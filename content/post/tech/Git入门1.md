@@ -99,7 +99,7 @@ git push -u origin master
 - 远程仓库(remote repository):远程版本库，`push`推送本地文件到远程版本库，`fetch`从远程版本库拉取 ~~资源~~ 版本信息，`pull`从远程版本库中拉取资源
 
 
-<center style="font-size:14px;font-family:cursive">
+<center style="font-size:13px;font-family:auto">
 ![imLgtx.png](https://s1.ax1x.com/2018/09/20/imLgtx.png)
 
 *Git本地工作区，暂存区，版本库的概念，图引自[易百教程](https://www.yiibai.com/git/)*
