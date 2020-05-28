@@ -27,7 +27,9 @@ autoCollapseToc: false
 
 ubuntu下安装：
 
-    sudo apt install git
+```Git
+sudo apt install git
+```
 
 windows 下安装，需[下载](https://git-scm.com/downloads)安装包
 
@@ -35,7 +37,9 @@ windows 下安装，需[下载](https://git-scm.com/downloads)安装包
 
 通俗地讲，本地任何一个目录都可以是本地仓库。只需要启动Terminal(ubuntu)或Git Bash(windows)，`cd`进入指定目录，运行
 
-    git init
+```git
+git init
+```
 
 即可以初始化一个**空的**本地仓库。此时，该目录下会多出一个`.git`子目录，它是Git用来跟踪管理版本库的。当然，如果你想取消版本管理，删除这个目录即可。
 
@@ -49,37 +53,43 @@ Git支持基于SSH和https关联远程仓库，但推荐使用SSH方式，它[�
 
 通过
 
-    ssh-keygen -t rsa -C "wangy325@qq.com"
+```git
+ssh-keygen -t rsa -C "wangy325@qq.com"
+```
 
 获取ssh密钥文件，操作过程中会提示确认保存文件的位置以及要求输入密码，以下是命令输出(windows 平台)。
 
-    Generating public/private rsa key pair.
-    Enter file in which to save the key (/c/Users/mayn/.ssh/id_rsa):
-    Enter passphrase (empty for no passphrase):
-    Enter same passphrase again:
-    Your identification has been saved in /c/Users/mayn/.ssh/id_rsa.
-    Your public key has been saved in /c/Users/mayn/.ssh/id_rsa.pub.
-    The key fingerprint is:
-    SHA256:Yy7sS0KnY+iaQDLldwI43znocIboZhDbD5ZPwjzMybU wangy325@qq.com
-    The key's randomart image is:
-    +---[RSA 2048]----+
-    |                 |
-    | .               |
-    |+ o .            |
-    |./ B o           |
-    |O.^ E o S        |
-    |=B @ B o .       |
-    |.+o B + .        |
-    |+o . = .         |
-    |o..   o.         |
-    +----[SHA256]-----+
+```git
+Generating public/private rsa key pair.
+Enter file in which to save the key (/c/Users/mayn/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /c/Users/mayn/.ssh/id_rsa.
+Your public key has been saved in /c/Users/mayn/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:Yy7sS0KnY+iaQDLldwI43znocIboZhDbD5ZPwjzMybU wangy325@qq.com
+The key's randomart image is:
++---[RSA 2048]----+
+|                 |
+| .               |
+|+ o .            |
+|./ B o           |
+|O.^ E o S        |
+|=B @ B o .       |
+|.+o B + .        |
+|+o . = .         |
+|o..   o.         |
++----[SHA256]-----+
+```
 
 命令执行完成之后，会在 `c/Users/mayn/` 下生成一个`.ssh`目录，里面包含了密钥信息。
 
 然后在GitHub页面添加新的ssh key，配置完成以后，便可以将本地仓库和远程仓库关联，并将本地文件上传到远程（通常，你需要先`add`并且`commit`文件到本地版本库）：
 
-    git remote add origin git@github.com:wangy325/repositoryName.git
-    git push -u origin master
+```git
+git remote add origin git@github.com:wangy325/repositoryName.git
+git push -u origin master
+```
 
 # Git的工作模式简单介绍
 
@@ -89,7 +99,7 @@ Git支持基于SSH和https关联远程仓库，但推荐使用SSH方式，它[�
 - 远程仓库(remote repository):远程版本库，`push`推送本地文件到远程版本库，`fetch`从远程版本库拉取 ~~资源~~ 版本信息，`pull`从远程版本库中拉取资源
 
 
-<center>
+<center style="font-size:14px;font-family:cursive">
 ![imLgtx.png](https://s1.ax1x.com/2018/09/20/imLgtx.png)
 
 *Git本地工作区，暂存区，版本库的概念，图引自[易百教程](https://www.yiibai.com/git/)*
@@ -121,39 +131,43 @@ Git 版本控制的一些主要概念：
 
 ## 添加文件到暂存区
 
-
-    git add file1 ...
+```git
+git add file1 ...
+```
 
 提交文件到仓库之前，需要配置用户名和电子邮件
 
-    git config --global user.name "wangy325"
-    git config --global user.email "wangy325@qq.com"
+```Git
+git config --global user.name "wangy325"
+git config --global user.email "wangy325@qq.com"
+```
 
 ## 提交文件到仓库
 
-    git commit -m "commit comment"
-
+```git
+git commit -m "commit comment"
+```
 
 ## 查看当前仓库的状态
 
-    $ git status
-    On branch master
-    Your branch is up to date with 'origin/master'.
+```git
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
 
-    Changes not staged for commit:
-      (use "git add <file>..." to update what will be committed)
-      (use "git checkout -- <file>..." to discard changes in working directory)
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
 
-            modified:   readme.md
+        modified:   readme.md
 
-    Untracked files:
-      (use "git add <file>..." to include in what will be committed)
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
 
-            Main.java
+        Main.java
 
-    no changes added to commit (use "git add" and/or "git commit -a")
-
-
+no changes added to commit (use "git add" and/or "git commit -a")
+```
 
 ## 查看某个文件的差异信息
 
