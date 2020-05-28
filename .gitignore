@@ -1,2 +1,4 @@
 .DS_Store
-themes/
+themes/*/node_modules/
+themes/*/.git/
+themes/*/.gitignore
