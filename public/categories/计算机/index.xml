@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>计算机 on </title>
+    <link>/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/</link>
+    <description>Recent content in 计算机 on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 17 Jul 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>2的补码问题</title>
+      <link>/post/tech/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A82%E7%9A%84%E8%A1%A5%E7%A0%81/</link>
+      <pubDate>Wed, 17 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tech/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A82%E7%9A%84%E8%A1%A5%E7%A0%81/</guid>
+      <description>&lt;p&gt;一直以来，关于2进制的讨论只出现在位运算里，并且也结束在位运算这里。所以，关于&lt;strong&gt;如何在计算机中表示一个负数&lt;/strong&gt;这样的问题的讨论很少，也常被忽略遗忘。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Redis Sentinel高可用实现 - </title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="wangy325" /><meta name="description" content="Redis v2.8 之后提供了高可用实现Redis Sentinel，实现了主从复制以及被动主备切换。v3.0 之后提供了分布式实现Redis Cluster。本文讨论的是使用Sentinel搭建Redis高可用服务。
+" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.55.6 with even 4.0.0" />
+
+
+<link rel="canonical" href="/post/tech/build-sentinel/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.812d2a0a.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Redis Sentinel高可用实现" />
+<meta property="og:description" content="Redis v2.8 之后提供了高可用实现Redis Sentinel，实现了主从复制以及被动主备切换。v3.0 之后提供了分布式实现Redis Cluster。本文讨论的是使用Sentinel搭建Redis高可用服务。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/tech/build-sentinel/" />
+<meta property="article:published_time" content="2019-08-14T16:01:23&#43;08:00"/>
+<meta property="article:modified_time" content="2019-10-21T10:01:23&#43;08:00"/>
+
+<meta itemprop="name" content="Redis Sentinel高可用实现">
+<meta itemprop="description" content="Redis v2.8 之后提供了高可用实现Redis Sentinel，实现了主从复制以及被动主备切换。v3.0 之后提供了分布式实现Redis Cluster。本文讨论的是使用Sentinel搭建Redis高可用服务。">
+
+
+<meta itemprop="datePublished" content="2019-08-14T16:01:23&#43;08:00" />
+<meta itemprop="dateModified" content="2019-10-21T10:01:23&#43;08:00" />
+<meta itemprop="wordCount" content="7615">
+
+
+
+<meta itemprop="keywords" content="redis," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Redis Sentinel高可用实现"/>
+<meta name="twitter:description" content="Redis v2.8 之后提供了高可用实现Redis Sentinel，实现了主从复制以及被动主备切换。v3.0 之后提供了分布式实现Redis Cluster。本文讨论的是使用Sentinel搭建Redis高可用服务。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo"></a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a><a href="/friendlink/">
+        <li class="mobile-menu-item">友链</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo"></a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/friendlink/">友链</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Redis Sentinel高可用实现</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-08-14 </span>
+        <div class="post-category">
+            <a href="/categories/nosql/"> NOSQL </a>
+            </div>
+          <span class="more-meta"> 约 7615 字 </span>
+          <span class="more-meta"> 预计阅读 16 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-准备">1 准备</a>
+<ul>
+<li><a href="#1-1-linux主机">1.1 linux主机</a></li>
+<li><a href="#1-2-redis-源码">1.2 Redis 源码</a></li>
+<li><a href="#1-3-了解linux防火墙的基本知识">1.3 了解linux防火墙的基本知识</a></li>
+<li><a href="#1-4-master-slave和sentinel">1.4 master，slave和sentinel</a></li>
+</ul></li>
+<li><a href="#2-安装配置redis">2 安装配置Redis</a>
+<ul>
+<li><a href="#section-1">2.1 编译源码</a></li>
+<li><a href="#2-2-其他配置项">2.2 其他配置项</a></li>
+<li><a href="#2-3-配置文件redis-conf">2.3 配置文件redis.conf</a></li>
+</ul></li>
+<li><a href="#3-启动redis">3 启动redis</a></li>
+<li><a href="#4-使用redis-cli">4 使用redis-cli</a></li>
+<li><a href="#5-关闭redis-server">5 关闭redis-server</a></li>
+<li><a href="#6-艺术就是复制">6 艺术就是复制</a>
+<ul>
+<li><a href="#6-1-配置redis-salve">6.1 配置redis-salve</a>
+<ul>
+<li><a href="#6-1-1-salve启动日志">6.1.1 salve启动日志</a></li>
+<li><a href="#6-1-2-验证主从数据同步">6.1.2 验证主从数据同步</a></li>
+</ul></li>
+<li><a href="#6-2-配置redis-sentinel">6.2 配置redis-sentinel</a>
+<ul>
+<li><a href="#6-2-1-sentinel启动日志">6.2.1 sentinel启动日志</a></li>
+<li><a href="#6-2-2-使用redis-cli查看系统信息">6.2.2 使用redis-cli查看系统信息</a></li>
+<li><a href="#6-2-3-模拟主备切换">6.2.3 模拟主备切换</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#7-结束语">7 结束语</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>Redis <a href="https://raw.githubusercontent.com/antirez/redis/2.8/00-RELEASENOTES">v2.8</a> 之后提供了高可用实现<code>Redis Sentinel</code>，实现了<strong>主从复制</strong>以及<del>被动</del><strong>主备切换</strong>。<a href="https://raw.githubusercontent.com/antirez/redis/3.0/00-RELEASENOTES">v3.0</a> 之后提供了分布式实现<code>Redis Cluster</code>。本文讨论的是使用Sentinel搭建Redis高可用服务。</p>
+
+<blockquote>
+<p>If all redis and sentinel instances were deployed in same host, you just build a fake redis-sentinel <em>High-Availability</em> environment<sup class="footnote-ref" id="fnref:v1"><a href="#fn:v1">1</a></sup>.</p>
+</blockquote>
+
+<h1 id="1-准备">1 准备</h1>
+
+<h2 id="1-1-linux主机">1.1 linux主机</h2>
+
+<p>本文使用centOS7，需安装gcc：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">yum install gcc
+<span class="c1"># or on ubuntu</span>
+apt-get install gcc</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="1-2-redis-源码">1.2 Redis 源码</h2>
+
+<p>本文使用<a href="http://download.redis.io/releases/redis-4.0.11.tar.gz">v4.0.0.11</a>，版本号应大于2.8.0。</p>
+
+<p>可以使用如下命令来获取指定版本的redis：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">wget http://download.redis.io/releases/redis-4.0.11.tar.gz</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="1-3-了解linux防火墙的基本知识">1.3 了解linux防火墙的基本知识</h2>
+
+<p>centOS7和centOS6使用不同的防火墙机制，前者使用<code>firewall</code>，后者使用<code>iptables</code>。</p>
+
+<h2 id="1-4-master-slave和sentinel">1.4 master，slave和sentinel</h2>
+
+<p>如果只想搭建一个单机(standalone)实例<sup class="footnote-ref" id="fnref:v2"><a href="#fn:v2">2</a></sup>来学习redis的数据结构，只需要阅读安装redis实例就好。</p>
+
+<p>多个<code>standalone</code>加之合适的配置便组成了<code>master-slave</code>结构，一般而言，此时已经具备了「主从复制」的能力。</p>
+
+<p>所谓<code>Sentinel</code>，并不是所谓「新技术」名词，只是一个用来做特定事情<sup class="footnote-ref" id="fnref:v3"><a href="#fn:v3">3</a></sup>的redis实例而已，故此我们也可以将其称作「服务」。如果需要搭建<code>Sentinel</code>服务，你需要先具备<code>master-slave</code>结构，也就是说，你至少需要搭建2个redis实例，并且将其中一台配置为另一台的slave。</p>
+
+<p>了解更多关于redis-sentinel的相关内容，请参考<a href="#">redis哨兵与高可用架构</a>。</p>
+
+<figure class="center">
+    <img src="/db/master-slave-vs-sentinel.png"
+         alt="img"/> <figcaption>
+            <h4>redis的主从模式和哨兵模式</h4>
+        </figcaption>
+</figure>
+
+<!-- <div class="admonition bug"><p class="admonition-title">bug</p>
+  
+此处用图片释义可能更明确
+
+</div> -->
+
+<h1 id="2-安装配置redis">2 安装配置Redis</h1>
+
+<p>接下来会依次安装Redis并且配置多个Redis实例</p>
+
+<h2 id="section-1">2.1 编译源码</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">  tar -zxf redis-4.0.11.tar.gz
+  <span class="c1"># compile source code</span>
+  <span class="nb">cd</span> redis-4.0.11
+  <span class="c1"># redis was recommended to install in /usr/local/redis</span>
+  mkdir /usr/local/redis
+  make install <span class="nv">PREFIX</span><span class="o">=</span>/usr/local/redis
+  <span class="c1"># ---</span>
+  <span class="c1">#if all operations are right, you will see the output below:</span>
+  <span class="o">[</span>root@shell ~<span class="o">]</span><span class="c1"># cd /usr/local/redis ; ll</span>
+  total <span class="m">68</span>
+  drwxr-xr-x <span class="m">2</span> root root  <span class="m">4096</span> Aug  <span class="m">4</span> <span class="m">15</span>:19 bin         <span class="c1">#the redis executable binary file folder.</span>
+  -rw-r--r-- <span class="m">1</span> root root    <span class="m">93</span> Aug  <span class="m">4</span> <span class="m">16</span>:54 dump.rdb    <span class="c1">#the dump of redis database, You can config where to save it later.</span>
+  -rw-r--r-- <span class="m">1</span> root root <span class="m">58905</span> Aug  <span class="m">7</span> <span class="m">13</span>:56 redis.conf  <span class="c1">#the config file of a particular redis instance.</span>
+  <span class="o">[</span>root@shell redis<span class="o">]</span><span class="c1"># cd /usr/local/redis/bin ; ll</span>    
+  total <span class="m">21876</span>
+  -rwxr-xr-x <span class="m">1</span> root root <span class="m">2452168</span> Aug  <span class="m">4</span> <span class="m">15</span>:19 redis-benchmark                 <span class="c1">#redis test tool</span>
+  -rwxr-xr-x <span class="m">1</span> root root <span class="m">5775312</span> Aug  <span class="m">4</span> <span class="m">15</span>:19 redis-check-aof                 <span class="c1">#redis AOF persistent check tool</span>
+  -rwxr-xr-x <span class="m">1</span> root root <span class="m">5775312</span> Aug  <span class="m">4</span> <span class="m">15</span>:19 redis-check-rdb                 <span class="c1">#redis RBD persistent check tool</span>
+  -rwxr-xr-x <span class="m">2</span> root root <span class="m">2618192</span> Aug  <span class="m">4</span> <span class="m">15</span>:19 redis-cli                       <span class="c1">#launch a redis client</span>
+  lrwxrwxrwx <span class="m">1</span> root root      <span class="m">12</span> Aug  <span class="m">4</span> <span class="m">15</span>:19 redis-sentinel -&gt; redis-server  <span class="c1">#launch a redis sentinel server</span>
+  -rwxr-xr-x <span class="m">3</span> root root <span class="m">5775312</span> Aug  <span class="m">4</span> <span class="m">15</span>:19 redis-server                    <span class="c1">#launch a redis server(instance)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>两个<code>ll</code>命令显示了一个redis的全部内容。本文用到的几个文件分别是：</p>
+
+<ul>
+<li>redis.conf： 配置文件，绝对的主角，它的戏谁都抢不走</li>
+<li>redis-server： 🧹扫地僧，开局现身一次，不出意外将隐居</li>
+<li>redis-client：谁都不用client，谁都是client</li>
+</ul>
+
+<h2 id="2-2-其他配置项">2.2 其他配置项</h2>
+
+<p>如果上述操作没有问题<del>这么简单也不会有问题</del>，理论上，一个<code>standalone</code>实例已经安装完成了，可以通过「命令 配置文件」的方式启动redis服务：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">/usr/local/redis/bin/redis-server /usr/local/redis/redis.conf</code></pre></td></tr></table>
+</div>
+</div>
+<p>但是为了方便启动服务，还需要做一些额外的操作：</p>
+
+<p style="background-color:lightgray">复制redis二进制程序到系统环境变量并将redis设置为开机启动</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> /usr/local/redis/bin/
+cp redis-server redis-cli redis-sentinel /usr/local/bin</code></pre></td></tr></table>
+</div>
+</div>
+<p>如此，启动redis的时候便不需要指定程序路径; 此时，已经可以直接在终端运行<code>redis-server</code>了</p>
+
+<p>将redis设置为开机启动（可选操作）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 安装完成后可以添加多个命令启动redis主从-哨兵系统</span>
+<span class="nb">echo</span> <span class="s2">&#34;redis-server /usr/local/redis.conf&#34;</span> &gt;&gt; /etc/rc.local</code></pre></td></tr></table>
+</div>
+</div>
+<!-- <p style="background-color:lightgray">将redis添加至系统服务，简化服务启停操作</p>
+
+<div class="admonition question"><p class="admonition-title">question</p>
+  此处需要添加内容
+</div> -->
+
+<p style="background-color:lightgray">开放防火墙端口</p>
+
+<div class="admonition tip"><p class="admonition-title">tip</p>
+  若主机未开启防火墙，则无需操作。
+</div>
+
+<p>如果你的主机开启了防火墙，其他主机是无法连接上你的redis-server的，此时需要为其开放端口。</p>
+
+<p>前面说到，centOS7和centOS6的防火墙机制不一样，需要分别处理。</p>
+
+<p>若需知晓防火墙状态，请运行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">systemctl status serviceName</code></pre></td></tr></table>
+</div>
+</div>
+<p>centOS7 和centOS6的防火墙服务名分别为 <code>firewalld</code>和<code>iptables</code></p>
+
+<ul>
+<li>对于centOS7：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 查看开放端口</span>
+<span class="o">[</span>root@shell ~<span class="o">]</span><span class="c1"># firewall-cmd --list-all</span>
+public
+  target: default
+  icmp-block-inversion: no
+  interfaces:
+  sources:
+  services: ssh dhcpv6-client http
+  ports: <span class="m">6379</span>/tcp
+  protocols:
+  masquerade: no
+  forward-ports:
+  source-ports:
+  icmp-blocks:
+  rich rules:
+<span class="c1"># 如果6379端口不在返回结果中，那么将6379添加到开放端口列表中</span>
+<span class="o">[</span>root@shell ~<span class="o">]</span><span class="c1"># firewall-cmd --permanent --add-port=6379/tcp</span>
+<span class="o">[</span>root@shell ~<span class="o">]</span><span class="c1"># firewall-cmd --reload</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>centOS6<sup class="footnote-ref" id="fnref:v4"><a href="#fn:v4">4</a></sup></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 添加规则</span>
+iptables -I INPUT -p tcp -m tcp --dport <span class="m">6379</span> -j ACCEPT
+<span class="c1"># 保存规则</span>
+service iptables save
+<span class="c1"># 重启iptables</span>
+service iptables restart</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="2-3-配置文件redis-conf">2.3 配置文件redis.conf</h2>
+
+<p>在redis的<a href="#section-1">安装文件夹</a>内，有一个系统预配置文件<code>redis.conf</code>，我们需要修改此配置文件以满足需求。</p>
+
+<p>以下列出了(redis-standalone)常见配置列表<sup class="footnote-ref" id="fnref:v4"><a href="#fn:v4">4</a></sup>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># redis进程是否以守护进程的方式(后台)运行(不以守护进程的方式运行会占用一个终端)</span>
+daemonize yes
+<span class="c1"># 指定redis进程的PID文件存放位置</span>
+pidfile /var/run/redis.pid
+<span class="c1"># redis进程的端口号</span>
+port <span class="m">6379</span>
+<span class="c1"># 允许任何ipv4的主机连接；</span>
+<span class="nb">bind</span> <span class="m">0</span>.0.0.0
+<span class="c1"># 客户端闲置多长时间(s)后关闭连接，默认此参数为0即关闭此功能</span>
+timeout <span class="m">300</span>
+<span class="c1"># redis日志级别，可用的级别有debug.verbose.notice.warning</span>
+loglevel verbose
+<span class="c1"># log文件输出位置，如果进程以守护进程的方式运行，此处又将输出文件设置为stdout的话，</span>
+<span class="c1"># 就会将日志信息输出到/dev/null里面去了</span>
+logfile /var/log/redis/redis_6379.log
+<span class="c1"># 设置数据库的数量，默认为0可以使用select &lt;dbid&gt;命令在连接上指定数据库id</span>
+databases <span class="m">16</span>
+<span class="c1"># 保存db到磁盘，可配置多条，表示不同级别的数据改动</span>
+<span class="c1"># 如下配置表示至少有一个key-value发生改动时，900s之后将其保存到磁盘；</span>
+<span class="c1"># 如果至少有10个key-value发生改动，那么300s后将其保存到磁盘；</span>
+save <span class="m">900</span> <span class="m">1</span>
+save <span class="m">300</span> <span class="m">10</span>
+<span class="c1"># 指定存储至本地数据库时是否压缩文件，默认为yes即启用存储</span>
+rdbcompression yes
+<span class="c1"># 指定本地数据库文件名</span>
+dbfilename dump.db
+<span class="c1"># 指定本地数据文件存放位置，以下配置表示保存在redis安装目录</span>
+dir ./
+<span class="c1"># 指定当本机为slave服务，配置为master的IP及端口，在redis启动的时候他会自动跟master进行数据同步</span>
+slaveof &lt;masterip&gt; &lt;masterport&gt;
+<span class="c1"># 当master设置了密码保护时，slave服务连接master的密码</span>
+masterauth &lt;master-password&gt;
+<span class="c1"># 设置redis连接密码，如果配置了连接密码，客户端在连接redis是需要通过AUTH&lt;password&gt;命令</span>
+<span class="c1"># 提供密码，默认关闭</span>
+requirepass password
+<span class="c1"># 设置同一时间最大客户连接数，默认无限制。redis可以同时连接的客户端数为redis程序可以打开的最大</span>
+<span class="c1"># 文件描述符，如果设置 maxclients 0，表示不作限制。当客户端连接数到达限制时，Redis会关闭新的</span>
+<span class="c1"># 连接并向客户端返回 max number of clients reached 错误信息</span>
+maxclients <span class="m">128</span>
+<span class="c1"># 指定Redis最大内存限制，Redis在启动时会把数据加载到内存中，达到最大内存后，Redis会先尝试清除</span>
+<span class="c1"># 已到期或即将到期的Key。当此方法处理后，仍然到达最大内存设置，将无法再进行写入操作，但仍然可以</span>
+<span class="c1"># 进行读取操作。Redis新的vm机制，会把Key存放内存，Value会存放在swap区</span>
+maxmemory &lt;bytes&gt;
+<span class="c1"># 指定是否在每次更新操作后进行日志记录，Redis在默认情况下是异步的把数据写入磁盘，如果不开启，可</span>
+<span class="c1"># 能会在断电时导致一段时间内的数据丢失。因为redis本身同步数据文件是按上面save条件来同步的，所以</span>
+<span class="c1"># 有的数据会在一段时间内只存在于内存中。默认为no。</span>
+appendonly no
+<span class="c1"># 指定跟新日志文件名默认为appendonly.aof</span>
+appendfilename appendonly.aof
+<span class="c1"># 指定更新日志的条件，有三个可选参数 - no：表示等操作系统进行数据缓存同步到磁盘(快)，always：表示每次</span>
+<span class="c1"># 更新操作后手动调用fsync()将数据写到磁盘(慢，安全)， everysec：表示每秒同步一次(折衷，默认值)；</span>
+appendfsync everysec</code></pre></td></tr></table>
+</div>
+</div>
+<p>⚠️注意：关于<code>bind</code>指令的描述<del>可以配置指定ip来允许指定连接，多个ip使用空格分隔</del>，关于bind的意义，参考<a href="https://blog.csdn.net/hel12he/article/details/46911159">redis配置外网访问</a></p>
+
+<h1 id="3-启动redis">3 启动redis</h1>
+
+<p>redis.conf文件配置无差的话，即可指定配置文件启动redis服务：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">redis-server /usr/local/redis/redis.conf</code></pre></td></tr></table>
+</div>
+</div>
+<p>启动日志：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">27552:C 04 Aug 16:12:58.912 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+27552:C 04 Aug 16:12:58.912 # Redis version=4.0.11, bits=64, commit=00000000, modified=0, pid=27552, just started
+27552:C 04 Aug 16:12:58.912 # Configuration loaded
+                _._                                                  
+           _.-``__ &#39;&#39;-._                                             
+      _.-``    `.  `_.  &#39;&#39;-._           Redis 4.0.11 (00000000/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ &#39;&#39;-._                                   
+ (    &#39;      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|&#39;` _.-&#39;|     Port: 6379
+ |    `-._   `._    /     _.-&#39;    |     PID: 27553
+  `-._    `-._  `-./  _.-&#39;    _.-&#39;                                   
+ |`-._`-._    `-.__.-&#39;    _.-&#39;_.-&#39;|                                  
+ |    `-._`-._        _.-&#39;_.-&#39;    |           http://redis.io        
+  `-._    `-._`-.__.-&#39;_.-&#39;    _.-&#39;                                   
+ |`-._`-._    `-.__.-&#39;    _.-&#39;_.-&#39;|                                  
+ |    `-._`-._        _.-&#39;_.-&#39;    |                                  
+  `-._    `-._`-.__.-&#39;_.-&#39;    _.-&#39;                                   
+      `-._    `-.__.-&#39;    _.-&#39;                                       
+          `-._        _.-&#39;                                           
+              `-.__.-&#39;                                               
+
+27553:M 04 Aug 16:12:58.915 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+27553:M 04 Aug 16:12:58.916 # Server initialized
+27553:M 04 Aug 16:12:58.916 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add &#39;vm.overcommit_memory = 1&#39; to /etc/sysctl.conf and then reboot or run the command &#39;sysctl vm.overcommit_memory=1&#39; for this to take effect.
+27553:M 04 Aug 16:12:58.916 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command &#39;echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled&#39; as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+27553:M 04 Aug 16:12:58.916 * Ready to accept connections</pre></td></tr></table>
+</div>
+</div>
+<p>可以看到，一个<code>standalon</code>已经运行成功，但是有3个WARNING<sup class="footnote-ref" id="fnref:v5"><a href="#fn:v5">5</a></sup>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">WARNING: The TCP backlog setting of <span class="m">511</span> cannot be enforced because /proc/sys/net/core/somaxconn is <span class="nb">set</span> to the lower value of <span class="m">128</span>.
+<span class="c1"># solution</span>
+<span class="o">[</span>root@shell ~<span class="o">]</span><span class="c1"># echo 511 &gt;/proc/sys/net/core/somaxconn</span>
+<span class="o">[</span>root@shell ~<span class="o">]</span><span class="c1"># echo &#34;net.core.somaxconn = 551&#34; &gt;&gt; /etc/sysctl.conf</span>
+
+WARNING overcommit_memory is <span class="nb">set</span> to <span class="m">0</span>! Background save may fail under low memory condition. To fix this issue add <span class="s1">&#39;vm.overcommit_memory = 1&#39;</span> to /etc/sysctl.conf and <span class="k">then</span> reboot or run the <span class="nb">command</span> <span class="s1">&#39;sysctl vm.overcommit_memory=1&#39;</span> <span class="k">for</span> this to take effect.
+<span class="c1">#solution</span>
+<span class="o">[</span>root@shell ~<span class="o">]</span><span class="c1"># echo 1 &gt; /proc/sys/vm/overcommit_memory</span>
+<span class="o">[</span>root@shell ~<span class="o">]</span><span class="c1"># echo &#34;vm.overcommit_memory=1&#34; &gt;&gt; /etc/sysctl.conf</span>
+
+WARNING you have Transparent Huge Pages <span class="o">(</span>THP<span class="o">)</span> support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the <span class="nb">command</span> <span class="s1">&#39;echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled&#39;</span> as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+<span class="c1">#solution</span>
+<span class="o">[</span>root@shell ~<span class="o">]</span><span class="c1"># echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled</span>
+<span class="o">[</span>root@shell ~<span class="o">]</span><span class="c1"># vi /etc/rc.local</span>
+<span class="k">if</span> <span class="nb">test</span> -f /sys/kernel/mm/transparent_hugepage/enabled<span class="p">;</span> <span class="k">then</span>
+   <span class="nb">echo</span> never &gt; /sys/kernel/mm/transparent_hugepage/enabled
+<span class="k">fi</span>
+<span class="k">if</span> <span class="nb">test</span> -f /sys/kernel/mm/transparent_hugepage/defrag<span class="p">;</span> <span class="k">then</span>
+   <span class="nb">echo</span> never &gt; /sys/kernel/mm/transparent_hugepage/defrag
+<span class="k">fi</span>    </code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="4-使用redis-cli">4 使用redis-cli</h1>
+
+<p>redis服务启动成功之后，便可以通过<code>redis-cli</code>与服务进行交互。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 连接redis-server，若-h和-p参数缺省，则默认连接localhost:6379</span>
+redis-cli -h <span class="m">127</span>.0.0.1 -p <span class="m">6379</span>
+<span class="m">127</span>.0.0.1:6379&gt;
+<span class="c1"># 若redis-server requirepass设置了密码，那么需要认证</span>
+<span class="m">127</span>.0.0.1:6379&gt; auth yourpassword
+OK
+<span class="c1"># ping-PONG说明redis服务正常</span>
+<span class="m">127</span>.0.0.1:6379&gt; ping
+<span class="m">127</span>.0.0.1:6379&gt; PONG
+<span class="c1"># 获取帮助</span>
+<span class="m">127</span>.0.0.1:6379&gt; <span class="nb">help</span>
+redis-cli <span class="m">4</span>.0.11
+To get <span class="nb">help</span> about Redis commands type:
+      <span class="s2">&#34;help @&lt;group&gt;&#34;</span> to get a list of commands in &lt;group&gt;
+      <span class="s2">&#34;help &lt;command&gt;&#34;</span> <span class="k">for</span> <span class="nb">help</span> on &lt;command&gt;
+      <span class="s2">&#34;help &lt;tab&gt;&#34;</span> to get a list of possible <span class="nb">help</span> topics
+      <span class="s2">&#34;quit&#34;</span> to <span class="nb">exit</span>
+
+To <span class="nb">set</span> redis-cli preferences:
+      <span class="s2">&#34;:set hints&#34;</span> <span class="nb">enable</span> online hints
+      <span class="s2">&#34;:set nohints&#34;</span> disable online hints
+Set your preferences in ~/.redisclirc
+<span class="m">127</span>.0.0.1:6379&gt; <span class="nb">help</span> shutdown
+
+  SHUTDOWN <span class="o">[</span>NOSAVE<span class="p">|</span>SAVE<span class="o">]</span>
+  summary: Synchronously save the dataset to disk and <span class="k">then</span> shut down the server
+  since: <span class="m">1</span>.0.0
+  group: server
+
+<span class="m">127</span>.0.0.1:6379&gt;
+<span class="c1"># 退出客户端</span>
+<span class="m">127</span>.0.0.1:6379&gt; exit</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="5-关闭redis-server">5 关闭redis-server</h1>
+
+<div class="admonition warning"><p class="admonition-title">warning</p>
+  不要使用kill -9 pid关闭redis server，这样会可能会丢失数据完整性 
+</div>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#关闭redis-server 可选参数nosave|save意为关闭服务之前是否保存数据到磁盘</span>
+<span class="m">127</span>.0.0.1:6379&gt; shutdown <span class="o">[</span>nosave<span class="p">|</span>save<span class="o">]</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="6-艺术就是复制">6 艺术就是复制</h1>
+
+<div class="admonition danger"><p class="admonition-title">danger</p>
+  以下配置是基于一台服务器的演示，如果要部署高可用环境，需要在不同的服务器上安装redis并作如下配置
+</div>
+
+<p>经过上述操作，一个redis-standalone服务就配置好了，如果要将redis系统高可用，只需要「复制」就好了。</p>
+
+<p>前面说过，<code>redis-server</code>是通过<strong>可执行文件 + 配置文件</strong>的方式启动，可执行文件已经解压得到，那么只需要复制配置文件就可以了。</p>
+
+<p>以下是本次slave和sentinel的配置：</p>
+
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th align="center">Address</th>
+<th align="left">Port</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><strong>Master</strong></td>
+<td align="center">localhost</td>
+<td align="left">6379</td>
+</tr>
+
+<tr>
+<td>Slave</td>
+<td align="center">localhost</td>
+<td align="left">16379, 26379</td>
+</tr>
+
+<tr>
+<td>Sentinel</td>
+<td align="center">localhost</td>
+<td align="left">6380, 16380, 26380</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># current workDir</span>
+<span class="nb">cd</span> /usr/local
+<span class="c1"># 创建文件夹存放slave和sentinel配置文件</span>
+mkdir redis-slave  redis-sentinel
+cp -r redis/redis.conf redis-slave
+cp -r redis/redis.conf redis-sentinel
+<span class="c1"># slave配置文件</span>
+mv redis-slave/redis.conf redis-slave/slave-16379.conf</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="6-1-配置redis-salve">6.1 配置redis-salve</h2>
+
+<p>slave的配置大抵和standalone一致，需要注意配置几个地方：</p>
+
+<ul>
+<li><code>logfile</code>的保存地址配置自行配置</li>
+<li><code>masterauth</code>和<code>requirepass</code>配置master的密码</li>
+<li><code>slaveof</code>指明了其是哪个「主」的「从」</li>
+<li><code>slave-read-only</code>指明从服务器只读</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">vim redis-slave/slave-16379.conf
+<span class="o">&lt;&lt;&lt;</span>
+    daemonize yes
+    pidfile /var/run/redis-16379.pid
+    logfile /var/log/redis/redis-16379.log
+    port <span class="m">16379</span>
+    <span class="nb">bind</span> <span class="m">0</span>.0.0.0
+    timeout <span class="m">300</span>
+    databases <span class="m">16</span>
+    dbfilename dump-16379.db
+    dir ./
+    masterauth yourpassword
+    requirepass yourpassword
+    slave-read-only yes
+    slaveof <span class="m">127</span>.0.0.1 <span class="m">6379</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 再多配一个slave</span>
+cp redis-slave/slave-16379.conf redis-slave/slave-26379.conf</code></pre></td></tr></table>
+</div>
+</div>
+<p>同样地，只需要更改部分配置内容（端口，文件名）就可以了。</p>
+
+<h3 id="6-1-1-salve启动日志">6.1.1 salve启动日志</h3>
+
+<p>以下是配置成功的slave启动日志：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">30463:C 05 Aug 11:33:34.536 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+30463:C 05 Aug 11:33:34.537 # Redis version=4.0.11, bits=64, commit=00000000, modified=0, pid=30463, just started
+30463:C 05 Aug 11:33:34.537 # Configuration loaded
+                _._                                                  
+           _.-``__ &#39;&#39;-._                                             
+      _.-``    `.  `_.  &#39;&#39;-._           Redis 4.0.11 (00000000/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ &#39;&#39;-._                                   
+ (    &#39;      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|&#39;` _.-&#39;|     Port: 26379
+ |    `-._   `._    /     _.-&#39;    |     PID: 30464
+  `-._    `-._  `-./  _.-&#39;    _.-&#39;                                   
+ |`-._`-._    `-.__.-&#39;    _.-&#39;_.-&#39;|                                  
+ |    `-._`-._        _.-&#39;_.-&#39;    |           http://redis.io        
+  `-._    `-._`-.__.-&#39;_.-&#39;    _.-&#39;                                   
+ |`-._`-._    `-.__.-&#39;    _.-&#39;_.-&#39;|                                  
+ |    `-._`-._        _.-&#39;_.-&#39;    |                                  
+  `-._    `-._`-.__.-&#39;_.-&#39;    _.-&#39;                                   
+      `-._    `-.__.-&#39;    _.-&#39;                                       
+          `-._        _.-&#39;                                      
+              `-.__.-&#39;                                               
+
+30464:S 05 Aug 11:33:34.539 # Server initialized
+30464:S 05 Aug 11:33:34.539 * Ready to accept connections
+# 注意以下输出：
+30464:S 05 Aug 11:33:34.539 * Connecting to MASTER 127.0.0.1:6379
+30464:S 05 Aug 11:33:34.539 * MASTER &lt;-&gt; SLAVE sync started
+30464:S 05 Aug 11:33:34.539 * Non blocking connect for SYNC fired the event.
+30464:S 05 Aug 11:33:34.539 * Master replied to PING, replication can continue...
+30464:S 05 Aug 11:33:34.539 * Partial resynchronization not possible (no cached master)
+30464:S 05 Aug 11:33:34.540 * Full resync from master: 4e99dfc708f2035b3b39f34796434de5889f667b:308
+30464:S 05 Aug 11:33:34.543 * MASTER &lt;-&gt; SLAVE sync: receiving 177 bytes from master
+30464:S 05 Aug 11:33:34.543 * MASTER &lt;-&gt; SLAVE sync: Flushing old data
+30464:S 05 Aug 11:33:34.543 * MASTER &lt;-&gt; SLAVE sync: Loading DB in memory
+30464:S 05 Aug 11:33:34.543 * MASTER &lt;-&gt; SLAVE sync: Finished with success</pre></td></tr></table>
+</div>
+</div>
+<p>slave的启动日志有几个信息值得关注：</p>
+
+<ul>
+<li>redis启动警告信息消除，说明我们之前的配置生效了；</li>
+<li>slave server 初始化成功之后，便开始连接master；</li>
+<li>master 连接成功之后，便开始从主数据库同步数据；</li>
+<li>之后，从数据库一直监听<sup><a>机制</a></sup>主数据库的改动并同步数据</li>
+</ul>
+
+<h3 id="6-1-2-验证主从数据同步">6.1.2 验证主从数据同步</h3>
+
+<p>可以通过在主数据库写入数据，通过从服务器读取数据来验证主从关系是否正常。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@shell ~<span class="o">]</span><span class="c1"># redis-cli -h localhost -p 6379</span>
+localhost:6379&gt; auth yourpassword
+OK
+localhost:16379&gt; get count
+<span class="s2">&#34;6&#34;</span>
+localhost:16379&gt; decr count
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">5</span>
+localhost:16379&gt; <span class="nb">exit</span>
+<span class="o">[</span>root@ ~<span class="o">]</span><span class="c1"># redis-cli -h localhost -p 16379</span>
+localhost:6379&gt; auth yourpassword
+OK
+localhost:6379&gt; get count
+<span class="s2">&#34;5&#34;</span>
+localhost:6379&gt; incr count
+<span class="o">(</span>error<span class="o">)</span> READONLY You can<span class="err">&#39;</span>t write against a <span class="nb">read</span> only slave.</code></pre></td></tr></table>
+</div>
+</div>
+<p>可以看到，主服务器将count值自减1之后，从服务器获取的count值也是自减后的值；同时，如果在从服务器上对count进行自增操作，会得到一条</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">(error) READONLY You can&#39;t write against a read only slave.</pre></td></tr></table>
+</div>
+</div>
+<p>的错误消息，说明</p>
+
+<ul>
+<li><p>端口16379的redis服务是slave；</p></li>
+
+<li><p>我们配置的从服务器只读生效了</p></li>
+</ul>
+
+<p>以上，即可完成配置经典的一主多备的redis服务部署。</p>
+
+<h2 id="6-2-配置redis-sentinel">6.2 配置redis-sentinel</h2>
+
+<p>同<code>slave</code>的配置一样，复制配置文件，少许改动即可，以下列出了<code>sentinel</code>的异于<code>slave</code>的配置项<sup class="footnote-ref" id="fnref:v7"><a href="#fn:v7">6</a></sup>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 哨兵sentinel监控的redis主节点的</span>
+<span class="c1">## quorum：当这些quorum个数sentinel哨兵认为master主节点失联 那么这时 客观上认为主节点失联了</span>  
+<span class="c1"># sentinel monitor &lt;master-name&gt; &lt;ip&gt; &lt;port&gt; &lt;quorum&gt;</span>  
+sentinel monitor master <span class="m">127</span>.0.0.1 <span class="m">6379</span> <span class="m">2</span>
+
+<span class="c1"># 当在Redis实例中开启了requirepass &lt;foobared&gt;，所有连接Redis实例的客户端都要提供密码</span>
+<span class="c1"># sentinel auth-pass &lt;master-name&gt; &lt;password&gt;</span>  
+sentinel auth-pass master yourpassword  
+
+<span class="c1"># 指定主节点应答哨兵sentinel的最大时间间隔，超过这个时间，哨兵主观上认为主节点下线，默认30秒</span>  
+<span class="c1"># sentinel down-after-milliseconds &lt;master-name&gt; &lt;milliseconds&gt;</span>
+sentinel down-after-milliseconds master <span class="m">30000</span>  
+
+<span class="c1"># 指定了在发生failover主备切换时，最多可以有多少个slave同时对新的master进行同步。这个数字越小，完成failover所需的时间就越长；反之，但是如果这个数字越大，就意味着越多的slave因为replication而不可用。可以通过将这个值设为1，来保证每次只有一个slave，处于不能处理命令请求的状态。</span>
+<span class="c1"># sentinel parallel-syncs &lt;master-name&gt; &lt;numslaves&gt;</span>
+sentinel parallel-syncs master <span class="m">1</span>  
+
+<span class="c1"># 故障转移的超时时间failover-timeout，默认三分钟，可以用在以下这些方面：</span>
+<span class="c1">## 1. 同一个sentinel对同一个master两次failover之间的间隔时间。</span>  
+<span class="c1">## 2. 当一个slave从一个错误的master那里同步数据时开始，直到slave被纠正为从正确的master那里同步数据时结束。</span>  
+<span class="c1">## 3. 当想要取消一个正在进行的failover时所需要的时间。</span>
+<span class="c1">## 4.当进行failover时，配置所有slaves指向新的master所需的最大时间。不过，即使过了这个超时，slaves依然会被正确配置为指向master，但是就不按parallel-syncs所配置的规则来同步数据了</span>
+<span class="c1"># sentinel failover-timeout &lt;master-name&gt; &lt;milliseconds&gt;</span>  
+sentinel failover-timeout master <span class="m">180000</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># sentinel配置文件</span>
+mv redis-sentinel/redis.conf redis-sentinel/sentinel-6380.conf
+vim redis-sentinel/sentinel-6380.conf
+<span class="o">&lt;&lt;&lt;</span>
+protected-mode no
+<span class="nb">bind</span> <span class="m">0</span>.0.0.0
+port <span class="m">16380</span>
+daemonize yes
+sentinel monitor master <span class="m">127</span>.0.0.1 <span class="m">6379</span> <span class="m">2</span>
+sentinel down-after-milliseconds master <span class="m">5000</span>
+sentinel failover-timeout master <span class="m">180000</span>
+sentinel parallel-syncs master <span class="m">1</span>
+sentinel auth-pass master yourpassword
+logfile /var/log/redis/sentinel-16380.log</code></pre></td></tr></table>
+</div>
+</div>
+<p>同理，可以再配置其他2个<code>sentinel</code>服务。</p>
+
+<h3 id="6-2-1-sentinel启动日志">6.2.1 sentinel启动日志</h3>
+
+<p>启动sentinel<sup class="footnote-ref" id="fnref:v8"><a href="#fn:v8">7</a></sup></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Shell" data-lang="Shell"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Shell" data-lang="Shell">redis-sentinel /usr/local/redis-sentinel/sentinel-6380.conf
+<span class="c1"># 或者</span>
+redis-server /usr/local/redis-sentinel/sentinel-6380.conf --sentinel</code></pre></td></tr></table>
+</div>
+</div>
+<p>以下是配置成功的<code>sentinel</code>启动日志其一</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">8550:X 05 Aug 14:29:38.696 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+8550:X 05 Aug 14:29:38.696 # Redis version=4.0.11, bits=64, commit=00000000, modified=0, pid=8550, just started
+8550:X 05 Aug 14:29:38.696 # Configuration loaded
+                _._                                                  
+           _.-``__ &#39;&#39;-._                                             
+      _.-``    `.  `_.  &#39;&#39;-._           Redis 4.0.11 (00000000/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ &#39;&#39;-._                                   
+ (    &#39;      ,       .-`  | `,    )     Running in sentinel mode
+ |`-._`-...-` __...-.``-._|&#39;` _.-&#39;|     Port: 6380
+ |    `-._   `._    /     _.-&#39;    |     PID: 8551
+  `-._    `-._  `-./  _.-&#39;    _.-&#39;                                   
+ |`-._`-._    `-.__.-&#39;    _.-&#39;_.-&#39;|                                  
+ |    `-._`-._        _.-&#39;_.-&#39;    |           http://redis.io        
+  `-._    `-._`-.__.-&#39;_.-&#39;    _.-&#39;                                   
+ |`-._`-._    `-.__.-&#39;    _.-&#39;_.-&#39;|                                  
+ |    `-._`-._        _.-&#39;_.-&#39;    |                                  
+  `-._    `-._`-.__.-&#39;_.-&#39;    _.-&#39;                                   
+      `-._    `-.__.-&#39;    _.-&#39;                                       
+          `-._        _.-&#39;                                           
+              `-.__.-&#39;                                               
+
+8551:X 05 Aug 14:29:38.702 # Sentinel ID is c3776869c9bc3998e45158d3933d8e7b7c60ea84
+8551:X 05 Aug 14:29:38.702 # +monitor master master 127.0.0.1 6379 quorum 2</pre></td></tr></table>
+</div>
+</div>
+<p>通过观查启动日志，我们可以看到：</p>
+
+<ul>
+<li>此实例的启动模式为<code>sentinel mode</code>，端口为6380</li>
+<li><code>sentinel</code>已经成功监控<code>master</code>端口6379了</li>
+</ul>
+
+<p>全部哨兵系统搭建起来并运行之后，再去查看<code>sentinel</code>的配置文件，会有如下自动配置的内容：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"># Generated by CONFIG REWRITE
+sentinel auth-pass master yourpassword
+sentinel config-epoch master 1
+sentinel leader-epoch master 1
+sentinel known-slave master 127.0.0.1 16379
+sentinel known-slave master 127.0.0.1 26379
+sentinel known-sentinel master 127.0.0.1 26380 e615ce0f9e12531b83b3c7c7ff0e91e3c8873222
+sentinel known-sentinel master 127.0.0.1 6380 dcc9d7e345a7f4db3b304b032bd1b41a8a7fc706
+sentinel current-epoch 1</pre></td></tr></table>
+</div>
+</div>
+<p>上面的配置列出了</p>
+
+<ul>
+<li>主服务器的密码</li>
+<li>以及当前世代（每发生一次主备切换称为一次世代，epoch加1）</li>
+<li>当前所有从服务器的地址和端口信息</li>
+<li>当前所以其他已知哨兵的端口和id信息</li>
+</ul>
+
+<h3 id="6-2-2-使用redis-cli查看系统信息">6.2.2 使用redis-cli查看系统信息</h3>
+
+<p><code>sentinel</code>哨兵系统搭建起来之后，可以任一通过客户端查看系统内的实例信息。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Shell" data-lang="Shell"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Shell" data-lang="Shell"><span class="m">127</span>.0.0.1:16380&gt; sentinel master master
+ <span class="m">1</span><span class="o">)</span> <span class="s2">&#34;name&#34;</span>
+ <span class="m">2</span><span class="o">)</span> <span class="s2">&#34;master&#34;</span>
+ <span class="m">3</span><span class="o">)</span> <span class="s2">&#34;ip&#34;</span>
+ <span class="m">4</span><span class="o">)</span> <span class="s2">&#34;127.0.0.1&#34;</span>
+ <span class="m">5</span><span class="o">)</span> <span class="s2">&#34;port&#34;</span>
+ <span class="m">6</span><span class="o">)</span> <span class="s2">&#34;6379&#34;</span>
+ <span class="m">7</span><span class="o">)</span> <span class="s2">&#34;runid&#34;</span>
+ <span class="m">8</span><span class="o">)</span> <span class="s2">&#34;dfefe0ba7435f7c2c193698f17b7e46f7450d5ce&#34;</span>
+ <span class="m">9</span><span class="o">)</span> <span class="s2">&#34;flags&#34;</span>
+<span class="m">10</span><span class="o">)</span> <span class="s2">&#34;master&#34;</span>
+...
+<span class="m">127</span>.0.0.1:16380&gt; sentinel slaves master
+<span class="m">1</span><span class="o">)</span>  <span class="m">1</span><span class="o">)</span> <span class="s2">&#34;name&#34;</span>
+    <span class="m">2</span><span class="o">)</span> <span class="s2">&#34;127.0.0.1:16379&#34;</span>
+    <span class="m">3</span><span class="o">)</span> <span class="s2">&#34;ip&#34;</span>
+    <span class="m">4</span><span class="o">)</span> <span class="s2">&#34;127.0.0.1&#34;</span>
+    <span class="m">5</span><span class="o">)</span> <span class="s2">&#34;port&#34;</span>
+    <span class="m">6</span><span class="o">)</span> <span class="s2">&#34;16379&#34;</span>
+    <span class="m">7</span><span class="o">)</span> <span class="s2">&#34;runid&#34;</span>
+    <span class="m">8</span><span class="o">)</span> <span class="s2">&#34;fdda882f98724c46359a4deb9390b6ae4de13320&#34;</span>
+    <span class="m">9</span><span class="o">)</span> <span class="s2">&#34;flags&#34;</span>
+   <span class="m">10</span><span class="o">)</span> <span class="s2">&#34;slave&#34;</span>
+ ...
+<span class="m">2</span><span class="o">)</span>  <span class="m">1</span><span class="o">)</span> <span class="s2">&#34;name&#34;</span>
+    <span class="m">2</span><span class="o">)</span> <span class="s2">&#34;127.0.0.1:26379&#34;</span>
+    <span class="m">3</span><span class="o">)</span> <span class="s2">&#34;ip&#34;</span>
+    <span class="m">4</span><span class="o">)</span> <span class="s2">&#34;127.0.0.1&#34;</span>
+    <span class="m">5</span><span class="o">)</span> <span class="s2">&#34;port&#34;</span>
+    <span class="m">6</span><span class="o">)</span> <span class="s2">&#34;26379&#34;</span>
+    <span class="m">7</span><span class="o">)</span> <span class="s2">&#34;runid&#34;</span>
+    <span class="m">8</span><span class="o">)</span> <span class="s2">&#34;4a2c286c0c99c3a1202eec142599193a85671f6c&#34;</span>
+    <span class="m">9</span><span class="o">)</span> <span class="s2">&#34;flags&#34;</span>
+   <span class="m">10</span><span class="o">)</span> <span class="s2">&#34;slave&#34;</span>
+...</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="6-2-3-模拟主备切换">6.2.3 模拟主备切换</h3>
+
+<p>哨兵的存在就是为了解决<code>master-slave</code>系统中由于<code>master</code>宕机引起的系统瘫痪问题。</p>
+
+<p>在哨兵系统中，一旦哨兵发现当前<code>master</code>宕机，哨兵会在余下的<code>slaves</code>中选举一个「继任」为新一代的<code>master</code>，从而保证系统的高可用。</p>
+
+<p>现在我们通过主动关闭当前<code>master</code>服务的方式来模拟<code>master</code>宕机，看看哨兵会做什么：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Shell" data-lang="Shell"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Shell" data-lang="Shell"><span class="c1"># 关闭master服务</span>
+redis-cli -p <span class="m">6379</span>
+<span class="m">127</span>.0.0.1:6379&gt; auth yourpassword
+OK
+<span class="m">127</span>.0.0.1:6379&gt; shutdown save
+<span class="m">127</span>.0.0.1:6379&gt; <span class="nb">exit</span>
+<span class="c1"># 查看sentinel日志</span>
+less /var/log/redis/sentinel-6380.log
+<span class="o">&lt;&lt;&lt;</span>
+<span class="m">29649</span>:X <span class="m">23</span> Aug <span class="m">17</span>:14:02.326 <span class="c1"># +sdown master master 127.0.0.1 6379</span>
+<span class="m">29649</span>:X <span class="m">23</span> Aug <span class="m">17</span>:14:02.389 <span class="c1"># +new-epoch 1</span>
+<span class="m">29649</span>:X <span class="m">23</span> Aug <span class="m">17</span>:14:02.391 <span class="c1"># +vote-for-leader 503d5371452f8e110df0f12c236da3e51b55b03a 1</span>
+<span class="m">29649</span>:X <span class="m">23</span> Aug <span class="m">17</span>:14:03.444 <span class="c1"># +odown master master 127.0.0.1 6379 #quorum 3/2</span>
+<span class="m">29649</span>:X <span class="m">23</span> Aug <span class="m">17</span>:14:03.444 <span class="c1"># Next failover delay: I will not start a failover before Fri Aug 23 17:14:38 2019</span>
+<span class="m">29649</span>:X <span class="m">23</span> Aug <span class="m">17</span>:14:03.488 <span class="c1"># +config-update-from sentinel 503d5371452f8e110df0f12c236da3e51b55b03a 172.16.16.203 16380 @ master 127.0.0.1 6379</span>
+<span class="m">29649</span>:X <span class="m">23</span> Aug <span class="m">17</span>:14:03.488 <span class="c1"># +switch-master master 127.0.0.1 6379 127.0.0.1 26379</span>
+<span class="m">29649</span>:X <span class="m">23</span> Aug <span class="m">17</span>:14:03.488 * +slave slave <span class="m">127</span>.0.0.1:16379 <span class="m">127</span>.0.0.1 <span class="m">16379</span> @ master <span class="m">127</span>.0.0.1 <span class="m">26379</span>
+<span class="m">29649</span>:X <span class="m">23</span> Aug <span class="m">17</span>:14:03.488 * +slave slave <span class="m">127</span>.0.0.1:6379 <span class="m">127</span>.0.0.1 <span class="m">6379</span> @ master <span class="m">127</span>.0.0.1 <span class="m">26379</span>
+<span class="m">29649</span>:X <span class="m">23</span> Aug <span class="m">17</span>:14:08.536 <span class="c1"># +sdown slave 127.0.0.1:6379 127.0.0.1 6379 @ master 127.0.0.1 26379</span>
+<span class="m">29649</span>:X <span class="m">23</span> Aug <span class="m">17</span>:15:42.868 <span class="c1"># -sdown slave 127.0.0.1:6379 127.0.0.1 6379 @ master 127.0.0.1 26379</span>
+<span class="m">29649</span>:X <span class="m">23</span> Aug <span class="m">17</span>:15:52.888 * +convert-to-slave slave <span class="m">127</span>.0.0.1:6379 <span class="m">127</span>.0.0.1 <span class="m">6379</span> @ master <span class="m">127</span>.0.0.1 <span class="m">26379</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>通过24行<code>sentinel</code>日志，我们可以看到的信息有哪些呢？</p>
+
+<ul>
+<li>master<strong>主观下线</strong><sup class="footnote-ref" id="fnref:v9"><a href="#fn:v9">8</a></sup>；</li>
+<li>系统进入新世代；</li>
+<li>3/2投票认为master下线，master<strong>客观下线</strong><sup class="footnote-ref" id="fnref:v10"><a href="#fn:v10">9</a></sup>；</li>
+<li>切换主服务器：从6379切换为26379；</li>
+<li>同时6379和16379切换为26379的从节点</li>
+</ul>
+
+<p>此时，我们如果查看redis的配置文件，会发现原<code>6379</code>的主服务器配置文件多了一行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">slaveof 127.0.0.1 26379</pre></td></tr></table>
+</div>
+</div>
+<p>同时，<code>16379</code>和<code>26379</code>端口的服务的<code>slaveof</code>配置项也作了相应修改。</p>
+
+<h1 id="7-结束语">7 结束语</h1>
+
+<p>至此，基于<code>sentinel</code>的redis高可用集群就搭建完成了。虽然篇幅较长，实际上搭建一个这样的系统的逻辑是比较简单的。</p>
+
+<p>主要易于混淆的是6不个redis实例的配置，细心点就好了。</p>
+
+<p>想用好这个高可用系统，你可能还需要了解更多关于<code>sentinel</code>的内容。</p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:v1">本文是在所有服务均配置完成之后所作的记录，并非同步记录，部分操作可能存在错误
+ <a class="footnote-return" href="#fnref:v1"><sup>[return]</sup></a></li>
+<li id="fn:v2">下文会多次提到实例这个概念，它在本文中指一个运行的Redis数据库服务
+ <a class="footnote-return" href="#fnref:v2"><sup>[return]</sup></a></li>
+<li id="fn:v3">监控master状态，如果宕机，则执行主备切换
+ <a class="footnote-return" href="#fnref:v3"><sup>[return]</sup></a></li>
+<li id="fn:v4"><a href="https://juejin.im/post/5b76e732f265da4376203849#heading-11">搭建redis单机服务</a>
+ <a class="footnote-return" href="#fnref:v4"><sup>[return]</sup></a></li>
+<li id="fn:v5"><a href="https://blog.csdn.net/kk185800961/article/details/53326465">解决redis启动的3个警告</a>
+ <a class="footnote-return" href="#fnref:v5"><sup>[return]</sup></a></li>
+<li id="fn:v7"><a href="https://juejin.im/post/5b7d226a6fb9a01a1e01ff64">redis哨兵与高可用</a>
+ <a class="footnote-return" href="#fnref:v7"><sup>[return]</sup></a></li>
+<li id="fn:v8"><a href="https://www.mankier.com/1/redis-server">redis-server man page</a>
+ <a class="footnote-return" href="#fnref:v8"><sup>[return]</sup></a></li>
+<li id="fn:v9">仅当前哨兵接收不到master的心跳，称为主观下线
+ <a class="footnote-return" href="#fnref:v9"><sup>[return]</sup></a></li>
+<li id="fn:v10">经过投票之后，满足配置个数的哨兵认为master下线，则master被认为客观下线，触发主备切换
+ <a class="footnote-return" href="#fnref:v10"><sup>[return]</sup></a></li>
+</ol>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">wangy325</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-10-21
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/redis/">redis</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/tech/%E8%87%AA%E5%BB%BAmysql/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">自建mysql数据库</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/tech/java-script%E4%B8%AD%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/">
+            <span class="next-text nav-default">Java Script中的构造函数</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=u8za1dzCiImO_8rKldjU1g" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-github" title="github"></a>
+  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wangy325</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

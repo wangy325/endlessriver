@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>static关键字——Java基础系列之二 - </title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="wangy325" /><meta name="description" content="介绍static关键字
+" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.55.6 with even 4.0.0" />
+
+
+<link rel="canonical" href="/post/tech/basic_java/static%E5%85%B3%E9%94%AE%E5%AD%97/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.812d2a0a.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="static关键字——Java基础系列之二" />
+<meta property="og:description" content="介绍static关键字" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/tech/basic_java/static%E5%85%B3%E9%94%AE%E5%AD%97/" />
+<meta property="article:published_time" content="2020-04-14T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2020-05-27T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="static关键字——Java基础系列之二">
+<meta itemprop="description" content="介绍static关键字">
+
+
+<meta itemprop="datePublished" content="2020-04-14T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-05-27T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="834">
+
+
+
+<meta itemprop="keywords" content="Java基础," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="static关键字——Java基础系列之二"/>
+<meta name="twitter:description" content="介绍static关键字"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo"></a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a><a href="/friendlink/">
+        <li class="mobile-menu-item">友链</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo"></a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/friendlink/">友链</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">static关键字——Java基础系列之二</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-04-14 </span>
+        <div class="post-category">
+            <a href="/categories/java/"> Java </a>
+            </div>
+          <span class="more-meta"> 约 834 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#2-1-静态域">2.1 静态域</a></li>
+<li><a href="#2-2-静态常量">2.2 静态常量</a></li>
+<li><a href="#2-3-span-id-m20-静态方法-span">2.3 <span id = "m20">静态方法</span></a></li>
+<li><a href="#2-4-工厂方法">2.4 工厂方法</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>介绍static关键字</p>
+
+<h2 id="2-1-静态域">2.1 静态域</h2>
+
+<p>如果将一个域定义为<code>static</code>，那么每个类中都只有一个这样的域。参考如下例子：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">Employee</span><span class="o">{</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">nextId</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kt">int</span> <span class="n">id</span><span class="o">;</span>
+  <span class="o">...</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>每一个<code>Employee</code>都有自己的一个<code>id</code>域，但是这个类的所有实例都共享一个<code>nextId</code>域。记住，即使没有<code>Employee</code>实例，静态域<code>nextId</code>也存在，它属于类而不属于任何对象。静态域只在类加载的时候初始化一次，并且是先于非<code>static</code>域初始化的</p>
+
+<p>以下是一个简单的<code>static</code>关键字使用示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">Employee</span> <span class="o">{</span>
+    <span class="kd">static</span> <span class="kt">int</span> <span class="n">nextId</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">salary</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Employee</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">salary</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">salary</span> <span class="o">=</span> <span class="n">salary</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setId</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">nextId</span><span class="o">;</span>
+        <span class="n">nextId</span><span class="o">++;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">getNextId</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">nextId</span><span class="o">;</span>
+    <span class="o">}</span>
+ <span class="c1">// ...get()
+</span><span class="c1"></span><span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestStatic</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Employee</span><span class="o">[]</span> <span class="n">x</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Employee</span><span class="o">[</span><span class="n">3</span><span class="o">];</span>
+        <span class="n">x</span><span class="o">[</span><span class="n">0</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Employee</span><span class="o">(</span><span class="s">&#34;alex&#34;</span><span class="o">,</span> <span class="n">5000</span><span class="o">);</span>
+        <span class="n">x</span><span class="o">[</span><span class="n">1</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Employee</span><span class="o">(</span><span class="s">&#34;bob&#34;</span><span class="o">,</span> <span class="n">6000</span><span class="o">);</span>
+        <span class="n">x</span><span class="o">[</span><span class="n">2</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Employee</span><span class="o">(</span><span class="s">&#34;cup&#34;</span><span class="o">,</span> <span class="n">7000</span><span class="o">);</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="n">Employee</span> <span class="n">e</span> <span class="o">:</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">setId</span><span class="o">();</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;id = &#34;</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getId</span><span class="o">()</span> 
+                <span class="o">+</span> <span class="s">&#34; name = &#34;</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34; salary = &#34;</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getSalary</span><span class="o">());</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;the nextId is:  &#34;</span> <span class="o">+</span> <span class="n">Employee</span><span class="o">.</span><span class="na">getNextId</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="o">/*</span> <span class="nl">output:</span>
+<span class="n">id</span> <span class="o">=</span> <span class="n">0</span> <span class="n">name</span> <span class="o">=</span> <span class="n">alex</span> <span class="n">salary</span> <span class="o">=</span> <span class="n">5000</span>
+<span class="n">id</span> <span class="o">=</span> <span class="n">1</span> <span class="n">name</span> <span class="o">=</span> <span class="n">bob</span> <span class="n">salary</span> <span class="o">=</span> <span class="n">6000</span>
+<span class="n">id</span> <span class="o">=</span> <span class="n">2</span> <span class="n">name</span> <span class="o">=</span> <span class="n">cup</span> <span class="n">salary</span> <span class="o">=</span> <span class="n">7000</span>
+<span class="n">the</span> <span class="n">nextId</span> <span class="nl">is:</span>  <span class="n">3</span>
+<span class="o">///:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="2-2-静态常量">2.2 静态常量</h2>
+
+<p>使用<code>static final</code>修饰的域可以作为静态常量，静态常量一般被声明为<code>public</code>,通常作为工具包的常量被其他类使用，如<code>Math.PI</code></p>
+
+<h2 id="2-3-span-id-m20-静态方法-span">2.3 <span id = "m20">静态方法</span></h2>
+
+<p>使用<code>static</code>修饰的方法被称为静态方法，和静态常量一样，通常被声明为<code>public</code>，供其他类通过类名直接调用，如<code>Math.pow(x,a)</code>用于计算x<sup>a</sup>。静态方法不能访问对象域，因为其不能操作对象，但是其可以访问类的静态域</p>
+
+<p>尽管可以通过对象实例来调用类的静态方法，但是不推荐如此做，编译器也会提示<code>应该使用类调用静态方法</code>，因为对象尽管可以调用静态方法，但是往往静态方法的返回与对象无关（静态方法只能操作静态域，而不能操作对象属性），反而会造成混淆</p>
+
+<p>Java对于<code>static</code>的语义可以理解为：</p>
+
+<blockquote>
+<p>属于类但是不属于对象的字段和方法</p>
+</blockquote>
+
+<h2 id="2-4-工厂方法">2.4 工厂方法</h2>
+
+<p>也是一种静态方法，不过其用来构造对象，因此被称为<code>静态工厂方法</code>，例如<code>NumberFormat.getCurrencyInstance()</code>就是一个利用工厂方法获取对象的例子</p>
+    </div>
+
+    
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/java%E5%9F%BA%E7%A1%80/">Java基础</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/tech/basic_java/%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">传值还是传引用——Java基础系列之三</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/tech/basic_java/%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/">
+            <span class="next-text nav-default">访问权限修饰符——Java基础系列之一</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=u8za1dzCiImO_8rKldjU1g" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-github" title="github"></a>
+  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wangy325</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
