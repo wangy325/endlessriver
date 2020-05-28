@@ -52,7 +52,7 @@ Git支持基于SSH和https关联远程仓库，但推荐使用SSH方式，它[�
     ssh-keygen -t rsa -C "wangy325@qq.com"
 
 获取ssh密钥文件，操作过程中会提示确认保存文件的位置以及要求输入密码，以下是命令输出(windows 平台)。
-    
+
     Generating public/private rsa key pair.
     Enter file in which to save the key (/c/Users/mayn/.ssh/id_rsa):
     Enter passphrase (empty for no passphrase):
@@ -89,13 +89,15 @@ Git支持基于SSH和https关联远程仓库，但推荐使用SSH方式，它[�
 - 远程仓库(remote repository):远程版本库，`push`推送本地文件到远程版本库，`fetch`从远程版本库拉取 ~~资源~~ 版本信息，`pull`从远程版本库中拉取资源
 
 
+<center>
 ![imLgtx.png](https://s1.ax1x.com/2018/09/20/imLgtx.png)
 
-​										*Git本地**工作区**，**暂存区**，**版本库**的概念，图引自[易百教程](https://www.yiibai.com/git/)*
-
+*Git本地工作区，暂存区，版本库的概念，图引自[易百教程](https://www.yiibai.com/git/)*
+</center>
 
 
 Git 版本控制的一些主要概念：
+
 - 3个步骤：
     1. `add`命令只添加文件到暂存区
     2. `commit`命令将文件添加到本地版本库
@@ -137,94 +139,99 @@ Git 版本控制的一些主要概念：
     $ git status
     On branch master
     Your branch is up to date with 'origin/master'.
-    
+
     Changes not staged for commit:
       (use "git add <file>..." to update what will be committed)
       (use "git checkout -- <file>..." to discard changes in working directory)
-    
+
             modified:   readme.md
-    
+
     Untracked files:
       (use "git add <file>..." to include in what will be committed)
-    
+
             Main.java
-    
+
     no changes added to commit (use "git add" and/or "git commit -a")
 
 
 
 ## 查看某个文件的差异信息
 
-- `git diff` 
+- `git diff`
 
     查看暂未`add`到暂存区的改动，也就是状态为`modified`的文件，如果文件已经`staged`，则此命令不会显示差异信息
 - `git diff --cached`     
-  
+
      查看已经`add`到暂存区的改动，也就是状态为`staged`的文件，如果文件处于`modified`状态，则此命令不会显示差异信息
 - `git diff HEAD`         
-  
+
      查看已暂存和未暂存的所有改动
 - `git diff --stat`       
-  
+
      显示差异的摘要信息
 - `git diff master origin/master`   
-  
-     显示本地仓库和远程仓库之间的文件的差异信息，即`committed`和`pushed`两个状态之间的差异 
+
+     显示本地仓库和远程仓库之间的文件的差异信息，即`committed`和`pushed`两个状态之间的差异
 - `git diff versionCode1 versionCode2`      
-  
+
      显示两个版本(号)之间的差异信息，`less`打开
 
-
-    $ git diff readme.md
-    warning: LF will be replaced by CRLF in readme.md.
-    The file will have its original line endings in your working directory.
-    diff --git a/readme.md b/readme.md
-    index bb8298f..222e2da 100644
-    --- a/readme.md
-    +++ b/readme.md
-    @@ -6,3 +6,5 @@
-     - Java的回调机制
-     - idea的多线程调试
-     - 拦截器
-    +
-    +> you can't live your life based on other people's point of view.
+```shell
+$ git diff readme.md
+warning: LF will be replaced by CRLF in readme.md.
+The file will have its original line endings in your working directory.
+diff --git a/readme.md b/readme.md
+index bb8298f..222e2da 100644
+--- a/readme.md
++++ b/readme.md
+@@ -6,3 +6,5 @@
+ - Java的回调机制
+ - idea的多线程调试
+ - 拦截器
++
++> you can't live your life based on other people's point of view.
+```
 
 ## 查看版本更新日志
 
-    git log [--pretty=oneline]       --可选参数显示简略信息
-    
-    $ git log
-    commit cf3d291b043457536f5851c3517c94f6f50d4c94 (HEAD -> master, origin/master)
-    Author: wangy325 <wangy325@qq.com>
-    Date:   Wed Sep 19 12:11:13 2018 +0800
-    
-        update readme.md
-    
-    commit 7daa43936419202cfd6c0e58988001577cb61e73
-    Author: wangy325 <wangy325@qq.com>
-    Date:   Wed Sep 19 12:10:30 2018 +0800
-    
-        upload files
+```Git
+git log [--pretty=oneline]       --可选参数显示简略信息
+
+$ git log
+commit cf3d291b043457536f5851c3517c94f6f50d4c94 (HEAD -> master, origin/master)
+Author: wangy325 <wangy325@qq.com>
+Date:   Wed Sep 19 12:11:13 2018 +0800
+
+    update readme.md
+
+commit 7daa43936419202cfd6c0e58988001577cb61e73
+Author: wangy325 <wangy325@qq.com>
+Date:   Wed Sep 19 12:10:30 2018 +0800
+
+    upload files
+```
 
 上面的日志显示 HEAD 的**版本号**为`cf3d291b043457536f5851c3517c94f6f50d4c94`，括号内显示，本地仓库和远程仓库的文件是一致的（最新的），以下是commit但是**没有push到远程仓库**的日志记录：
 
-    commit f67ec47c9df0f0f8351413ef64494e908d7183a0 (HEAD -> master)
-    Author: wangy325 <wangy325@qq.com>
-    Date:   Thu Sep 20 17:29:09 2018 +0800
-    
-        add motto
-    
-    commit cf3d291b043457536f5851c3517c94f6f50d4c94 (origin/master)
-    Author: wangy325 <wangy325@qq.com>
-    Date:   Wed Sep 19 12:11:13 2018 +0800
-    
-        update readme.md
-    
-    commit 7daa43936419202cfd6c0e58988001577cb61e73
-    Author: wangy325 <wangy325@qq.com>
-    Date:   Wed Sep 19 12:10:30 2018 +0800
-    
-        upload files
+```Git
+commit f67ec47c9df0f0f8351413ef64494e908d7183a0 (HEAD -> master)
+Author: wangy325 <wangy325@qq.com>
+Date:   Thu Sep 20 17:29:09 2018 +0800
+
+    add motto
+
+commit cf3d291b043457536f5851c3517c94f6f50d4c94 (origin/master)
+Author: wangy325 <wangy325@qq.com>
+Date:   Wed Sep 19 12:11:13 2018 +0800
+
+    update readme.md
+
+commit 7daa43936419202cfd6c0e58988001577cb61e73
+Author: wangy325 <wangy325@qq.com>
+Date:   Wed Sep 19 12:10:30 2018 +0800
+
+    upload files
+```
 
 上面的日志显示，本地HEAD最新的版本号和远程仓库的版本号不一致，暗示本地仓库的改动还未提交到远程仓库
 
@@ -234,17 +241,18 @@ Git 版本控制的一些主要概念：
 
 1. modified 状态撤回
 
-> git checkout 
+> git checkout
 
 ## 从工作区和索引中删除文件
 
-> ***git rm [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch] [--quiet] [--] <file>…*** 
+> ***git rm [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch] [--quiet] [--] <file>…***
 
 
-- `git rm <file>`  
+**1 `git rm <file>`**
 
-    从当前工作目录中删除文件，这个文件将会从***工作空间***物理删除，然后commit，版本库中的改文件信息会被删除
-```
+从当前工作目录中删除文件，这个文件将会从**工作空间**物理删除，然后commit，版本库中的改文件信息会被删除
+
+```Git
 $ git rm text2.md
 rm 'text2.md'
 
@@ -263,11 +271,12 @@ $ git commit -m "aaa"
  1 file changed, 1 deletion(-)
  delete mode 100644 text2.md
 ```
-- `git rm -f <file>` 
 
-    如果当前文件已经在暂存区，则将其从***暂存区***和***工作空间***中移除（移除版本信息），commit 之后，其将不在版本库中
+**2 `git rm -f <file>`**
 
-```
+如果当前文件已经在暂存区，则将其从**暂存区**和**工作空间**中移除（移除版本信息），commit 之后，其将不在版本库中
+
+```Git
 $ git add t3.md
 warning: LF will be replaced by CRLF in t3.md.
 The file will have its original line endings in your working directory.
@@ -287,10 +296,12 @@ Your branch is ahead of 'origin/master' by 6 commits.
 
 nothing to commit, working tree clean
 ```
-- `git rm --cached <file>`  
 
-    如果当前文件改动已经add到暂存区，使用该命令从暂存区中移除版本信息，但是工作空间中还存在，commit之后，其将不在版本库中
-```
+**3 `git rm --cached <file>`**
+
+如果当前文件改动已经add到暂存区，使用该命令从**暂存区**中移除版本信息，但是工作空间中还存在，commit之后，其将不在版本库中
+
+```Git
 $ git add t3.md
 warning: LF will be replaced by CRLF in t3.md.
 The file will have its original line endings in your working directory.
@@ -320,4 +331,3 @@ Untracked files:
 ---
 
 1. 首次创建时间 2018/09/19 09:34
-2. update time  2020/04/02 12:10
