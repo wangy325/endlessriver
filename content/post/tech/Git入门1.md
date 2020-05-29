@@ -99,11 +99,13 @@ git push -u origin master
 - 远程仓库(remote repository):远程版本库，`push`推送本地文件到远程版本库，`fetch`从远程版本库拉取 ~~资源~~ 版本信息，`pull`从远程版本库中拉取资源
 
 
-<center style="font-size:13px;font-family:auto">
-![imLgtx.png](https://s1.ax1x.com/2018/09/20/imLgtx.png)
+<center style="font-size:13px;font-family:auto;color:darkgray">
+![imLgtx.png](/git_stage.png)
 
-*Git本地工作区，暂存区，版本库的概念，图引自[易百教程](https://www.yiibai.com/git/)*
+Git本地工作区，暂存区，版本库的概念，图引自[易百教程](https://www.yiibai.com/git/)
 </center>
+
+<!-- {{% figure class="center" src="/git_stage.png" title="Git本地工作区，暂存区，版本库的概念，图引自[易百教程](https://www.yiibai.com/git/)" alt="img" %}} -->
 
 
 Git 版本控制的一些主要概念：
