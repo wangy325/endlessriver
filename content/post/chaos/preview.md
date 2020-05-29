@@ -1,5 +1,5 @@
 ---
-title: "这是一篇预览文档"
+title: "Theme preview"
 date: 2018-07-10T00:00:00+08:00
 lastmod: 2018-07-10T00:00:00+08:00
 draft: true
@@ -54,8 +54,6 @@ New paragraph.
 ## Anchor
 
 *Define anchor by `{#section-id}`*
-
-*这是斜体*
 
 [Something](#section-7)
 
@@ -392,7 +390,7 @@ Dictionary
 :   item 1
 
     item 2
-    
+
     item 3
 
 ## Blocks
@@ -405,7 +403,7 @@ Dictionary
 ```
 
     This is a block.
-    
+
     This is more of a block.
 
 
@@ -425,7 +423,6 @@ Dictionary
 Assuming guessing is not enabled.
 
 `````
-
 ```
 // Fenced **without** highlighting
 function doIt() {
@@ -436,7 +433,7 @@ function doIt() {
 }
 ```
 
-​```javascript
+```javascript
 // Fenced **with** highlighting
 function doIt() {
     for (var i = 1; i <= slen ; i^^) {
@@ -457,7 +454,7 @@ function doIt() {
 }
 ```
 
-​```javascript
+```javascript
 // Fenced **with** highlighting
 function doIt() {
     for (var i = 1; i <= slen ; i^^) {
@@ -538,8 +535,7 @@ elipsis...
 ## Neseted Fences
 
 ````
-
-```
+    ```
     This will still be parsed
     as a normal indented code block.
     ```
@@ -571,7 +567,7 @@ as a fenced code block.
         > ```
 ````
 
-```
+    ```
     This will still be parsed
     as a normal indented code block.
     ```
