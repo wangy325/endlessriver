@@ -198,9 +198,9 @@ defaultContentLanguage = "zh-cn"           # Default language to use
     pagePV = true
 
   [params.reward]                                         # 文章打赏
-    enable = false
-    wechat = "/path/to/your/wechat-qr-code.png"           # 微信二维码
-    alipay = "/path/to/your/alipay-qr-code.png"           # 支付宝二维码
+    enable = true
+    wechat = "/img/reward/wechat.png"           # 微信二维码
+    # alipay = "/img/reward/alipay.png"           # 支付宝二维码
 
   [params.social]                                         # 社交链接
     a-email = "http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=u8za1dzCiImO_8rKldjU1g"
