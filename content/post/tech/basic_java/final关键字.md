@@ -8,16 +8,12 @@ categories: [Java]
 author: "wangy325"
 
 hasJCKLanguage: true
-# You can also close(false) or open(true) something for this content.
-# P.S. comment can only be closed
-comment: false
+comment: true
 toc: true
 autoCollapseToc: false
-postMetaInFooter: false
+postMetaInFooter: true
 hiddenFromHomePage: false
-# You can also define another contentCopyright. e.g. contentCopyright: "This is another copyright."
-contentCopyright: false
-reward: false
+reward: true
 mathjax: false
 mathjaxEnableSingleDollar: false
 mathjaxEnableAutoNumber: false
@@ -89,12 +85,12 @@ public class FinalParam {
     static void raiseSalary(final Employee2 e){
         e.raiseSalary(3);
     }
-    
+
     static void swap(final Employee2 j, final Employee2 k){
         Employee temp = j;
         // object reference can not be modified
         // k = temp; // not allowed
-        // j = k; // not allowed 
+        // j = k; // not allowed
     }
     static void  g(final int i){
         // i++; // not allowed
@@ -160,7 +156,7 @@ class FinalMethodExt extends FinalMethod{
         System.out.println("ext f()");
     }
     // cannot override
-    // final void g(){ System.out.println("ext g()"); } 
+    // final void g(){ System.out.println("ext g()"); }
 
     final void p(){
         System.out.println("ext p()");
@@ -188,6 +184,6 @@ g()
 
 `final`类的域可以**是或不是**`final`,规则同[final数据](#m3)一致
 
-{{% admonition note "注释" false %}}
+{{% admonition note "TIPS" true %}}
 final关键字在多线程情况下可以阻止资源共享
 {{% /admonition %}}
