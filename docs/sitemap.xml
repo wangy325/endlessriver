@@ -1,356 +1,356 @@
-<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
+<?xml-stylesheet type="text/xsl" href="https://wangy325.github.io/eldlessriver/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>/post/tech/advance_java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/advance_java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/tech/advance_java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/advance_java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/tech/basic_java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/basic_java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/tech/basic_java/%E5%86%85%E9%83%A8%E7%B1%BB/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/basic_java/%E5%86%85%E9%83%A8%E7%B1%BB/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/tech/basic_java/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/basic_java/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/tech/basic_java/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/basic_java/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/tech/basic_java/object%E8%B6%85%E7%B1%BB/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/basic_java/object%E8%B6%85%E7%B1%BB/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/tech/springboot_aop_demo/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/springboot_aop_demo/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/friendlink/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/friendlink/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/about/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/about/</loc>
     <lastmod>2020-05-29T12:46:25+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/categories/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/categories/</loc>
     <lastmod>2020-05-30T15:58:07+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/</loc>
     <lastmod>2020-05-30T15:58:07+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/java/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/categories/java/</loc>
     <lastmod>2020-05-30T15:58:07+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/java%E8%BF%9B%E9%98%B6/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/tags/java%E8%BF%9B%E9%98%B6/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/</loc>
     <lastmod>2020-05-30T15:58:07+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/tags/</loc>
     <lastmod>2020-05-30T15:58:07+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/java%E5%9F%BA%E7%A1%80/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/tags/java%E5%9F%BA%E7%A1%80/</loc>
     <lastmod>2020-05-30T15:58:07+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/tech/basic_java/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/basic_java/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/tech/basic_java/final%E5%85%B3%E9%94%AE%E5%AD%97/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/basic_java/final%E5%85%B3%E9%94%AE%E5%AD%97/</loc>
     <lastmod>2020-05-30T15:58:07+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/tech/basic_java/%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/basic_java/%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/tech/basic_java/static%E5%85%B3%E9%94%AE%E5%AD%97/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/basic_java/static%E5%85%B3%E9%94%AE%E5%AD%97/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/tech/basic_java/%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/basic_java/%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/categories/springboot/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/categories/springboot/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/aop/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/tags/aop/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/server/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/categories/server/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/fdfs/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/tags/fdfs/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/tech/%E5%AE%89%E8%A3%85%E5%8D%95%E6%9C%BA%E7%89%88fdfs%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/%E5%AE%89%E8%A3%85%E5%8D%95%E6%9C%BA%E7%89%88fdfs%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/categories/js/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/categories/js/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/node.js/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/tags/node.js/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/tech/%E5%85%B3%E4%BA%8Eforever%E5%90%AF%E5%8A%A8node%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/%E5%85%B3%E4%BA%8Eforever%E5%90%AF%E5%8A%A8node%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/tech/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/tags/mysql/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/tags/mysql/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/tech/%E8%87%AA%E5%BB%BAmysql/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/%E8%87%AA%E5%BB%BAmysql/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/categories/nosql/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/categories/nosql/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/tech/build-sentinel/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/build-sentinel/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/tags/redis/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/tags/redis/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/js/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/tags/js/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/tech/java-script%E4%B8%AD%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/java-script%E4%B8%AD%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/tech/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A82%E7%9A%84%E8%A1%A5%E7%A0%81/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A82%E7%9A%84%E8%A1%A5%E7%A0%81/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/tech/%E5%B8%B8%E8%A7%81cron%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%A4%BA%E4%BE%8B/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/%E5%B8%B8%E8%A7%81cron%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%A4%BA%E4%BE%8B/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/tech/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/sql/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/categories/sql/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/tech/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84sql%E4%BC%98%E5%8C%96%E7%9A%84%E4%BE%8B%E5%AD%90/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84sql%E4%BC%98%E5%8C%96%E7%9A%84%E4%BE%8B%E5%AD%90/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/tech/java%E6%8E%A5%E5%8F%A3%E5%9B%9E%E8%B0%83/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/java%E6%8E%A5%E5%8F%A3%E5%9B%9E%E8%B0%83/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/tech/mybatis%E4%B8%ADtrim%E6%A0%87%E7%AD%BE%E5%8A%A8%E6%80%81%E6%8B%BC%E6%8E%A5sql/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/mybatis%E4%B8%ADtrim%E6%A0%87%E7%AD%BE%E5%8A%A8%E6%80%81%E6%8B%BC%E6%8E%A5sql/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/tech/mysql%E7%9A%84%E5%87%A0%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/mysql%E7%9A%84%E5%87%A0%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/tags/mybatis/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/tags/mybatis/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/tech/git%E5%85%A5%E9%97%A82/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/git%E5%85%A5%E9%97%A82/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/categories/vcs/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/categories/vcs/</loc>
     <lastmod>2020-05-29T12:47:22+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/git/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/tags/git/</loc>
     <lastmod>2020-05-29T12:47:22+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/tech/git%E5%85%A5%E9%97%A81/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/git%E5%85%A5%E9%97%A81/</loc>
     <lastmod>2020-05-29T12:47:22+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/tech/restrict/</loc>
+    <loc>https://wangy325.github.io/eldlessriver/post/tech/restrict/</loc>
     <lastmod>2020-05-28T19:52:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
