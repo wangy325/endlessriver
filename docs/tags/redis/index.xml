@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>redis on Endless River</title>
-    <link>/tags/redis/</link>
+    <link>https://wangy325.github.io/eldlessriver/tags/redis/</link>
     <description>Recent content in redis on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Wed, 14 Aug 2019 16:01:23 +0800</lastBuildDate>
     
-	<atom:link href="/tags/redis/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://wangy325.github.io/eldlessriver/tags/redis/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Redis Sentinel高可用实现</title>
-      <link>/post/tech/build-sentinel/</link>
+      <link>https://wangy325.github.io/eldlessriver/post/tech/build-sentinel/</link>
       <pubDate>Wed, 14 Aug 2019 16:01:23 +0800</pubDate>
       
-      <guid>/post/tech/build-sentinel/</guid>
+      <guid>https://wangy325.github.io/eldlessriver/post/tech/build-sentinel/</guid>
       <description>&lt;p&gt;Redis &lt;a href=&#34;https://raw.githubusercontent.com/antirez/redis/2.8/00-RELEASENOTES&#34;&gt;v2.8&lt;/a&gt; 之后提供了高可用实现&lt;code&gt;Redis Sentinel&lt;/code&gt;，实现了&lt;strong&gt;主从复制&lt;/strong&gt;以及&lt;del&gt;被动&lt;/del&gt;&lt;strong&gt;主备切换&lt;/strong&gt;。&lt;a href=&#34;https://raw.githubusercontent.com/antirez/redis/3.0/00-RELEASENOTES&#34;&gt;v3.0&lt;/a&gt; 之后提供了分布式实现&lt;code&gt;Redis Cluster&lt;/code&gt;。本文讨论的是使用Sentinel搭建Redis高可用服务。&lt;/p&gt;</description>
     </item>
     

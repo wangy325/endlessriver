@@ -27,22 +27,22 @@
 <meta name="generator" content="Hugo 0.55.6 with even 4.0.0" />
 
 
-<link rel="canonical" href="/post/tech/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A82%E7%9A%84%E8%A1%A5%E7%A0%81/" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/manifest.json">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="canonical" href="https://wangy325.github.io/eldlessriver/post/tech/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A82%E7%9A%84%E8%A1%A5%E7%A0%81/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/eldlessriver/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/eldlessriver/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/eldlessriver/favicon-16x16.png">
+<link rel="manifest" href="/eldlessriver/manifest.json">
+<link rel="mask-icon" href="/eldlessriver/safari-pinned-tab.svg" color="#5bbad5">
 
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<link href="/dist/even.1db5821d.min.css" rel="stylesheet">
+<link href="/eldlessriver/dist/even.1db5821d.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
 <meta property="og:title" content="2的补码问题" />
 <meta property="og:description" content="一直以来，关于2进制的讨论只出现在位运算里，并且也结束在位运算这里。所以，关于如何在计算机中表示一个负数这样的问题的讨论很少，也常被忽略遗忘。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/post/tech/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A82%E7%9A%84%E8%A1%A5%E7%A0%81/" />
+<meta property="og:url" content="https://wangy325.github.io/eldlessriver/post/tech/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A82%E7%9A%84%E8%A1%A5%E7%A0%81/" />
 <meta property="article:published_time" content="2019-07-17T00:00:00&#43;00:00"/>
 <meta property="article:modified_time" content="2020-05-28T19:52:52&#43;08:00"/>
 
@@ -74,7 +74,7 @@
 <body>
   <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/" class="logo">Endless River</a>
+    <a href="/eldlessriver/" class="logo">Endless River</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -84,15 +84,15 @@
 </div>
 <nav id="mobile-menu" class="mobile-menu slideout-menu">
   <ul class="mobile-menu-list">
-    <a href="/">
+    <a href="/eldlessriver/">
         <li class="mobile-menu-item">主页</li>
-      </a><a href="/post/">
+      </a><a href="/eldlessriver/post/">
         <li class="mobile-menu-item">归档</li>
-      </a><a href="/tags/">
+      </a><a href="/eldlessriver/tags/">
         <li class="mobile-menu-item">标签</li>
-      </a><a href="/about/">
+      </a><a href="/eldlessriver/about/">
         <li class="mobile-menu-item">关于</li>
-      </a><a href="/friendlink/">
+      </a><a href="/eldlessriver/friendlink/">
         <li class="mobile-menu-item">友链</li>
       </a>
   </ul>
@@ -100,21 +100,21 @@
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
-  <a href="/" class="logo">Endless River</a>
+  <a href="/eldlessriver/" class="logo">Endless River</a>
 </div>
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
     <li class="menu-item">
-        <a class="menu-item-link" href="/">主页</a>
+        <a class="menu-item-link" href="/eldlessriver/">主页</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/post/">归档</a>
+        <a class="menu-item-link" href="/eldlessriver/post/">归档</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/tags/">标签</a>
+        <a class="menu-item-link" href="/eldlessriver/tags/">标签</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/about/">关于</a>
+        <a class="menu-item-link" href="/eldlessriver/about/">关于</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/friendlink/">友链</a>
+        <a class="menu-item-link" href="/eldlessriver/friendlink/">友链</a>
       </li>
   </ul>
 </nav>
@@ -136,14 +136,14 @@
 
         <div class="post-category">
               <span class="icomoonfree icon-folder"></span>
-            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"> 计算机 </a>
+            <a href="/eldlessriver/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"> 计算机 </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
           <span class="more-meta analyse"> 约 1467 字 </span>
           <span class="icomoonfree icon-clock"></span>
           <span class="more-meta analyse"> 预计阅读 3 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
-          <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+          <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/eldlessriver/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
 
@@ -351,12 +351,12 @@
 </div><footer class="post-footer">
       
       <nav class="post-nav">
-        <a class="prev" href="/post/tech/java-script%E4%B8%AD%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/">
+        <a class="prev" href="/eldlessriver/post/tech/java-script%E4%B8%AD%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/">
             <i class="iconfont icon-left"></i>
             <span class="prev-text nav-default">Java Script中的构造函数</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
-        <a class="next" href="/post/tech/%E5%B8%B8%E8%A7%81cron%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%A4%BA%E4%BE%8B/">
+        <a class="next" href="/eldlessriver/post/tech/%E5%B8%B8%E8%A7%81cron%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%A4%BA%E4%BE%8B/">
             <span class="next-text nav-default">常见的cron表达式示例</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
@@ -391,7 +391,7 @@
       <div class="social-links">
       <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=u8za1dzCiImO_8rKldjU1g" class="iconfont icon-email" title="email"></a>
       <a href="https://github.com/wangy325" class="iconfont icon-github" title="github"></a>
-  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+  <a href="https://wangy325.github.io/eldlessriver/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
 </div>
 
 <div class="copyright">
@@ -436,7 +436,7 @@
     timeago().render(document.querySelectorAll('.timeago'), languageCode);
     timeago.cancel();  
   </script>
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+<script type="text/javascript" src="/eldlessriver/dist/even.26188efa.min.js"></script>
 
 
 
