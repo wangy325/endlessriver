@@ -19,7 +19,7 @@ pygmentsCodefencesGuessSyntax = true
 
 hasCJKLanguage = true     # has chinese/japanese/korean ? # 自动检测是否包含 中文\日文\韩文
 paginate = 10                                              # 首页每页显示的文章数
-disqusShortname = ""      # disqus_shortname
+disqusShortname = "endlessriver"      # disqus_shortname
 googleAnalytics = ""      # UA-XXXXXXXX-X
 copyright = ""            # default: author.name ↓        # 默认为下面配置的author.name ↓
 rsslimit = 20
@@ -150,9 +150,9 @@ defaultContentLanguage = "zh-cn"           # Default language to use
   # Display a message at the beginning of an article to warn the readers that it's content may be outdated.
   # 在文章开头显示提示信息，提醒读者文章内容可能过时。
   [params.outdatedInfoWarning]
-    enable = false
-    hint = 30               # Display hint if the last modified time is more than these days ago.    # 如果文章最后更新于这天数之前，显示提醒
-    warn = 180              # Display warning if the last modified time is more than these days ago.    # 如果文章最后更新于这天数之前，显示警告
+    enable = true
+    hint = 180               # Display hint if the last modified time is more than these days ago.    # 如果文章最后更新于这天数之前，显示提醒
+    warn = 360              # Display warning if the last modified time is more than these days ago.    # 如果文章最后更新于这天数之前，显示警告
 
   [params.gitment]          # Gitment is a comment system based on GitHub issues. see https://github.com/imsun/gitment
     owner = ""              # Your GitHub ID
