@@ -100,7 +100,7 @@ git push -u origin master
 
 
 <center style="font-size:13px;font-family:auto;color:darkgray">
-![imLgtx.png](/git_stage.png)
+![imLgtx.png](/endlessriver/git_stage.png)
 
 Git本地工作区，暂存区，版本库的概念，图引自[易百教程](https://www.yiibai.com/git/)
 </center>

@@ -41,7 +41,7 @@ mathjax: false
 
 找了一个相对自由的环境，希望能够借项目好好学习，确实学到了很多，但还不够，远远不够。新的技术，新的思路每年都在变化，而我，连5年前甚至10年前的技术都没完全掌握。
 
-{{% figure class="center" src="/debm.jpg" title="" alt="img" %}}
+{{% figure class="center" src="/endlessriver/debm.jpg" title="" alt="img" %}}
 
 这个博客雏形就是19年在广州的时候搭建的，用于记录我的学习与感悟。
 
