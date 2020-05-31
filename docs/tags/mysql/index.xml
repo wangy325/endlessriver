@@ -2,39 +2,39 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>mysql on Endless River</title>
-    <link>https://wangy325.github.io/eldlessriver/tags/mysql/</link>
+    <link>https://wangy325.github.io/endlessriver/tags/mysql/</link>
     <description>Recent content in mysql on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Fri, 16 Aug 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://wangy325.github.io/eldlessriver/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://wangy325.github.io/endlessriver/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>自建mysql数据库</title>
-      <link>https://wangy325.github.io/eldlessriver/post/tech/%E8%87%AA%E5%BB%BAmysql/</link>
+      <link>https://wangy325.github.io/endlessriver/post/tech/%E8%87%AA%E5%BB%BAmysql/</link>
       <pubDate>Fri, 16 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/eldlessriver/post/tech/%E8%87%AA%E5%BB%BAmysql/</guid>
+      <guid>https://wangy325.github.io/endlessriver/post/tech/%E8%87%AA%E5%BB%BAmysql/</guid>
       <description>&lt;p&gt;自建mysql数据库的安装配置及简单优化&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>一个简单的sql优化示例</title>
-      <link>https://wangy325.github.io/eldlessriver/post/tech/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84sql%E4%BC%98%E5%8C%96%E7%9A%84%E4%BE%8B%E5%AD%90/</link>
+      <link>https://wangy325.github.io/endlessriver/post/tech/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84sql%E4%BC%98%E5%8C%96%E7%9A%84%E4%BE%8B%E5%AD%90/</link>
       <pubDate>Wed, 14 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/eldlessriver/post/tech/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84sql%E4%BC%98%E5%8C%96%E7%9A%84%E4%BE%8B%E5%AD%90/</guid>
+      <guid>https://wangy325.github.io/endlessriver/post/tech/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84sql%E4%BC%98%E5%8C%96%E7%9A%84%E4%BE%8B%E5%AD%90/</guid>
       <description>&lt;p&gt;sql查询过程中，如果数据量过大，而查询条件又很简略的时候，往往会导致查询过程非常痛苦&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>MySQL中的几个字符串处理函数</title>
-      <link>https://wangy325.github.io/eldlessriver/post/tech/mysql%E7%9A%84%E5%87%A0%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/</link>
+      <link>https://wangy325.github.io/endlessriver/post/tech/mysql%E7%9A%84%E5%87%A0%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/</link>
       <pubDate>Fri, 21 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/eldlessriver/post/tech/mysql%E7%9A%84%E5%87%A0%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/</guid>
+      <guid>https://wangy325.github.io/endlessriver/post/tech/mysql%E7%9A%84%E5%87%A0%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/</guid>
       <description>&lt;p&gt;如题&lt;/p&gt;</description>
     </item>
     

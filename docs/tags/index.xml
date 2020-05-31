@@ -2,111 +2,111 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Endless River</title>
-    <link>https://wangy325.github.io/eldlessriver/tags/</link>
+    <link>https://wangy325.github.io/endlessriver/tags/</link>
     <description>Recent content in Tags on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Fri, 15 May 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://wangy325.github.io/eldlessriver/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://wangy325.github.io/endlessriver/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Java进阶</title>
-      <link>https://wangy325.github.io/eldlessriver/tags/java%E8%BF%9B%E9%98%B6/</link>
+      <link>https://wangy325.github.io/endlessriver/tags/java%E8%BF%9B%E9%98%B6/</link>
       <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/eldlessriver/tags/java%E8%BF%9B%E9%98%B6/</guid>
+      <guid>https://wangy325.github.io/endlessriver/tags/java%E8%BF%9B%E9%98%B6/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Java基础</title>
-      <link>https://wangy325.github.io/eldlessriver/tags/java%E5%9F%BA%E7%A1%80/</link>
+      <link>https://wangy325.github.io/endlessriver/tags/java%E5%9F%BA%E7%A1%80/</link>
       <pubDate>Wed, 29 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/eldlessriver/tags/java%E5%9F%BA%E7%A1%80/</guid>
+      <guid>https://wangy325.github.io/endlessriver/tags/java%E5%9F%BA%E7%A1%80/</guid>
       <description></description>
     </item>
     
     <item>
       <title>aop</title>
-      <link>https://wangy325.github.io/eldlessriver/tags/aop/</link>
+      <link>https://wangy325.github.io/endlessriver/tags/aop/</link>
       <pubDate>Sat, 14 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/eldlessriver/tags/aop/</guid>
+      <guid>https://wangy325.github.io/endlessriver/tags/aop/</guid>
       <description></description>
     </item>
     
     <item>
       <title>fdfs</title>
-      <link>https://wangy325.github.io/eldlessriver/tags/fdfs/</link>
+      <link>https://wangy325.github.io/endlessriver/tags/fdfs/</link>
       <pubDate>Sat, 31 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/eldlessriver/tags/fdfs/</guid>
+      <guid>https://wangy325.github.io/endlessriver/tags/fdfs/</guid>
       <description></description>
     </item>
     
     <item>
       <title>node.js</title>
-      <link>https://wangy325.github.io/eldlessriver/tags/node.js/</link>
+      <link>https://wangy325.github.io/endlessriver/tags/node.js/</link>
       <pubDate>Wed, 28 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/eldlessriver/tags/node.js/</guid>
+      <guid>https://wangy325.github.io/endlessriver/tags/node.js/</guid>
       <description></description>
     </item>
     
     <item>
       <title>mysql</title>
-      <link>https://wangy325.github.io/eldlessriver/tags/mysql/</link>
+      <link>https://wangy325.github.io/endlessriver/tags/mysql/</link>
       <pubDate>Fri, 16 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/eldlessriver/tags/mysql/</guid>
+      <guid>https://wangy325.github.io/endlessriver/tags/mysql/</guid>
       <description></description>
     </item>
     
     <item>
       <title>redis</title>
-      <link>https://wangy325.github.io/eldlessriver/tags/redis/</link>
+      <link>https://wangy325.github.io/endlessriver/tags/redis/</link>
       <pubDate>Wed, 14 Aug 2019 16:01:23 +0800</pubDate>
       
-      <guid>https://wangy325.github.io/eldlessriver/tags/redis/</guid>
+      <guid>https://wangy325.github.io/endlessriver/tags/redis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>JS</title>
-      <link>https://wangy325.github.io/eldlessriver/tags/js/</link>
+      <link>https://wangy325.github.io/endlessriver/tags/js/</link>
       <pubDate>Thu, 25 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/eldlessriver/tags/js/</guid>
+      <guid>https://wangy325.github.io/endlessriver/tags/js/</guid>
       <description></description>
     </item>
     
     <item>
       <title>设计模式</title>
-      <link>https://wangy325.github.io/eldlessriver/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+      <link>https://wangy325.github.io/endlessriver/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Wed, 05 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/eldlessriver/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>https://wangy325.github.io/endlessriver/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</guid>
       <description></description>
     </item>
     
     <item>
       <title>mybatis</title>
-      <link>https://wangy325.github.io/eldlessriver/tags/mybatis/</link>
+      <link>https://wangy325.github.io/endlessriver/tags/mybatis/</link>
       <pubDate>Fri, 21 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/eldlessriver/tags/mybatis/</guid>
+      <guid>https://wangy325.github.io/endlessriver/tags/mybatis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>git</title>
-      <link>https://wangy325.github.io/eldlessriver/tags/git/</link>
+      <link>https://wangy325.github.io/endlessriver/tags/git/</link>
       <pubDate>Thu, 20 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/eldlessriver/tags/git/</guid>
+      <guid>https://wangy325.github.io/endlessriver/tags/git/</guid>
       <description></description>
     </item>
     
