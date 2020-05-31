@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Endless River</title>
+    <link>/post/</link>
+    <description>Recent content in Posts on Endless River</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 15 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>资源访问受限—Java并发系列之二</title>
+      <link>/post/tech/advance_java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/</link>
+      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tech/advance_java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/</guid>
+      <description>&lt;p&gt;在系列一中，虽然创建了多线程，并且线程之间出现了一些&lt;strong&gt;不可预测&lt;/strong&gt;的CPU调度，但是由于线程之间是&lt;strong&gt;相互隔离&lt;/strong&gt;的——&lt;strong&gt;线程没有访问共同的资源&lt;/strong&gt;，尽管在执行任务的过程可能被CPU剥夺运行权，但是当它们再次获得运行权时对运行结果并没有影响，它们是安全的&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>线程与任务—Java并发系列之一</title>
+      <link>/post/tech/advance_java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</link>
+      <pubDate>Sat, 09 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tech/advance_java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</guid>
+      <description>&lt;p&gt;并发是生产过程不可能绕过去的坎，&lt;del&gt;要编写高性能的程序，必须使用并发&lt;/del&gt;&lt;/p&gt;
+
+&lt;p&gt;并发的本质是多个线程同时处理任务&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;，不同于进程，线程之间的资源是共享的，当程序不够严谨时，使用多线程就可能带来问题，这是要反复讨论并发的原因之一&lt;/p&gt;
+
+&lt;p&gt;在Java中，必须明白一点：线程由Thread类启动，但Thread类并不执行任何操作，&lt;strong&gt;它只是驱动赋予它的任务&lt;/strong&gt;。因此将&lt;strong&gt;线程与任务&lt;/strong&gt;的概念区分开，有利于理解并发&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>集合框架—Java基础系列之十</title>
+      <link>/post/tech/basic_java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/</link>
+      <pubDate>Wed, 29 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tech/basic_java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/</guid>
+      <description>&lt;p&gt;本文系统讲解了常见的集合框架实现，所有实现都是&lt;strong&gt;线程不安全&lt;/strong&gt;的&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>内部类—Java基础系列之九</title>
+      <link>/post/tech/basic_java/%E5%86%85%E9%83%A8%E7%B1%BB/</link>
+      <pubDate>Thu, 23 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tech/basic_java/%E5%86%85%E9%83%A8%E7%B1%BB/</guid>
+      <description>&lt;p&gt;将一个类定义在另一个类的内部，这就是内部类&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>lambda表达式—Java基础系列之八</title>
+      <link>/post/tech/basic_java/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+      <pubDate>Wed, 22 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tech/basic_java/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
+      <description>&lt;p&gt;lambda表达式是一个&lt;strong&gt;可传递的代码块&lt;/strong&gt;，可以在以后执行&lt;strong&gt;一次或多次&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>抽象类与接口—Java基础系列之七</title>
+      <link>/post/tech/basic_java/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/</link>
+      <pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tech/basic_java/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/</guid>
+      <description>&lt;p&gt;抽象类是由&lt;code&gt;abstract&lt;/code&gt;关键字修饰的类。将一个普通类用&lt;code&gt;abstract&lt;/code&gt;修饰，它就是抽象类&lt;/p&gt;
+
+&lt;p&gt;若使用&lt;code&gt;abstract&lt;/code&gt;修饰方法，那么称该方法为&lt;strong&gt;抽象方法&lt;/strong&gt;，抽象方法没有方法体&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Object超类(上)—Java基础系列之六</title>
+      <link>/post/tech/basic_java/object%E8%B6%85%E7%B1%BB/</link>
+      <pubDate>Sun, 19 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tech/basic_java/object%E8%B6%85%E7%B1%BB/</guid>
+      <description>&lt;p&gt;在Java中，如果一个类没有明确地指出超类，那么Object就是这个类的超类。实际上，Object类是所有类超类，这个类定义了一些重要的方法&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>基于Spring Boot的AOP demo</title>
+      <link>/post/tech/springboot_aop_demo/</link>
+      <pubDate>Sat, 14 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tech/springboot_aop_demo/</guid>
+      <description>&lt;p&gt;有一个cd接口，其实体类用于播放歌曲，同时我们想在播放歌曲的时候记录每个曲目的播放次数。看起来，记录次数这个事和播放曲目是不相干的事情，当然，我们可以在每首歌曲播放完成之后记录，但是
+更好的办法是使用一个切面，切入到播放方法中，来完成这件事，这样可以减少无关逻辑对代码的侵入。&lt;/p&gt;
+
+&lt;p&gt;此程序分别使用了基于@Aspect注解和基于XML配置文件2种方式进行了切面注入，2种方式效果是等同的。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>动态绑定与静态绑定—Java基础系列之五</title>
+      <link>/post/tech/basic_java/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/</link>
+      <pubDate>Sat, 18 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tech/basic_java/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/</guid>
+      <description>&lt;p&gt;这是Java方法调用的2个术语，用来描述Java虚拟机方法调用的2种机制&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>final关键字-Java基础系列之四</title>
+      <link>/post/tech/basic_java/final%E5%85%B3%E9%94%AE%E5%AD%97/</link>
+      <pubDate>Fri, 17 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tech/basic_java/final%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;不同的使用环境下，&lt;code&gt;final&lt;/code&gt;关键字的含义有细微差别，但通常它指“这是无法改变的”&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>传值还是传引用—Java基础系列之三</title>
+      <link>/post/tech/basic_java/%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/</link>
+      <pubDate>Wed, 15 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tech/basic_java/%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/</guid>
+      <description>&lt;p&gt;Java语言设计总是&lt;strong&gt;按值调用&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>static关键字—Java基础系列之二</title>
+      <link>/post/tech/basic_java/static%E5%85%B3%E9%94%AE%E5%AD%97/</link>
+      <pubDate>Tue, 14 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tech/basic_java/static%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
+      <description>&lt;p&gt;介绍static关键字&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>访问权限修饰符—Java基础系列之一</title>
+      <link>/post/tech/basic_java/%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/</link>
+      <pubDate>Mon, 13 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tech/basic_java/%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本系列内容主要来自TIJ，Java核心技术卷以及Java SE 8 API&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>安装单机版fdfs服务遇到的问题</title>
+      <link>/post/tech/%E5%AE%89%E8%A3%85%E5%8D%95%E6%9C%BA%E7%89%88fdfs%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Sat, 31 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tech/%E5%AE%89%E8%A3%85%E5%8D%95%E6%9C%BA%E7%89%88fdfs%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <description>&lt;p&gt;本文简单记录了2个在安装单机版fdfs服务遇到的问题，虽然报错信息不同，但是问题出在同一个地方：&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>关于forever启动node服务的问题</title>
+      <link>/post/tech/%E5%85%B3%E4%BA%8Eforever%E5%90%AF%E5%8A%A8node%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Wed, 28 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tech/%E5%85%B3%E4%BA%8Eforever%E5%90%AF%E5%8A%A8node%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <description>&lt;p&gt;在使用jenkins自动构建node.js项目的时候，由于对forever的不熟悉，构建脚本一直存在一点小问题。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>比较器的「退化」</title>
+      <link>/post/tech/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/</link>
+      <pubDate>Tue, 27 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tech/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/</guid>
+      <description>&lt;p&gt;在使用匿名内部类比较器的时候，idea提供了几个层次的比较器代码优化，给👴整懵逼了。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>自建mysql数据库</title>
+      <link>/post/tech/%E8%87%AA%E5%BB%BAmysql/</link>
+      <pubDate>Fri, 16 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tech/%E8%87%AA%E5%BB%BAmysql/</guid>
+      <description>&lt;p&gt;自建mysql数据库的安装配置及简单优化&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Redis Sentinel高可用实现</title>
+      <link>/post/tech/build-sentinel/</link>
+      <pubDate>Wed, 14 Aug 2019 16:01:23 +0800</pubDate>
+      
+      <guid>/post/tech/build-sentinel/</guid>
+      <description>&lt;p&gt;Redis &lt;a href=&#34;https://raw.githubusercontent.com/antirez/redis/2.8/00-RELEASENOTES&#34;&gt;v2.8&lt;/a&gt; 之后提供了高可用实现&lt;code&gt;Redis Sentinel&lt;/code&gt;，实现了&lt;strong&gt;主从复制&lt;/strong&gt;以及&lt;del&gt;被动&lt;/del&gt;&lt;strong&gt;主备切换&lt;/strong&gt;。&lt;a href=&#34;https://raw.githubusercontent.com/antirez/redis/3.0/00-RELEASENOTES&#34;&gt;v3.0&lt;/a&gt; 之后提供了分布式实现&lt;code&gt;Redis Cluster&lt;/code&gt;。本文讨论的是使用Sentinel搭建Redis高可用服务。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java Script中的构造函数</title>
+      <link>/post/tech/java-script%E4%B8%AD%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Thu, 25 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tech/java-script%E4%B8%AD%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/</guid>
+      <description>&lt;p&gt;函数作为JavaScript中的一个特殊数据类型（特殊对象的一种，另一种是数组），有一些特性值得思考与讨论。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2的补码问题</title>
+      <link>/post/tech/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A82%E7%9A%84%E8%A1%A5%E7%A0%81/</link>
+      <pubDate>Wed, 17 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tech/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A82%E7%9A%84%E8%A1%A5%E7%A0%81/</guid>
+      <description>&lt;p&gt;一直以来，关于2进制的讨论只出现在位运算里，并且也结束在位运算这里。所以，关于&lt;strong&gt;如何在计算机中表示一个负数&lt;/strong&gt;这样的问题的讨论很少，也常被忽略遗忘。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

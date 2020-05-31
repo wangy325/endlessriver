@@ -4,6 +4,7 @@
 
 baseURL = "/"
 title = "Endless River"
+publishDir = "docs"
 
 preserveTaxonomyNames = true
 enableRobotsTXT = true
