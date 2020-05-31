@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>一个简单的sql优化示例 - Endless River</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="wangy325" /><meta name="description" content="sql查询过程中，如果数据量过大，而查询条件又很简略的时候，往往会导致查询过程非常痛苦
+" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.55.6 with even 4.0.0" />
+
+
+<link rel="canonical" href="/post/tech/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84sql%E4%BC%98%E5%8C%96%E7%9A%84%E4%BE%8B%E5%AD%90/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.1db5821d.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="一个简单的sql优化示例" />
+<meta property="og:description" content="sql查询过程中，如果数据量过大，而查询条件又很简略的时候，往往会导致查询过程非常痛苦" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/tech/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84sql%E4%BC%98%E5%8C%96%E7%9A%84%E4%BE%8B%E5%AD%90/" />
+<meta property="article:published_time" content="2018-11-14T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2020-05-28T19:52:52&#43;08:00"/>
+
+<meta itemprop="name" content="一个简单的sql优化示例">
+<meta itemprop="description" content="sql查询过程中，如果数据量过大，而查询条件又很简略的时候，往往会导致查询过程非常痛苦">
+
+
+<meta itemprop="datePublished" content="2018-11-14T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-05-28T19:52:52&#43;08:00" />
+<meta itemprop="wordCount" content="422">
+
+
+
+<meta itemprop="keywords" content="mysql," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="一个简单的sql优化示例"/>
+<meta name="twitter:description" content="sql查询过程中，如果数据量过大，而查询条件又很简略的时候，往往会导致查询过程非常痛苦"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Endless River</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a><a href="/friendlink/">
+        <li class="mobile-menu-item">友链</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Endless River</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/friendlink/">友链</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">一个简单的sql优化示例</h1>
+
+      <div class="post-meta">
+          <span>
+              <span class="icomoonfree icon-calendar"></span>
+              <span class="post-time"> 2018-11-14</span>
+          </span>
+
+        <div class="post-category">
+              <span class="icomoonfree icon-folder"></span>
+            <a href="/categories/sql/"> SQL </a>
+            </div>
+          <span class="icomoonfree icon-sigma"></span>
+          <span class="more-meta analyse"> 约 422 字 </span>
+          <span class="icomoonfree icon-clock"></span>
+          <span class="more-meta analyse"> 预计阅读 1 分钟 </span>
+        <span class="icomoonfree icon-eye"></span>
+          <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">目录</h2>
+  <div class="post-toc-content always-active">
+    
+  </div>
+</div>
+    <div class="post-content">
+      <p>sql查询过程中，如果数据量过大，而查询条件又很简略的时候，往往会导致查询过程非常痛苦</p>
+
+<p>例如，我在执行以下sql语句的时候</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">projectId</span> <span class="k">FROM</span> <span class="n">lywl_equip_package</span> <span class="k">WHERE</span> <span class="n">salesId</span> <span class="k">in</span> <span class="p">(</span>
+		<span class="k">SELECT</span>	
+		<span class="n">t1</span><span class="p">.</span><span class="n">id</span>
+		<span class="k">FROM</span>
+			<span class="n">cmp_datapackage_user</span> <span class="n">t1</span>
+		<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">cmp_datapackage</span> <span class="n">t2</span> <span class="k">ON</span> <span class="n">t1</span><span class="p">.</span><span class="n">datapackage_id</span> <span class="o">=</span> <span class="n">t2</span><span class="p">.</span><span class="n">id</span>
+		<span class="k">WHERE</span>
+			<span class="n">t1</span><span class="p">.</span><span class="n">sales_cycle</span> <span class="o">&gt;</span> <span class="mi">1</span>
+		<span class="k">AND</span> <span class="n">t1</span><span class="p">.</span><span class="n">is_valid</span> <span class="o">=</span> <span class="mi">1</span>
+		<span class="k">AND</span> <span class="n">t1</span><span class="p">.</span><span class="n">is_share</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="k">AND</span> <span class="n">t1</span><span class="p">.</span><span class="n">sales_price</span> <span class="o">&lt;&gt;</span> <span class="mi">9999</span>
+		<span class="k">AND</span> <span class="n">t1</span><span class="p">.</span><span class="n">sales_name</span> <span class="n">REGEXP</span> <span class="s1">&#39;移动.*/(季度|半年|年)&#39;</span>
+		<span class="k">AND</span> <span class="n">t2</span><span class="p">.</span><span class="k">operator</span> <span class="o">=</span><span class="mi">1</span>
+		<span class="k">AND</span> <span class="n">t2</span><span class="p">.</span><span class="n">is_share</span> <span class="o">=</span> <span class="mi">1</span>
+		<span class="k">AND</span> <span class="n">t2</span><span class="p">.</span><span class="n">datapackage_cycle</span> <span class="o">=</span> <span class="mi">1</span>
+	<span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>以上sql查询的是订购移动跨月销售品的设备id, 查询耗时 6.462s</p>
+
+<p>由于 lywl_equip_package 数据量比较大, in 查询每次都将 lywl_equip_package 的数据与in 语句中的匹配, 耗时较为严重</p>
+
+<p>但是作如下改动之后,sql的查询效率就快很多</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span>
+<span class="n">tt2</span><span class="p">.</span><span class="n">projectId</span>
+  <span class="k">FROM</span> <span class="p">(</span>
+  	<span class="k">SELECT</span>	
+  		<span class="n">t1</span><span class="p">.</span><span class="n">id</span>
+  	<span class="k">FROM</span>
+  		<span class="n">cmp_datapackage_user</span> <span class="n">t1</span>
+  	<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">cmp_datapackage</span> <span class="n">t2</span> <span class="k">ON</span> <span class="n">t1</span><span class="p">.</span><span class="n">datapackage_id</span> <span class="o">=</span> <span class="n">t2</span><span class="p">.</span><span class="n">id</span>
+  	<span class="k">WHERE</span>
+  		<span class="n">t1</span><span class="p">.</span><span class="n">sales_cycle</span> <span class="o">&gt;</span> <span class="mi">1</span>
+  	<span class="k">AND</span> <span class="n">t1</span><span class="p">.</span><span class="n">is_valid</span> <span class="o">=</span> <span class="mi">1</span>
+  	<span class="k">AND</span> <span class="n">t1</span><span class="p">.</span><span class="n">is_share</span> <span class="o">=</span> <span class="mi">0</span>
+  	<span class="k">AND</span> <span class="n">t1</span><span class="p">.</span><span class="n">sales_price</span> <span class="o">&lt;&gt;</span> <span class="mi">9999</span>
+  	<span class="k">AND</span> <span class="n">t1</span><span class="p">.</span><span class="n">sales_name</span> <span class="n">REGEXP</span> <span class="s1">&#39;移动.*/(季度|半年|年)&#39;</span>
+  	<span class="k">AND</span> <span class="n">t2</span><span class="p">.</span><span class="k">operator</span> <span class="o">=</span><span class="mi">1</span>
+  	<span class="k">AND</span> <span class="n">t2</span><span class="p">.</span><span class="n">is_share</span> <span class="o">=</span> <span class="mi">1</span>
+  	<span class="k">AND</span> <span class="n">t2</span><span class="p">.</span><span class="n">datapackage_cycle</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="p">)</span> <span class="n">tt1</span>
+  <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">lywl_equip_package</span> <span class="n">tt2</span> <span class="k">ON</span> <span class="n">tt2</span><span class="p">.</span><span class="n">salesId</span> <span class="o">=</span> <span class="n">tt1</span><span class="p">.</span><span class="n">id</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>查询时间 0.246s</p>
+
+<p>以上的操作在于, 将IN查询中的结果储存为一张临时表,然后将其作为主表,左连接lywl_equip_package.以数据少的表作为主表,可以提升查询效率.</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">wangy325</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-05-28
+        <a href="https://github.com/wangy325/my_blog/commit/da95f6e88fbd403ff990ab4e42facf895554385c" title="git all hugo site">(da95f6e)</a>
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/reward/wechat.png">
+        <span>微信打赏</span>
+      </label>
+    
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/mysql/">mysql</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/tech/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">代理模式</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/tech/java%E6%8E%A5%E5%8F%A3%E5%9B%9E%E8%B0%83/">
+            <span class="next-text nav-default">Java接口回调</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'endlessriver';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=u8za1dzCiImO_8rKldjU1g" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangy325" class="iconfont icon-github" title="github"></a>
+  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wangy325</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
