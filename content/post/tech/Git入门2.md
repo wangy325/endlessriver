@@ -109,14 +109,14 @@ $ git branch -vv
 也可以手动建立追踪关系:
 
 ```
-// 将本地master分支与远程master分支建立追踪关系 
+// 将本地master分支与远程master分支建立追踪关系
 $ git branch --set-upstream master origin/master
 ```
 
 建立追踪关系之后, **`git pull`** 就可以省略远程名, git 自动从**当前分支**追踪的远程分支中获取更新并且拉取到本地工作空间
 
 ```
-// 现在自动从远程仓库(origin)中拉取当前分支追踪的远程分支的更新 
+// 现在自动从远程仓库(origin)中拉取当前分支追踪的远程分支的更新
 $ git pull origin
 // 若当前分支只有一个追踪分支, 甚至可以省略主机名
 $ git pull
@@ -140,7 +140,6 @@ $ git merge origin/master
 
 ```git
 $ git fetch origin master:tmp
-$ git diff tmp 
+$ git diff tmp
 $ git merge tmp
 ```
-
