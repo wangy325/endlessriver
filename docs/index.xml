@@ -23,7 +23,7 @@
     <item>
       <title>线程与任务—Java并发系列之一</title>
       <link>https://wangy325.github.io/endlessriver/post/tech/advance_java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</link>
-      <pubDate>Sat, 09 May 2020 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangy325.github.io/endlessriver/post/tech/advance_java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</guid>
       <description>&lt;p&gt;并发是生产过程不可能绕过去的坎，&lt;del&gt;要编写高性能的程序，必须使用并发&lt;/del&gt;&lt;/p&gt;
@@ -34,12 +34,52 @@
     </item>
     
     <item>
-      <title>集合框架—Java基础系列之十</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/</link>
+      <title>Collections—Java集合框架系列之五</title>
+      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/collections/</link>
+      <pubDate>Sun, 10 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/collections/</guid>
+      <description>&lt;p&gt;集合框架中一个重要的类，其实是Collection接口的&lt;strong&gt;伴随类&lt;/strong&gt;，其中定义了许多实用方法，用来获取&lt;strong&gt;集合视图&lt;/strong&gt;，或提供一些方便的操作集合元素的&lt;strong&gt;算法&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;由于视图是直接封装的Collection接口，&lt;strong&gt;因此其方法有些局限&lt;/strong&gt;，并且由于特殊的设计，部分操作是不允许的（会抛出 &lt;em&gt;UnsupportedOperationExceptin&lt;/em&gt; ）&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Map—Java集合框架系列之四</title>
+      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/map/</link>
+      <pubDate>Sun, 10 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/map/</guid>
+      <description>&lt;p&gt;Map即映射，即键-值对，键不允许重复，并且一个键最多映射一个值&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Set—Java集合框架系列之三</title>
+      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/set/</link>
+      <pubDate>Wed, 06 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/set/</guid>
+      <description>&lt;p&gt;Set是&lt;strong&gt;不含重复元素的集&lt;/strong&gt;，严格来讲，Set不允许当&lt;code&gt;e1.equals(e2)&lt;/code&gt;为真时， &lt;em&gt;e1&lt;/em&gt; 和 &lt;em&gt;e2&lt;/em&gt; 同时出现在集合中。Set最多允许一个&lt;code&gt;null&lt;/code&gt;元素&lt;/p&gt;
+
+&lt;p&gt;将&lt;strong&gt;可变对象&lt;/strong&gt;置入Set时需要特别小心，当对象的改动影响到了元素之间的&lt;code&gt;equals()&lt;/code&gt;比较的结果，那么Set的行为就变得不确定了。因此，&lt;strong&gt;不能将Set本身作为Set的元素&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Queue—Java集合框架系列之二</title>
+      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/queue/</link>
+      <pubDate>Sat, 02 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/queue/</guid>
+      <description>&lt;p&gt;Queue（队列），实际开发过程中，在单线程环境下使用的情况下不多，Queue作为集合框架中重要组成似乎习惯性被忽略，队列总是先持有元素，再处理元素&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>List—Java集合框架系列之一</title>
+      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/list/</link>
       <pubDate>Wed, 29 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/</guid>
-      <description>&lt;p&gt;本文系统讲解了常见的集合框架实现，所有实现都是&lt;strong&gt;线程不安全&lt;/strong&gt;的&lt;/p&gt;</description>
+      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/list/</guid>
+      <description>&lt;p&gt;接下来的集合框架系列文章讲解了常见的集合框架实现，此系列的所有实现都是&lt;strong&gt;线程不安全&lt;/strong&gt;的&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -166,42 +206,6 @@
       
       <guid>https://wangy325.github.io/endlessriver/post/tech/%E5%AE%89%E8%A3%85%E5%8D%95%E6%9C%BA%E7%89%88fdfs%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
       <description>&lt;p&gt;本文简单记录了2个在安装单机版fdfs服务遇到的问题，虽然报错信息不同，但是问题出在同一个地方：&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>关于forever启动node服务的问题</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/%E5%85%B3%E4%BA%8Eforever%E5%90%AF%E5%8A%A8node%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</link>
-      <pubDate>Wed, 28 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangy325.github.io/endlessriver/post/tech/%E5%85%B3%E4%BA%8Eforever%E5%90%AF%E5%8A%A8node%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
-      <description>&lt;p&gt;在使用jenkins自动构建node.js项目的时候，由于对forever的不熟悉，构建脚本一直存在一点小问题。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>比较器的「退化」</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/</link>
-      <pubDate>Tue, 27 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangy325.github.io/endlessriver/post/tech/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/</guid>
-      <description>&lt;p&gt;在使用匿名内部类比较器的时候，idea提供了几个层次的比较器代码优化，给👴整懵逼了。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>自建mysql数据库</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/%E8%87%AA%E5%BB%BAmysql/</link>
-      <pubDate>Fri, 16 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangy325.github.io/endlessriver/post/tech/%E8%87%AA%E5%BB%BAmysql/</guid>
-      <description>&lt;p&gt;自建mysql数据库的安装配置及简单优化&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Redis Sentinel高可用实现</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/build-sentinel/</link>
-      <pubDate>Wed, 14 Aug 2019 16:01:23 +0800</pubDate>
-      
-      <guid>https://wangy325.github.io/endlessriver/post/tech/build-sentinel/</guid>
-      <description>&lt;p&gt;Redis &lt;a href=&#34;https://raw.githubusercontent.com/antirez/redis/2.8/00-RELEASENOTES&#34;&gt;v2.8&lt;/a&gt; 之后提供了高可用实现&lt;code&gt;Redis Sentinel&lt;/code&gt;，实现了&lt;strong&gt;主从复制&lt;/strong&gt;以及&lt;del&gt;被动&lt;/del&gt;&lt;strong&gt;主备切换&lt;/strong&gt;。&lt;a href=&#34;https://raw.githubusercontent.com/antirez/redis/3.0/00-RELEASENOTES&#34;&gt;v3.0&lt;/a&gt; 之后提供了分布式实现&lt;code&gt;Redis Cluster&lt;/code&gt;。本文讨论的是使用Sentinel搭建Redis高可用服务。&lt;/p&gt;</description>
     </item>
     
   </channel>

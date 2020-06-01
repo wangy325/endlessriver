@@ -61,7 +61,7 @@ centOS7和centOS6使用不同的防火墙机制，前者使用`firewall`，后�
 
 了解更多关于redis-sentinel的相关内容，请参考[redis哨兵与高可用架构](#)。
 
-{{% figure class="center" src="/db/master-slave-vs-sentinel.png" title="redis的主从模式和哨兵模式" alt="img" %}}
+{{% figure class="center" src="/endlessriver/img/master-slave-vs-sentinel.png" title="redis的主从模式和哨兵模式" alt="img" %}}
 
 <!-- {{% admonition bug "bug" %}}
 此处用图片释义可能更明确
@@ -243,7 +243,7 @@ appendfilename appendonly.aof
 appendfsync everysec
 
 ```
-⚠️注意：关于`bind`指令的描述~~可以配置指定ip来允许指定连接，多个ip使用空格分隔~~，关于bind的意义，参考[redis配置外网访问](https://blog.csdn.net/hel12he/article/details/46911159) 
+⚠️注意：关于`bind`指令的描述~~可以配置指定ip来允许指定连接，多个ip使用空格分隔~~，关于bind的意义，参考[redis配置外网访问](https://blog.csdn.net/hel12he/article/details/46911159)
 
 
 # 3 启动redis

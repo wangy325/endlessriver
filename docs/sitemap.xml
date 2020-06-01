@@ -16,8 +16,36 @@
   </url>
   
   <url>
-    <loc>https://wangy325.github.io/endlessriver/post/tech/basic_java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/</loc>
-    <lastmod>2020-05-28T19:52:52+08:00</lastmod>
+    <loc>https://wangy325.github.io/endlessriver/post/tech/basic_java/collections/</loc>
+    <lastmod>2020-05-27T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangy325.github.io/endlessriver/post/tech/basic_java/map/</loc>
+    <lastmod>2020-05-27T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangy325.github.io/endlessriver/post/tech/basic_java/set/</loc>
+    <lastmod>2020-05-27T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangy325.github.io/endlessriver/post/tech/basic_java/queue/</loc>
+    <lastmod>2020-05-27T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangy325.github.io/endlessriver/post/tech/basic_java/list/</loc>
+    <lastmod>2020-05-27T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -66,20 +94,20 @@
   
   <url>
     <loc>https://wangy325.github.io/endlessriver/about/</loc>
-    <lastmod>2020-05-29T12:46:25+08:00</lastmod>
+    <lastmod>2020-05-31T22:50:48+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://wangy325.github.io/endlessriver/categories/</loc>
-    <lastmod>2020-05-30T15:58:07+08:00</lastmod>
+    <lastmod>2020-05-31T22:50:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.github.io/endlessriver/</loc>
-    <lastmod>2020-05-30T15:58:07+08:00</lastmod>
+    <lastmod>2020-05-31T22:50:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -97,19 +125,25 @@
   
   <url>
     <loc>https://wangy325.github.io/endlessriver/post/</loc>
-    <lastmod>2020-05-30T15:58:07+08:00</lastmod>
+    <lastmod>2020-05-31T22:50:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.github.io/endlessriver/tags/</loc>
-    <lastmod>2020-05-30T15:58:07+08:00</lastmod>
+    <lastmod>2020-05-31T22:50:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.github.io/endlessriver/tags/java%E5%9F%BA%E7%A1%80/</loc>
     <lastmod>2020-05-30T15:58:07+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangy325.github.io/endlessriver/tags/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/</loc>
+    <lastmod>2020-05-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -325,26 +359,26 @@
   
   <url>
     <loc>https://wangy325.github.io/endlessriver/post/tech/git%E5%85%A5%E9%97%A82/</loc>
-    <lastmod>2020-05-28T19:52:52+08:00</lastmod>
+    <lastmod>2020-05-31T22:50:48+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://wangy325.github.io/endlessriver/categories/vcs/</loc>
-    <lastmod>2020-05-29T12:47:22+08:00</lastmod>
+    <lastmod>2020-05-31T22:50:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.github.io/endlessriver/tags/git/</loc>
-    <lastmod>2020-05-29T12:47:22+08:00</lastmod>
+    <lastmod>2020-05-31T22:50:48+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.github.io/endlessriver/post/tech/git%E5%85%A5%E9%97%A81/</loc>
-    <lastmod>2020-05-29T12:47:22+08:00</lastmod>
+    <lastmod>2020-05-31T22:50:48+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
