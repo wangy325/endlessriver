@@ -105,7 +105,7 @@ public class FinalParam {
 /* output:
 salary of e = 3000
 salary of x = 3000
-///:~
+*///:~
 ```
 
 `final`参数一般用来向匿名内部类中传递数据
@@ -133,6 +133,11 @@ public class FinalMethodT{
         y.f();
         y.g();
         // y.p() // can't access
+        System.out.println("----");
+        FinalMethod z = new FinalMethod();
+        z.f();
+        z.g();
+//        z.p(); // can't access
     }
 }
 
@@ -169,7 +174,10 @@ ext p()
 ----
 ext f()
 g()
-///:~
+----
+f()
+g()
+*///:~
 ```
 
 基类和导出类的`p`方法，看上去像是导出类覆盖了基类的方法，实际上这是一种“字面”的覆盖，因为`private`方法并不是基类接口的一部分，它和导出类的`p`方法只是具有**相同名称**而已  
