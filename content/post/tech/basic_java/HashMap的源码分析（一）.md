@@ -16,7 +16,9 @@ autoCollapseToc: false
 
 本文内容简单分析了JDK8中HashMap源码的几个重要方法，便于理解散列表在Java集合框架中的具体应用。
 
-HashMap基于散列表，散列表中每一个Node节点（桶）是链表数组，当两个条目（entry）的key的hash值对桶数（capacity）取模的值相等时，这两个entry会存储在同一个链表数组中。但当链表数组中元素达到一定数目时，链表数组结构会转变为**树结构**
+HashMap基于散列表，散列表中每一个Node节点（桶）是链表数组，当两个条目（entry）的key的hash值对桶数（capacity）取模的值相等时，这两个entry会存储在同一个链表数组中。但当链表数组中元素达到一定数目时，链表数组结构会转变为**树结构**。
+
+此文中没有讨论HashMap中涉及到树结构的源码。
 
 <!--more-->
 
@@ -120,14 +122,17 @@ final void putMapEntries(Map<? extends K, ? extends V> m, boolean evict) {
 ```
 可以看到，除了最后一个构造器额外调用了`putVal()`方法外，构造器都只做了一些字段初始化工作，那么HashMap的键值对是如何“放入”的呢？
 
-### 2.2 插入键值对与扩容
+### 2.2 插入键值对
 
 键值对的插入与扩容密不可分，接下来从这两个方法来阐述HashMap的键值对插入过程
 
-
-插入（更新）键值对：
+当使用`put(K,V)`向映射中插入键值对时，实际上调用的是`putVal()`方法
 
 ```Java
+public V put(K key, V value) {
+    return putVal(hash(key), key, value, false, true);
+}
+
 /**
  * Implements Map.put and related methods. 向HashMap中插入元素
  *
@@ -202,8 +207,9 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict) {
     return null;
 }
 ```
+## 3.扩容
 
-初始化/扩容映射集：
+由`putVal()`方法可知，`resize()`方法在初始化过程中也发挥了作用。
 
 ```Java
 /**
@@ -268,7 +274,7 @@ final Node<K,V>[] resize() {
                     Node<K,V> next;
                     do {
                         next = e.next;
-
+                        // 此处的逻辑比较晦涩，需仔细推敲
                         if ((e.hash & oldCap) == 0) {
                             /*
                              * 此处的逻辑为：
@@ -308,5 +314,254 @@ final Node<K,V>[] resize() {
         }
     }
     return newTab;
+}
+```
+上述`resize()`方法的结论可以通过以下代码验证
+
+```Java
+public class NodeTest<K, V> {
+
+    final Node<K, V>[] table = new Node[4];
+    final Node<K, V>[] newtab = new Node[8];
+
+    // 构造代码块，构造NodeTest实例时执行
+    {
+        Node node = new Node(5, "five", null);
+
+        Node node1 = new Node(3, "four", null);
+        Node node2 = new Node(7, "three", node1);
+        Node node3 = new Node(11, "two", node2);
+        Node node4 = new Node(15, "one", node3);
+        Node node5 = new Node(17, "six", node4);
+        Node node6 = new Node(21, "seven", node5);
+
+        Node node7 = new Node(22, "eight", null);
+        Node node8 = new Node(23, "nine", null);
+
+        table[0] = node;
+        table[1] = node7;
+        table[2] = node6;
+        table[3] = node8;
+    }
+
+    public static void main(String[] args) {
+
+        NodeTest<Integer, String> nt = new NodeTest<>();
+
+        // 看看HashMap源码的resize方法的复制部分究竟搞什么飞机
+        nt.resize(nt.table, nt.newtab);
+        // 看看此时的newtab
+        nt.printTable(nt.newtab);
+
+    }
+
+    public void printTable(Node<K, V>[] newtab) {
+        Node<K, V> g, h;
+        for (int i = 0; i < newtab.length; i++) {
+            if ((g = newtab[i]) != null) {
+                if (g.next == null) {
+                    System.out.println("newtab[" + i + "]" + g.getKey() + ", " + g.getValue());
+                } else {
+                    do {
+                        h = g.next;
+                        System.out.println("newtab[" + i + "]" + g.getKey() + ", " + g.getValue());
+                    } while ((g = h) != null);
+                }
+            }
+        }
+    }
+
+    public void resize(Node<K, V>[] table, Node<K, V>[] newtab) {
+        int oldcap = table.length;
+        for (int j = 0; j < oldcap; ++j) {
+            Node<K, V> e;
+            if ((e = table[j]) != null) {
+                table[j] = null;
+                if (e.next == null) {
+                    newtab[j] = e;
+                } else { // preserve order
+                    Node<K, V> loHead = null, loTail = null;
+                    Node<K, V> hiHead = null, hiTail = null;
+                    Node<K, V> next;
+                    do {
+                        next = e.next;
+                        if ((e.key.hashCode() & oldcap) == 0) {
+                            if (loTail == null) {
+                                loHead = e;
+                            } else {
+                                loTail.next = e;
+                            }
+                            loTail = e;
+                        } else {
+                            if (hiTail == null) {
+                                hiHead = e;
+                            } else {
+                                hiTail.next = e;
+                            }
+                            hiTail = e;
+                        }
+                    } while ((e = next) != null);
+
+                    if (loTail != null) {
+                        loTail.next = null;
+                        newtab[j] = loHead;
+                    }
+                    if (hiTail != null) {
+                        hiTail.next = null;
+                        newtab[j + oldcap] = hiHead;
+                    }
+                }
+            }
+        }
+    }
+
+    static class Node<K, V> implements Map.Entry<K, V> {
+
+        K key;
+        V value;
+        Node<K, V> next;
+
+        public Node(K key, V value, Node<K, V> next) {
+            this.key = key;
+            this.value = value;
+            this.next = next;
+        }
+
+        @Override
+
+        public K getKey() {
+            return key;
+        }
+
+        @Override
+        public V getValue() {
+            return value;
+        }
+
+        @Override
+        public V setValue(V value) {
+            return null;
+        }
+    }
+}
+/*
+newtab[0]5, five
+newtab[1]22, eight
+newtab[2]17, six
+newtab[2]11, two
+newtab[2]3, four
+newtab[3]23, nine
+newtab[6]21, seven
+newtab[6]15, one
+newtab[6]7, three
+*///:~
+```
+从输出可以看到，原`table[2]`的节点被拆分后分别放在`newtab[2]`和`newtab[6]`的桶里，并且节点的顺序没有变化
+
+## 4.获取键值对
+
+一般使用`get(K key)`方法获取映射中指定键的值，get方法相较`putVal()`要简单许多
+
+> public V get(Object key)
+
+```Java
+public V get(Object key) {
+    Node<K,V> e;
+    //有key则返回对应value，否则返回null
+    return (e = getNode(hash(key), key)) == null ? null : e.value;
+}
+
+final Node<K,V> getNode(int hash, Object key) {
+    Node<K,V>[] tab; Node<K,V> first, e; int n; K k;
+    // 直接通过hash找到key值存放的桶
+    if ((tab = table) != null && (n = tab.length) > 0 &&
+        (first = tab[(n - 1) & hash]) != null) {
+        if (first.hash == hash && // always check first node
+            // 先从第一个节点查看，如key相等则返回此节点
+            ((k = first.key) == key || (key != null && key.equals(k))))
+            return first;
+        if ((e = first.next) != null) {
+            // 否则查找链表中的其他节点
+            if (first instanceof TreeNode)
+                return ((TreeNode<K,V>)first).getTreeNode(hash, key);
+            do {
+                if (e.hash == hash &&
+                    ((k = e.key) == key || (key != null && key.equals(k))))
+                    return e;
+            } while ((e = e.next) != null);
+        }
+    }
+    return null;
+}
+```
+
+## 5. 删除键值对
+
+使用`remove(K key)`删除映射中的键值对
+
+```Java
+public V remove(Object key) {
+    Node<K,V> e;
+    //返回null或对应key的value
+    return (e = removeNode(hash(key), key, null, false, true)) == null ?
+        null : e.value;
+}
+
+/**
+ * Implements Map.remove and related methods.
+ *
+ * @param hash hash for key
+ * @param key the key
+ * @param value the value to match if matchValue, else ignored
+ * @param matchValue if true only remove if value is equal
+ * @param movable if false do not move other nodes while removing
+ * @return the node, or null if none
+ */
+final Node<K,V> removeNode(int hash, Object key, Object value,
+                           boolean matchValue, boolean movable) {
+    Node<K,V>[] tab; Node<K,V> p; int n, index;
+    // 直接定位存放键值对的桶
+    if ((tab = table) != null && (n = tab.length) > 0 &&
+        (p = tab[index = (n - 1) & hash]) != null) {
+        Node<K,V> node = null, e; K k; V v;
+        if (p.hash == hash &&
+            ((k = p.key) == key || (key != null && key.equals(k))))
+            // 若第一个节点就是，那就是它了
+            node = p;
+        else if ((e = p.next) != null) {
+            if (p instanceof TreeNode)
+                node = ((TreeNode<K,V>)p).getTreeNode(hash, key);
+            else {
+                // 遍历链表定位key
+                do {
+                    if (e.hash == hash &&
+                        ((k = e.key) == key ||
+                         (key != null && key.equals(k)))) {
+                        node = e;
+                        break;
+                    }
+                    p = e;
+                } while ((e = e.next) != null);
+            }
+        }
+        if (node != null && (!matchValue || (v = node.value) == value ||
+                             (value != null && value.equals(v)))) {
+            if (node instanceof TreeNode)
+                ((TreeNode<K,V>)node).removeTreeNode(this, tab, movable);
+            else if (node == p)
+                // 第一个节点
+                tab[index] = node.next;
+            else
+                // 非第一个节点
+                // else语句快的do循环保证了p一定是node的前一个节点
+                p.next = node.next;
+            ++modCount;
+            --size;
+            // LinkedHashMap用到
+            afterNodeRemoval(node);
+            return node;
+        }
+    }
+    return null;
 }
 ```

@@ -133,9 +133,9 @@
           <a href="/endlessriver/categories/java/"> Java </a>
           </div>
         <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 2668 字 </span>
+        <span class="more-meta analyse"> 约 4262 字 </span>
         <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 6 分钟 </span>
+        <span class="more-meta"> 预计阅读 9 分钟 </span>
     </div>
   </header>
   
@@ -143,7 +143,9 @@
     <div class="post-summary">
       <p>本文内容简单分析了JDK8中HashMap源码的几个重要方法，便于理解散列表在Java集合框架中的具体应用。</p>
 
-<p>HashMap基于散列表，散列表中每一个Node节点（桶）是链表数组，当两个条目（entry）的key的hash值对桶数（capacity）取模的值相等时，这两个entry会存储在同一个链表数组中。但当链表数组中元素达到一定数目时，链表数组结构会转变为<strong>树结构</strong></p>
+<p>HashMap基于散列表，散列表中每一个Node节点（桶）是链表数组，当两个条目（entry）的key的hash值对桶数（capacity）取模的值相等时，这两个entry会存储在同一个链表数组中。但当链表数组中元素达到一定数目时，链表数组结构会转变为<strong>树结构</strong>。</p>
+
+<p>此文中没有讨论HashMap中涉及到树结构的源码。</p>
     </div>
     <div class="read-more">
       <a href="/endlessriver/post/tech/basic_java/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%80/" class="read-more-link">阅读更多</a>
