@@ -19,7 +19,9 @@
       <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%80/</guid>
       <description>&lt;p&gt;本文内容简单分析了JDK8中HashMap源码的几个重要方法，便于理解散列表在Java集合框架中的具体应用。&lt;/p&gt;
 
-&lt;p&gt;HashMap基于散列表，散列表中每一个Node节点（桶）是链表数组，当两个条目（entry）的key的hash值对桶数（capacity）取模的值相等时，这两个entry会存储在同一个链表数组中。但当链表数组中元素达到一定数目时，链表数组结构会转变为&lt;strong&gt;树结构&lt;/strong&gt;&lt;/p&gt;</description>
+&lt;p&gt;HashMap基于散列表，散列表中每一个Node节点（桶）是链表数组，当两个条目（entry）的key的hash值对桶数（capacity）取模的值相等时，这两个entry会存储在同一个链表数组中。但当链表数组中元素达到一定数目时，链表数组结构会转变为&lt;strong&gt;树结构&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;p&gt;此文中没有讨论HashMap中涉及到树结构的源码。&lt;/p&gt;</description>
     </item>
     
     <item>
