@@ -16,7 +16,7 @@ autoCollapseToc: false
 
 本文内容简单分析了JDK8中HashMap源码的几个重要方法，便于理解散列表在Java集合框架中的具体应用。
 
-HashMap基于散列表，散列表中每一个Node节点（桶）是链表数组，当两个条目（entry）的key的hash值对桶数（capacity）取模的值相等时，这两个entry会存储在同一个链表数组中。但当链表数组中元素达到一定数目时，链表数组结构会转变为**树结构**。
+HashMap基于散列表，散列表中每一个Node节点（桶）是链表，当两个条目（entry）的key的hash值对桶数（capacity）取模的值相等时，这两个entry会存储在同一个链表中。但当链表中元素达到一定数目时，链表结构会转变为**树结构**。
 
 此文中没有讨论HashMap中涉及到树结构的源码。
 
@@ -494,6 +494,12 @@ final Node<K,V> getNode(int hash, Object key) {
     return null;
 }
 ```
+
+另外判断一个映射中是否存在某个键对应的值对应的方法
+
+> public boolean containsKey(Object key) {return getNode(hash(key), key) != null;}
+
+实际上也是调用的上面提到的`getNode()`方法
 
 ## 5. 删除键值对
 
