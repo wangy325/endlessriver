@@ -44,15 +44,15 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangy325.github.io/endlessriver/post/tech/basic_java/object%E8%B6%85%E7%B1%BB/" />
 <meta property="article:published_time" content="2020-04-19T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2020-05-28T19:52:52&#43;08:00"/>
+<meta property="article:modified_time" content="2020-09-26T14:09:51&#43;08:00"/>
 
 <meta itemprop="name" content="Object超类(上)—Java基础系列之六">
 <meta itemprop="description" content="在Java中，如果一个类没有明确地指出超类，那么Object就是这个类的超类。实际上，Object类是所有类超类，这个类定义了一些重要的方法">
 
 
 <meta itemprop="datePublished" content="2020-04-19T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-05-28T19:52:52&#43;08:00" />
-<meta itemprop="wordCount" content="1631">
+<meta itemprop="dateModified" content="2020-09-26T14:09:51&#43;08:00" />
+<meta itemprop="wordCount" content="1648">
 
 
 
@@ -139,7 +139,7 @@
             <a href="/endlessriver/categories/java/"> Java </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 1631 字 </span>
+          <span class="more-meta analyse"> 约 1648 字 </span>
           <span class="icomoonfree icon-clock"></span>
           <span class="more-meta analyse"> 预计阅读 4 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
@@ -214,7 +214,7 @@
 
         <span class="cm">/*if (salary != employee2.salary) return false;
 </span><span class="cm">        return name != null ? name.equals(employee2.name) : employee2.name == null;*/</span>
-      
+
       	<span class="c1">// or using Objects.equals(Object a, Object b) to compare
 </span><span class="c1"></span>      	<span class="k">return</span> <span class="n">Objects</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">name</span><span class="o">,</span><span class="n">employee2</span><span class="o">.</span><span class="na">name</span><span class="o">)</span>
            <span class="o">&amp;&amp;</span> <span class="n">salary</span> <span class="o">==</span> <span class="n">employee2</span><span class="o">.</span><span class="na">salary</span><span class="o">;</span>
@@ -256,7 +256,7 @@
 </span><span class="c1"></span>  <span class="nd">@Override</span>
     <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="n">Object</span> <span class="n">o</span><span class="o">)</span> <span class="o">{</span>
       <span class="k">if</span><span class="o">(!</span><span class="kd">super</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">o</span><span class="o">))</span> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
-      
+
       <span class="c1">// super.equals checked that o and this belong to same class
 </span><span class="c1"></span>      <span class="n">Manager</span> <span class="n">m</span> <span class="o">=</span> <span class="o">(</span><span class="n">Manager</span><span class="o">)</span><span class="n">o</span><span class="o">;</span>
       <span class="k">return</span> <span class="n">bonus</span> <span class="o">==</span> <span class="n">m</span><span class="o">.</span><span class="na">bonus</span><span class="o">;</span>
@@ -312,7 +312,7 @@
 <li>判断类型使用的是<code>instanceof</code>而非<code>getClass</code></li>
 </ol>
 
-<p>将方法声明为<code>final</code>即保证了<strong>基类对相等概念的控制权</strong>，这还不够，使用<code>instanceof</code>保证了基类和导出类（或不同导出类）之间域的相等性比较的可能</p>
+<p>将方法声明为<code>final</code>即保证了<strong>基类对相等概念的控制权</strong>（导出类无法覆盖equals方法），这还不够，使用<code>instanceof</code>保证了基类和导出类（或不同导出类）之间域的相等性比较的可能</p>
 
 <p><strong>应该谨慎使用<code>instanceof</code></strong></p>
 
@@ -357,10 +357,10 @@
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">t</span><span class="o">.</span><span class="na">hashCode</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34; : &#34;</span> <span class="o">+</span><span class="n">tb</span><span class="o">.</span><span class="na">hashCode</span><span class="o">());</span>
     <span class="o">}</span>
 <span class="o">}</span>
-<span class="o">/*</span> <span class="n">output</span>
-<span class="n">115</span> <span class="o">:</span> <span class="n">1956725890</span>
-<span class="n">115</span> <span class="o">:</span> <span class="n">356573597</span>
-<span class="o">///:~</span></code></pre></td></tr></table>
+<span class="cm">/* output
+</span><span class="cm">115 : 1956725890
+</span><span class="cm">115 : 356573597
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>注意，<code>s</code>和<code>t</code>哈希值相同时因为String类覆盖了hashCode方法，其值是由字符串字面量值计算来的，而StringBuilder没有覆盖hashCode方法，其值是Object默认的hashCode方法导出的<strong>对象存储地址</strong></p>
@@ -374,8 +374,8 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2020-05-28
-        <a href="https://github.com/wangy325/my_blog/commit/da95f6e88fbd403ff990ab4e42facf895554385c" title="git all hugo site">(da95f6e)</a>
+        2020-09-26
+        <a href="https://github.com/wangy325/my_blog/commit/767876769387d3a08edd7913bb8fd839a53b83b7" title="内容更新">(7678767)</a>
     </span>
   </p>
   

@@ -44,15 +44,15 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangy325.github.io/endlessriver/post/tech/basic_java/map/" />
 <meta property="article:published_time" content="2020-05-10T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2020-06-02T01:38:57&#43;08:00"/>
+<meta property="article:modified_time" content="2020-09-26T14:09:51&#43;08:00"/>
 
 <meta itemprop="name" content="Map—Java集合框架系列之四">
 <meta itemprop="description" content="Map即映射，即键-值对，键不允许重复，并且一个键最多映射一个值">
 
 
 <meta itemprop="datePublished" content="2020-05-10T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-06-02T01:38:57&#43;08:00" />
-<meta itemprop="wordCount" content="4625">
+<meta itemprop="dateModified" content="2020-09-26T14:09:51&#43;08:00" />
+<meta itemprop="wordCount" content="4793">
 
 
 
@@ -139,7 +139,7 @@
             <a href="/endlessriver/categories/java/"> Java </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 4625 字 </span>
+          <span class="more-meta analyse"> 约 4793 字 </span>
           <span class="icomoonfree icon-clock"></span>
           <span class="more-meta analyse"> 预计阅读 10 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
@@ -209,16 +209,16 @@
 <p>HashMap和<strong>Hashtable</strong>大致相同，区别在与Hashtable是同步的，且Hashtable<strong>不允许null</strong></p>
 </blockquote>
 
-<p>HashMap的初始化和扩容机制叙述参见<a href="#hashtable">散列表</a>，默认容量是16，桶数总是2<sup>n</sup>，最大桶数是2<sup>30</sup>，每次扩容加倍，<strong>当桶数大于最大桶数后，不再rehash</strong>。桶数总是为2的幂次的原理和<a href="#resize">ArrayDeque一致</a>，通过5次位运算将低位全部转为1，然后执行+1操作进位，变成下一个2<sup>n</sup></p>
+<p>HashMap的初始化和扩容机制叙述参见<a href="../set/#1-span-id-hashtable-散列集-span">散列表</a>，如果初始化时不指定容量（桶数？容量不是键值对数目），默认为16。容量总是2<sup>n</sup>，最大容量是2<sup>30</sup>，每次扩容加倍，<strong>当桶数大于最大桶数后，不再rehash</strong>。容量总是为2的幂次的原理和<a href="../queue/#3-arraydeque">ArrayDeque一致</a>，通过5次位运算将低位全部转为1，然后执行+1操作进位，变成下一个2<sup>n</sup>。因此HashMap带参构造器指定的capacity最后会初始化为大于其的最近的2<sup>n</sup>。（1变2，3变4，5变8，9变16&hellip;）</p>
 
 <p>HashMap使用<code>table</code>和<code>entrySet</code>分别表示桶数和当前映射中的键值对数：</p>
 
 <blockquote>
-<p>transient Node<K,V>[] table;  桶数组</p>
+<p>transient Node<K,V>[] table;  桶数组，桶由链表构成</p>
 
-<p>transient Set<Map.Entry<K,V>&gt; entrySet; 映射中的键值对数</p>
+<p>transient Set<Map.Entry<K,V>&gt; entrySet; 映射中的键值对数，size</p>
 
-<p>int threshold; 临界键值对数，等于 table.length * loadFactor</p>
+<p>int threshold; 临界键值对数，等于 table.length * loadFactor，当size &gt; threshold时，发生扩容</p>
 
 <p>final float loadFactor; 装载因子，默认0.75</p>
 </blockquote>
@@ -262,10 +262,11 @@
 </span><span class="lnt">36
 </span><span class="lnt">37
 </span><span class="lnt">38
+</span><span class="lnt">39
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">static</span> <span class="kt">void</span> <span class="nf">bucketsTest</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-  <span class="c1">// initial capacity 8, load factor 0.75, threshold 6
+  <span class="c1">//load factor 0.75
 </span><span class="c1"></span>  <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">hm</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;(</span><span class="n">7</span><span class="o">);</span>
   <span class="n">hm</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;1&#34;</span><span class="o">,</span> <span class="s">&#34;ok&#34;</span><span class="o">);</span>
   <span class="n">hm</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;2&#34;</span><span class="o">,</span> <span class="s">&#34;fine&#34;</span><span class="o">);</span>
@@ -278,7 +279,8 @@
 
   <span class="n">Field</span> <span class="n">table</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="na">getDeclaredField</span><span class="o">(</span><span class="s">&#34;table&#34;</span><span class="o">);</span>
   <span class="n">Field</span> <span class="n">threshold</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="na">getDeclaredField</span><span class="o">(</span><span class="s">&#34;threshold&#34;</span><span class="o">);</span>
-  <span class="c1">// Class&lt;?&gt; node = Class.forName(&#34;java.util.HashMap$Node&#34;);
+  <span class="c1">// can not access
+</span><span class="c1"></span>  <span class="c1">// Class&lt;?&gt; node = Class.forName(&#34;java.util.HashMap$Node&#34;);
 </span><span class="c1"></span>  <span class="n">table</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
   <span class="n">threshold</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
   <span class="c1">// Node&lt;K,V&gt;[]
@@ -304,7 +306,7 @@
 </span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
-<p>上例解释了HashMap的再散列过程，当映射中的<strong>元素数大于桶数与装载因子之积</strong>时，在散列过程发生</p>
+<p>上例解释了HashMap的扩容过程，当映射中的<strong>元素数大于桶数与装载因子之积</strong>时，便会扩容</p>
 
 <p>Map中提供3种<strong>集合视图</strong>，键的，值的和entry的，视图并不能对映射进行完全结构性控制，比如向Map中添加条目，则只能使用<code>Map.put</code>方法，使用视图时，除了<strong>删除</strong>这一改变Map结构的操作，其他操作会抛出<em>UnsurportedOperationException</em></p>
 
@@ -423,9 +425,7 @@
 </span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
-<p>值得一提的事，和<a href="#sortedset">SortedSet</a>的子集视图一样，<strong>对原集合和视图的修改是相互的</strong>，不会引发 <em>ConcurrentModificationException</em></p>
-
-<p>至于 <em>UnsupportedOperationException</em> 的抛出，查看源码即可知：</p>
+<p>值得一提的事，和<a href="../set/#2-treeset">SortedSet</a>的子集视图一样，<strong>对原集合和视图的修改是相互的</strong>，不会引发  <em>ConcurrentModificationException</em> ，但是其对映射的操作是有限的，比如<code>keySet.add(2)</code>就抛出 <em>UnsupportedOperationException</em> ，迭代器不支持操作。查看源码即可知：</p>
 
 <p><img src="/endlessriver/img/HashMap_1.png" alt="YeQ7rT.png" /></p>
 
@@ -989,8 +989,8 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2020-06-02
-        <a href="https://github.com/wangy325/my_blog/commit/4571e2a1640bf5cd53301b0f97504b1ed04f2681" title="use static resources and some literal revise">(4571e2a)</a>
+        2020-09-26
+        <a href="https://github.com/wangy325/my_blog/commit/767876769387d3a08edd7913bb8fd839a53b83b7" title="内容更新">(7678767)</a>
     </span>
   </p>
   
