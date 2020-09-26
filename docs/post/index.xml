@@ -6,15 +6,26 @@
     <description>Recent content in Posts on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 15 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 24 Sep 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangy325.github.io/endlessriver/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>HashMap的源码分析（一）</title>
+      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%80/</link>
+      <pubDate>Thu, 24 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%80/</guid>
+      <description>&lt;p&gt;本文内容简单分析了JDK8中HashMap源码的几个重要方法，便于理解散列表在Java集合框架中的具体应用。&lt;/p&gt;
+
+&lt;p&gt;HashMap基于散列表，散列表中每一个Node节点（桶）是链表数组，当两个条目（entry）的key的hash值对桶数（capacity）取模的值相等时，这两个entry会存储在同一个链表数组中。但当链表数组中元素达到一定数目时，链表数组结构会转变为&lt;strong&gt;树结构&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>资源访问受限—Java并发系列之二</title>
       <link>https://wangy325.github.io/endlessriver/post/tech/advance_java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/</link>
-      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 20 May 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangy325.github.io/endlessriver/post/tech/advance_java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/</guid>
       <description>&lt;p&gt;在系列一中，虽然创建了多线程，并且线程之间出现了一些&lt;strong&gt;不可预测&lt;/strong&gt;的CPU调度，但是由于线程之间是&lt;strong&gt;相互隔离&lt;/strong&gt;的——&lt;strong&gt;线程没有访问共同的资源&lt;/strong&gt;，尽管在执行任务的过程可能被CPU剥夺运行权，但是当它们再次获得运行权时对运行结果并没有影响，它们是安全的&lt;/p&gt;</description>
@@ -23,7 +34,7 @@
     <item>
       <title>线程与任务—Java并发系列之一</title>
       <link>https://wangy325.github.io/endlessriver/post/tech/advance_java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</link>
-      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangy325.github.io/endlessriver/post/tech/advance_java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</guid>
       <description>&lt;p&gt;并发是生产过程不可能绕过去的坎，&lt;del&gt;要编写高性能的程序，必须使用并发&lt;/del&gt;&lt;/p&gt;
@@ -36,7 +47,7 @@
     <item>
       <title>Collections—Java集合框架系列之五</title>
       <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/collections/</link>
-      <pubDate>Sun, 10 May 2020 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/collections/</guid>
       <description>&lt;p&gt;集合框架中一个重要的类，其实是Collection接口的&lt;strong&gt;伴随类&lt;/strong&gt;，其中定义了许多实用方法，用来获取&lt;strong&gt;集合视图&lt;/strong&gt;，或提供一些方便的操作集合元素的&lt;strong&gt;算法&lt;/strong&gt;&lt;/p&gt;
@@ -79,7 +90,7 @@
       <pubDate>Wed, 29 Apr 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/list/</guid>
-      <description>&lt;p&gt;接下来的集合框架系列文章讲解了常见的集合框架实现，此系列的所有实现都是&lt;strong&gt;线程不安全&lt;/strong&gt;的&lt;/p&gt;</description>
+      <description>&lt;p&gt;接下来的集合框架系列文章讲解了常见的集合框架实现，此系列涉及到的实现都是&lt;strong&gt;线程不安全&lt;/strong&gt;的&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -197,15 +208,6 @@
       
       <guid>https://wangy325.github.io/endlessriver/post/tech/%E5%85%B3%E4%BA%8Eforever%E5%90%AF%E5%8A%A8node%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
       <description>&lt;p&gt;在使用jenkins自动构建node.js项目的时候，由于对forever的不熟悉，构建脚本一直存在一点小问题。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>比较器的「退化」</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/</link>
-      <pubDate>Tue, 27 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangy325.github.io/endlessriver/post/tech/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/</guid>
-      <description>&lt;p&gt;在使用匿名内部类比较器的时候，idea提供了几个层次的比较器代码优化，给👴整懵逼了。&lt;/p&gt;</description>
     </item>
     
   </channel>

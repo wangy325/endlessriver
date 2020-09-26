@@ -47,7 +47,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangy325.github.io/endlessriver/post/tech/basic_java/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/" />
 <meta property="article:published_time" content="2020-04-21T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2020-05-28T19:52:52&#43;08:00"/>
+<meta property="article:modified_time" content="2020-09-26T14:09:51&#43;08:00"/>
 
 <meta itemprop="name" content="抽象类与接口—Java基础系列之七">
 <meta itemprop="description" content="抽象类是由abstract关键字修饰的类。将一个普通类用abstract修饰，它就是抽象类
@@ -56,8 +56,8 @@
 
 
 <meta itemprop="datePublished" content="2020-04-21T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-05-28T19:52:52&#43;08:00" />
-<meta itemprop="wordCount" content="1735">
+<meta itemprop="dateModified" content="2020-09-26T14:09:51&#43;08:00" />
+<meta itemprop="wordCount" content="1744">
 
 
 
@@ -146,7 +146,7 @@
             <a href="/endlessriver/categories/java/"> Java </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 1735 字 </span>
+          <span class="more-meta analyse"> 约 1744 字 </span>
           <span class="icomoonfree icon-clock"></span>
           <span class="more-meta analyse"> 预计阅读 4 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
@@ -255,18 +255,18 @@
         <span class="kd">super</span><span class="o">();</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;S constructor&#34;</span><span class="o">);</span>
     <span class="o">}</span>
-    
+
     <span class="nd">@Override</span>
     <span class="kt">void</span> <span class="nf">f</span><span class="o">()</span> <span class="o">{</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;S.f()&#34;</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
-<span class="o">/*</span> <span class="n">output</span>
-<span class="n">F</span> <span class="n">constructor</span>
-<span class="n">S</span> <span class="n">constructor</span>
-<span class="n">S</span><span class="o">.</span><span class="na">f</span><span class="o">()</span>
-<span class="n">F</span><span class="o">.</span><span class="na">g</span><span class="o">()</span>
-<span class="o">///:~</span></code></pre></td></tr></table>
+<span class="cm">/* output
+</span><span class="cm">F constructor
+</span><span class="cm">S constructor
+</span><span class="cm">S.f()
+</span><span class="cm">F.g()
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
 <h2 id="8-2-接口">8.2 接口</h2>
@@ -419,11 +419,11 @@
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;L.j()&#34;</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
-<span class="o">/*</span> <span class="n">output</span>
-<span class="n">1</span>
-<span class="n">L</span><span class="o">.</span><span class="na">j</span><span class="o">()</span>
-<span class="n">I</span><span class="o">.</span><span class="na">k</span><span class="o">()</span>
-<span class="o">///:~</span></code></pre></td></tr></table>
+<span class="cm">/* output
+</span><span class="cm">1
+</span><span class="cm">L.j()
+</span><span class="cm">I.k()
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
 <h3 id="8-2-3-默认方法的冲突">8.2.3 默认方法的冲突</h3>
@@ -496,14 +496,14 @@
 </span><span class="c1"></span>    <span class="nd">@Override</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">di</span><span class="o">()</span> <span class="o">{</span>
 	      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;calling C.di()&#34;</span><span class="o">);</span>
-        <span class="c1">// 这里使用了I1的实现
+        <span class="c1">// 这里使用了I1的实现，注意这里的写法 Interface.super.default_method
 </span><span class="c1"></span>        <span class="n">I1</span><span class="o">.</span><span class="na">super</span><span class="o">.</span><span class="na">di</span><span class="o">();</span>
     <span class="o">}</span>
 <span class="o">}</span>
-<span class="o">/*</span> <span class="n">output</span>
-<span class="n">calling</span> <span class="n">C</span><span class="o">.</span><span class="na">di</span><span class="o">()</span>
-<span class="n">I1</span><span class="o">.</span><span class="na">di</span><span class="o">()</span>
-<span class="o">///:~</span></code></pre></td></tr></table>
+<span class="cm">/* output
+</span><span class="cm">calling C.di()
+</span><span class="cm">I1.di()
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>若上例中<code>I2.di()</code>是抽象方法，是不是就不存在歧义了呢？<strong>并不是</strong>，编译器还是会提醒覆盖<code>di()</code>方法</p>
@@ -560,9 +560,9 @@
 <span class="kd">class</span> <span class="nc">W</span> <span class="kd">extends</span> <span class="n">Drink</span> <span class="kd">implements</span> <span class="n">Vita</span><span class="o">{</span>
 	<span class="c1">// empty body
 </span><span class="c1"></span><span class="o">}</span>
-<span class="o">/*</span>
-<span class="n">Vita</span> <span class="n">奶</span>
-<span class="o">///:~</span></code></pre></td></tr></table>
+<span class="cm">/*
+</span><span class="cm">Vita 奶
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>当然，也可以通过手动覆盖来指定实现，就像情况1中的那样：</p>
@@ -693,12 +693,12 @@
     <span class="nd">@Override</span>
     <span class="kd">public</span> <span class="n">Service</span> <span class="nf">getService</span><span class="o">()</span> <span class="o">{</span><span class="k">return</span> <span class="k">new</span> <span class="n">AgeService</span><span class="o">();}</span>
 <span class="o">}</span>
-<span class="o">/*</span>
-<span class="n">NameService</span><span class="o">.</span><span class="na">service_a</span><span class="o">()</span>
-<span class="n">NameService</span><span class="o">.</span><span class="na">service_b</span><span class="o">()</span>
-<span class="n">AgeService</span><span class="o">.</span><span class="na">service_a</span><span class="o">()</span>
-<span class="n">AgeService</span><span class="o">.</span><span class="na">service_b</span><span class="o">()</span>
-<span class="o">///:~</span></code></pre></td></tr></table>
+<span class="cm">/*
+</span><span class="cm">NameService.service_a()
+</span><span class="cm">NameService.service_b()
+</span><span class="cm">AgeService.service_a()
+</span><span class="cm">AgeService.service_b()
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>上例中，服务类没有提供公有构造器，而其实例化由工厂了完成。这样做的好处在于，在使用服务方法时，无需知道确切服务的类型而去调用构造器，<strong>代码完全与接口的实现（本例中为NameService和AgeService）分离</strong>，具体应用过程中可以轻易的将A实现替换为B实现</p>
@@ -712,8 +712,8 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2020-05-28
-        <a href="https://github.com/wangy325/my_blog/commit/da95f6e88fbd403ff990ab4e42facf895554385c" title="git all hugo site">(da95f6e)</a>
+        2020-09-26
+        <a href="https://github.com/wangy325/my_blog/commit/767876769387d3a08edd7913bb8fd839a53b83b7" title="内容更新">(7678767)</a>
     </span>
   </p>
   
