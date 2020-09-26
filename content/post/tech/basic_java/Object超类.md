@@ -48,7 +48,7 @@ class Employee2 {
 
         /*if (salary != employee2.salary) return false;
         return name != null ? name.equals(employee2.name) : employee2.name == null;*/
-      
+
       	// or using Objects.equals(Object a, Object b) to compare
       	return Objects.equals(name,employee2.name)
            && salary == employee2.salary;
@@ -73,7 +73,7 @@ class Manager extends Employee2{
   @Override
     public boolean equals(Object o) {
       if(!super.equals(o)) return false;
-      
+
       // super.equals checked that o and this belong to same class
       Manager m = (Manager)o;
       return bonus == m.bonus;
@@ -110,7 +110,7 @@ class Stu{
 1. 这个方法是`final`的
 2. 判断类型使用的是`instanceof`而非`getClass`
 
-将方法声明为`final`即保证了**基类对相等概念的控制权**，这还不够，使用`instanceof`保证了基类和导出类（或不同导出类）之间域的相等性比较的可能
+将方法声明为`final`即保证了**基类对相等概念的控制权**（导出类无法覆盖equals方法），这还不够，使用`instanceof`保证了基类和导出类（或不同导出类）之间域的相等性比较的可能
 
 **应该谨慎使用`instanceof`**
 
@@ -120,7 +120,7 @@ class Stu{
 
 Java语言对<span id="hashCode">hashCode方法有如下规范</span>：
 
-- 在同一次Java程序运行过程中，无论调用多少次对象的hashCode方法，返回的应该是同一个整型值；而在不同程序运行过程中则无此要求 
+- 在同一次Java程序运行过程中，无论调用多少次对象的hashCode方法，返回的应该是同一个整型值；而在不同程序运行过程中则无此要求
 - 对于任何对象`a`、`b`，若`a.equals(b)`为`true`，那么`a`和`b`的hashCode返回值应该相等
 - 对于任何对象`a`、`b`，若`a.equals(b)`为`false`，`a`和`b`的hashCode返回值**没有必要一定不等**；需要指出的是，给不同对象分配不同的hashcode值有利于提升哈希表的性能
 
@@ -140,7 +140,7 @@ public class HashT {
 /* output
 115 : 1956725890
 115 : 356573597
-///:~
+*///:~
 ```
 
 注意，`s`和`t`哈希值相同时因为String类覆盖了hashCode方法，其值是由字符串字面量值计算来的，而StringBuilder没有覆盖hashCode方法，其值是Object默认的hashCode方法导出的**对象存储地址**

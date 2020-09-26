@@ -52,21 +52,21 @@ HashMap是由散列表对键进行散列的，允许null键和null值。HashMap�
 
 > HashMap和**Hashtable**大致相同，区别在与Hashtable是同步的，且Hashtable**不允许null**
 
-HashMap的初始化和扩容机制叙述参见[散列表](#hashtable)，默认容量是16，桶数总是2<sup>n</sup>，最大桶数是2<sup>30</sup>，每次扩容加倍，**当桶数大于最大桶数后，不再rehash**。桶数总是为2的幂次的原理和[ArrayDeque一致](#resize)，通过5次位运算将低位全部转为1，然后执行+1操作进位，变成下一个2<sup>n</sup>
+HashMap的初始化和扩容机制叙述参见[散列表](../set/#1-span-id-hashtable-散列集-span)，如果初始化时不指定容量（桶数？容量不是键值对数目），默认为16。容量总是2<sup>n</sup>，最大容量是2<sup>30</sup>，每次扩容加倍，**当桶数大于最大桶数后，不再rehash**。容量总是为2的幂次的原理和[ArrayDeque一致](../queue/#3-arraydeque)，通过5次位运算将低位全部转为1，然后执行+1操作进位，变成下一个2<sup>n</sup>。因此HashMap带参构造器指定的capacity最后会初始化为大于其的最近的2<sup>n</sup>。（1变2，3变4，5变8，9变16...）
 
 HashMap使用`table`和`entrySet`分别表示桶数和当前映射中的键值对数：
 
-> transient Node<K,V>[] table;	桶数组
+> transient Node<K,V>[] table;	桶数组，桶由链表构成
 >
-> transient Set<Map.Entry<K,V>> entrySet; 映射中的键值对数
+> transient Set<Map.Entry<K,V>> entrySet; 映射中的键值对数，size
 >
-> int threshold; 临界键值对数，等于 table.length * loadFactor
+> int threshold; 临界键值对数，等于 table.length * loadFactor，当size > threshold时，发生扩容
 >
 > final float loadFactor; 装载因子，默认0.75
 
 ```java
 static void bucketsTest() throws Exception {
-  // initial capacity 8, load factor 0.75, threshold 6
+  //load factor 0.75
   HashMap<String, String> hm = new HashMap<>(7);
   hm.put("1", "ok");
   hm.put("2", "fine");
@@ -79,6 +79,7 @@ static void bucketsTest() throws Exception {
 
   Field table = cls.getDeclaredField("table");
   Field threshold = cls.getDeclaredField("threshold");
+  // can not access
   // Class<?> node = Class.forName("java.util.HashMap$Node");
   table.setAccessible(true);
   threshold.setAccessible(true);
@@ -105,7 +106,7 @@ buckets after rehash: 16
 *///:~
 ```
 
-上例解释了HashMap的再散列过程，当映射中的**元素数大于桶数与装载因子之积**时，在散列过程发生
+上例解释了HashMap的扩容过程，当映射中的**元素数大于桶数与装载因子之积**时，便会扩容
 
 Map中提供3种**集合视图**，键的，值的和entry的，视图并不能对映射进行完全结构性控制，比如向Map中添加条目，则只能使用`Map.put`方法，使用视图时，除了**删除**这一改变Map结构的操作，其他操作会抛出*UnsurportedOperationException*
 
@@ -168,9 +169,7 @@ key: 2, value:风衣
 *///:~
 ```
 
-值得一提的事，和[SortedSet](#sortedset)的子集视图一样，**对原集合和视图的修改是相互的**，不会引发 *ConcurrentModificationException*
-
-至于 *UnsupportedOperationException* 的抛出，查看源码即可知：
+值得一提的事，和[SortedSet](../set/#2-treeset)的子集视图一样，**对原集合和视图的修改是相互的**，不会引发  *ConcurrentModificationException* ，但是其对映射的操作是有限的，比如`keySet.add(2)`就抛出 *UnsupportedOperationException* ，迭代器不支持操作。查看源码即可知：
 
 ![YeQ7rT.png](/endlessriver/img/HashMap_1.png)
 
