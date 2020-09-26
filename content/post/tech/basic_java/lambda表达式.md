@@ -46,7 +46,7 @@ class StringLengthComparator implements Comparator<String>{
 /* output
 [alibaba, baida, baidu, kingdee, tencent]
 [baida, baidu, alibaba, kingdee, tencent]
-///:~
+*///:~
 ```
 
 上例中，`compare`方法不是立即调用，在数组完成排序之前，`sort`方法会一直调用`compare`方法，只要元素的排列顺序不正确就会重新排列元素
@@ -93,7 +93,7 @@ new ArrayList().removeIf(e -> e == null)
 
 > 对于只有一个抽象方法的接口，需要这种接口的对象时，就可以提供一个lambda表达式，这种接口叫**函数式接口**
 
-`java,util.Comparator`接口就是一个函数式接口，它只有一个抽象方法：
+`java.util.Comparator`接口就是一个函数式接口，它只有一个抽象方法：
 
 ```java
 int compare(T o1, T o2);
@@ -146,19 +146,19 @@ list.forEach(System.out::println)
 public class Intro {
     public static void main(String[] args) {
         String[] s = new String[]{"baidu", "alibaba", "tencent", "baida", "kingdee"};
-				// lmabda statement original
-				/*Arrays.sort(s, (o1,o2) -> {
+		// lmabda statement original
+		/*Arrays.sort(s, (o1,o2) -> {
           if (o1.length() != o2.length()) return o1.length() - o2.length();
         	return o1.compareTo(o2);
         })*/
-      
+
       	// lambda expression with method reference
         Arrays.sort(s, (o1,o2) -> localCompare(o1, o2) );
-      
+
       	// method reference
       	Arrays.sort(s, Intro::localCompare)
         System.out.println(Arrays.toString(s));
-    
+
     private static int localCompare(String o1, String o2) {
         if (o1.length() != o2.length()) return o1.length() - o2.length();
         return o1.compareTo(o2);
@@ -168,7 +168,7 @@ public class Intro {
 
 原始的lambda表达式有2行代码（2个逻辑），可以将其重构为一个方法，并在lambda表达式中引用该方法，这样做之后，原lambda表达式的“体”就变成了一个简单的方法调用，那么它便可以等价为方法引用：
 
-```java 
+```java
 Arrays.sort(s, Intro::localCompare)
 ````
 
@@ -205,7 +205,7 @@ Arrays.sort(s, String::compareToIgnoreCase);
 
 ```java
 public List<Spitter> findAll() {
-        return jdbcOperations.query(SPITTER_SELECT, 
+        return jdbcOperations.query(SPITTER_SELECT,
                                     (rs, rowNum) -> this.mapResult(rs, rowNum));
     }
 // skip mapResult...
@@ -244,7 +244,7 @@ static void repeatMessage(String msg, int delay) {
     new Timer(delay, listener).start();
   }
 ```
- 
+
 这是出于线程安全的考虑
 
 
@@ -269,5 +269,5 @@ static void repeatMessage(String msg, int delay) {
   Compartor<String> comp = (first, second) -> first.length() - senond.length();
   // ERROR variable first already exists
   ```
- 
+
 lambda表达式的“体”和“嵌套块”具有相同的作用域

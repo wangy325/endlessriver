@@ -1,6 +1,6 @@
 ---
 title: "Collections—Java集合框架系列之五"
-date: 2020-05-10
+date: 2020-05-12
 lastmod: 2020-05-27
 draft: false
 tags: [Java基础, 集合框架]

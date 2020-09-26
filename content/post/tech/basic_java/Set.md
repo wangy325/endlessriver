@@ -21,11 +21,11 @@ Set是**不含重复元素的集**，严格来讲，Set不允许当`e1.equals(e2
 
 <!--more-->
 
-### 1 <span id="hashtable">散列集</span>
+## 1 <span id="hashtable">散列集</span>
 
 数组和链表能够记录元素的插入顺序，这对于通过索引快速对元素执行操作很有利，但是如果忘记了索引，那么需要从头遍历，这在数据量很大的情况下效率低下。在**不考虑元素的顺序情况下，能提供快速查询**所需要的数据，这就是**散列表**(*hash table*)
 
-散列表为每个对象计算一个整数，称为**散列码**(*hash code*)，这意味着如果将自定义对象作为Set的对象，那么必须要**负责实现这个类的*hashCode*方法**，还有一点要注意的是，hashCode和equals方法之间存在[约束关系](#hashCode)，因此**最好也重写equals方法以保证一致性**
+散列表为每个对象计算一个整数，称为**散列码**( *hash code* )，这意味着如果将自定义对象作为Set的对象，那么必须要**负责实现这个类的 *hashCode* 方法**，还有一点要注意的是，hashCode和equals方法之间存在[约束关系](#hashCode)，因此**最好也重写equals方法以保证一致性**
 
 Java中的散列表是用**链表数组**实现的，每个链表称为**桶**
 
@@ -54,33 +54,33 @@ $$
 
 Java标准类库中，散列表的桶数总是2<sup>n</sup>，默认值是16
 
-#### 1.1 HashSet
+### 1.1 HashSet
 
 HashSet是由HashMap实现的基于散列表的集合，允许至多一个`null`元素
 
-不论桶数，当元素被合理地分配在散列表的桶中时，HashSet的基本操作（add，remove，contains和size）的效率是一致的；但是迭代HashSet所需要的时间消化则与元素数量以及组成**集**的HashMap桶数正相关。因此合理的设置桶数非常有必要
+不论桶数，当元素被合理地分配在散列表的桶中时，HashSet的基本操作（add，remove，contains和size）的效率是一致的；但是迭代HashSet所需要的时间则与元素数量以及组成**集**的HashMap桶数正相关。因此合理的设置桶数非常有必要
 
 与List不同的是，HashSet的迭代器不能保证元素的迭代顺序，并且迭代器也是 *fail-fast* 的，在使用迭代器时同样需要留意 *ConcurrentModificationException*
 
 HashSet主要字段：
 
->  ```java
->  private transient HashMap<E,Object> map;
->  
->  // Dummy value to associate with an Object in the backing Map
->  private static final Object PRESENT = new Object();
->  ```
+```java
+  private transient HashMap<E,Object> map;
+
+  // Dummy value to associate with an Object in the backing Map
+  private static final Object PRESENT = new Object();
+```
 
 HashSet构造器：
 
-> ```java
-> public HashSet() {map = new HashMap<>();}
-> public HashSet(Collection<? extends E> c) {...}
-> public HashSet(int initialCapacity, float loadFactor) {...}
-> public HashSet(int initialCapacity) {...}
-> ```
+```java
+ public HashSet() {map = new HashMap<>();}
+ public HashSet(Collection<? extends E> c) {...}
+ public HashSet(int initialCapacity, float loadFactor) {...}
+ public HashSet(int initialCapacity) {...}
+```
 
-**所以HashSet就是一个所有值为`new Object()`的 HashMap的KeySet**，参考如下示例：
+**所以HashSet就是一个所有值为`PRESENT`常量的 HashMap的KeySet**，参考如下示例：
 
 ```java
 static void initializationTest() throws Exception {
@@ -96,17 +96,20 @@ static void initializationTest() throws Exception {
   System.out.println(fm.get(hs).getClass());
   @SuppressWarnings("unchecked")
   HashMap<Integer, Object> o = (HashMap<Integer, Object>) fm.get(hs);
-  System.out.println(o.get(1).getClass());
+  for (Map.Entry<Integer, Object> entry : o.entrySet()) {
+            System.out.println(entry.getKey() + ":" + entry.getValue());
+    }
 }
 /* output
 class java.util.HashMap
-class java.lang.Object
+1:java.lang.Object@1540e19d
+2:java.lang.Object@1540e19d
 *///:~
 ```
 
 **如果将自定义对象存入HashSet，必须覆盖 *equals* 和 *hashCode* 方法**
 
-#### 1.2 LinkedHashSet
+### 1.2 LinkedHashSet
 
 HashSet的子类，与HashSet的 区别在于LinkedHashSet使用双端链表维护集中的元素，因此元素能够被有序迭代（迭代顺序是元素的插入顺序），当元素添加到集中时，便会并入LinkedList中
 
@@ -130,7 +133,7 @@ HashSet(int initialCapacity, float loadFactor, boolean dummy) {
 - 由于加入了链表，迭代LinkedHashSet时只与集合的容量(size)有关，而与桶数无关；而HashSet的迭代效率与二者都有关
 - LinkedHashSet设置过大的桶数所带来的性能（负）影响小于HashSet
 
-### 2 TreeSet
+## 2 TreeSet
 
 **树集**是由**红—黑树**实现的有序集合(*sorted collection*)。在Java集合框架中，TreeSet由TreeMap实现，和HashSet一样，**TreeSet是TreeMap的所有值为`new Object()`的keySet**
 
@@ -182,13 +185,14 @@ NavigableSet继承了SortedSet，并新增了方法：
 >
 >   获取倒序迭代器
 
-TreeSet中的元素总是有序的，排序规则可以是默认的自然排序（ *comparable* ）或在构造器中指定比较器（ *comparator* ），和**PriorityQueue一样，若向TreeSet插入未排序的元素，会抛出*ClassCastException***
+TreeSet中的元素总是有序的，排序规则可以是默认的自然排序（ *comparable* ）或在构造器中指定比较器（ *comparator* ），和**PriorityQueue一样，若向TreeSet插入未排序的元素，会抛出 `ClassCastException`**
 
-需要注意的是，在使用自定义比较规则时，置入TreeSet中的元素需要考虑到***comparable/comparator* 方法和*equals*方法的一致性**
+需要注意的是，在使用自定义比较规则时，置入TreeSet中的元素需要考虑到<b>*comparable/comparator* 方法和 *equals* 方法的一致性</b>
 
 参考如下示例：
 
 ```java
+//... 省略头部
 static void consistenceTest() {
   class Item implements Serializable {
     private int code;
@@ -217,9 +221,11 @@ static void consistenceTest() {
       return result;
     }
   }
+  // 故意修改比较器的相等逻辑
   SortedSet<Item> ss = new TreeSet<>((o1, o2) -> o1.code - o2.code + 1);
-  ss.add(new Item(1, "apple"));
-  ss.add(new Item(1, "apple"));
+  Item item = new Item(1, "apple");
+  ss.add(item);
+  ss.add(item);
   // Set中出现重复元素
   ss.forEach(System.out::println);
 }
@@ -239,9 +245,10 @@ $$
 
 值得一提的是，NavigableSet的获取子集的方法，可以用来对原集合进行修改；同样地，**若原集合发生改变，子集也会随之改变**
 
-> 这与ArrayList的SubList不同，获取子集后对原集合的修改会引发*ConcurrentModificationException*
+> 这与ArrayList的SubList不同，SubList获取子集后对原集合的修改会引发*ConcurrentModificationException*
 
 ```java
+//...省略头部
 static void eleTest() {
   TreeSet<String> ss = new TreeSet<String>() {{
     add("nokia");
@@ -287,4 +294,4 @@ true
 
 
 
-[^8]: 每个桶里都有元素么？每个桶至多有多少元素？通过源码来看HashSet和HashMap一个桶里至多有一个元素
+[^8]: 每个桶里都有元素么？每个桶至多有多少元素？

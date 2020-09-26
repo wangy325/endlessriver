@@ -47,7 +47,7 @@ Queue（队列），实际开发过程中，在单线程环境下使用的情况
 
 `offer()`方法尝试向队列中插入一个元素，否则返回`false`，而`Collection.add`方法失败之后会抛出（运行时）异常。因此`offer()`方法适用于定容或有界队列中插入元素
 
-队列中不允许插入`null`，或者说**不应**将`null`插入队列中（LinkedList允许空值），因为`null`会作为队列方法的特殊返回值（空队列指示器）出现，若将`null`抽入队列，会引发歧义
+队列中不允许插入`null`，或者说**不应**将`null`插入队列中（LinkedList允许空值），因为`null`会作为队列方法的特殊返回值（空队列指示器）出现，若将`null`插入队列，会引发歧义
 
 **Queue有两个子接口：**
 
@@ -140,7 +140,7 @@ Queue（队列），实际开发过程中，在单线程环境下使用的情况
 
 优先级队列的第一个元素(head)总是按照排序规则计算出最小元素，如果有几个相等的最小元素，那么head为其中任意一个，当使用`poll(`)或`remove()`后，其他最小元素自动移动至head
 
-> 优先级队列并没有对所有元素进行排序
+> 从输出来看，优先级队列并没有对所有元素进行完全排序，而是队列发生结构性变化时，保证队头元素一定是满足排序规则的
 
 优先级队列是自动扩容的，其扩容机制为：
 
@@ -245,7 +245,7 @@ dell	lenovo	hp	samsung
 
 LinkedList是Deque的实现，可以作为双端队列使用，其实现了Deque声明的所有方法
 
-想讲LinkedList作为Deque使用，须将其声明为 Deque
+想将LinkedList作为Deque使用，须将其声明为 Deque
 
 ```java
 Deque<String> deque = new LinkedList<>();
@@ -253,7 +253,7 @@ Deque<String> deque = new LinkedList<>();
 
 LinkedList基于链表节点的灵活性，很容易就能够实现在首尾两端对元素进行操作
 
-### 11.2.3 ArrayDeque
+### 3 ArrayDeque
 
 ArrayDeque是由**循环数组**实现的双端队列，没有容量限制，并且能够自动扩容，**不允许** 插入`null`值
 
@@ -300,7 +300,9 @@ private static int calculateSize(int numElements) {
 
 若指定容量>8时，那么需要对其进行 **5次右移及位或运算保证最终的容量大小是2<sup>n</sup>**，比如传进来的参数是13，那么最后得到的容量就是2<sup>4</sup>
 
-ArrayDeque中，当`head==tail`时触发扩容，容量增加一倍
+ArrayDeque中，当`head==tail`[^n2]时触发扩容，容量增加一倍
+
+> TODO
 
 参考如下源码：
 
@@ -347,7 +349,7 @@ private void doubleCapacity() {
 }
 ```
 
-一般地，循环队列都是使用**模运算**实现的，而ArrayDeque通过**位运算**来实现循环队列，Java集合框架中很多地方都使用了位运算（如HashMap的扩容），位运算和模运算有如下关系：
+一般地，循环队列都是使用**模运算**实现的，而ArrayDeque通过**位运算**来实现循环队列，Java集合框架中很多地方都使用了位运算（如HashMap的扩容），位运算和模运算有[如下关系](https://blog.csdn.net/lonyw/article/details/80519652)：
 
 > x % 2<sup>n</sup> = x & (2<sup>n</sup> - 1)
 
@@ -405,3 +407,4 @@ ArrayDeque的具体方法就不再赘述了，其囊括了作为Queue以及Stack
 
 
 [^注1]: *A collection designed for holding elements prior to processing*
+[^n2]: head和tail在循环数组中的行为是如何？
