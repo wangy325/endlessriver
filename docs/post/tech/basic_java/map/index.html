@@ -52,7 +52,7 @@
 
 <meta itemprop="datePublished" content="2020-05-10T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-09-26T14:09:51&#43;08:00" />
-<meta itemprop="wordCount" content="4793">
+<meta itemprop="wordCount" content="6146">
 
 
 
@@ -139,9 +139,9 @@
             <a href="/endlessriver/categories/java/"> Java </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 4793 字 </span>
+          <span class="more-meta analyse"> 约 6146 字 </span>
           <span class="icomoonfree icon-clock"></span>
-          <span class="more-meta analyse"> 预计阅读 10 分钟 </span>
+          <span class="more-meta analyse"> 预计阅读 13 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
           <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/endlessriver/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -157,7 +157,16 @@
 <li>
 <ul>
 <li><a href="#1-hashmap">1 HashMap</a></li>
-<li><a href="#2-linkedhashmap">2 LinkedHashMap</a></li>
+<li><a href="#2-linkedhashmap">2 LinkedHashMap</a>
+<ul>
+<li><a href="#2-1-linkedhashmap如何链接节点">2.1 LinkedHashMap如何链接节点</a></li>
+<li><a href="#2-2-linkedhashmap的回调方法">2.2 LinkedHashMap的回调方法</a>
+<ul>
+<li><a href="#afternoderemoval">afterNodeRemoval</a></li>
+<li><a href="#afternodeinsertion">afterNodeInsertion</a></li>
+<li><a href="#afternodeaccess">afterNodeAccess</a></li>
+</ul></li>
+</ul></li>
 <li><a href="#3-treemap">3 TreeMap</a></li>
 </ul></li>
 </ul></li>
@@ -448,20 +457,69 @@
 
 <p>LinkedHashMap(链表散列映射)是HashMap的导出类，像LinkedHashSet与HashSet的关系一样</p>
 
-<p>LinkedHasMap和HashMap的<a href="#performance">性能差异</a>与HashSet和LinkedHashSet一致</p>
+<p>其与HashMap的差别在于其使用LinkedList来维护键值对插入的顺序，其插入机制和HashMap是一致的</p>
 
-<p>一般地，LinkedHashMap使用<strong>插入顺序</strong>（ <em>insertion order</em> ）。但有特殊情况，LinkedHashMap提供构造参数<code>assertOrder</code>，来根据<strong>访问顺序</strong>（ <em>access order</em> ）对映射条目进行迭代：</p>
+<p>LinkedHashMap和HashMap的<a href="../set/#1-2-linkedhashset">性能相差不大</a>与HashSet和LinkedHashSet一致：</p>
+
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">HashMap</td>
+<td align="left">HashMap基于散列表，插入和查询键值对的开销是固定的</td>
+</tr>
+
+<tr>
+<td align="left">LinkedHashMap</td>
+<td align="left">和HashMap类似，不过其使用LinkedList维护内部次序，因此其迭代顺序是插入顺序或者LRU（最近最少使用）次序，性能稍差于HashMap</td>
+</tr>
+</tbody>
+</table>
+
+<hr />
+
+<p>一般地，LinkedHashMap使用<strong>插入顺序</strong>（ <em>insertion order</em> ）。但有特殊情况，LinkedHashMap提供构造参数<code>accessOrder</code>，来根据<strong>访问顺序</strong>（ <em>access order</em> ）对映射条目进行迭代</p>
+
+<p>主要构造器：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">LinkedHashMap</span><span class="o">(</span><span class="kt">int</span> <span class="n">initialCapacity</span><span class="o">,</span>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="cm">/**
+</span><span class="cm"> * Constructs an empty LinkedHashMap instance with the
+</span><span class="cm"> * specified initial capacity, load factor and ordering mode.
+</span><span class="cm"> *
+</span><span class="cm"> * @param  initialCapacity the initial capacity
+</span><span class="cm"> * @param  loadFactor      the load factor
+</span><span class="cm"> * @param  accessOrder     the ordering mode - true for
+</span><span class="cm"> *         access-order, false for insertion-order
+</span><span class="cm"> * @throws IllegalArgumentException if the initial capacity is negative
+</span><span class="cm"> *         or the load factor is nonpositive
+</span><span class="cm"> */</span>
+<span class="kd">public</span> <span class="nf">LinkedHashMap</span><span class="o">(</span><span class="kt">int</span> <span class="n">initialCapacity</span><span class="o">,</span>
                          <span class="kt">float</span> <span class="n">loadFactor</span><span class="o">,</span>
                          <span class="kt">boolean</span> <span class="n">accessOrder</span><span class="o">)</span> <span class="o">{</span>
   <span class="kd">super</span><span class="o">(</span><span class="n">initialCapacity</span><span class="o">,</span> <span class="n">loadFactor</span><span class="o">);</span>
@@ -619,7 +677,7 @@
 
 <p>如果方法返回false，不执行操作；返回true，则移除参数<code>eldest</code>条目</p>
 
-<p>参数 <code>eldest</code>是映射的“最旧的”元素——当前最先插入/最少访问的元素：</p>
+<p>参数 <code>eldest</code>是映射的“最旧的”元素——当前最先插入/最少访问的元素，即队头元素：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
@@ -627,12 +685,18 @@
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// first 为队首entry
-</span><span class="c1"></span><span class="k">if</span> <span class="o">(</span><span class="n">evict</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">first</span> <span class="o">=</span> <span class="n">head</span><span class="o">)</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">removeEldestEntry</span><span class="o">(</span><span class="n">first</span><span class="o">))</span> <span class="o">{</span>
-<span class="n">K</span> <span class="n">key</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="na">key</span><span class="o">;</span>
-<span class="n">removeNode</span><span class="o">(</span><span class="n">hash</span><span class="o">(</span><span class="n">key</span><span class="o">),</span> <span class="n">key</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="kc">false</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">afterNodeInsertion</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">evict</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// possibly remove eldest
+</span><span class="c1"></span>    <span class="n">LinkedHashMap</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">first</span><span class="o">;</span>
+    <span class="c1">// if true，移除队头元素
+</span><span class="c1"></span>    <span class="k">if</span> <span class="o">(</span><span class="n">evict</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">first</span> <span class="o">=</span> <span class="n">head</span><span class="o">)</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">removeEldestEntry</span><span class="o">(</span><span class="n">first</span><span class="o">))</span> <span class="o">{</span>
+        <span class="n">K</span> <span class="n">key</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="na">key</span><span class="o">;</span>
+        <span class="n">removeNode</span><span class="o">(</span><span class="n">hash</span><span class="o">(</span><span class="n">key</span><span class="o">),</span> <span class="n">key</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="kc">false</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+    <span class="o">}</span>
 <span class="o">}</span></code></pre></td></tr></table>
 </div>
 </div>
@@ -743,72 +807,312 @@
 </span><span class="lnt">59
 </span><span class="lnt">60
 </span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">static</span> <span class="kt">void</span> <span class="nf">lruCacheTest</span><span class="o">()</span> <span class="o">{</span>
-  <span class="kd">class</span> <span class="nc">Cache</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">V</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="kt">int</span> <span class="n">count</span><span class="o">;</span>
-		<span class="c1">// 访问顺序构造器
-</span><span class="c1"></span>    <span class="kd">private</span> <span class="nf">Cache</span><span class="o">(</span><span class="kt">int</span> <span class="n">initialCapacity</span><span class="o">,</span> <span class="kt">float</span> <span class="n">loadFactor</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">accessOrder</span><span class="o">)</span> <span class="o">{</span>
-      <span class="kd">super</span><span class="o">(</span><span class="n">initialCapacity</span><span class="o">,</span> <span class="n">loadFactor</span><span class="o">,</span> <span class="n">accessOrder</span><span class="o">);</span>
-      <span class="k">this</span><span class="o">.</span><span class="na">count</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
-    <span class="o">}</span>
+    <span class="kd">class</span> <span class="nc">Cache</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">V</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">V</span><span class="o">&gt;</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">50</span><span class="o">;</span>
 
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">get</span><span class="o">(</span><span class="n">Object</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
-      <span class="c1">// Integer value = super.get(key);
-</span><span class="c1"></span>      <span class="c1">// 使用remove保证put触发removeEldestEntry方法
-</span><span class="c1"></span>      <span class="n">Integer</span> <span class="n">value</span> <span class="o">=</span> <span class="n">remove</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
-      <span class="n">put</span><span class="o">((</span><span class="n">K</span><span class="o">)</span> <span class="n">key</span><span class="o">,</span> <span class="o">++</span><span class="n">value</span><span class="o">);</span>
-      <span class="k">return</span> <span class="n">value</span><span class="o">;</span>
-    <span class="o">}</span>
+        <span class="kd">private</span> <span class="nf">Cache</span><span class="o">(</span><span class="kt">int</span> <span class="n">initialCapacity</span><span class="o">,</span> <span class="kt">float</span> <span class="n">loadFactor</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">accessOrder</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kd">super</span><span class="o">(</span><span class="n">initialCapacity</span><span class="o">,</span> <span class="n">loadFactor</span><span class="o">,</span> <span class="n">accessOrder</span><span class="o">);</span>
+        <span class="o">}</span>
 
-    <span class="nd">@Override</span>
-    <span class="kd">protected</span> <span class="kt">boolean</span> <span class="nf">removeEldestEntry</span><span class="o">(</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">eldest</span><span class="o">)</span> <span class="o">{</span>
-      <span class="n">count</span><span class="o">++;</span>
-      <span class="k">if</span> <span class="o">(</span><span class="n">count</span> <span class="o">==</span> <span class="n">55</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">Set</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">entries</span> <span class="o">=</span> <span class="n">entrySet</span><span class="o">();</span>
-        <span class="c1">// 典型的在forEach中使用集合方法出现CME异常的情形
-</span><span class="c1"></span>        <span class="cm">/*for (Map.Entry&lt;K, Integer&gt; entry : entries) {
-</span><span class="cm">          	if (entry.getValue() &lt; 8) {
-</span><span class="cm">            	System.out.println(entry.getKey() + &#34;: &#34; + entry.getValue());
-</span><span class="cm">              // entries.remove(entry); // may cause CME
-</span><span class="cm">             }
-</span><span class="cm">          }*/</span>
-        <span class="n">entries</span><span class="o">.</span><span class="na">removeIf</span><span class="o">(</span><span class="n">next</span> <span class="o">-&gt;</span> <span class="o">{</span>
-          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">next</span><span class="o">.</span><span class="na">getKey</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;: &#34;</span> <span class="o">+</span> <span class="n">next</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
-          <span class="k">return</span> <span class="n">next</span><span class="o">.</span><span class="na">getValue</span><span class="o">()</span> <span class="o">&lt;</span> <span class="n">10</span><span class="o">;</span>
-        <span class="o">});</span>
-      <span class="o">}</span>
-      <span class="c1">//若在此方法中对集合进行修改，那么必须返回false
-</span><span class="c1"></span>      <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="cm">/**
+</span><span class="cm">         * 此方法总是返回false
+</span><span class="cm">         *
+</span><span class="cm">         * @param eldest
+</span><span class="cm">         * @return false
+</span><span class="cm">         */</span>
+        <span class="nd">@Override</span>
+        <span class="kd">protected</span> <span class="kt">boolean</span> <span class="nf">removeEldestEntry</span><span class="o">(</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">V</span><span class="o">&gt;</span> <span class="n">eldest</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">Set</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span> <span class="n">V</span><span class="o">&gt;&gt;</span> <span class="n">entries</span> <span class="o">=</span> <span class="n">entrySet</span><span class="o">();</span>
+            <span class="c1">// lambda表达式中使用外部变量需要保证线程安全
+</span><span class="c1"></span>            <span class="n">AtomicInteger</span> <span class="n">vs</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AtomicInteger</span><span class="o">();</span>
+            <span class="n">entries</span><span class="o">.</span><span class="na">removeIf</span><span class="o">(</span><span class="n">next</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                <span class="n">V</span> <span class="n">value</span> <span class="o">=</span> <span class="n">next</span><span class="o">.</span><span class="na">getValue</span><span class="o">();</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="k">instanceof</span> <span class="n">Integer</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">((</span><span class="n">Integer</span><span class="o">)</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">vs</span><span class="o">.</span><span class="na">addAndGet</span><span class="o">((</span><span class="n">Integer</span><span class="o">)</span> <span class="n">value</span><span class="o">);</span>
+                        <span class="k">return</span> <span class="o">(</span><span class="n">Integer</span><span class="o">)</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">10</span><span class="o">;</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+                <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+            <span class="o">});</span>
+            <span class="c1">// 打印次数反映此法的调用次数
+</span><span class="c1"></span>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">vs</span><span class="o">.</span><span class="na">intValue</span><span class="o">()</span> <span class="o">==</span> <span class="n">count</span><span class="o">);</span>
+            <span class="c1">//若在此方法中对集合进行修改，那么必须返回false
+</span><span class="c1"></span>            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="o">}</span>
     <span class="o">}</span>
-  <span class="o">}</span>
-  <span class="n">Cache</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">cache</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Cache</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;(</span><span class="n">8</span><span class="o">,</span> <span class="n">0</span><span class="o">.</span><span class="na">75f</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
-  <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
-  <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">2</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
-  <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">3</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
-  <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">4</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
-  <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">5</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
-  <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">50</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-    <span class="n">cache</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="k">new</span> <span class="n">Random</span><span class="o">().</span><span class="na">nextInt</span><span class="o">(</span><span class="n">50</span><span class="o">)</span> <span class="o">%</span> <span class="n">5</span> <span class="o">+</span> <span class="n">1</span><span class="o">);</span>
-  <span class="o">}</span>
-  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;------&#34;</span><span class="o">);</span>
-  <span class="n">cache</span><span class="o">.</span><span class="na">forEach</span><span class="o">((</span><span class="n">k</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="s">&#34;: &#34;</span> <span class="o">+</span> <span class="n">v</span><span class="o">));</span>
+    <span class="n">Cache</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">cache</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Cache</span><span class="o">&lt;&gt;(</span><span class="n">8</span><span class="o">,</span> <span class="n">0</span><span class="o">.</span><span class="na">75f</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+    <span class="c1">// 初始化映射集， afterNodeInsertion
+</span><span class="c1"></span>    <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
+    <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">2</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
+    <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">3</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
+    <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">4</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
+    <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">5</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">cache</span><span class="o">.</span><span class="na">count</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">key</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="o">().</span><span class="na">nextInt</span><span class="o">(</span><span class="n">50</span><span class="o">)</span> <span class="o">%</span> <span class="n">5</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">cache</span><span class="o">.</span><span class="na">count</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">//保证最后一次访问removeEldestEntry方法
+</span><span class="c1"></span>            <span class="n">cache</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">// 将值增1，实现计数器效果
+</span><span class="c1"></span>        <span class="c1">// 此处不能使用compute方法，因此法会调用afterNodeInsertion
+</span><span class="c1"></span>        <span class="c1">// 设计的目的在最后一次put之后调用afterNodeInsertion方法，而使用compute会调用2次
+</span><span class="c1">//            cache.put(key, cache.compute(key, (k, v) -&gt; Integer.sum(value, 1)));
+</span><span class="c1"></span>        <span class="n">cache</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="o">++</span><span class="n">value</span><span class="o">);</span>
+
+    <span class="o">}</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;-------&#34;</span><span class="o">);</span>
+
+    <span class="n">cache</span><span class="o">.</span><span class="na">forEach</span><span class="o">((</span><span class="n">k</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="s">&#34;: &#34;</span> <span class="o">+</span> <span class="n">v</span><span class="o">));</span>
 <span class="o">}</span>
 <span class="cm">/* output:
-</span><span class="cm">2: 13
-</span><span class="cm">5: 8
-</span><span class="cm">1: 4
-</span><span class="cm">4: 16
-</span><span class="cm">3: 9
-</span><span class="cm">------
-</span><span class="cm">2: 13
-</span><span class="cm">4: 16
+</span><span class="cm">false
+</span><span class="cm">false
+</span><span class="cm">false
+</span><span class="cm">false
+</span><span class="cm">false
+</span><span class="cm">true
+</span><span class="cm">-------
+</span><span class="cm">1: 11
+</span><span class="cm">2: 12
+</span><span class="cm">4: 14
 </span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
-<p>上例对一个容量为5的LinkedList进行50次随机访问，每次访问后记录访问次数（用value自增），最后删除访问次数不到10次的条目</p>
+<p>上例对一个容量为5的LinkedList进行50次随机访问，每次访问后记录访问次数（用value自增），最后删除访问次数不到10次的条目。可以看到，<code>removeEldestEntry</code>方法调用了6次，最后映射集中只有访问次数大于10次的键值对了</p>
+
+<h4 id="2-1-linkedhashmap如何链接节点">2.1 LinkedHashMap如何链接节点</h4>
+
+<p>我们知道，LinkedHashMap在HashMap的基础上使用linkedList（并不是集合框架中的LinkedList）将键值对链接起来，因此键值对才能够被有序迭代，那么这一动作是在什么时候发生的呢？</p>
+
+<p>这一过程涉及到2个方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">// 覆盖了HashMap的newNode方法
+</span><span class="c1"></span><span class="n">Node</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="nf">newNode</span><span class="o">(</span><span class="kt">int</span> <span class="n">hash</span><span class="o">,</span> <span class="n">K</span> <span class="n">key</span><span class="o">,</span> <span class="n">V</span> <span class="n">value</span><span class="o">,</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">LinkedHashMap</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">p</span> <span class="o">=</span>
+        <span class="k">new</span> <span class="n">LinkedHashMap</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;(</span><span class="n">hash</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+    <span class="c1">// 链接节点
+</span><span class="c1"></span>    <span class="n">linkNodeLast</span><span class="o">(</span><span class="n">p</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">p</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="c1">// link at the end of list
+</span><span class="c1"></span><span class="kd">private</span> <span class="kt">void</span> <span class="nf">linkNodeLast</span><span class="o">(</span><span class="n">LinkedHashMap</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">p</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">LinkedHashMap</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">last</span> <span class="o">=</span> <span class="n">tail</span><span class="o">;</span>
+    <span class="n">tail</span> <span class="o">=</span> <span class="n">p</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">last</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="n">head</span> <span class="o">=</span> <span class="n">p</span><span class="o">;</span>
+    <span class="k">else</span> <span class="o">{</span>
+        <span class="n">p</span><span class="o">.</span><span class="na">before</span> <span class="o">=</span> <span class="n">last</span><span class="o">;</span>
+        <span class="n">last</span><span class="o">.</span><span class="na">after</span> <span class="o">=</span> <span class="n">p</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>上面的两个方法可以看到，每次插入键值对到映射中时，总会和前一个节点建立连接</p>
+
+<h4 id="2-2-linkedhashmap的回调方法">2.2 LinkedHashMap的回调方法</h4>
+
+<p>LinkedHashMap中有3个重要的回调方法，是LinkedHashMap维护链表以及实现顺序迭代的重要依赖</p>
+
+<h5 id="afternoderemoval">afterNodeRemoval</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">// 删除键值对之后调用
+</span><span class="c1"></span><span class="kt">void</span> <span class="nf">afterNodeRemoval</span><span class="o">(</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// unlink
+</span><span class="c1"></span>    <span class="n">LinkedHashMap</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">p</span> <span class="o">=</span>
+        <span class="o">(</span><span class="n">LinkedHashMap</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;)</span><span class="n">e</span><span class="o">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="na">before</span><span class="o">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="na">after</span><span class="o">;</span>
+    <span class="n">p</span><span class="o">.</span><span class="na">before</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="na">after</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">b</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+        <span class="c1">// e = head
+</span><span class="c1"></span>        <span class="n">head</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
+    <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+        <span class="c1">// 将b.after指向a
+</span><span class="c1"></span>        <span class="n">b</span><span class="o">.</span><span class="na">after</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">a</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+        <span class="c1">// e = tail
+</span><span class="c1"></span>        <span class="n">tail</span> <span class="o">=</span> <span class="n">b</span><span class="o">;</span>
+    <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+        <span class="c1">// 将a.before指向b
+</span><span class="c1"></span>        <span class="n">a</span><span class="o">.</span><span class="na">before</span> <span class="o">=</span> <span class="n">b</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">// 连接完成
+</span><span class="c1"></span><span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h5 id="afternodeinsertion">afterNodeInsertion</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">// 插入新节点之后调用
+</span><span class="c1"></span><span class="kt">void</span> <span class="nf">afterNodeInsertion</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">evict</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// possibly remove eldest
+</span><span class="c1"></span>    <span class="n">LinkedHashMap</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">first</span><span class="o">;</span>
+    <span class="c1">// 注意判断条件，需要removeEldestEntry方法返回true
+</span><span class="c1"></span>    <span class="c1">// removeEldestEntry方法默认返回false
+</span><span class="c1"></span>    <span class="c1">//因此默认行为是不删除节点
+</span><span class="c1"></span>    <span class="k">if</span> <span class="o">(</span><span class="n">evict</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">first</span> <span class="o">=</span> <span class="n">head</span><span class="o">)</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">removeEldestEntry</span><span class="o">(</span><span class="n">first</span><span class="o">))</span> <span class="o">{</span>
+        <span class="n">K</span> <span class="n">key</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="na">key</span><span class="o">;</span>
+        <span class="c1">// 移除队头节点
+</span><span class="c1"></span>        <span class="n">removeNode</span><span class="o">(</span><span class="n">hash</span><span class="o">(</span><span class="n">key</span><span class="o">),</span> <span class="n">key</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="kc">false</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+        <span class="c1">//will call afterNodeRemoval
+</span><span class="c1"></span>    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h5 id="afternodeaccess">afterNodeAccess</h5>
+
+<p>如果构造LinkedHashMap时指定构造参数<code>accessOrder=true</code>，那么此法将访问的节点移动至队尾</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kt">void</span> <span class="nf">afterNodeAccess</span><span class="o">(</span><span class="n">Node</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// move node to last
+</span><span class="c1"></span>    <span class="n">LinkedHashMap</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">last</span><span class="o">;</span>
+    <span class="c1">// 访问顺序，且访问节点不为tail
+</span><span class="c1"></span>    <span class="k">if</span> <span class="o">(</span><span class="n">accessOrder</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">last</span> <span class="o">=</span> <span class="n">tail</span><span class="o">)</span> <span class="o">!=</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">LinkedHashMap</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">p</span> <span class="o">=</span>
+            <span class="o">(</span><span class="n">LinkedHashMap</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;)</span><span class="n">e</span><span class="o">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="na">before</span><span class="o">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="na">after</span><span class="o">;</span>
+        <span class="c1">// 置空p.after，因要将p放到队尾
+</span><span class="c1"></span>        <span class="n">p</span><span class="o">.</span><span class="na">after</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">b</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="c1">// b == null说明e==head
+</span><span class="c1"></span>            <span class="n">head</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
+        <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+            <span class="c1">// 将e的前一节点与e的后一节点连接
+</span><span class="c1"></span>            <span class="n">b</span><span class="o">.</span><span class="na">after</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">a</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="c1">// 将e的后一节点与e的前一节点连接
+</span><span class="c1"></span>            <span class="n">a</span><span class="o">.</span><span class="na">before</span> <span class="o">=</span> <span class="n">b</span><span class="o">;</span>
+        <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+            <span class="c1">// 这个条件会被满足吗？
+</span><span class="c1"></span>            <span class="n">last</span> <span class="o">=</span> <span class="n">b</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">last</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="c1">// 这个条件会被满足吗
+</span><span class="c1"></span>            <span class="n">head</span> <span class="o">=</span> <span class="n">p</span><span class="o">;</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="c1">// 将p作为最后节点
+</span><span class="c1"></span>            <span class="n">p</span><span class="o">.</span><span class="na">before</span> <span class="o">=</span> <span class="n">last</span><span class="o">;</span>
+            <span class="n">last</span><span class="o">.</span><span class="na">after</span> <span class="o">=</span> <span class="n">p</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">tail</span> <span class="o">=</span> <span class="n">p</span><span class="o">;</span>
+        <span class="o">++</span><span class="n">modCount</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>上述方法的流程图为：</p>
+
+<p><center><img src="/endlessriver/img/afterNodeAccess_flow.svg" alt="afterNodeAccess" /></center></p>
 
 <h3 id="3-treemap">3 TreeMap</h3>
 
@@ -931,40 +1235,24 @@
 <p>上例中分别对HashMap使用自然排序和指定比较器的方法，可以看到映射中key的排序差异</p>
 
 <p>当指定TreeMap实现类的名字SortedMap或NavigableMap的实现时，方可使用SortedMap和NavigableMap的实用方法，由于方法名都是解释型的，此处不多作表述：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">navigableTest</span><span class="o">()</span> <span class="o">{</span>
-   <span class="n">TreeMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">tm</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeMap</span><span class="o">&lt;&gt;(</span><span class="n">map</span><span class="o">);</span>
-   <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">tm</span><span class="o">.</span><span class="na">firstEntry</span><span class="o">().</span><span class="na">getKey</span><span class="o">());</span>
-   <span class="n">SortedMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">subMap</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="na">subMap</span><span class="o">(</span><span class="s">&#34;AMIT&#34;</span><span class="o">,</span> <span class="s">&#34;andy&#34;</span><span class="o">+</span><span class="s">&#34;0&#34;</span><span class="o">);</span>
-   <span class="n">subMap</span><span class="o">.</span><span class="na">forEach</span><span class="o">((</span><span class="n">k</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="s">&#34;, &#34;</span> <span class="o">+</span> <span class="n">v</span><span class="o">));</span>
-   <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">tm</span><span class="o">.</span><span class="na">ceilingEntry</span><span class="o">(</span><span class="s">&#34;AMIt&#34;</span><span class="o">).</span><span class="na">getKey</span><span class="o">());</span>
- <span class="o">}</span>
-<span class="cm">/* output:
-</span><span class="cm">AMIT
-</span><span class="cm">AMIT, 母系社会
-</span><span class="cm">Lin, 可惜没如果
-</span><span class="cm">andy, 一起走过的日子
-</span><span class="cm">Lin
-</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
-</div>
-</div>
+
+<p>​<code>java
+ static void navigableTest() {
+   TreeMap&lt;String, String&gt; tm = new TreeMap&lt;&gt;(map);
+   System.out.println(tm.firstEntry().getKey());
+   SortedMap&lt;String, String&gt; subMap = tm.subMap(&quot;AMIT&quot;, &quot;andy&quot;+&quot;0&quot;);
+   subMap.forEach((k, v) -&gt; System.out.println(k + &quot;, &quot; + v));
+   System.out.println(tm.ceilingEntry(&quot;AMIt&quot;).getKey());
+ }
+/* output:
+AMIT
+AMIT, 母系社会
+Lin, 可惜没如果
+andy, 一起走过的日子
+Lin
+*///:~
+</code></p>
+
 <blockquote>
 <p>由于subMap方法是“包前不包尾”的（其他获取子映射视图的方法也一样），为了包尾，可以使用上例的方法</p>
 </blockquote>

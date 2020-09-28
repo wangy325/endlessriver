@@ -187,11 +187,32 @@ public boolean add(E e) {
 
 LinkedHashMap(链表散列映射)是HashMap的导出类，像LinkedHashSet与HashSet的关系一样
 
-LinkedHasMap和HashMap的[性能差异](#performance)与HashSet和LinkedHashSet一致
+其与HashMap的差别在于其使用LinkedList来维护键值对插入的顺序，其插入机制和HashMap是一致的
 
-一般地，LinkedHashMap使用**插入顺序**（ *insertion order* ）。但有特殊情况，LinkedHashMap提供构造参数`assertOrder`，来根据**访问顺序**（ *access order* ）对映射条目进行迭代：
+LinkedHashMap和HashMap的[性能相差不大](../set/#1-2-linkedhashset)与HashSet和LinkedHashSet一致：
+
+|||
+|:--|:--|
+|HashMap|HashMap基于散列表，插入和查询键值对的开销是固定的|
+|LinkedHashMap|和HashMap类似，不过其使用LinkedList维护内部次序，因此其迭代顺序是插入顺序或者LRU（最近最少使用）次序，性能稍差于HashMap|
+---
+
+一般地，LinkedHashMap使用**插入顺序**（ *insertion order* ）。但有特殊情况，LinkedHashMap提供构造参数`accessOrder`，来根据**访问顺序**（ *access order* ）对映射条目进行迭代
+
+主要构造器：
 
 ```java
+/**
+ * Constructs an empty LinkedHashMap instance with the
+ * specified initial capacity, load factor and ordering mode.
+ *
+ * @param  initialCapacity the initial capacity
+ * @param  loadFactor      the load factor
+ * @param  accessOrder     the ordering mode - true for
+ *         access-order, false for insertion-order
+ * @throws IllegalArgumentException if the initial capacity is negative
+ *         or the load factor is nonpositive
+ */
 public LinkedHashMap(int initialCapacity,
                          float loadFactor,
                          boolean accessOrder) {
@@ -287,13 +308,16 @@ protected boolean removeEldestEntry(Map.Entry<K,V> eldest) {
 
 如果方法返回false，不执行操作；返回true，则移除参数`eldest`条目
 
-参数 `eldest`是映射的“最旧的”元素——当前最先插入/最少访问的元素：
+参数 `eldest`是映射的“最旧的”元素——当前最先插入/最少访问的元素，即队头元素：
 
 ```java
-// first 为队首entry
-if (evict && (first = head) != null && removeEldestEntry(first)) {
-K key = first.key;
-removeNode(hash(key), key, null, false, true);
+void afterNodeInsertion(boolean evict) { // possibly remove eldest
+    LinkedHashMap.Entry<K,V> first;
+    // if true，移除队头元素
+    if (evict && (first = head) != null && removeEldestEntry(first)) {
+        K key = first.key;
+        removeNode(hash(key), key, null, false, true);
+    }
 }
 ```
 
@@ -326,69 +350,201 @@ private static void eldestRemoveTest() {
 
 ```java
 static void lruCacheTest() {
-  class Cache<K, V> extends LinkedHashMap<K, Integer> {
-    private int count;
-		// 访问顺序构造器
-    private Cache(int initialCapacity, float loadFactor, boolean accessOrder) {
-      super(initialCapacity, loadFactor, accessOrder);
-      this.count = 0;
-    }
+    class Cache<K, V> extends LinkedHashMap<K, V> {
+        private final int count = 50;
 
-    @Override
-    public Integer get(Object key) {
-      // Integer value = super.get(key);
-      // 使用remove保证put触发removeEldestEntry方法
-      Integer value = remove(key);
-      put((K) key, ++value);
-      return value;
-    }
+        private Cache(int initialCapacity, float loadFactor, boolean accessOrder) {
+            super(initialCapacity, loadFactor, accessOrder);
+        }
 
-    @Override
-    protected boolean removeEldestEntry(Map.Entry<K, Integer> eldest) {
-      count++;
-      if (count == 55) {
-        Set<Map.Entry<K, Integer>> entries = entrySet();
-        // 典型的在forEach中使用集合方法出现CME异常的情形
-        /*for (Map.Entry<K, Integer> entry : entries) {
-          	if (entry.getValue() < 8) {
-            	System.out.println(entry.getKey() + ": " + entry.getValue());
-              // entries.remove(entry); // may cause CME
-             }
-          }*/
-        entries.removeIf(next -> {
-          System.out.println(next.getKey() + ": " + next.getValue());
-          return next.getValue() < 10;
-        });
-      }
-      //若在此方法中对集合进行修改，那么必须返回false
-      return false;
+        /**
+         * 此方法总是返回false
+         *
+         * @param eldest
+         * @return false
+         */
+        @Override
+        protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
+            Set<Map.Entry<K, V>> entries = entrySet();
+            // lambda表达式中使用外部变量需要保证线程安全
+            AtomicInteger vs = new AtomicInteger();
+            entries.removeIf(next -> {
+                V value = next.getValue();
+                if (value instanceof Integer) {
+                    if ((Integer) value > 0) {
+                        vs.addAndGet((Integer) value);
+                        return (Integer) value < 10;
+                    }
+                }
+                return false;
+            });
+            // 打印次数反映此法的调用次数
+            System.out.println(vs.intValue() == count);
+            //若在此方法中对集合进行修改，那么必须返回false
+            return false;
+        }
     }
-  }
-  Cache<Integer, Integer> cache = new Cache<Integer, Integer>(8, 0.75f, true);
-  cache.put(1, 0);
-  cache.put(2, 0);
-  cache.put(3, 0);
-  cache.put(4, 0);
-  cache.put(5, 0);
-  for (int i = 0; i < 50; i++) {
-    cache.get(new Random().nextInt(50) % 5 + 1);
-  }
-  System.out.println("------");
-  cache.forEach((k, v) -> System.out.println(k + ": " + v));
+    Cache<Integer, Integer> cache = new Cache<>(8, 0.75f, true);
+    // 初始化映射集， afterNodeInsertion
+    cache.put(1, 0);
+    cache.put(2, 0);
+    cache.put(3, 0);
+    cache.put(4, 0);
+    cache.put(5, 0);
+    for (int i = 0; i < cache.count; i++) {
+        int key = new Random().nextInt(50) % 5 + 1;
+        int value = cache.get(key);
+        if (i == cache.count - 1) {
+            //保证最后一次访问removeEldestEntry方法
+            cache.remove(key);
+        }
+        // 将值增1，实现计数器效果
+        // 此处不能使用compute方法，因此法会调用afterNodeInsertion
+        // 设计的目的在最后一次put之后调用afterNodeInsertion方法，而使用compute会调用2次
+//            cache.put(key, cache.compute(key, (k, v) -> Integer.sum(value, 1)));
+        cache.put(key, ++value);
+
+    }
+    System.out.println("-------");
+
+    cache.forEach((k, v) -> System.out.println(k + ": " + v));
 }
 /* output:
-2: 13
-5: 8
-1: 4
-4: 16
-3: 9
-------
-2: 13
-4: 16
+false
+false
+false
+false
+false
+true
+-------
+1: 11
+2: 12
+4: 14
 *///:~
 ```
 
-上例对一个容量为5的LinkedList进行50次随机访问，每次访问后记录访问次数（用value自增），最后删除访问次数不到10次的条目
+上例对一个容量为5的LinkedList进行50次随机访问，每次访问后记录访问次数（用value自增），最后删除访问次数不到10次的条目。可以看到，`removeEldestEntry`方法调用了6次，最后映射集中只有访问次数大于10次的键值对了
+
+#### 2.1 LinkedHashMap如何链接节点
+
+我们知道，LinkedHashMap在HashMap的基础上使用linkedList（并不是集合框架中的LinkedList）将键值对链接起来，因此键值对才能够被有序迭代，那么这一动作是在什么时候发生的呢？
+
+这一过程涉及到2个方法：
+
+```Java
+// 覆盖了HashMap的newNode方法
+Node<K,V> newNode(int hash, K key, V value, Node<K,V> e) {
+    LinkedHashMap.Entry<K,V> p =
+        new LinkedHashMap.Entry<K,V>(hash, key, value, e);
+    // 链接节点
+    linkNodeLast(p);
+    return p;
+}
+// link at the end of list
+private void linkNodeLast(LinkedHashMap.Entry<K,V> p) {
+    LinkedHashMap.Entry<K,V> last = tail;
+    tail = p;
+    if (last == null)
+        head = p;
+    else {
+        p.before = last;
+        last.after = p;
+    }
+}
+```
+上面的两个方法可以看到，每次插入键值对到映射中时，总会和前一个节点建立连接
+
+#### 2.2 LinkedHashMap的回调方法
+
+LinkedHashMap中有3个重要的回调方法，是LinkedHashMap维护链表以及实现顺序迭代的重要依赖
+
+##### afterNodeRemoval
+
+```Java
+// 删除键值对之后调用
+void afterNodeRemoval(Node<K,V> e) { // unlink
+    LinkedHashMap.Entry<K,V> p =
+        (LinkedHashMap.Entry<K,V>)e, b = p.before, a = p.after;
+    p.before = p.after = null;
+    if (b == null){
+        // e = head
+        head = a;
+    }else{
+        // 将b.after指向a
+        b.after = a;
+    }
+    if (a == null){
+        // e = tail
+        tail = b;
+    }else{
+        // 将a.before指向b
+        a.before = b;
+    }
+    // 连接完成
+}
+```
+
+##### afterNodeInsertion
+
+```Java
+// 插入新节点之后调用
+void afterNodeInsertion(boolean evict) { // possibly remove eldest
+    LinkedHashMap.Entry<K,V> first;
+    // 注意判断条件，需要removeEldestEntry方法返回true
+    // removeEldestEntry方法默认返回false
+    //因此默认行为是不删除节点
+    if (evict && (first = head) != null && removeEldestEntry(first)) {
+        K key = first.key;
+        // 移除队头节点
+        removeNode(hash(key), key, null, false, true);
+        //will call afterNodeRemoval
+    }
+}
+```
+
+##### afterNodeAccess
+
+如果构造LinkedHashMap时指定构造参数`accessOrder=true`，那么此法将访问的节点移动至队尾
+
+```Java
+void afterNodeAccess(Node<K,V> e) { // move node to last
+    LinkedHashMap.Entry<K,V> last;
+    // 访问顺序，且访问节点不为tail
+    if (accessOrder && (last = tail) != e) {
+        LinkedHashMap.Entry<K,V> p =
+            (LinkedHashMap.Entry<K,V>)e, b = p.before, a = p.after;
+        // 置空p.after，因要将p放到队尾
+        p.after = null;
+        if (b == null){
+            // b == null说明e==head
+            head = a;
+        }else{
+            // 将e的前一节点与e的后一节点连接
+            b.after = a;
+        }
+        if (a != null){
+            // 将e的后一节点与e的前一节点连接
+            a.before = b;
+        }else{
+            // 这个条件会被满足吗？
+            last = b;
+        }
+        if (last == null){
+            // 这个条件会被满足吗
+            head = p;
+        }else {
+            // 将p作为最后节点
+            p.before = last;
+            last.after = p;
+        }
+        tail = p;
+        ++modCount;
+    }
+}
+```
+上述方法的流程图为：
+
+<center>![afterNodeAccess](/endlessriver/img/afterNodeAccess_flow.svg)</center>
 
 ### 3 TreeMap
 
@@ -459,7 +615,7 @@ yoga: 说谎
 
 当指定TreeMap实现类的名字SortedMap或NavigableMap的实现时，方可使用SortedMap和NavigableMap的实用方法，由于方法名都是解释型的，此处不多作表述：
 
-```java
+​```java
  static void navigableTest() {
    TreeMap<String, String> tm = new TreeMap<>(map);
    System.out.println(tm.firstEntry().getKey());
