@@ -233,8 +233,9 @@ public LinkedHashMap(int initialCapacity,
 - computeIfAbsent
 - computeIfPresent
 - merge
+- replace
 
-此外，**replace方法只有的成功替换值之后才是有效访问**
+其中，replace方法只有**成功替换值之后才是有效访问**
 
 ```java
 static {
@@ -615,26 +616,30 @@ yoga: 说谎
 
 当指定TreeMap实现类的名字SortedMap或NavigableMap的实现时，方可使用SortedMap和NavigableMap的实用方法，由于方法名都是解释型的，此处不多作表述：
 
-​```java
+```Java
  static void navigableTest() {
-   TreeMap<String, String> tm = new TreeMap<>(map);
-   System.out.println(tm.firstEntry().getKey());
-   SortedMap<String, String> subMap = tm.subMap("AMIT", "andy"+"0");
-   subMap.forEach((k, v) -> System.out.println(k + ", " + v));
-   System.out.println(tm.ceilingEntry("AMIt").getKey());
+     TreeMap<String, String> tm = new TreeMap<>(map);
+      System.out.println(tm.firstEntry().getKey());
+      // 使用一个比key 'andy'大的值，即可包含这个key，"+ 0"是一个实用手段
+      SortedMap<String, String> subMap = tm.subMap("AMIT", "andy" + "0");
+      subMap.compute("AMIT", (k, v) -> "彩虹");
+      subMap.forEach((k, v) -> System.out.println(k + ", " + v));
+
+      //NavigableMap接口方法，返回大于或等于给定key的一个entry
+      System.out.println(tm.ceilingEntry("AMIT").getValue());
  }
 /* output:
 AMIT
-AMIT, 母系社会
+AMIT, 彩虹
 Lin, 可惜没如果
 andy, 一起走过的日子
-Lin
+彩虹
 *///:~
 ```
 
 > 由于subMap方法是“包前不包尾”的（其他获取子映射视图的方法也一样），为了包尾，可以使用上例的方法
 
-NavigableMap对获取子映射视图的方法进行了扩展
+NavigableMap对获取子映射视图的方法进行了扩展，不作过多表述
 
 
 [^9]: 实际上使用put更新已有key的value时，触发的是另一个方法：`afterNodeAccess`，此方法将条目移动至队尾（如果使用访问顺序）
