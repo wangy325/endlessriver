@@ -62,7 +62,7 @@
 
 <meta itemprop="datePublished" content="2020-05-15T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-09-26T14:09:51&#43;08:00" />
-<meta itemprop="wordCount" content="5705">
+<meta itemprop="wordCount" content="5725">
 
 
 
@@ -153,7 +153,7 @@
             <a href="/endlessriver/categories/java/"> Java </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 5705 字 </span>
+          <span class="more-meta analyse"> 约 5725 字 </span>
           <span class="icomoonfree icon-clock"></span>
           <span class="more-meta analyse"> 预计阅读 12 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
@@ -303,10 +303,10 @@
   <span class="n">t</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
   <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;waiting for liftoff&#34;</span><span class="o">);</span>
 <span class="o">}</span>
-<span class="o">/*</span> <span class="nl">output:</span>
-<span class="n">waiting</span> <span class="k">for</span> <span class="n">liftoff</span>
-<span class="err">#</span><span class="n">0</span><span class="o">(</span><span class="n">9</span><span class="o">),</span> <span class="err">#</span><span class="n">0</span><span class="o">(</span><span class="n">8</span><span class="o">),</span> <span class="err">#</span><span class="n">0</span><span class="o">(</span><span class="n">7</span><span class="o">),</span> <span class="err">#</span><span class="n">0</span><span class="o">(</span><span class="n">6</span><span class="o">),</span> <span class="err">#</span><span class="n">0</span><span class="o">(</span><span class="n">5</span><span class="o">),</span> <span class="err">#</span><span class="n">0</span><span class="o">(</span><span class="n">4</span><span class="o">),</span> <span class="err">#</span><span class="n">0</span><span class="o">(</span><span class="n">3</span><span class="o">),</span> <span class="err">#</span><span class="n">0</span><span class="o">(</span><span class="n">2</span><span class="o">),</span> <span class="err">#</span><span class="n">0</span><span class="o">(</span><span class="n">1</span><span class="o">),</span> <span class="err">#</span><span class="n">0</span><span class="o">(</span><span class="n">LiftOff</span><span class="o">!),</span>
-<span class="o">///:~</span></code></pre></td></tr></table>
+<span class="cm">/* output:
+</span><span class="cm">waiting for liftoff
+</span><span class="cm">#0(9), #0(8), #0(7), #0(6), #0(5), #0(4), #0(3), #0(2), #0(1), #0(LiftOff!),
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>从输出可以看到，start()迅速地返回了，而由start()开启的新线程的工作任务还在执行，此例中，main()线程（主线程）与LiftOff.run()线程”同时“执行</p>
@@ -332,10 +332,10 @@
   <span class="o">}</span>
   <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;waiting for liftoff&#34;</span><span class="o">);</span>
 <span class="o">}</span>
-<span class="o">/*</span> <span class="nl">output:</span><span class="err">（</span><span class="n">sample</span><span class="err">）</span>
-<span class="err">#</span><span class="n">1</span><span class="o">(</span><span class="n">9</span><span class="o">),</span> <span class="err">#</span><span class="n">4</span><span class="o">(</span><span class="n">9</span><span class="o">),</span> <span class="n">waiting</span> <span class="k">for</span> <span class="n">liftoff</span>
-<span class="err">#</span><span class="n">3</span><span class="o">(</span><span class="n">9</span><span class="o">),</span> <span class="err">#</span><span class="n">2</span><span class="o">(</span><span class="n">9</span><span class="o">),</span> <span class="err">#</span><span class="n">0</span><span class="o">(</span><span class="n">9</span><span class="o">),</span> <span class="err">#</span><span class="n">2</span><span class="o">(</span><span class="n">8</span><span class="o">),</span> <span class="err">#</span><span class="n">0</span><span class="o">(</span><span class="n">8</span><span class="o">),</span> <span class="err">#</span><span class="n">3</span><span class="o">(</span><span class="n">8</span><span class="o">),</span> <span class="err">#</span><span class="n">4</span><span class="o">(</span><span class="n">8</span><span class="o">),</span> <span class="err">#</span><span class="n">1</span><span class="o">(</span><span class="n">8</span><span class="o">),</span> <span class="err">#</span><span class="n">4</span><span class="o">(</span><span class="n">7</span><span class="o">),</span> <span class="err">#</span><span class="n">3</span><span class="o">(</span><span class="n">7</span><span class="o">),</span> <span class="err">#</span><span class="n">4</span><span class="o">(</span><span class="n">6</span><span class="o">),</span> <span class="err">#</span><span class="n">2</span><span class="o">(</span><span class="n">7</span><span class="o">),</span> <span class="err">#</span><span class="n">0</span><span class="o">(</span><span class="n">7</span><span class="o">),</span> <span class="err">#</span><span class="n">2</span><span class="o">(</span><span class="n">6</span><span class="o">),</span> <span class="err">#</span><span class="n">4</span><span class="o">(</span><span class="n">5</span><span class="o">),</span> <span class="err">#</span><span class="n">3</span><span class="o">(</span><span class="n">6</span><span class="o">),</span> <span class="err">#</span><span class="n">1</span><span class="o">(</span><span class="n">7</span><span class="o">),</span> <span class="err">#</span><span class="n">3</span><span class="o">(</span><span class="n">5</span><span class="o">),</span> <span class="err">#</span><span class="n">4</span><span class="o">(</span><span class="n">4</span><span class="o">),</span> <span class="err">#</span><span class="n">2</span><span class="o">(</span><span class="n">5</span><span class="o">),</span> <span class="err">#</span><span class="n">0</span><span class="o">(</span><span class="n">6</span><span class="o">),</span> <span class="err">#</span><span class="n">2</span><span class="o">(</span><span class="n">4</span><span class="o">),</span> <span class="err">#</span><span class="n">4</span><span class="o">(</span><span class="n">3</span><span class="o">),</span> <span class="err">#</span><span class="n">3</span><span class="o">(</span><span class="n">4</span><span class="o">),</span> <span class="err">#</span><span class="n">1</span><span class="o">(</span><span class="n">6</span><span class="o">),</span> <span class="err">#</span><span class="n">3</span><span class="o">(</span><span class="n">3</span><span class="o">),</span> <span class="err">#</span><span class="n">4</span><span class="o">(</span><span class="n">2</span><span class="o">),</span> <span class="err">#</span><span class="n">2</span><span class="o">(</span><span class="n">3</span><span class="o">),</span> <span class="err">#</span><span class="n">0</span><span class="o">(</span><span class="n">5</span><span class="o">),</span> <span class="err">#</span><span class="n">2</span><span class="o">(</span><span class="n">2</span><span class="o">),</span> <span class="err">#</span><span class="n">4</span><span class="o">(</span><span class="n">1</span><span class="o">),</span> <span class="err">#</span><span class="n">3</span><span class="o">(</span><span class="n">2</span><span class="o">),</span> <span class="err">#</span><span class="n">1</span><span class="o">(</span><span class="n">5</span><span class="o">),</span> <span class="err">#</span><span class="n">3</span><span class="o">(</span><span class="n">1</span><span class="o">),</span> <span class="err">#</span><span class="n">4</span><span class="o">(</span><span class="n">LiftOff</span><span class="o">!),</span> <span class="err">#</span><span class="n">2</span><span class="o">(</span><span class="n">1</span><span class="o">),</span> <span class="err">#</span><span class="n">0</span><span class="o">(</span><span class="n">4</span><span class="o">),</span> <span class="err">#</span><span class="n">2</span><span class="o">(</span><span class="n">LiftOff</span><span class="o">!),</span> <span class="err">#</span><span class="n">3</span><span class="o">(</span><span class="n">LiftOff</span><span class="o">!),</span> <span class="err">#</span><span class="n">1</span><span class="o">(</span><span class="n">4</span><span class="o">),</span> <span class="err">#</span><span class="n">0</span><span class="o">(</span><span class="n">3</span><span class="o">),</span> <span class="err">#</span><span class="n">0</span><span class="o">(</span><span class="n">2</span><span class="o">),</span> <span class="err">#</span><span class="n">1</span><span class="o">(</span><span class="n">3</span><span class="o">),</span> <span class="err">#</span><span class="n">0</span><span class="o">(</span><span class="n">1</span><span class="o">),</span> <span class="err">#</span><span class="n">1</span><span class="o">(</span><span class="n">2</span><span class="o">),</span> <span class="err">#</span><span class="n">0</span><span class="o">(</span><span class="n">LiftOff</span><span class="o">!),</span> <span class="err">#</span><span class="n">1</span><span class="o">(</span><span class="n">1</span><span class="o">),</span> <span class="err">#</span><span class="n">1</span><span class="o">(</span><span class="n">LiftOff</span><span class="o">!),</span>
-<span class="o">///:~</span></code></pre></td></tr></table>
+<span class="cm">/* output:（sample）
+</span><span class="cm">#1(9), #4(9), waiting for liftoff
+</span><span class="cm">#3(9), #2(9), #0(9), #2(8), #0(8), #3(8), #4(8), #1(8), #4(7), #3(7), #4(6), #2(7), #0(7), #2(6), #4(5), #3(6), #1(7), #3(5), #4(4), #2(5), #0(6), #2(4), #4(3), #3(4), #1(6), #3(3), #4(2), #2(3), #0(5), #2(2), #4(1), #3(2), #1(5), #3(1), #4(LiftOff!), #2(1), #0(4), #2(LiftOff!), #3(LiftOff!), #1(4), #0(3), #0(2), #1(3), #0(1), #1(2), #0(LiftOff!), #1(1), #1(LiftOff!),
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>可以看到，不同任务的执行时混乱无序的，这是由线程调度自动控制的</p>
@@ -440,11 +440,11 @@
         <span class="o">}</span>
     <span class="o">}</span>
 <span class="o">}</span>
-<span class="o">/*</span> <span class="nl">output:</span>
-<span class="n">id</span><span class="o">(</span><span class="n">0</span> <span class="n">Thread</span><span class="o">[</span><span class="n">apple</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">main</span><span class="o">])</span> <span class="n">is</span> <span class="n">interrupted</span>
-<span class="nf">id</span><span class="o">(</span><span class="n">1</span> <span class="n">Thread</span><span class="o">[</span><span class="n">google</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">main</span><span class="o">])</span>
-<span class="n">id</span><span class="o">(</span><span class="n">1</span> <span class="n">Thread</span><span class="o">[</span><span class="n">google</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">main</span><span class="o">])</span>
-<span class="o">///:~</span></code></pre></td></tr></table>
+<span class="cm">/* output:
+</span><span class="cm">id(0 Thread[apple,5,main]) is interrupted
+</span><span class="cm">id(1 Thread[google,5,main])
+</span><span class="cm">id(1 Thread[google,5,main])
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>上例说明了线程被中断（调用interrupted()方法）之后，再调用sleep()方法会抛出 <em>InterruptedException</em></p>
@@ -486,12 +486,12 @@
                        <span class="o">+</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;) is&#34;</span> <span class="o">+</span> <span class="s">&#34; interrupted&#34;</span><span class="o">);</span>
   <span class="o">}</span>
 <span class="o">}</span>
-<span class="o">/*</span> <span class="nl">output:</span>
-<span class="n">id</span><span class="o">(</span><span class="n">0</span> <span class="n">Thread</span><span class="o">[</span><span class="n">apple</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">main</span><span class="o">])</span> <span class="n">is</span> <span class="n">interrupted</span>
-<span class="nf">id</span><span class="o">(</span><span class="n">0</span> <span class="n">Thread</span><span class="o">[</span><span class="n">apple</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">main</span><span class="o">])</span>
-<span class="n">id</span><span class="o">(</span><span class="n">1</span> <span class="n">Thread</span><span class="o">[</span><span class="n">google</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">main</span><span class="o">])</span>
-<span class="n">id</span><span class="o">(</span><span class="n">1</span> <span class="n">Thread</span><span class="o">[</span><span class="n">google</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">main</span><span class="o">])</span>
-<span class="o">///:~</span></code></pre></td></tr></table>
+<span class="cm">/* output:
+</span><span class="cm">id(0 Thread[apple,5,main]) is interrupted
+</span><span class="cm">id(0 Thread[apple,5,main])
+</span><span class="cm">id(1 Thread[google,5,main])
+</span><span class="cm">id(1 Thread[google,5,main])
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>这说明，尽管调用sleep()抛出中断异常，线程并没有终止，并且线程的<strong>中断状态还被清除了</strong>，再次循环时程序正常运行</p>
@@ -591,12 +591,12 @@
         <span class="o">}</span>
     <span class="o">}</span>
 <span class="o">}</span>
-<span class="o">/*</span> <span class="nl">output:</span>
-<span class="n">id</span><span class="o">(</span><span class="n">0</span> <span class="n">Thread</span><span class="o">[</span><span class="n">apple</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">main</span><span class="o">])</span>
-<span class="n">TIMED_WAITING</span>
-<span class="nf">id</span><span class="o">(</span><span class="n">0</span> <span class="n">Thread</span><span class="o">[</span><span class="n">apple</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">main</span><span class="o">])</span> <span class="n">is</span> <span class="n">interrupted</span>
-<span class="nf">id</span><span class="o">(</span><span class="n">0</span> <span class="n">Thread</span><span class="o">[</span><span class="n">apple</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">main</span><span class="o">])</span>
-<span class="o">///:~</span></code></pre></td></tr></table>
+<span class="cm">/* output:
+</span><span class="cm">id(0 Thread[apple,5,main])
+</span><span class="cm">TIMED_WAITING
+</span><span class="cm">id(0 Thread[apple,5,main]) is interrupted
+</span><span class="cm">id(0 Thread[apple,5,main])
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>可以看到，<strong>当线程阻塞时，调用interrupted()方法也会抛出异常，并且清除中断状态</strong></p>
@@ -736,23 +736,23 @@
         <span class="n">executorService</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
     <span class="o">}</span>
 <span class="o">}</span>
-<span class="o">/*</span> <span class="nl">output:</span>
-<span class="n">Thread</span><span class="o">[</span><span class="n">pool</span><span class="o">-</span><span class="n">1</span><span class="o">-</span><span class="n">thread</span><span class="o">-</span><span class="n">2</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">main</span><span class="o">]:</span> <span class="n">2</span>
-<span class="n">Thread</span><span class="o">[</span><span class="n">pool</span><span class="o">-</span><span class="n">1</span><span class="o">-</span><span class="n">thread</span><span class="o">-</span><span class="n">5</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">main</span><span class="o">]:</span> <span class="n">2</span>
-<span class="n">Thread</span><span class="o">[</span><span class="n">pool</span><span class="o">-</span><span class="n">1</span><span class="o">-</span><span class="n">thread</span><span class="o">-</span><span class="n">3</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">main</span><span class="o">]:</span> <span class="n">2</span>
-<span class="n">Thread</span><span class="o">[</span><span class="n">pool</span><span class="o">-</span><span class="n">1</span><span class="o">-</span><span class="n">thread</span><span class="o">-</span><span class="n">1</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">main</span><span class="o">]:</span> <span class="n">2</span>
-<span class="n">Thread</span><span class="o">[</span><span class="n">pool</span><span class="o">-</span><span class="n">1</span><span class="o">-</span><span class="n">thread</span><span class="o">-</span><span class="n">4</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">main</span><span class="o">]:</span> <span class="n">2</span>
-<span class="n">Thread</span><span class="o">[</span><span class="n">pool</span><span class="o">-</span><span class="n">1</span><span class="o">-</span><span class="n">thread</span><span class="o">-</span><span class="n">6</span><span class="o">,</span><span class="n">10</span><span class="o">,</span><span class="n">main</span><span class="o">]:</span> <span class="n">2</span>
-<span class="n">Thread</span><span class="o">[</span><span class="n">pool</span><span class="o">-</span><span class="n">1</span><span class="o">-</span><span class="n">thread</span><span class="o">-</span><span class="n">3</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">main</span><span class="o">]:</span> <span class="n">1</span>
-<span class="n">Thread</span><span class="o">[</span><span class="n">pool</span><span class="o">-</span><span class="n">1</span><span class="o">-</span><span class="n">thread</span><span class="o">-</span><span class="n">2</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">main</span><span class="o">]:</span> <span class="n">1</span>
-<span class="n">Thread</span><span class="o">[</span><span class="n">pool</span><span class="o">-</span><span class="n">1</span><span class="o">-</span><span class="n">thread</span><span class="o">-</span><span class="n">5</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">main</span><span class="o">]:</span> <span class="n">1</span>
-<span class="n">Thread</span><span class="o">[</span><span class="n">pool</span><span class="o">-</span><span class="n">1</span><span class="o">-</span><span class="n">thread</span><span class="o">-</span><span class="n">1</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">main</span><span class="o">]:</span> <span class="n">1</span>
-<span class="n">Thread</span><span class="o">[</span><span class="n">pool</span><span class="o">-</span><span class="n">1</span><span class="o">-</span><span class="n">thread</span><span class="o">-</span><span class="n">4</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">main</span><span class="o">]:</span> <span class="n">1</span>
-<span class="n">Thread</span><span class="o">[</span><span class="n">pool</span><span class="o">-</span><span class="n">1</span><span class="o">-</span><span class="n">thread</span><span class="o">-</span><span class="n">6</span><span class="o">,</span><span class="n">10</span><span class="o">,</span><span class="n">main</span><span class="o">]:</span> <span class="n">1</span>
-<span class="o">///:~</span></code></pre></td></tr></table>
+<span class="cm">/* output:
+</span><span class="cm">Thread[pool-1-thread-2,1,main]: 2
+</span><span class="cm">Thread[pool-1-thread-5,1,main]: 2
+</span><span class="cm">Thread[pool-1-thread-3,1,main]: 2
+</span><span class="cm">Thread[pool-1-thread-1,1,main]: 2
+</span><span class="cm">Thread[pool-1-thread-4,1,main]: 2
+</span><span class="cm">Thread[pool-1-thread-6,10,main]: 2
+</span><span class="cm">Thread[pool-1-thread-3,1,main]: 1
+</span><span class="cm">Thread[pool-1-thread-2,1,main]: 1
+</span><span class="cm">Thread[pool-1-thread-5,1,main]: 1
+</span><span class="cm">Thread[pool-1-thread-1,1,main]: 1
+</span><span class="cm">Thread[pool-1-thread-4,1,main]: 1
+</span><span class="cm">Thread[pool-1-thread-6,10,main]: 1
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
-<p>事实上，尽管设置了线程优先级，并且使用了10w次浮点运算来尝试让线程调度优先选择优先级高的线程<sup class="footnote-ref" id="fnref:8"><a href="#fn:8">7</a></sup>，<strong>实际上却没有收到效果</strong></p>
+<p>事实上，尽管设置了线程优先级，并且使用了10w次浮点运算来尝试让线程调度优先选择优先级高的线程<sup class="footnote-ref" id="fnref:8"><a href="#fn:8">7</a></sup>，<strong>实际上却没有收到预期效果</strong>，说明线程优先级并不能准确地调度线程</p>
 
 <h3 id="13-1-6-让步">13.1.6 让步</h3>
 
@@ -850,13 +850,13 @@
         <span class="o">}</span>
     <span class="o">}</span>
 <span class="o">}</span>
-<span class="o">/*</span> <span class="nl">output:</span> <span class="o">(</span><span class="n">sample</span><span class="o">)</span>
-<span class="n">thread</span><span class="o">[</span><span class="n">0</span><span class="o">].</span><span class="na">isDaemon</span><span class="o">:</span> <span class="kc">true</span>
-<span class="n">thread</span><span class="o">[</span><span class="n">1</span><span class="o">].</span><span class="na">isDaemon</span><span class="o">:</span> <span class="kc">true</span>
-<span class="n">thread</span><span class="o">[</span><span class="n">2</span><span class="o">].</span><span class="na">isDaemon</span><span class="o">:</span> <span class="kc">true</span>
-<span class="n">thread</span><span class="o">[</span><span class="n">3</span><span class="o">].</span><span class="na">isDaemon</span><span class="o">:</span> <span class="kc">true</span>
-<span class="n">thread</span><span class="o">[</span><span class="n">4</span><span class="o">].</span><span class="na">isDaemon</span><span class="o">:</span> <span class="kc">true</span>
-<span class="o">///:~</span></code></pre></td></tr></table>
+<span class="cm">/* output: (sample)
+</span><span class="cm">thread[0].isDaemon: true
+</span><span class="cm">thread[1].isDaemon: true
+</span><span class="cm">thread[2].isDaemon: true
+</span><span class="cm">thread[3].isDaemon: true
+</span><span class="cm">thread[4].isDaemon: true
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>上例中，Daemon被设置为守护线程，其派生出的许多线程虽然没有被显示的声明为守护线程，其也确实是守护线程。注意到，Daemon线程的run()方法是一个“很大”的循环，但实际上只循环了几次，那是因为主线程终止了，守护线程于是也被杀死了</p>
@@ -992,12 +992,12 @@
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">currentThread</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;join completed.&#34;</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
-<span class="o">/*</span> <span class="nl">output:</span>
-<span class="n">Thread</span><span class="o">[</span><span class="n">sa</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">main</span><span class="o">]</span><span class="n">is</span> <span class="n">interrupted</span> <span class="o">?</span> <span class="kc">false</span>
-<span class="n">Thread</span><span class="o">[</span><span class="n">ja</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">main</span><span class="o">]</span><span class="n">join</span> <span class="n">completed</span><span class="o">.</span>
-<span class="n">Thread</span><span class="o">[</span><span class="n">sb</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">main</span><span class="o">]</span> <span class="n">has</span> <span class="n">awakened</span><span class="o">.</span>
-<span class="n">Thread</span><span class="o">[</span><span class="n">jb</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">main</span><span class="o">]</span><span class="n">join</span> <span class="n">completed</span><span class="o">.</span>
-<span class="o">///:~</span></code></pre></td></tr></table>
+<span class="cm">/* output:
+</span><span class="cm">Thread[sa,5,main]is interrupted ? false
+</span><span class="cm">Thread[ja,5,main]join completed.
+</span><span class="cm">Thread[sb,5,main] has awakened.
+</span><span class="cm">Thread[jb,5,main]join completed.
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>上例中，ja和jb总是会等待sa和sb完成，sa在main()中被设置中断状态，因此在sa的run()方法执行sleep()会抛出异常，<strong>同时清除中断状态，因此中断状态为false</strong></p>
@@ -1101,9 +1101,9 @@
         <span class="o">}</span>
     <span class="o">}</span>
 <span class="o">}</span>
-<span class="o">/*</span> <span class="nl">output:</span> <span class="o">(</span><span class="n">sample</span><span class="o">)</span>
-<span class="err">#</span><span class="n">1</span><span class="o">(</span><span class="n">1</span><span class="o">),</span> <span class="err">#</span><span class="n">4</span><span class="o">(</span><span class="n">4</span><span class="o">),</span> <span class="err">#</span><span class="n">5</span><span class="o">(</span><span class="n">5</span><span class="o">),</span> <span class="err">#</span><span class="n">3</span><span class="o">(</span><span class="n">3</span><span class="o">),</span> <span class="err">#</span><span class="n">2</span><span class="o">(</span><span class="n">2</span><span class="o">),</span>
-<span class="o">///:~</span></code></pre></td></tr></table>
+<span class="cm">/* output: (sample)
+</span><span class="cm">#1(1), #4(4), #5(5), #3(3), #2(2),
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>上面的示例中，<strong>对象创建时顺便创建并启动线程</strong></p>
@@ -1304,11 +1304,11 @@
         <span class="o">}</span>
     <span class="o">}</span>
 <span class="o">}</span>
-<span class="o">/*</span>
-<span class="n">Exception</span> <span class="n">in</span> <span class="n">thread</span> <span class="s">&#34;Thread-0&#34;</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">RuntimeException</span>
-	<span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">access</span><span class="o">.</span><span class="na">concurrency</span><span class="o">.</span><span class="na">basic</span><span class="o">.</span><span class="na">ExceptionThread$ExceptionT</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">ExceptionThread</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="n">22</span><span class="o">)</span>
-	<span class="n">at</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">Thread</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="n">748</span><span class="o">)</span>
-<span class="o">///:~</span></code></pre></td></tr></table>
+<span class="cm">/*
+</span><span class="cm">Exception in thread &#34;Thread-0&#34; java.lang.RuntimeException
+</span><span class="cm">	at com.access.concurrency.basic.ExceptionThread$ExceptionT.run(ExceptionThread.java:22)
+</span><span class="cm">	at java.lang.Thread.run(Thread.java:748)
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>可以看到，<strong>线程抛出的异常无法被捕获</strong></p>
@@ -1397,9 +1397,9 @@
         <span class="o">}</span>
     <span class="o">}</span>
 <span class="o">}</span>
-<span class="o">/*</span> <span class="nl">output:</span>
-<span class="k">default</span> <span class="o">?(</span><span class="kc">true</span><span class="o">)</span> <span class="n">caught</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">RuntimeException</span>
-<span class="o">///:~</span></code></pre></td></tr></table>
+<span class="cm">/* output:
+</span><span class="cm">default ?(true) caught java.lang.RuntimeException
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>给线程分配异常处理器的的方法有2个：</p>

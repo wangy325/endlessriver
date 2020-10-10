@@ -57,7 +57,7 @@
 
 <meta itemprop="datePublished" content="2020-05-12T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-09-26T14:09:51&#43;08:00" />
-<meta itemprop="wordCount" content="1448">
+<meta itemprop="wordCount" content="1601">
 
 
 
@@ -146,9 +146,9 @@
             <a href="/endlessriver/categories/java/"> Java </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 1448 字 </span>
+          <span class="more-meta analyse"> 约 1601 字 </span>
           <span class="icomoonfree icon-clock"></span>
-          <span class="more-meta analyse"> 预计阅读 3 分钟 </span>
+          <span class="more-meta analyse"> 预计阅读 4 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
           <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/endlessriver/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -267,10 +267,19 @@
 </span><span class="lnt">71
 </span><span class="lnt">72
 </span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UnmodifiableViewTest</span> <span class="o">{</span>
-    <span class="kd">static</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;(){{</span>
+    <span class="kd">static</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{{</span>
         <span class="n">add</span><span class="o">(</span><span class="s">&#34;fan&#34;</span><span class="o">);</span>
         <span class="n">add</span><span class="o">(</span><span class="s">&#34;bar&#34;</span><span class="o">);</span>
         <span class="n">add</span><span class="o">(</span><span class="s">&#34;foo&#34;</span><span class="o">);</span>
@@ -280,66 +289,75 @@
         <span class="n">add</span><span class="o">(</span><span class="s">&#34;hope&#34;</span><span class="o">);</span>
     <span class="o">}};</span>
     <span class="kd">static</span> <span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;(</span><span class="n">l</span><span class="o">);</span>
-    <span class="kd">static</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">m</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;(){{</span>
-        <span class="n">put</span><span class="o">(</span><span class="s">&#34;c&#34;</span><span class="o">,</span><span class="s">&#34;cable&#34;</span><span class="o">);</span>
-        <span class="n">put</span><span class="o">(</span><span class="s">&#34;b&#34;</span><span class="o">,</span><span class="s">&#34;bar&#34;</span><span class="o">);</span>
-        <span class="n">put</span><span class="o">(</span><span class="s">&#34;f&#34;</span><span class="o">,</span><span class="s">&#34;floyd&#34;</span><span class="o">);</span>
-        <span class="n">put</span><span class="o">(</span><span class="s">&#34;e&#34;</span><span class="o">,</span><span class="s">&#34;echo&#34;</span><span class="o">);</span>
-        <span class="n">put</span><span class="o">(</span><span class="s">&#34;a&#34;</span><span class="o">,</span><span class="s">&#34;anchor&#34;</span><span class="o">);</span>
-        <span class="n">put</span><span class="o">(</span><span class="s">&#34;d&#34;</span><span class="o">,</span><span class="s">&#34;dribble&#34;</span><span class="o">);</span>
+    <span class="kd">static</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">m</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;()</span> <span class="o">{{</span>
+        <span class="n">put</span><span class="o">(</span><span class="s">&#34;c&#34;</span><span class="o">,</span> <span class="s">&#34;cable&#34;</span><span class="o">);</span>
+        <span class="n">put</span><span class="o">(</span><span class="s">&#34;b&#34;</span><span class="o">,</span> <span class="s">&#34;bar&#34;</span><span class="o">);</span>
+        <span class="n">put</span><span class="o">(</span><span class="s">&#34;f&#34;</span><span class="o">,</span> <span class="s">&#34;floyd&#34;</span><span class="o">);</span>
+        <span class="n">put</span><span class="o">(</span><span class="s">&#34;e&#34;</span><span class="o">,</span> <span class="s">&#34;echo&#34;</span><span class="o">);</span>
+        <span class="n">put</span><span class="o">(</span><span class="s">&#34;a&#34;</span><span class="o">,</span> <span class="s">&#34;anchor&#34;</span><span class="o">);</span>
+        <span class="n">put</span><span class="o">(</span><span class="s">&#34;d&#34;</span><span class="o">,</span> <span class="s">&#34;dribble&#34;</span><span class="o">);</span>
     <span class="o">}};</span>
+
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 <span class="c1">//        unmodifiableList();
 </span><span class="c1">//        unmodifiableSet();
 </span><span class="c1"></span>        <span class="n">unmodifiableMap</span><span class="o">();</span>
     <span class="o">}</span>
 
-    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">unmodifiableList</span><span class="o">(){</span>
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">strings</span> <span class="o">=</span> <span class="n">Collections</span><span class="o">.</span><span class="na">unmodifiableList</span><span class="o">(</span><span class="n">l</span><span class="o">);</span>
-        <span class="c1">// strings.add(&#34;add&#34;); // USOE
-</span><span class="c1"></span>        <span class="c1">// strings.remove(&#34;bar&#34;); // USOE
-</span><span class="c1"></span>        <span class="c1">// strings.removeAll(l);// USOE
-</span><span class="c1"></span>        <span class="n">strings</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">print</span><span class="o">);</span>
-        <span class="n">ListIterator</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">iterator</span> <span class="o">=</span> <span class="n">strings</span><span class="o">.</span><span class="na">listIterator</span><span class="o">();</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">unmodifiableList</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">ul</span> <span class="o">=</span> <span class="n">Collections</span><span class="o">.</span><span class="na">unmodifiableList</span><span class="o">(</span><span class="n">l</span><span class="o">);</span>
+        <span class="c1">// 对视图集的元素增删会抛出UnsupportedOperationException
+</span><span class="c1"></span>        <span class="c1">// strings.add(&#34;add&#34;);
+</span><span class="c1"></span>        <span class="c1">// strings.remove(&#34;bar&#34;);
+</span><span class="c1"></span>        <span class="c1">// strings.removeAll(l);
+</span><span class="c1"></span>        <span class="n">ul</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">print</span><span class="o">);</span>
+        <span class="c1">//可以操作迭代器
+</span><span class="c1"></span>        <span class="n">ListIterator</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">iterator</span> <span class="o">=</span> <span class="n">ul</span><span class="o">.</span><span class="na">listIterator</span><span class="o">();</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">iterator</span><span class="o">.</span><span class="na">nextIndex</span><span class="o">());</span>
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">strings1</span> <span class="o">=</span> <span class="n">strings</span><span class="o">.</span><span class="na">subList</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">2</span><span class="o">);</span>
-        <span class="n">strings1</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+<span class="c1">//        List&lt;String&gt; ul_sub = l.subList(1, 3);
+</span><span class="c1"></span>        <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">ul_sub</span> <span class="o">=</span> <span class="n">ul</span><span class="o">.</span><span class="na">subList</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">3</span><span class="o">);</span>
+        <span class="c1">// 子集对元素的操作也是不支持的
+</span><span class="c1">//        ul_sub.removeIf(s -&gt; s.equals(&#34;foo&#34;));
+</span><span class="c1"></span>        <span class="n">ul_sub</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
     <span class="o">}</span>
 
-    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">unmodifiableSet</span><span class="o">(){</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">unmodifiableSet</span><span class="o">()</span> <span class="o">{</span>
         <span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">set</span> <span class="o">=</span> <span class="n">Collections</span><span class="o">.</span><span class="na">unmodifiableSet</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">set</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">&#34;anchor&#34;</span><span class="o">));</span>
         <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">set</span><span class="o">.</span><span class="na">iterator</span><span class="o">();</span>
         <span class="n">i</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
-        <span class="c1">// i.remove(); //USOE
-</span><span class="c1"></span>        <span class="c1">// set.clear(); // USOE
-</span><span class="c1"></span>        <span class="n">TreeSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span>  <span class="n">ts</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeSet</span><span class="o">&lt;&gt;(</span><span class="n">s</span><span class="o">);</span>
+        <span class="c1">// 迭代器无法移除元素是必然的
+</span><span class="c1"></span>        <span class="c1">// i.remove();
+</span><span class="c1"></span>        <span class="c1">// set.clear();
+</span><span class="c1"></span>        <span class="n">TreeSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">ts</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeSet</span><span class="o">&lt;&gt;(</span><span class="n">s</span><span class="o">);</span>
         <span class="c1">// 使用sorted set构建
-</span><span class="c1"></span>        <span class="n">NavigableSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">strings</span> <span class="o">=</span> <span class="n">Collections</span><span class="o">.</span><span class="na">unmodifiableNavigableSet</span><span class="o">(</span><span class="n">ts</span><span class="o">);</span>
-        <span class="c1">// String s = strings.pollFirst(); //USOE
-</span><span class="c1"></span>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">strings</span><span class="o">.</span><span class="na">first</span><span class="o">());</span>
-        <span class="n">NavigableSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">anchor</span> <span class="o">=</span> <span class="n">strings</span><span class="o">.</span><span class="na">headSet</span><span class="o">(</span><span class="s">&#34;anchor&#34;</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
-        <span class="c1">//anchor.remove(&#34;anchor&#34;); //USOE
+</span><span class="c1"></span>        <span class="n">NavigableSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">ns</span> <span class="o">=</span> <span class="n">Collections</span><span class="o">.</span><span class="na">unmodifiableNavigableSet</span><span class="o">(</span><span class="n">ts</span><span class="o">);</span>
+        <span class="c1">// 无法从集中移除元素 UnsupportedOperationException
+</span><span class="c1">//        String s = ns.pollFirst();
+</span><span class="c1"></span>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">ns</span><span class="o">.</span><span class="na">first</span><span class="o">());</span>
+        <span class="n">NavigableSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">anchor</span> <span class="o">=</span> <span class="n">ns</span><span class="o">.</span><span class="na">headSet</span><span class="o">(</span><span class="s">&#34;anchor&#34;</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+        <span class="c1">// 子集也不能被修改
+</span><span class="c1">//        anchor.remove(&#34;anchor&#34;);
 </span><span class="c1"></span>        <span class="n">anchor</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
     <span class="o">}</span>
 
-    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">unmodifiableMap</span><span class="o">(){</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">unmodifiableMap</span><span class="o">()</span> <span class="o">{</span>
         <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="n">Collections</span><span class="o">.</span><span class="na">unmodifiableMap</span><span class="o">(</span><span class="n">m</span><span class="o">);</span>
-        <span class="c1">// map.replace(&#34;a&#34;,&#34;apple&#34;); //USOE
+        <span class="c1">// 不支持的操作
+</span><span class="c1"></span>        <span class="c1">// map.replace(&#34;a&#34;,&#34;apple&#34;);
 </span><span class="c1"></span>        <span class="n">Set</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="n">map</span><span class="o">.</span><span class="na">entrySet</span><span class="o">();</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&#34;f&#34;</span><span class="o">));</span>
-        <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;&gt;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">iterator</span><span class="o">();</span>
-        <span class="n">i</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
-        <span class="c1">// i.remove(); //USOE
-</span><span class="c1"></span>        <span class="n">TreeMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">tm</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeMap</span><span class="o">&lt;&gt;(</span><span class="n">m</span><span class="o">);</span>
+
+        <span class="n">TreeMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">tm</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeMap</span><span class="o">&lt;&gt;(</span><span class="n">m</span><span class="o">);</span>
         <span class="c1">// 使用sorted map
 </span><span class="c1"></span>        <span class="n">NavigableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">nm</span> <span class="o">=</span> <span class="n">Collections</span><span class="o">.</span><span class="na">unmodifiableNavigableMap</span><span class="o">(</span><span class="n">tm</span><span class="o">);</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">nm</span><span class="o">.</span><span class="na">ceilingEntry</span><span class="o">(</span><span class="s">&#34;car&#34;</span><span class="o">).</span><span class="na">getValue</span><span class="o">());</span>
         <span class="n">NavigableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">sm</span> <span class="o">=</span> <span class="n">nm</span><span class="o">.</span><span class="na">subMap</span><span class="o">(</span><span class="s">&#34;b&#34;</span><span class="o">,</span> <span class="kc">true</span><span class="o">,</span> <span class="s">&#34;d&#34;</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
-        <span class="c1">// sm.remove(&#34;c&#34;); //USOE
-</span><span class="c1"></span>        <span class="n">sm</span><span class="o">.</span><span class="na">forEach</span><span class="o">((</span><span class="n">k</span><span class="o">,</span><span class="n">v</span><span class="o">)-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">k</span><span class="o">+</span><span class="s">&#34;, &#34;</span><span class="o">+</span><span class="n">v</span><span class="o">));</span>
+        <span class="c1">// 不支持的操作
+</span><span class="c1"></span>        <span class="c1">// sm.remove(&#34;c&#34;);
+</span><span class="c1"></span>        <span class="n">sm</span><span class="o">.</span><span class="na">forEach</span><span class="o">((</span><span class="n">k</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="s">&#34;, &#34;</span> <span class="o">+</span> <span class="n">v</span><span class="o">));</span>
         <span class="n">NavigableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">descendingMap</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="na">descendingMap</span><span class="o">();</span>
-        <span class="n">descendingMap</span><span class="o">.</span><span class="na">forEach</span><span class="o">((</span><span class="n">k</span><span class="o">,</span><span class="n">v</span><span class="o">)-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">k</span><span class="o">+</span><span class="s">&#34;, &#34;</span><span class="o">+</span><span class="n">v</span><span class="o">));</span>
+        <span class="n">descendingMap</span><span class="o">.</span><span class="na">forEach</span><span class="o">((</span><span class="n">k</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="s">&#34;, &#34;</span> <span class="o">+</span> <span class="n">v</span><span class="o">));</span>
     <span class="o">}</span>
 <span class="o">}</span></code></pre></td></tr></table>
 </div>
@@ -387,7 +405,7 @@
 
 <h3 id="2-同步视图">2 同步视图</h3>
 
-<p>由于Java集合框架中很多（上述全部）都不是同步的， <em>Java SE 8 API Specification</em> 里面重复出现的一段话就是</p>
+<p>由于Java集合框架中的组成都不是同步的（Vector和Hashtable除外）， <em>Java SE 8 API Specification</em> 里面重复出现的一段话就是</p>
 
 <blockquote>
 <p><strong><em>Note that this implementation is not synchronized.</em></strong> If multiple threads access an <code>ArrayList</code> instance concurrently, and at least one of the threads modifies the list structurally, it <em>must</em> be synchronized externally. (A structural modification is any operation that adds or deletes one or more elements, or explicitly resizes the backing array; merely setting the value of an element is not a structural modification.) This is typically accomplished by synchronizing on some object that naturally encapsulates the list. If no such object exists, the list should be &ldquo;wrapped&rdquo; using the <code>Collections.synchronizedList</code>method. This is best done at creation time, to prevent accidental unsynchronized access to the list:</p>

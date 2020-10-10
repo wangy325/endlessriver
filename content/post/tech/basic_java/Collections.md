@@ -32,7 +32,7 @@ Java中提供的获取**不可修改视图**的方法，只能用来遍历原集
 
 ```java
 public class UnmodifiableViewTest {
-    static List<String> l = new ArrayList<String>(){{
+    static List<String> l = new ArrayList<String>() {{
         add("fan");
         add("bar");
         add("foo");
@@ -42,66 +42,75 @@ public class UnmodifiableViewTest {
         add("hope");
     }};
     static Set<String> s = new HashSet<>(l);
-    static Map<String,String> m = new HashMap<String, String>(){{
-        put("c","cable");
-        put("b","bar");
-        put("f","floyd");
-        put("e","echo");
-        put("a","anchor");
-        put("d","dribble");
+    static Map<String, String> m = new HashMap<String, String>() {{
+        put("c", "cable");
+        put("b", "bar");
+        put("f", "floyd");
+        put("e", "echo");
+        put("a", "anchor");
+        put("d", "dribble");
     }};
+
     public static void main(String[] args) {
 //        unmodifiableList();
 //        unmodifiableSet();
         unmodifiableMap();
     }
 
-    static void unmodifiableList(){
-        List<String> strings = Collections.unmodifiableList(l);
-        // strings.add("add"); // USOE
-        // strings.remove("bar"); // USOE
-        // strings.removeAll(l);// USOE
-        strings.forEach(System.out::print);
-        ListIterator<String> iterator = strings.listIterator();
+    static void unmodifiableList() {
+        List<String> ul = Collections.unmodifiableList(l);
+        // 对视图集的元素增删会抛出UnsupportedOperationException
+        // strings.add("add");
+        // strings.remove("bar");
+        // strings.removeAll(l);
+        ul.forEach(System.out::print);
+        //可以操作迭代器
+        ListIterator<String> iterator = ul.listIterator();
         System.out.println(iterator.nextIndex());
-        List<String> strings1 = strings.subList(1, 2);
-        strings1.forEach(System.out::println);
+//        List<String> ul_sub = l.subList(1, 3);
+        List<String> ul_sub = ul.subList(1, 3);
+        // 子集对元素的操作也是不支持的
+//        ul_sub.removeIf(s -> s.equals("foo"));
+        ul_sub.forEach(System.out::println);
     }
 
-    static void unmodifiableSet(){
+    static void unmodifiableSet() {
         Set<String> set = Collections.unmodifiableSet(s);
         System.out.println(set.contains("anchor"));
         Iterator<String> i = set.iterator();
         i.next();
-        // i.remove(); //USOE
-        // set.clear(); // USOE
-        TreeSet<String>  ts = new TreeSet<>(s);
+        // 迭代器无法移除元素是必然的
+        // i.remove();
+        // set.clear();
+        TreeSet<String> ts = new TreeSet<>(s);
         // 使用sorted set构建
-        NavigableSet<String> strings = Collections.unmodifiableNavigableSet(ts);
-        // String s = strings.pollFirst(); //USOE
-        System.out.println(strings.first());
-        NavigableSet<String> anchor = strings.headSet("anchor", true);
-        //anchor.remove("anchor"); //USOE
+        NavigableSet<String> ns = Collections.unmodifiableNavigableSet(ts);
+        // 无法从集中移除元素 UnsupportedOperationException
+//        String s = ns.pollFirst();
+        System.out.println(ns.first());
+        NavigableSet<String> anchor = ns.headSet("anchor", true);
+        // 子集也不能被修改
+//        anchor.remove("anchor");
         anchor.forEach(System.out::println);
     }
 
-    static void unmodifiableMap(){
+    static void unmodifiableMap() {
         Map<String, String> map = Collections.unmodifiableMap(m);
-        // map.replace("a","apple"); //USOE
+        // 不支持的操作
+        // map.replace("a","apple");
         Set<Map.Entry<String, String>> e = map.entrySet();
         System.out.println(map.get("f"));
-        Iterator<Map.Entry<String, String>> i = e.iterator();
-        i.next();
-        // i.remove(); //USOE
-        TreeMap<String,String> tm = new TreeMap<>(m);
+
+        TreeMap<String, String> tm = new TreeMap<>(m);
         // 使用sorted map
         NavigableMap<String, String> nm = Collections.unmodifiableNavigableMap(tm);
         System.out.println(nm.ceilingEntry("car").getValue());
         NavigableMap<String, String> sm = nm.subMap("b", true, "d", true);
-        // sm.remove("c"); //USOE
-        sm.forEach((k,v)-> System.out.println(k+", "+v));
+        // 不支持的操作
+        // sm.remove("c");
+        sm.forEach((k, v) -> System.out.println(k + ", " + v));
         NavigableMap<String, String> descendingMap = sm.descendingMap();
-        descendingMap.forEach((k,v)-> System.out.println(k+", "+v));
+        descendingMap.forEach((k, v) -> System.out.println(k + ", " + v));
     }
 }
 ```
@@ -131,7 +140,7 @@ public class UnmodifiableViewTest {
 
 ### 2 同步视图
 
-由于Java集合框架中很多（上述全部）都不是同步的， *Java SE 8 API Specification* 里面重复出现的一段话就是
+由于Java集合框架中的组成都不是同步的（Vector和Hashtable除外）， *Java SE 8 API Specification* 里面重复出现的一段话就是
 
 > ***Note that this implementation is not synchronized.*** If multiple threads access an `ArrayList` instance concurrently, and at least one of the threads modifies the list structurally, it *must* be synchronized externally. (A structural modification is any operation that adds or deletes one or more elements, or explicitly resizes the backing array; merely setting the value of an element is not a structural modification.) This is typically accomplished by synchronizing on some object that naturally encapsulates the list. If no such object exists, the list should be "wrapped" using the `Collections.synchronizedList`method. This is best done at creation time, to prevent accidental unsynchronized access to the list:
 >
