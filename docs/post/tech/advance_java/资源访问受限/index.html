@@ -44,15 +44,15 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangy325.github.io/endlessriver/post/tech/advance_java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/" />
 <meta property="article:published_time" content="2020-05-20T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2020-10-12T12:01:38&#43;08:00"/>
+<meta property="article:modified_time" content="2020-10-19T15:44:59&#43;08:00"/>
 
 <meta itemprop="name" content="资源访问受限—Java并发系列之二">
 <meta itemprop="description" content="在系列一中，虽然创建了多线程，并且线程之间出现了一些不可预测的CPU调度，但是由于线程之间是相互隔离的——线程没有访问共同的资源，尽管在执行任务的过程可能被CPU剥夺运行权，但是当它们再次获得运行权时对运行结果并没有影响，它们是安全的">
 
 
 <meta itemprop="datePublished" content="2020-05-20T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-10-12T12:01:38&#43;08:00" />
-<meta itemprop="wordCount" content="10688">
+<meta itemprop="dateModified" content="2020-10-19T15:44:59&#43;08:00" />
+<meta itemprop="wordCount" content="12516">
 
 
 
@@ -139,9 +139,9 @@
             <a href="/endlessriver/categories/java/"> Java </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 10688 字 </span>
+          <span class="more-meta analyse"> 约 12516 字 </span>
           <span class="icomoonfree icon-clock"></span>
-          <span class="more-meta analyse"> 预计阅读 22 分钟 </span>
+          <span class="more-meta analyse"> 预计阅读 25 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
           <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/endlessriver/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -173,6 +173,8 @@
 <li><a href="#4-原子性与原子类">4 原子性与原子类</a></li>
 <li><a href="#5-可见性-volatile">5 可见性（volatile）</a></li>
 <li><a href="#6-临界区">6 临界区</a></li>
+<li><a href="#7-线程本地存储-threadlocal">7 线程本地存储-ThreadLocal</a></li>
+<li><a href="#8-再论object超类">8 再论Object超类</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -2056,6 +2058,319 @@
 <h2 id="6-临界区">6 临界区</h2>
 
 <p>使用synchronized关键字对整个方法加锁（防止其他线程访问整个方法）往往会带来更大的性能开销，如果你只想保护某些代码块，可以使用<strong>同步代码块</strong>，这一段被锁保护的代码块就称为<strong>临界区</strong>（ <em>critical section</em> ），前面的<strong>显式锁</strong>所保护的区域以及使用<strong>synchronized</strong>保护的代码块都是临界区</p>
+
+<h2 id="7-线程本地存储-threadlocal">7 线程本地存储-ThreadLocal</h2>
+
+<p>既然共享资源需要考虑同步问题，那么阻止资源共享就可避免线程冲突<sup class="footnote-ref" id="fnref:17"><a href="#fn:17">10</a></sup>。<code>java.lang.ThreadLoacl</code>类提供了一种机制，为使用相同变量的不同线程提供不同的存储，称为<strong>线程本地存储</strong></p>
+
+<p>考虑SimpleDateFormat类，它不是线程安全的，如果作为全局变量，在多线程情况下可能会出现问题。使用同步的开销太大，一般是直接使用局部变量来解决问题，不过这也很浪费资源。因为SimpleDateFormat不必是共享资源，这时候，可以使用线程本地存储：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">ThreadLoacl</span><span class="o">&lt;</span><span class="n">SimpleDateFormat</span><span class="o">&gt;</span> <span class="n">dateFormat</span>
+  <span class="o">=</span> <span class="n">ThreadLoacal</span><span class="o">.</span><span class="na">withInitial</span><span class="o">(()-&gt;{</span>
+    <span class="k">new</span> <span class="n">SimpleDateFormat</span><span class="o">(</span><span class="s">&#34;yyyy-MM-dd&#34;</span><span class="o">);</span>
+  <span class="o">})</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>这样每个线程都有一个dataFormat实例</p>
+
+<p>下例中，每个线程都有一个线程本地存储，用于存储一个0-100的随机数，然后对其进行自增运算</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ThreadLocalVariableHolder</span> <span class="o">{</span>
+    <span class="c1">// Java 8 提供的方法
+</span><span class="c1"></span>    <span class="cm">/*static final ThreadLocal&lt;Integer&gt; value = ThreadLocal.withInitial(new Supplier&lt;Integer&gt;() {
+</span><span class="cm">        @Override
+</span><span class="cm">        public Integer get() {
+</span><span class="cm">            Random r = new Random();
+</span><span class="cm">            return r.nextInt(10);
+</span><span class="cm">        }
+</span><span class="cm">    });*/</span>
+
+    <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Task</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+        <span class="kd">static</span> <span class="kd">final</span> <span class="n">ThreadLocal</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">value</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ThreadLocal</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;()</span> <span class="o">{</span>
+            <span class="kd">private</span> <span class="n">Random</span> <span class="n">r</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="o">();</span>
+
+            <span class="nd">@Override</span>
+            <span class="kd">protected</span> <span class="kd">synchronized</span> <span class="n">Integer</span> <span class="nf">initialValue</span><span class="o">()</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="na">nextInt</span><span class="o">(</span><span class="n">100</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">};</span>
+
+        <span class="kd">static</span> <span class="kt">void</span> <span class="nf">increment</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">value</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">value</span><span class="o">.</span><span class="na">get</span><span class="o">()</span> <span class="o">+</span> <span class="n">1</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="kd">static</span> <span class="n">Integer</span> <span class="nf">getValue</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;: &#34;</span> <span class="o">+</span> <span class="n">getValue</span><span class="o">();</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">while</span> <span class="o">(!</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">isInterrupted</span><span class="o">())</span> <span class="o">{</span>
+                <span class="n">increment</span><span class="o">();</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">2</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="k">new</span> <span class="n">Task</span><span class="o">()).</span><span class="na">start</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="n">TimeUnit</span><span class="o">.</span><span class="na">MILLISECONDS</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/* output(sample):
+</span><span class="cm">Thread[Thread-1,5,main]: 41
+</span><span class="cm">Thread[Thread-3,5,main]: 19
+</span><span class="cm">Thread[Thread-1,5,main]: 42
+</span><span class="cm">Thread[Thread-3,5,main]: 20
+</span><span class="cm">Thread[Thread-1,5,main]: 43
+</span><span class="cm">Thread[Thread-3,5,main]: 21
+</span><span class="cm">...
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>可以看到，虽然没有同步，但是也无需担心资源冲突的问题，线程1和线程3的数据不会互相干扰</p>
+
+<p>ThreadLoacl通常作为<strong>静态域</strong>存储，虽然多个线程只有一个ThreadLocal实例，但是每个实例都有自己的存储，并不会有竞争条件</p>
+
+<p><a href="https://www.jianshu.com/p/00abc3e884d2">深入理解ThreadLocal</a></p>
+
+<h2 id="8-再论object超类">8 再论Object超类</h2>
+
+<p>之前的讨论中，我们说到了<a href="../../basic_java/object超类/">Object超类</a>的hashCode和equals方法，这次在多线程环境下阐释Object超类的其他几个重要方法</p>
+
+<p>多线程条件下，使用互斥（mutex）来解决资源共享问题时常用手段，接下来讨论的是如何让2个线程之间协同起来</p>
+
+<p>其实在可重入锁的<a href="#condition">条件</a>对象的使用中，就使用了对象之间的协作——当要转账时，发现余额不足则当前转账线程等待，而被其他线程唤醒以继续执行（虽然它可能又进入等待）。它工作的机制是线程A获得了锁，但是发现其必须在某个条件上等待（余额充足），于是其阻塞并释放锁（可被中断），线程B得以获得锁并执行，B执行完成之后唤醒线程A，其进入Runnable状态</p>
+
+<p><center>
+<img src="/endlessriver/img/wait_on_condition.svg" alt="" />
+<p><i>线程在条件上等待的工作逻辑</i></p>
+</center></p>
+
+<p><strong>Object对象的wait()，notify()和notifyAll()方法提供了线程线程之间协作的能力</strong></p>
+
+<p><code>wait()</code>方法使当前线程进入等待，其还可以接受一个超时参数</p>
+
+<p><code>wait()</code>方法必须配合synchronized关键字使用，原因是调用<code>wait()</code>方法时，该对象的监视器被释放了——前提是<strong>必须要先持有对象的监视器</strong></p>
+
+<p><code>notify()</code>用于唤醒一个在<strong>当前监视器</strong>（如果是临界区，则是指定对象锁；若是同步方法，则是实例锁）上等待的线程，notify方法有相当的局限性：</p>
+
+<ol>
+<li>并不是唤醒所有的<code>wait()</code>线程，它没有这个能力，只能唤醒（使用）相同监视器的线程</li>
+<li>并不是唤醒指定当前监视器的线程，它只唤醒一个，至于是哪一个是不确定的</li>
+</ol>
+
+<p><code>notifyAll()</code>用于唤醒在<strong>当前监视器</strong>上等待的所有线程</p>
+
+<p><code>notify()</code>和<code>notifyAll()</code>方法也只能在获取锁之后执行，被唤醒的线程也只有等调用<code>notify()</code>和<code>notifyAll()</code>方法的锁被释放之后才可能继续执行</p>
+
+<p>考虑下面的例子：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">WaitOnCondition</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">volatile</span> <span class="kt">boolean</span> <span class="n">tracked</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+
+    <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">playTrack</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(!</span><span class="n">tracked</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// 在WaitOnCondition实例上等待
+</span><span class="c1"></span>            <span class="n">wait</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;play &#34;</span><span class="o">);</span>
+        <span class="n">tracked</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">recordTrack</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">tracked</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;record &#34;</span><span class="o">);</span>
+        <span class="n">tracked</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="c1">// 最好不要使用notify,除非你明确地知道期待的线程一定被唤醒
+</span><span class="c1"></span>        <span class="n">notifyAll</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">Play</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+
+        <span class="nd">@SneakyThrows</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">playTrack</span><span class="o">();</span>
+                <span class="n">TimeUnit</span><span class="o">.</span><span class="na">MILLISECONDS</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">1000</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">Record</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+        <span class="nd">@SneakyThrows</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">recordTrack</span><span class="o">();</span>
+                <span class="n">TimeUnit</span><span class="o">.</span><span class="na">MILLISECONDS</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">1000</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="n">WaitOnCondition</span> <span class="n">tp</span> <span class="o">=</span> <span class="k">new</span> <span class="n">WaitOnCondition</span><span class="o">();</span>
+        <span class="n">var</span> <span class="n">pool</span> <span class="o">=</span> <span class="n">Executors</span><span class="o">.</span><span class="na">newCachedThreadPool</span><span class="o">();</span>
+        <span class="n">pool</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="n">tp</span><span class="o">.</span><span class="na">new</span> <span class="nf">Play</span><span class="o">());</span>
+        <span class="n">pool</span><span class="o">.</span><span class="na">submit</span><span class="o">((</span><span class="n">tp</span><span class="o">.</span><span class="na">new</span> <span class="nf">Record</span><span class="o">()));</span>
+
+        <span class="n">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">5</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/* output:
+</span><span class="cm">record play record play record play record play
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>record和play任务本来是可以无序运行的，但是由于play任务在<code>playTrack()</code>方法上使用了<code>wait()</code>，条件是布尔值<code>tracked</code>，该值由record任务在<code>recordTrack</code>时修改，修改完成之后record任务负责唤醒等待的线程。这样就完成了线程的交互</p>
+
+<p>将<code>tracked</code>设置为<code>volatile</code>变量是volatile关键字的典型应用场景</p>
+
+<blockquote>
+<p>在使用条件时，应当谨慎地避免死锁</p>
+</blockquote>
 <div class="footnotes">
 
 <hr />
@@ -2079,6 +2394,8 @@
  <a class="footnote-return" href="#fnref:14"><sup>[return]</sup></a></li>
 <li id="fn:16">不一定正确，还需要查阅资料进行确认
  <a class="footnote-return" href="#fnref:16"><sup>[return]</sup></a></li>
+<li id="fn:17">有时候资源共享是必须的，同步也是必须的
+ <a class="footnote-return" href="#fnref:17"><sup>[return]</sup></a></li>
 </ol>
 </div>
     </div>
@@ -2091,8 +2408,8 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2020-10-12
-        <a href="https://github.com/wangy325/my_blog/commit/804c49069ff05088380ce20d07ec68cf517fb911" title="线程资源共享部分内容更新">(804c490)</a>
+        2020-10-19
+        <a href="https://github.com/wangy325/my_blog/commit/49655a2d97e1477d6df0790d1e0865863aa94413" title="增加部分synchronized关键字内容">(49655a2)</a>
     </span>
   </p>
   
