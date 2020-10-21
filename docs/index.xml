@@ -6,10 +6,19 @@
     <description>Recent content on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 24 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Oct 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangy325.github.io/endlessriver/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>获取任务的返回值—Java并发系列之三</title>
+      <link>https://wangy325.github.io/endlessriver/post/tech/advance_java/%E8%8E%B7%E5%8F%96%E4%BB%BB%E5%8A%A1%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC/</link>
+      <pubDate>Tue, 20 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.github.io/endlessriver/post/tech/advance_java/%E8%8E%B7%E5%8F%96%E4%BB%BB%E5%8A%A1%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC/</guid>
+      <description>要创建一个任务，通常实现Runnable接口。考虑一个经典的问题：用多线程分段计算0-100的加和，我们需要把每个线程计算的值汇总，然后再得</description>
+    </item>
     
     <item>
       <title>HashMap的源码分析（一）</title>
@@ -199,17 +208,6 @@
       
       <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/static%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
       <description>&lt;p&gt;介绍static关键字&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>访问权限修饰符—Java基础系列之一</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/</link>
-      <pubDate>Mon, 13 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;本系列内容主要来自TIJ，Java核心技术卷以及Java SE 8 API&lt;/p&gt;
-&lt;/blockquote&gt;</description>
     </item>
     
   </channel>
