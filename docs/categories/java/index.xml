@@ -6,10 +6,25 @@
     <description>Recent content in Java on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 20 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 23 Oct 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangy325.github.io/endlessriver/categories/java/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>终结任务—Java并发系列之四</title>
+      <link>https://wangy325.github.io/endlessriver/post/tech/advance_java/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</link>
+      <pubDate>Fri, 23 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.github.io/endlessriver/post/tech/advance_java/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</guid>
+      <description>&lt;p&gt;一般地，如果程序运行良好，任务执行完所需操作后自然结束，任务终结&lt;/p&gt;
+
+&lt;p&gt;如果任务执行时出现异常，任务也会终结&lt;/p&gt;
+
+&lt;p&gt;在设计多个线程协同工作的任务时，需要判断任务终结的条件，以便合适地终结任务，这点尤为重要&lt;/p&gt;
+
+&lt;p&gt;在本节中主要讨论在多线程协同工作的情况下，如何合适的终结线程&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>获取任务的返回值—Java并发系列之三</title>
@@ -198,15 +213,6 @@
       
       <guid>https://wangy325.github.io/endlessriver/post/tech/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/</guid>
       <description>&lt;p&gt;在使用匿名内部类比较器的时候，idea提供了几个层次的比较器代码优化，给👴整懵逼了。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>代理模式</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</link>
-      <pubDate>Wed, 05 Dec 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangy325.github.io/endlessriver/post/tech/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</guid>
-      <description>&lt;p&gt;代理可以简单理解为，B类托管A类的功能，并根据需求，对A类的访问作&lt;font color=red&gt;&lt;strong&gt;控制&lt;/strong&gt;&lt;/font&gt;，这里的&lt;font color=red&gt;&lt;strong&gt;控制&lt;/strong&gt;&lt;/font&gt;可以理解为对A类方法执行的流程的影响，包括但不限于：&lt;/p&gt;</description>
     </item>
     
   </channel>

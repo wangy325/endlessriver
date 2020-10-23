@@ -6,10 +6,25 @@
     <description>Recent content in Java进阶 on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 20 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 23 Oct 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangy325.github.io/endlessriver/tags/java%E8%BF%9B%E9%98%B6/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>终结任务—Java并发系列之四</title>
+      <link>https://wangy325.github.io/endlessriver/post/tech/advance_java/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</link>
+      <pubDate>Fri, 23 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.github.io/endlessriver/post/tech/advance_java/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</guid>
+      <description>&lt;p&gt;一般地，如果程序运行良好，任务执行完所需操作后自然结束，任务终结&lt;/p&gt;
+
+&lt;p&gt;如果任务执行时出现异常，任务也会终结&lt;/p&gt;
+
+&lt;p&gt;在设计多个线程协同工作的任务时，需要判断任务终结的条件，以便合适地终结任务，这点尤为重要&lt;/p&gt;
+
+&lt;p&gt;在本节中主要讨论在多线程协同工作的情况下，如何合适的终结线程&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>获取任务的返回值—Java并发系列之三</title>

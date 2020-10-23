@@ -50,7 +50,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangy325.github.io/endlessriver/post/tech/advance_java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" />
 <meta property="article:published_time" content="2020-05-15T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2020-10-10T15:00:20&#43;08:00"/>
+<meta property="article:modified_time" content="2020-10-23T11:11:03&#43;08:00"/>
 
 <meta itemprop="name" content="线程与任务—Java并发系列之一">
 <meta itemprop="description" content="并发是生产过程不可能绕过去的坎，要编写高性能的程序，必须使用并发
@@ -61,8 +61,8 @@
 
 
 <meta itemprop="datePublished" content="2020-05-15T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-10-10T15:00:20&#43;08:00" />
-<meta itemprop="wordCount" content="5760">
+<meta itemprop="dateModified" content="2020-10-23T11:11:03&#43;08:00" />
+<meta itemprop="wordCount" content="6230">
 
 
 
@@ -153,9 +153,9 @@
             <a href="/endlessriver/categories/java/"> Java </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 5760 字 </span>
+          <span class="more-meta analyse"> 约 6230 字 </span>
           <span class="icomoonfree icon-clock"></span>
-          <span class="more-meta analyse"> 预计阅读 12 分钟 </span>
+          <span class="more-meta analyse"> 预计阅读 13 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
           <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/endlessriver/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -168,20 +168,17 @@
 <ul>
 <li>
 <ul>
-<li>
-<ul>
-<li><a href="#13-1-1-任务">13.1.1 任务</a></li>
-<li><a href="#13-1-2-线程">13.1.2 线程</a></li>
-<li><a href="#13-1-3-线程生命周期">13.1.3 线程生命周期</a></li>
-<li><a href="#13-1-4-中断状态">13.1.4 中断状态</a></li>
-<li><a href="#13-1-5-优先级">13.1.5 优先级</a></li>
-<li><a href="#13-1-6-让步">13.1.6 让步</a></li>
-<li><a href="#13-1-7-守护线程">13.1.7 守护线程</a></li>
-<li><a href="#13-1-8-休眠">13.1.8 休眠</a></li>
-<li><a href="#13-1-9-加入一个线程">13.1.9 加入一个线程</a></li>
-<li><a href="#13-1-10-自管理线程">13.1.10 自管理线程</a></li>
-<li><a href="#13-1-11-捕获异常">13.1.11 捕获异常</a></li>
-</ul></li>
+<li><a href="#1-任务">1 任务</a></li>
+<li><a href="#2-线程">2 线程</a></li>
+<li><a href="#3-线程生命周期">3 线程生命周期</a></li>
+<li><a href="#4-中断状态">4 中断状态</a></li>
+<li><a href="#5-优先级">5 优先级</a></li>
+<li><a href="#6-让步">6 让步</a></li>
+<li><a href="#7-守护线程">7 守护线程</a></li>
+<li><a href="#8-休眠">8 休眠</a></li>
+<li><a href="#9-加入一个线程">9 加入一个线程</a></li>
+<li><a href="#10-自管理线程">10 自管理线程</a></li>
+<li><a href="#11-捕获异常">11 捕获异常</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -196,7 +193,7 @@
 
 <!-- 实际上，开发过程中线程于任务（的联系）被隔离的更加明显，往往不需要显式地声明线程，然后将任务（声明任务是必须的）分配给线程，并由线程负责驱动（ *allocate task to thread to execute* ），这一过程通常由**线程池**完成 -->
 
-<h3 id="13-1-1-任务">13.1.1 任务</h3>
+<h2 id="1-任务">1 任务</h2>
 
 <p>任务是由线程驱动的，因此声明任务然后将其<strong>交给线程</strong>即可</p>
 
@@ -282,7 +279,7 @@
 
 <p>因此，从Runnabl导出的类，除了必须声明run()方法之外，其不会产生任何的线程能力，<strong>要实现线程行为，必须显式地将其分配给线程</strong></p>
 
-<h3 id="13-1-2-线程">13.1.2 线程</h3>
+<h2 id="2-线程">2 线程</h2>
 
 <p>Thread即线程。将Runnable转为 <em>工作任务</em> 的的<strong>传统方法</strong>就是将其提交给Thread构造器</p>
 <div class="highlight"><div class="chroma">
@@ -340,7 +337,7 @@
 </div>
 <p>可以看到，不同任务的执行时混乱无序的，这是由线程调度自动控制的</p>
 
-<h3 id="13-1-3-线程生命周期">13.1.3 线程生命周期</h3>
+<h2 id="3-线程生命周期">3 线程生命周期</h2>
 
 <p><strong>NEW</strong></p>
 
@@ -366,7 +363,7 @@
 
 <p>​   1）run()方法正常退出，2）没有捕获的异常终止了run()方法</p>
 
-<h3 id="13-1-4-中断状态">13.1.4 中断状态</h3>
+<h2 id="4-中断状态">4 中断状态</h2>
 
 <p>当run()方法return或遇到异常时，线程终止运行，除此之外，无法强制终止线程<sup class="footnote-ref" id="fnref:4"><a href="#fn:4">4</a></sup></p>
 
@@ -633,7 +630,7 @@
 
 <p>使用isInterrupted()和interrupted()方法都可以获取线程的中断状态，二者的区别在于isInterrupted()方法不会清除线程的中断状态（ <em>interrupted status of the thread is unaffected</em> ）；但interrupted()方法会清除线程的中断状态，且该方法是<strong>静态方法</strong></p>
 
-<h3 id="13-1-5-优先级">13.1.5 优先级</h3>
+<h2 id="5-优先级">5 优先级</h2>
 
 <p>线程的<strong>优先级</strong>将线程的重要性传递给调度器，尽管CPU处理线程的顺序是不确定的，但是调度器倾向于<strong>优先让优先级高的线程执行</strong><sup class="footnote-ref" id="fnref:6"><a href="#fn:6">6</a></sup></p>
 
@@ -758,13 +755,13 @@
 </div>
 <p>事实上，尽管设置了线程优先级，并且使用了10w次浮点运算来尝试让线程调度优先选择优先级高的线程<sup class="footnote-ref" id="fnref:8"><a href="#fn:8">7</a></sup>，<strong>实际上却没有收到预期效果</strong>，说明线程优先级并不能准确地调度线程</p>
 
-<h3 id="13-1-6-让步">13.1.6 让步</h3>
+<h2 id="6-让步">6 让步</h2>
 
 <p><code>Thread.yield()</code>是一个静态方法，可以给线程调度器一个<strong>暗示</strong>：当前线程的run()方法已经完成的差不多了，可以让别的线程（相同优先级）使用CPU了。注意，没有任何机制保证这个暗示一定会采纳</p>
 
 <p><strong>不要误用此方法</strong>！</p>
 
-<h3 id="13-1-7-守护线程">13.1.7 守护线程</h3>
+<h2 id="7-守护线程">7 守护线程</h2>
 
 <p>有些地方称之为<strong>后台（daemon）线程</strong>，一般在程序运行时在后台提供通用服务，守护线程在程序开发中<strong>并不是必不可少的</strong></p>
 
@@ -869,7 +866,7 @@
 <p>守护线程不会执行finally子句，这是因为守护线程被设计为“强制关闭“的，一旦所有的非守护线程终止，守护线程就会”突然“关闭，不允许存在执行finally块这样”优雅“的行为</p>
 </blockquote>
 
-<h3 id="13-1-8-休眠">13.1.8 休眠</h3>
+<h2 id="8-休眠">8 休眠</h2>
 
 <p>通常调用<code>sleep()</code>可以使线程中止一段时间，此时线程让出CPU时间给其他线程使用</p>
 
@@ -877,11 +874,11 @@
 
 <p>对sleep()的调用可能引发<a href="#ie">中断异常</a>（ <em>Interrupted Exception</em> ）</p>
 
-<h3 id="13-1-9-加入一个线程">13.1.9 加入一个线程</h3>
+<h2 id="9-加入一个线程">9 加入一个线程</h2>
 
-<p>可以在一个线程（ <em>A</em> ）中调用另一个线程（ <em>B</em> ）的<code>join()</code>方法，其效果是<strong>A线程会挂起，等待B线程执行完毕后再继续执行</strong>，<code>join()</code>方法可以接受一个时间参数，表示最长等待时间，若超时仍未返回，A线程继续执行</p>
+<p>可以在一个线程（ <em>A</em> ）中调用另一个线程（ <em>B</em> ）的<code>join()</code>方法，其效果是<strong>A线程会进入等待（挂起），等待B线程执行完毕后再继续执行</strong>，<code>join()</code>方法可以接受一个时间参数，表示最长等待时间，若超时仍未返回，A线程继续执行</p>
 
-<p><code>join()</code>可以被中断，中断发生的情况和休眠一致</p>
+<p><code>join()</code>方法可以被中断，中断发生的情况和休眠一致</p>
 
 <p>下面的代码演示了 interrupt，sleep和join方法所执行的操作：</p>
 <div class="highlight"><div class="chroma">
@@ -1033,7 +1030,130 @@
 
 <p>上例中，还有一个关注点：<strong>在构造器中直接调用了<code>start()</code>方法</strong>，这种方式称为<strong>自管理线程</strong></p>
 
-<h3 id="13-1-10-自管理线程">13.1.10 自管理线程</h3>
+<p>不难理解，“加入一个线程”含有让线程<strong>有序执行</strong>的语义，利用这个性质，可以实现简单的<strong>无锁同步</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SyncWithoutSynchronized</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">sum</span><span class="o">;</span>
+
+    <span class="kt">void</span> <span class="nf">increase</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">sum</span><span class="o">++;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;: &#34;</span> <span class="o">+</span> <span class="n">sum</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/** 单线程模式 */</span>
+    <span class="kt">void</span> <span class="nf">singleThread</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="n">Thread</span> <span class="n">task</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">100</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">increase</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+        <span class="n">task</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="c1">// 等待task执行完成
+</span><span class="c1"></span>        <span class="n">task</span><span class="o">.</span><span class="na">join</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sum</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kt">void</span> <span class="nf">multiThread</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">10</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+                    <span class="n">increase</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">});</span>
+            <span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+            <span class="c1">// 使用join()保证有序性，此时可以不需要同步
+</span><span class="c1"></span>            <span class="c1">// join() 保证了happens-before原则
+</span><span class="c1"></span>            <span class="n">thread</span><span class="o">.</span><span class="na">join</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="c1">// 主线程等待所有的子线程结束
+</span><span class="c1"></span>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sum</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="n">SyncWithoutSynchronized</span> <span class="n">va</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SyncWithoutSynchronized</span><span class="o">();</span>
+    <span class="c1">//        va.singleThread();
+</span><span class="c1"></span>        <span class="n">va</span><span class="o">.</span><span class="na">multiThread</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/* output:
+</span><span class="cm">Thread[Thread-0,5,main]: 1
+</span><span class="cm">Thread[Thread-1,5,main]: 2
+</span><span class="cm">Thread[Thread-2,5,main]: 3
+</span><span class="cm">Thread[Thread-3,5,main]: 4
+</span><span class="cm">Thread[Thread-4,5,main]: 5
+</span><span class="cm">Thread[Thread-5,5,main]: 6
+</span><span class="cm">Thread[Thread-6,5,main]: 7
+</span><span class="cm">Thread[Thread-7,5,main]: 8
+</span><span class="cm">Thread[Thread-8,5,main]: 9
+</span><span class="cm">Thread[Thread-9,5,main]: 10
+</span><span class="cm">10
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>上例使用后台任务计算<code>1+2+...+10</code>的值，主线程总是等待后台任务执行完成之后再返回。在<code>multiThread()</code>方法中，额外开启了10个线程，每一个线程都在主线程上调用<code>join()</code>方法，从输出来看，线程0-9是顺序执行的，最终的结果不会出现讹误，这种情况下，实现了无锁同步，而共享变量<code>sum</code>不需要额外处理</p>
+
+<h2 id="10-自管理线程">10 自管理线程</h2>
 
 <p>除了实现Runnable接口之外，还可以通过<strong>继承Thread类</strong>来创建线程</p>
 <div class="highlight"><div class="chroma">
@@ -1106,8 +1226,8 @@
     <span class="o">}</span>
 <span class="o">}</span>
 <span class="cm">/* output: (sample)
-</span><span class="cm">#1(1), #4(4), #5(5), #3(3), #2(2),
-</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</span><span class="cm"> * #1(1), #4(4), #5(5), #3(3), #2(2),
+</span><span class="cm"> */</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>上面的示例中，<strong>对象创建时顺便创建并启动线程</strong></p>
@@ -1260,7 +1380,7 @@
 </div>
 <p>需要说明的是，本节讨论的都是<strong>显式创建线程</strong>的方式，这种方式在有些规范里已经不再推荐了，尤其在很多线程协同的场景下，<strong>创建并维护线程</strong>的成本以及<strong>上下文切换</strong>的成本会非常高，此时，<strong>线程池</strong>将是更好的选择</p>
 
-<h3 id="13-1-11-捕获异常">13.1.11 捕获异常</h3>
+<h2 id="11-捕获异常">11 捕获异常</h2>
 
 <p>从线程中逃逸的异常不能被捕获，一旦线程中的异常逃逸到run()方法外部，那么它将会传播到控制台，这种情况下，线程就终止了</p>
 <div class="highlight"><div class="chroma">
@@ -1447,8 +1567,8 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2020-10-10
-        <a href="https://github.com/wangy325/my_blog/commit/b8b48cefb4799eef04dcb7df87e3bfabcdb25fb1" title="集合视图以及线程基础内容更新">(b8b48ce)</a>
+        2020-10-23
+        <a href="https://github.com/wangy325/my_blog/commit/8a28c36a504c907a39c1ff9b3a701831be778172" title="join可以使线程有序执行">(8a28c36)</a>
     </span>
   </p>
   
