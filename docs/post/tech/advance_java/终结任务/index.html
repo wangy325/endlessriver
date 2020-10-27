@@ -19,7 +19,7 @@
 <meta name="author" content="wangy325" /><meta name="description" content="一般地，如果程序运行良好，任务执行完所需操作后自然结束，任务终结
 如果任务执行时出现异常，任务也会终结
 在设计多个线程协同工作的任务时，需要判断任务终结的条件，以便合适地终结任务，这点尤为重要
-在本节中主要讨论在多线程协同工作的情况下，如何合适的终结线程
+在本节中主要讨论在多线程协同工作的情况下，如何合适的终结任务
 " />
 
 
@@ -49,11 +49,11 @@
 
 在设计多个线程协同工作的任务时，需要判断任务终结的条件，以便合适地终结任务，这点尤为重要
 
-在本节中主要讨论在多线程协同工作的情况下，如何合适的终结线程" />
+在本节中主要讨论在多线程协同工作的情况下，如何合适的终结任务" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangy325.github.io/endlessriver/post/tech/advance_java/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/" />
 <meta property="article:published_time" content="2020-10-23T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2020-10-23T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2020-10-25T17:44:55&#43;08:00"/>
 
 <meta itemprop="name" content="终结任务—Java并发系列之四">
 <meta itemprop="description" content="一般地，如果程序运行良好，任务执行完所需操作后自然结束，任务终结
@@ -62,12 +62,12 @@
 
 在设计多个线程协同工作的任务时，需要判断任务终结的条件，以便合适地终结任务，这点尤为重要
 
-在本节中主要讨论在多线程协同工作的情况下，如何合适的终结线程">
+在本节中主要讨论在多线程协同工作的情况下，如何合适的终结任务">
 
 
 <meta itemprop="datePublished" content="2020-10-23T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-10-23T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="3167">
+<meta itemprop="dateModified" content="2020-10-25T17:44:55&#43;08:00" />
+<meta itemprop="wordCount" content="3278">
 
 
 
@@ -80,7 +80,7 @@
 
 在设计多个线程协同工作的任务时，需要判断任务终结的条件，以便合适地终结任务，这点尤为重要
 
-在本节中主要讨论在多线程协同工作的情况下，如何合适的终结线程"/>
+在本节中主要讨论在多线程协同工作的情况下，如何合适的终结任务"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -160,7 +160,7 @@
             <a href="/endlessriver/categories/java/"> Java </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 3167 字 </span>
+          <span class="more-meta analyse"> 约 3278 字 </span>
           <span class="icomoonfree icon-clock"></span>
           <span class="more-meta analyse"> 预计阅读 7 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
@@ -187,7 +187,7 @@
 
 <p>在设计多个线程协同工作的任务时，需要判断任务终结的条件，以便合适地终结任务，这点尤为重要</p>
 
-<p>在本节中主要讨论在多线程协同工作的情况下，如何合适的终结线程</p>
+<p>在本节中主要讨论在多线程协同工作的情况下，如何合适的终结任务</p>
 
 <h1 id="响应中断">响应中断</h1>
 
@@ -386,9 +386,13 @@
 </span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
-<p>因为两个任务是交互等待-执行的，调用<code>wait()</code>方法而进入<strong>WAITING</strong>状态的线程可以被中断并抛出异常<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>，上面的输出显示<code>BufferOn</code>任务先响应中断，这只是可能的情况之一，因为输出*Wax Off!*之后<code>BufferOn</code>任务会进入等待，而正好被中断</p>
+<p>因为两个任务是交互等待-执行的，调用<code>wait()</code>方法而进入<strong>WAITING</strong>状态的线程可以被中断并抛出异常<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>，上面的输出显示<code>BufferOn</code>任务先响应中断，这只是可能的情况之一，因为输出 <em>Wax Off!</em> 之后<code>BufferOn</code>任务会进入等待，而正好被中断</p>
 
-<p>调用执行器的<code>shutdownNow()</code>方法关闭提交的任务，<code>shutdownNow()</code>方法会立即给已经提交的任务发送一个中断<code>interrupt()</code>命令。调用<code>shutdownNow()</code>之后，可以看到两个任务都抛出<code>InterruptedException</code>异常</p>
+<p>调用执行器的<code>shutdownNow()</code>方法关闭提交的任务，<code>shutdownNow()</code>方法会立即给已经提交的任务发送一个中断<code>interrupt()</code>命令。调用<code>shutdownNow()</code>之后，可以看到两个任务都抛出<code>InterruptedException</code></p>
+
+<blockquote>
+<p>⚠️注意： 两个任务都抛出中断异常和任务中的sleep方法有关，由于sleep和wait都可以被中断并抛出异常，所以异常的抛出是由谁引发的并不容易确定。虽然try块位于任务的最外层，但是<code>Thread.interrupted()</code>方法并不抛出异常</p>
+</blockquote>
 
 <p>上例实际上是利用了中断线程而出现的异常而终止线程的运行，然而，<strong>BLOCKED</strong><sup class="footnote-ref" id="fnref:2"><a href="#fn:2">2</a></sup>状态下的线程无法响应中断</p>
 
@@ -968,8 +972,8 @@ Exiting via while() test</pre></td></tr></table>
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2020-10-23
-        
+        2020-10-25
+        <a href="https://github.com/wangy325/my_blog/commit/49cd7eeee42c3345d68d8b67adea7dc620545f21" title="关于任务是如何结束的">(49cd7ee)</a>
     </span>
   </p>
   
@@ -994,7 +998,11 @@ Exiting via while() test</pre></td></tr></table>
           <a href="/endlessriver/tags/java%E8%BF%9B%E9%98%B6/">Java进阶</a>
           </div>
       <nav class="post-nav">
-        
+        <a class="prev" href="/endlessriver/post/tech/advance_java/%E7%94%9F%E4%BA%A7%E8%80%85%E4%B8%8E%E6%B6%88%E8%B4%B9%E8%80%85/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">阻塞队列—Java并发系列之五</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
         <a class="next" href="/endlessriver/post/tech/advance_java/%E8%8E%B7%E5%8F%96%E4%BB%BB%E5%8A%A1%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC/">
             <span class="next-text nav-default">获取任务的返回值—Java并发系列之三</span>
             <span class="next-text nav-mobile">下一篇</span>

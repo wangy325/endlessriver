@@ -6,10 +6,32 @@
     <description>Recent content in Java on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 23 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Oct 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangy325.github.io/endlessriver/categories/java/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Java内存模型与volatile关键字(转)</title>
+      <link>https://wangy325.github.io/endlessriver/post/tech/advance_java/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</link>
+      <pubDate>Tue, 27 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.github.io/endlessriver/post/tech/advance_java/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</guid>
+      <description>&lt;p&gt;本文转自&lt;a href=&#34;http://www.cnblogs.com/dolphin0520/p/3920373.html&#34;&gt;Matrix海子&lt;/a&gt;，是描述&lt;code&gt;volatile&lt;/code&gt;关键字非常好的一篇文章，从Java的内存模型开始，归本溯源的阐述了&lt;code&gt;volatile&lt;/code&gt;关键字在并发中的作用与局限&lt;/p&gt;
+
+&lt;p&gt;此博客的内容参照了《深入理解Java虚拟机》的内容&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>阻塞队列—Java并发系列之五</title>
+      <link>https://wangy325.github.io/endlessriver/post/tech/advance_java/%E7%94%9F%E4%BA%A7%E8%80%85%E4%B8%8E%E6%B6%88%E8%B4%B9%E8%80%85/</link>
+      <pubDate>Mon, 26 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.github.io/endlessriver/post/tech/advance_java/%E7%94%9F%E4%BA%A7%E8%80%85%E4%B8%8E%E6%B6%88%E8%B4%B9%E8%80%85/</guid>
+      <description>&lt;p&gt;在讨论线程协作的时候，已经讨论了生产者与消费者雏形，比如录音是生产者，而播放则是消费者；同样的，在汽车打蜡的模型中，打蜡可看作生产者，抛光可看作消费者；只是它们的关系是简单的生产-消费关系&lt;/p&gt;
+
+&lt;p&gt;除了简单的线程协同之外，Java提供了&lt;strong&gt;同步队列&lt;/strong&gt;来解决线程的协同问题，本节重点讨论这部分的内容&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>终结任务—Java并发系列之四</title>
@@ -23,7 +45,7 @@
 
 &lt;p&gt;在设计多个线程协同工作的任务时，需要判断任务终结的条件，以便合适地终结任务，这点尤为重要&lt;/p&gt;
 
-&lt;p&gt;在本节中主要讨论在多线程协同工作的情况下，如何合适的终结线程&lt;/p&gt;</description>
+&lt;p&gt;在本节中主要讨论在多线程协同工作的情况下，如何合适的终结任务&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -193,26 +215,6 @@
       
       <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/static%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
       <description>&lt;p&gt;介绍static关键字&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>访问权限修饰符—Java基础系列之一</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/</link>
-      <pubDate>Mon, 13 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;本系列内容主要来自TIJ，Java核心技术卷以及Java SE 8 API&lt;/p&gt;
-&lt;/blockquote&gt;</description>
-    </item>
-    
-    <item>
-      <title>比较器的「退化」</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/</link>
-      <pubDate>Tue, 27 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangy325.github.io/endlessriver/post/tech/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/</guid>
-      <description>&lt;p&gt;在使用匿名内部类比较器的时候，idea提供了几个层次的比较器代码优化，给👴整懵逼了。&lt;/p&gt;</description>
     </item>
     
   </channel>

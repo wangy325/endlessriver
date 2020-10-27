@@ -2,8 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wangy325.github.io/endlessriver/post/tech/advance_java/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</loc>
+    <lastmod>2020-10-27T23:45:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangy325.github.io/endlessriver/post/tech/advance_java/%E7%94%9F%E4%BA%A7%E8%80%85%E4%B8%8E%E6%B6%88%E8%B4%B9%E8%80%85/</loc>
+    <lastmod>2020-10-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://wangy325.github.io/endlessriver/post/tech/advance_java/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</loc>
-    <lastmod>2020-10-23T00:00:00+00:00</lastmod>
+    <lastmod>2020-10-25T17:44:55+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -122,37 +136,37 @@
   
   <url>
     <loc>https://wangy325.github.io/endlessriver/categories/</loc>
-    <lastmod>2020-10-23T11:11:03+08:00</lastmod>
+    <lastmod>2020-10-27T23:45:59+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.github.io/endlessriver/</loc>
-    <lastmod>2020-10-23T11:11:03+08:00</lastmod>
+    <lastmod>2020-10-27T23:45:59+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.github.io/endlessriver/categories/java/</loc>
-    <lastmod>2020-10-23T11:11:03+08:00</lastmod>
+    <lastmod>2020-10-27T23:45:59+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.github.io/endlessriver/tags/java%E8%BF%9B%E9%98%B6/</loc>
-    <lastmod>2020-10-23T11:11:03+08:00</lastmod>
+    <lastmod>2020-10-27T23:45:59+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.github.io/endlessriver/post/</loc>
-    <lastmod>2020-10-23T11:11:03+08:00</lastmod>
+    <lastmod>2020-10-27T23:45:59+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.github.io/endlessriver/tags/</loc>
-    <lastmod>2020-10-23T11:11:03+08:00</lastmod>
+    <lastmod>2020-10-27T23:45:59+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -413,11 +427,6 @@
   
   <url>
     <loc>https://wangy325.github.io/endlessriver/post/tech/advance_java/%E6%AD%BB%E9%94%81/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangy325.github.io/endlessriver/post/tech/advance_java/%E7%94%9F%E4%BA%A7%E8%80%85%E4%B8%8E%E6%B6%88%E8%B4%B9%E8%80%85/</loc>
     <priority>0</priority>
   </url>
   
