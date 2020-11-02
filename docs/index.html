@@ -45,7 +45,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://wangy325.github.io/endlessriver/" />
 
-<meta property="og:updated_time" content="2020-10-27T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2020-10-30T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Endless River">
 <meta itemprop="description" content="">
@@ -119,6 +119,40 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/endlessriver/post/tech/advance_java/%E6%AD%BB%E9%94%81/">死锁—Java并发系列之六</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-10-30 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/endlessriver/categories/java/"> Java </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 3214 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 7 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>Java有能力使任务为等待某些条件成立而进入阻塞状态，所以就有可能出现这样一种情况：某个任务在等待另一个任务，而后者又在等待其他的任务，这样一直等待下去，直到等待链上的最后一个任务又在等待第一个任务释放锁，这样就出现了任务之间相互等待的连续循环现象，这种情况出现之后，没有哪个任务能够执行，于是 <strong>死锁</strong> 出现</p>
+
+<p>死锁之所以难以规避，其重要的原因就在于其不确定性，可能程序运行良好，但是有潜在的死锁风险，这个风险在某些域的初始条件变化时，变得特别大，导致程序很快死锁。同时，死锁的出现也很难复现，它就像埋在程序里的地雷</p>
+    </div>
+    <div class="read-more">
+      <a href="/endlessriver/post/tech/advance_java/%E6%AD%BB%E9%94%81/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/endlessriver/post/tech/advance_java/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">Java内存模型与volatile关键字(转)</a></h1>
     <div class="post-meta">
 
@@ -133,7 +167,7 @@
           <a href="/endlessriver/categories/java/"> Java </a>
           </div>
         <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 10446 字 </span>
+        <span class="more-meta analyse"> 约 10447 字 </span>
         <span class="icomoonfree icon-clock"></span>
         <span class="more-meta"> 预计阅读 21 分钟 </span>
     </div>
@@ -316,6 +350,8 @@
   <div class="post-content">
     <div class="post-summary">
       <p>在系列一中，虽然创建了多线程，并且线程之间出现了一些<strong>不可预测</strong>的CPU调度，但是由于线程之间是<strong>相互隔离</strong>的——<strong>线程没有访问共同的资源</strong>，尽管在执行任务的过程可能被CPU剥夺运行权，但是当它们再次获得运行权时对运行结果并没有影响，它们是安全的</p>
+
+<p>考虑一种情况，如果<strong>多个线程访问同一个资源</strong>，并对资源内容进行修改，会发生什么情况？</p>
     </div>
     <div class="read-more">
       <a href="/endlessriver/post/tech/advance_java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/" class="read-more-link">阅读更多</a>
@@ -421,40 +457,6 @@
     </div>
     <div class="read-more">
       <a href="/endlessriver/post/tech/basic_java/map/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/endlessriver/post/tech/basic_java/set/">Set—Java集合框架系列之三</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2020-05-06 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/endlessriver/categories/java/"> Java </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 3019 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 7 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>Set是<strong>不含重复元素的集</strong>，严格来讲，Set不允许当<code>e1.equals(e2)</code>为真时， <em>e1</em> 和 <em>e2</em> 同时出现在集合中。Set最多允许一个<code>null</code>元素</p>
-
-<p>将<strong>可变对象</strong>置入Set时需要特别小心，当对象的改动影响到了元素之间的<code>equals()</code>比较的结果，那么Set的行为就变得不确定了。因此，<strong>不能将Set本身作为Set的元素</strong></p>
-    </div>
-    <div class="read-more">
-      <a href="/endlessriver/post/tech/basic_java/set/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
