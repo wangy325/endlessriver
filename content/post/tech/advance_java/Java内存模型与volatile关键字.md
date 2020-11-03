@@ -16,7 +16,7 @@ autoCollapseToc: false
 
 本文转自[Matrix海子](http://www.cnblogs.com/dolphin0520/p/3920373.html)，是描述`volatile`关键字非常好的一篇文章，从Java的内存模型开始，归本溯源的阐述了`volatile`关键字在并发中的作用与局限
 
-此博客的内容参照了《深入理解Java虚拟机》的内容
+此文部分内容参照了《深入理解Java虚拟机》
 
 <!--more-->
 

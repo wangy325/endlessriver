@@ -51,7 +51,7 @@
 
 <meta itemprop="datePublished" content="2020-10-20T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-10-22T20:40:27&#43;08:00" />
-<meta itemprop="wordCount" content="2876">
+<meta itemprop="wordCount" content="3518">
 
 
 
@@ -138,9 +138,9 @@
             <a href="/endlessriver/categories/java/"> Java </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 2876 字 </span>
+          <span class="more-meta analyse"> 约 3518 字 </span>
           <span class="icomoonfree icon-clock"></span>
-          <span class="more-meta analyse"> 预计阅读 6 分钟 </span>
+          <span class="more-meta analyse"> 预计阅读 8 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
           <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/endlessriver/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -163,6 +163,7 @@
 <li><a href="#构造器">构造器</a></li>
 <li><a href="#方法-1">方法</a></li>
 </ul></li>
+<li><a href="#应用示例">应用示例</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -337,7 +338,7 @@
 <td class="lntd">
 <pre class="chroma"><code class="language-java" data-lang="java"><span class="kt">boolean</span> <span class="nf">cancel</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">mayInterruptIfRunning</span><span class="o">)</span>
 
-    <span class="n">尝试取消任务的执行</span><span class="err">，</span><span class="n">实际上是向任务发送一个中断</span><span class="err">（</span><span class="n">interrupt</span><span class="o">()</span><span class="err">）</span><span class="n">信号</span><span class="err">。</span><span class="n">布尔值参数为true表示这个任务可以被中断</span>
+    <span class="n">尝试取消任务的执行</span><span class="err">，</span><span class="n">实际上是向任务发送一个中断</span><span class="err">（</span><span class="n">interrupt</span><span class="o">()</span><span class="err">）</span><span class="n">信号</span><span class="err">。</span><span class="n">布尔值参数为true表示向这个任务发送中断信号</span><span class="err">，</span><span class="n">false则不发送中断信号</span>
 
     <span class="nf">这个方法返回之后调用isDone</span><span class="o">()</span><span class="n">总是返回true</span><span class="err">；</span>
     <span class="n">如果此方法返回true</span><span class="err">，</span><span class="n">调用isCanceled</span><span class="o">()</span><span class="n">总是返回true</span>
@@ -375,7 +376,7 @@
     <span class="nf">抛出异常和get</span><span class="o">()</span><span class="n">方法一样</span><span class="err">，</span><span class="n">除外多了一个TimeOutException</span><span class="err">，</span><span class="n">超时异常</span></code></pre></td></tr></table>
 </div>
 </div>
-<p>特别地，如果只想使用Future的可取消任务的特性，而不需要任务返回值，那么可以将Future声明为Future&lt;?&gt;并且将任务返回null</p>
+<p>特别地，如果只想使用Future的可取消任务的特性，而不需要任务返回值，那么可以将Future声明为<code>Future&lt;?&gt;</code>并且将任务返回<code>null</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
@@ -740,6 +741,147 @@
 <p>可以看到，我们计划在循环中让任务执行<code>runAndReset()</code>2次，之后尝试去调用<code>get()</code>方法，发现进程会一直阻塞，这也和api文档中描述的一致（without setting its result, and then resets this future to initial state），说明任务没有执行完成而且是处于初始状态。接下来的<code>isDone()</code>方法返回false也验证了这点，接着调用<code>run()</code>方法再次运行任务，最后获取任务的返回值，看到任务共执行了3次，最后的结果是最后一次<code>run()</code>方法返回的结果，接着的<code>isDone()</code>方法返回true，说明任务执行完成</p>
 
 <p>相反地，如果先运行<code>run()</code>方法，再尝试运行<code>runAndReset()</code>，后者直接返回false</p>
+
+<h2 id="应用示例">应用示例</h2>
+
+<p>在<a href="../死锁/#抢票问题">抢票问题</a>中，为了获取每个线程抢到的票数，我们使用了<code>ThreadLocal</code>来存放当前线程和其抢到的票（自定义bean）的信息，并在任务执行完成之后将其返回，以便程序完成之后明确地知道每个线程抢到的票数</p>
+
+<p>之所以使用自定义bean使任务包含线程信息而不使任务直接返回其抢到的票数，是因为线程池无法操作线程，更加无法在线程池的维度获取当前运行任务的线程信息</p>
+
+<p>利用<code>FutureTask</code>对象，我们则可以通过显示的构造线程来简化任务的代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TicketIssueWithFutureTask</span> <span class="kd">extends</span> <span class="n">TicketIssue</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Thread</span><span class="o">,</span> <span class="n">Future</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">resultMap</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+
+    <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Purchase</span> <span class="kd">implements</span> <span class="n">Callable</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="o">{</span>
+
+        <span class="c1">// 线程抢到的票计数器
+</span><span class="c1"></span>        <span class="c1">// 线程内部存储一般声明为static
+</span><span class="c1"></span>        <span class="kd">private</span> <span class="kd">static</span> <span class="n">ThreadLocal</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">tl</span> <span class="o">=</span> <span class="n">ThreadLocal</span><span class="o">.</span><span class="na">withInitial</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="n">0</span><span class="o">);</span>
+
+        <span class="kd">private</span> <span class="kd">final</span> <span class="n">Tick</span> <span class="n">tick</span><span class="o">;</span>
+
+        <span class="n">Purchase</span><span class="o">(</span><span class="n">Tick</span> <span class="n">tick</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">tick</span> <span class="o">=</span> <span class="n">tick</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">call</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+                <span class="kd">synchronized</span> <span class="o">(</span><span class="n">tick</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">tick</span><span class="o">.</span><span class="na">getTick</span><span class="o">())</span> <span class="o">{</span>
+                        <span class="n">tl</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">tl</span><span class="o">.</span><span class="na">get</span><span class="o">()</span> <span class="o">+</span> <span class="n">1</span><span class="o">);</span>
+                        <span class="k">try</span> <span class="o">{</span>
+                            <span class="c1">// 给其他线程机会
+</span><span class="c1"></span>                            <span class="n">tick</span><span class="o">.</span><span class="na">wait</span><span class="o">(</span><span class="n">10</span><span class="o">);</span>
+                        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                        <span class="k">if</span> <span class="o">(!</span><span class="n">tick</span><span class="o">.</span><span class="na">isTickSupply</span><span class="o">)</span> <span class="k">break</span><span class="o">;</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="k">return</span> <span class="n">tl</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kt">void</span> <span class="nf">multiPurchase</span><span class="o">(</span><span class="kt">int</span> <span class="n">threadCount</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ExecutionException</span><span class="o">,</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">threadCount</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="c1">// FutureTask实现了Runnable，可以在显式线程执行之后再通过其获取返回值
+</span><span class="c1"></span>            <span class="c1">// 当然，也可以通过执行器执行
+</span><span class="c1"></span>            <span class="n">FutureTask</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">ft</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FutureTask</span><span class="o">&lt;&gt;(</span><span class="k">new</span> <span class="n">Purchase</span><span class="o">(</span><span class="n">tick</span><span class="o">));</span>
+            <span class="n">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="n">ft</span><span class="o">);</span>
+            <span class="n">t</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+            <span class="n">resultMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">ft</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">Thread</span><span class="o">,</span> <span class="n">Future</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">entry</span> <span class="o">:</span> <span class="n">resultMap</span><span class="o">.</span><span class="na">entrySet</span><span class="o">())</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">entry</span><span class="o">.</span><span class="na">getKey</span><span class="o">().</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34; 抢到票：&#34;</span> <span class="o">+</span> <span class="n">entry</span><span class="o">.</span><span class="na">getValue</span><span class="o">().</span><span class="na">get</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;张&#34;</span><span class="o">);</span>
+            <span class="n">sum</span> <span class="o">=</span> <span class="n">sum</span> <span class="o">+</span> <span class="n">entry</span><span class="o">.</span><span class="na">getValue</span><span class="o">().</span><span class="na">get</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;已购票数：&#34;</span> <span class="o">+</span> <span class="n">sum</span><span class="o">);</span>
+    <span class="o">}</span>
+
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">TicketIssueWithFutureTask</span> <span class="n">ti</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TicketIssueWithFutureTask</span><span class="o">();</span>
+
+        <span class="n">ti</span><span class="o">.</span><span class="na">singleSupply</span><span class="o">(</span><span class="n">10</span><span class="o">);</span>
+        <span class="n">ti</span><span class="o">.</span><span class="na">multiPurchase</span><span class="o">(</span><span class="n">12</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>使用<code>FutureTask</code>之后，使用显式的线程对应每个线程的返回值，就可以获得想要的信息</p>
 
     </div>
 

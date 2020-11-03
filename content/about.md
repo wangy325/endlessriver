@@ -32,7 +32,3 @@ mathjax: false
 这个博客是19年搭建的，可能较多的内容类似于学习笔记，毕竟还是打基础的阶段，此目的在于系统化知识体系；其次在于记录一些问题，简单则寥寥数语，复杂则深入剖析；再次用于记录平淡的生活感悟。
 
 望持之以恒。
-
-最后以一张表情包自勉。
-
-{{% figure class="center" src="/endlessriver/img/debm.jpg" title="" alt="img" %}}
