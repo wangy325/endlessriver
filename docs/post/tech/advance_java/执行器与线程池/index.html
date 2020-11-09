@@ -47,7 +47,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangy325.github.io/endlessriver/post/tech/advance_java/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/" />
 <meta property="article:published_time" content="2020-11-03T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2020-11-03T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2020-11-07T00:28:37&#43;08:00"/>
 
 <meta itemprop="name" content="执行器与线程池—Java并发系列之七">
 <meta itemprop="description" content="本系列的文章到目前为止，虽然没有特别说明，但是使用执行器(Executor(s))的次数已经难以计数了，Executors提供了一些非常方便的静态方法，可以根据需要创建不同的ExecutorService，然后调用其execute(Runnable)或submit(Callable&lt;T&gt;)方法。在多线程的条件下，执行器还有一个非常明显的优势，它使用线程池管理线程，避免了系统创建和销毁线程的开销。在一般的Java并发过程中，也建议使用执行器完成任务而非显式地创建线程
@@ -56,8 +56,8 @@
 
 
 <meta itemprop="datePublished" content="2020-11-03T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-11-03T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="14575">
+<meta itemprop="dateModified" content="2020-11-07T00:28:37&#43;08:00" />
+<meta itemprop="wordCount" content="16729">
 
 
 
@@ -146,9 +146,9 @@
             <a href="/endlessriver/categories/java/"> Java </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 14575 字 </span>
+          <span class="more-meta analyse"> 约 16729 字 </span>
           <span class="icomoonfree icon-clock"></span>
-          <span class="more-meta analyse"> 预计阅读 30 分钟 </span>
+          <span class="more-meta analyse"> 预计阅读 34 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
           <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/endlessriver/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -156,7 +156,7 @@
 
     <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">目录</h2>
-  <div class="post-toc-content always-active">
+  <div class="post-toc-content">
     <nav id="TableOfContents">
 <ul>
 <li><a href="#1-executors">1 Executors</a></li>
@@ -168,11 +168,11 @@
 <li><a href="#2-2-1-构造器">2.2.1 构造器</a></li>
 <li><a href="#2-2-2-核心概念">2.2.2 核心概念</a>
 <ul>
-<li><a href="#核心线程池与最大线程池">核心线程池与最大线程池</a></li>
-<li><a href="#创建新线程">创建新线程</a></li>
-<li><a href="#存活时间">存活时间</a></li>
-<li><a href="#任务队列">任务队列</a></li>
-<li><a href="#拒绝策略">拒绝策略</a></li>
+<li><a href="#核心线程池与最大线程池"><strong>核心线程池与最大线程池</strong></a></li>
+<li><a href="#创建新线程"><strong>创建新线程</strong></a></li>
+<li><a href="#存活时间"><strong>存活时间</strong></a></li>
+<li><a href="#任务队列"><strong>任务队列</strong></a></li>
+<li><a href="#拒绝策略"><strong>拒绝策略</strong></a></li>
 </ul></li>
 <li><a href="#2-2-3-工厂方法构建的实例">2.2.3 工厂方法构建的实例</a></li>
 </ul></li>
@@ -697,7 +697,7 @@
 
 <h3 id="2-2-2-核心概念">2.2.2 核心概念</h3>
 
-<h4 id="核心线程池与最大线程池">核心线程池与最大线程池</h4>
+<h4 id="核心线程池与最大线程池"><strong>核心线程池与最大线程池</strong></h4>
 
 <p>线程池的<code>getPoolSize()</code>方法返回的线程数不应该超过线程池的核心线程池大小（corePoolSize）<strong>或</strong> 最大线程池大小（maximumPoolSize）。线程池中的工作线程数不可能超过最大线程池大小。若想获得当前的正在执行任务的线程数，需使用<code>getActiveCount()</code>方法</p>
 
@@ -768,11 +768,11 @@
 </div>
 <p>使用<code>prestartCoreThread()</code>还有一个好处，它可以保证队列中的任务顺序执行</p>
 
-<h4 id="创建新线程">创建新线程</h4>
+<h4 id="创建新线程"><strong>创建新线程</strong></h4>
 
 <p>线程池中的线程使用线程工厂<code>ThreadFactory</code>创建，如果没有指定，将使用<code>Executors.defaultThreadFactory</code>。如果线程工厂在创建线程时失败而返回null，那么线程池将无法执行任何任务</p>
 
-<h4 id="存活时间">存活时间</h4>
+<h4 id="存活时间"><strong>存活时间</strong></h4>
 
 <p>keepAliveTime针对的是非核心线程，非核心线程处理完任务后，若在keepAliveTime内没有新任务添加到队列并被其获取并运行，其将被销毁。这是一种资源保护策略，如果线程池的任务突然增多，可能又会创建非核心线程来完成任务。当corePoolSize = maximumPoolSize时，线程池无法创建非核心线程，此时keepAliveTime参数可能没有意义，一般将其设置为0</p>
 
@@ -822,7 +822,7 @@
 </div>
 <p>可以看到，如果将变量<code>allowCoreThreadTimeOut</code>的值设置为true，那么空闲的核心线程池也将会在keepAliveTime超时之后被销毁(如果没有任务让其执行)</p>
 
-<h4 id="任务队列">任务队列</h4>
+<h4 id="任务队列"><strong>任务队列</strong></h4>
 
 <p>任务队列是一个阻塞队列，一个线程池中只有一个任务队列。任务队列用于缓存当前尚没有线程可执行之的任务，其和线程池之间存在如下的交互关系：</p>
 
@@ -843,7 +843,7 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
 <li><p>有界队列，一般由<a href="../生产者-消费者与阻塞队列/#2-1-arrayblockingqueue">ArrayBlockingQueue</a>实现，使用有界队列可以避免资源耗尽，但是也增加了配置的难度，是应该配置更多的线程数更小的队列还是应该配置更大的队列更少的线程数，往往需要根据具体的任务来考量</p></li>
 </ol>
 
-<h4 id="拒绝策略">拒绝策略</h4>
+<h4 id="拒绝策略"><strong>拒绝策略</strong></h4>
 
 <p>前面提到，如果线程池满载，新提交的任务就会被线程池拒绝执行；同样的，如果线程池关闭了，提交任务也会被拒绝。线程池通过调用<code>RejectedExecutionHandler.rejectedExecution(Runnable, ThreadPoolExecutor)</code>来拒绝任务，<code>ThreadPoolExecutor</code>内建了4种不同的拒绝策略</p>
 
@@ -999,6 +999,503 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
 
 <h2 id="2-4-completionservice">2.4 CompletionService</h2>
 
+<p>在提交单个任务时，使用<code>submit()</code>或者<code>execute()</code>方法或许能够满足要求，但如果需要控制多个任务时，依次提交的操作看起来“有些繁琐”，此时我们可以使用ExecutorService提供的invokeAny/invokeAll方法，在介绍CompletionService接口时，我们不妨先看看这两个方法</p>
+
+<p>之前介绍<code>AbstractExecutorService</code>时提到，这两个方法是在这个抽象类中实现的，其中前者在获取到一个任务的返回值时便取消其他（未执行或正在执行的任务）任务，而后者需要等待所有的任务执行完成之后才能对任务的返回进行处理，接下来我们分别来看：</p>
+
+<p>invokeAll会阻塞等待所有的任务执行完成</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Future</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="nf">invokeAll</span><span class="o">(</span><span class="n">Collection</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Callable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">tasks</span><span class="o">)</span>
+    <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">tasks</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="n">NullPointerException</span><span class="o">();</span>
+    <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Future</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">futures</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Future</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;(</span><span class="n">tasks</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
+    <span class="kt">boolean</span> <span class="n">done</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Callable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">t</span> <span class="o">:</span> <span class="n">tasks</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">RunnableFuture</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">newTaskFor</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+            <span class="n">futures</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">f</span><span class="o">);</span>
+            <span class="n">execute</span><span class="o">(</span><span class="n">f</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">// 有序迭代
+</span><span class="c1"></span>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">futures</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">Future</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">futures</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(!</span><span class="n">f</span><span class="o">.</span><span class="na">isDone</span><span class="o">())</span> <span class="o">{</span>
+                <span class="k">try</span> <span class="o">{</span>
+                    <span class="c1">// 阻塞等待任务执行完成
+</span><span class="c1"></span>                    <span class="n">f</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+                <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">CancellationException</span> <span class="n">ignore</span><span class="o">)</span> <span class="o">{</span>
+                <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">ExecutionException</span> <span class="n">ignore</span><span class="o">)</span> <span class="o">{</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">done</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">futures</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(!</span><span class="n">done</span><span class="o">)</span>
+            <span class="c1">// 处理因异常而未正常执行的任务
+</span><span class="c1"></span>            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">futures</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+                <span class="n">futures</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// invokeAny
+</span><span class="c1"></span><span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">invokeAny</span><span class="o">(</span><span class="n">Collection</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Callable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">tasks</span><span class="o">)</span>
+    <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">ExecutionException</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">doInvokeAny</span><span class="o">(</span><span class="n">tasks</span><span class="o">,</span> <span class="kc">false</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">TimeoutException</span> <span class="n">cannotHappen</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">assert</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">private</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">doInvokeAny</span><span class="o">(</span><span class="n">Collection</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Callable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">tasks</span><span class="o">,</span>
+                          <span class="kt">boolean</span> <span class="n">timed</span><span class="o">,</span> <span class="kt">long</span> <span class="n">nanos</span><span class="o">)</span>
+    <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">ExecutionException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">tasks</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="n">NullPointerException</span><span class="o">();</span>
+    <span class="kt">int</span> <span class="n">ntasks</span> <span class="o">=</span> <span class="n">tasks</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">ntasks</span> <span class="o">==</span> <span class="n">0</span><span class="o">)</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalArgumentException</span><span class="o">();</span>
+    <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Future</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">futures</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Future</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;(</span><span class="n">ntasks</span><span class="o">);</span>
+    <span class="n">ExecutorCompletionService</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">ecs</span> <span class="o">=</span>
+        <span class="k">new</span> <span class="n">ExecutorCompletionService</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;(</span><span class="k">this</span><span class="o">);</span>
+
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="c1">// Record exceptions so that if we fail to obtain any
+</span><span class="c1"></span>        <span class="c1">// result, we can throw the last exception we got.
+</span><span class="c1"></span>        <span class="n">ExecutionException</span> <span class="n">ee</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="kd">final</span> <span class="kt">long</span> <span class="n">deadline</span> <span class="o">=</span> <span class="n">timed</span> <span class="o">?</span> <span class="n">System</span><span class="o">.</span><span class="na">nanoTime</span><span class="o">()</span> <span class="o">+</span> <span class="n">nanos</span> <span class="o">:</span> <span class="n">0L</span><span class="o">;</span>
+        <span class="n">Iterator</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Callable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">it</span> <span class="o">=</span> <span class="n">tasks</span><span class="o">.</span><span class="na">iterator</span><span class="o">();</span>
+
+        <span class="c1">// Start one task for sure; the rest incrementally
+</span><span class="c1"></span>        <span class="n">futures</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">ecs</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="n">it</span><span class="o">.</span><span class="na">next</span><span class="o">()));</span>
+        <span class="o">--</span><span class="n">ntasks</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">active</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span>
+
+        <span class="k">for</span> <span class="o">(;;)</span> <span class="o">{</span>
+            <span class="c1">// 并没阻塞第一个任务，此时可能第一个任务还未执行完
+</span><span class="c1"></span>            <span class="n">Future</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">ecs</span><span class="o">.</span><span class="na">poll</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">f</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">ntasks</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="o">--</span><span class="n">ntasks</span><span class="o">;</span>
+                    <span class="c1">// 不等待上一个任务的结果，直接新执行一个任务
+</span><span class="c1"></span>                    <span class="n">futures</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">ecs</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="n">it</span><span class="o">.</span><span class="na">next</span><span class="o">()));</span>
+                    <span class="o">++</span><span class="n">active</span><span class="o">;</span>
+                <span class="o">}</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">active</span> <span class="o">==</span> <span class="n">0</span><span class="o">)</span>
+                    <span class="k">break</span><span class="o">;</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">timed</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">f</span> <span class="o">=</span> <span class="n">ecs</span><span class="o">.</span><span class="na">poll</span><span class="o">(</span><span class="n">nanos</span><span class="o">,</span> <span class="n">TimeUnit</span><span class="o">.</span><span class="na">NANOSECONDS</span><span class="o">);</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">f</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+                        <span class="k">throw</span> <span class="k">new</span> <span class="n">TimeoutException</span><span class="o">();</span>
+                    <span class="n">nanos</span> <span class="o">=</span> <span class="n">deadline</span> <span class="o">-</span> <span class="n">System</span><span class="o">.</span><span class="na">nanoTime</span><span class="o">();</span>
+                <span class="o">}</span>
+                <span class="k">else</span>
+                    <span class="c1">// 没有可执行的任务了，则等待一个结果
+</span><span class="c1"></span>                    <span class="n">f</span> <span class="o">=</span> <span class="n">ecs</span><span class="o">.</span><span class="na">take</span><span class="o">();</span>
+            <span class="o">}</span>
+            <span class="c1">// 有结果则返回
+</span><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">f</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="o">--</span><span class="n">active</span><span class="o">;</span>
+                <span class="k">try</span> <span class="o">{</span>
+                    <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+                <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">ExecutionException</span> <span class="n">eex</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">ee</span> <span class="o">=</span> <span class="n">eex</span><span class="o">;</span>
+                <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">RuntimeException</span> <span class="n">rex</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">ee</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ExecutionException</span><span class="o">(</span><span class="n">rex</span><span class="o">);</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">ee</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+            <span class="n">ee</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ExecutionException</span><span class="o">();</span>
+        <span class="k">throw</span> <span class="n">ee</span><span class="o">;</span>
+
+    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">futures</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+            <span class="c1">// 取消还未执行或者执行中的任务
+</span><span class="c1"></span>            <span class="c1">// 中断任务
+</span><span class="c1"></span>            <span class="n">futures</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>可以看到，与invokeAll不同的是，invokeAny方法是在循环的启动任务，直到获取到任一任务的返回值为止，而未执行或正在执行的任务则会被中断</p>
+
+<p>下面的示例中，我们修改了<a href="../生产者-消费者与阻塞队列/#3-1-查找关键字">阻塞队列-查找关键字</a>应用，让任务在成功搜寻到含有关键字的文件时就视为任务完成，取消其他任务的执行，这样一种场景之下，我们可以使用invokeAny方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Search1Keyword</span> <span class="kd">extends</span> <span class="n">SearchKeyword</span> <span class="o">{</span>
+
+    <span class="n">String</span> <span class="n">empty</span> <span class="o">=</span> <span class="s">&#34;&#34;</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Search1Keyword</span> <span class="n">s1k</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Search1Keyword</span><span class="o">();</span>
+        <span class="n">s1k</span><span class="o">.</span><span class="na">find</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kt">void</span> <span class="nf">find</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// 带资源的try块
+</span><span class="c1"></span>        <span class="k">try</span> <span class="o">(</span><span class="n">Scanner</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Scanner</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&#34;Enter keyword (e.g. volatile): &#34;</span><span class="o">);</span>
+            <span class="n">keyword</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">nextLine</span><span class="o">();</span>
+
+            <span class="n">Producer</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Producer</span><span class="o">();</span>
+            <span class="n">List</span><span class="o">&lt;</span><span class="n">Callable</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;&gt;</span> <span class="n">tasks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+
+            <span class="n">ExecutorService</span> <span class="n">pool</span> <span class="o">=</span> <span class="n">Executors</span><span class="o">.</span><span class="na">newCachedThreadPool</span><span class="o">();</span>
+
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="c1">// run consumer
+</span><span class="c1"></span>                <span class="n">tasks</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Consumer1</span><span class="o">());</span>
+            <span class="o">}</span>
+            <span class="n">pool</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">p</span><span class="o">);</span>
+            <span class="c1">// 此方法并不那么单纯，其结果只取一个，但是任务可能执行了多个
+</span><span class="c1"></span>            <span class="n">String</span> <span class="n">res</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="na">invokeAny</span><span class="o">(</span><span class="n">tasks</span><span class="o">);</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">res</span><span class="o">);</span>
+            <span class="n">pool</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">Consumer1</span> <span class="kd">implements</span> <span class="n">Callable</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="o">{</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="k">while</span> <span class="o">(!</span><span class="n">done</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="na">take</span><span class="o">();</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">file</span> <span class="o">==</span> <span class="n">DUMMY</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">done</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+                    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                        <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="n">search1</span><span class="o">(</span><span class="n">file</span><span class="o">,</span> <span class="n">keyword</span><span class="o">);</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="k">return</span> <span class="n">s</span><span class="o">;</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// ignore
+</span><span class="c1"></span>            <span class="o">}</span>
+            <span class="k">return</span> <span class="n">empty</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">search1</span><span class="o">(</span><span class="n">File</span> <span class="n">file</span><span class="o">,</span> <span class="n">String</span> <span class="n">keyword</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">FileNotFoundException</span> <span class="o">{</span>
+        <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">(</span><span class="s">&#34;&#34;</span><span class="o">);</span>
+
+        <span class="k">try</span> <span class="o">(</span><span class="n">Scanner</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Scanner</span><span class="o">(</span><span class="n">file</span><span class="o">,</span> <span class="s">&#34;UTF-8&#34;</span><span class="o">))</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">lineNumber</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+            <span class="k">while</span> <span class="o">(</span><span class="n">in</span><span class="o">.</span><span class="na">hasNextLine</span><span class="o">())</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(!</span><span class="n">Thread</span><span class="o">.</span><span class="na">interrupted</span><span class="o">())</span> <span class="o">{</span>
+                    <span class="n">lineNumber</span><span class="o">++;</span>
+                    <span class="n">String</span> <span class="n">line</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">nextLine</span><span class="o">();</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">line</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">keyword</span><span class="o">))</span> <span class="o">{</span>
+                        <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&#34;[&#34;</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()).</span><span class="na">append</span><span class="o">(</span><span class="s">&#34;]: &#34;</span><span class="o">)</span>
+                            <span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">file</span><span class="o">.</span><span class="na">getPath</span><span class="o">()).</span><span class="na">append</span><span class="o">(</span><span class="n">lineNumber</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="n">line</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="s">&#34;\n&#34;</span><span class="o">);</span>
+                    <span class="o">}</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="c1">// thread interrupted by future.cancel()
+</span><span class="c1"></span>                    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;[%s] %s%n&#34;</span><span class="o">,</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">(),</span> <span class="s">&#34; interrupted&#34;</span><span class="o">);</span>
+                    <span class="k">return</span> <span class="n">empty</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/* output (sample1)
+</span><span class="cm">Enter keyword (e.g. volatile): take
+</span><span class="cm">[pool-1-thread-5]: TestBlockingQueue.java39    LiftOff take() throws InterruptedException {
+</span><span class="cm">[pool-1-thread-5]: TestBlockingQueue.java40        return rockets.take();
+</span><span class="cm">[pool-1-thread-5]: TestBlockingQueue.java65                    LiftOff rocket = take();
+</span><span class="cm">[pool-1-thread-5]: TestBlockingQueue.java78                System.out.println(&#34;Interrupted during take()&#34;);
+</span><span class="cm">
+</span><span class="cm">[pool-1-thread-11]  interrupted
+</span><span class="cm">[pool-1-thread-10]  interrupted
+</span><span class="cm">[pool-1-thread-6]  interrupted
+</span><span class="cm">[pool-1-thread-4]  interrupted
+</span><span class="cm">[pool-1-thread-9]  interrupted
+</span><span class="cm">[pool-1-thread-3]  interrupted
+</span><span class="cm">[pool-1-thread-7]  interrupted
+</span><span class="cm">[pool-1-thread-8]  interrupted
+</span><span class="cm">
+</span><span class="cm">(sample2)
+</span><span class="cm">Enter keyword (e.g. volatile): take
+</span><span class="cm">[pool-1-thread-4]: Search1Keyword.java66                    File file = queue.take();
+</span><span class="cm">
+</span><span class="cm">[pool-1-thread-2]  interrupted
+</span><span class="cm">[pool-1-thread-10]  interrupted
+</span><span class="cm">[pool-1-thread-8]  interrupted
+</span><span class="cm">[pool-1-thread-5]  interrupted
+</span><span class="cm">[pool-1-thread-11]  interrupted
+</span><span class="cm">[pool-1-thread-7]  interrupted
+</span><span class="cm">[pool-1-thread-9]  interrupted
+</span><span class="cm">*/</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>我们将对一个包含关键字的文件进行的完整搜寻视为任务结束，虽然还可能有其他文件还有关键字，但是搜寻任务不再执行。从输出可以看到，输出的只包含一个文件的关键字信息。另外，我们使用10个任务，其中sample1中其他9个任务都被中断，而sample2中只有7个任务被interrupt，说明情况1中，所有的任务都开始执行了，而情况2中，还有未开始执行的任务(其永远不能执行了)</p>
+
+<p>试着思考一个问题，既然invokeAny只需要获取一个任务的返回值即可，那为什么不直接启动第一个任务然后阻塞获取其返回值，而要启动（那么）多任务呢？启动一个任务不是更加简单么？</p>
+
+<p>我们分析源码时，发现invokeAny使用了<code>ExecutorCompletionService</code>，这个类继承自接口<code>CompletionService</code>，可以用来管理任务提交之后的<code>Future&lt;T&gt;</code>对象——将已经完成的Future其放在一个阻塞队列中取用，这样我们就可以回答上面的问题了：</p>
+
+<p>invokeAny利用<code>ExecutorCompletionService</code>提交任务，并管理任务的返回，这样可以避免单独启动一个任务而需要阻塞很长时间的弊端，启动的多个任务只要有一个任务完成，其放置已完成Future的阻塞队列将变得可用而使invokeAny快速结束</p>
+
+<p><code>ExecutorCompletionService</code>的快速用法为:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">ExecutorCompletionService</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">ecs</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ExecutorCompletionService</span><span class="o">&lt;&gt;(</span><span class="n">executor</span><span class="o">)</span> <span class="o">;</span>
+<span class="k">for</span><span class="o">(</span><span class="n">Callable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">task</span> <span class="o">:</span> <span class="n">tasks</span><span class="o">){</span>
+    <span class="n">ecs</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="n">task</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">tasks</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">;</span> <span class="n">i</span><span class="o">++</span> <span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// get return value
+</span><span class="c1"></span>    <span class="n">ecs</span><span class="o">.</span><span class="na">take</span><span class="o">().</span><span class="na">get</span><span class="o">();</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
 <h1 id="3-线程池">3 线程池</h1>
 
 <p>前文说过，<code>ThreadPoolExecutor</code>实例代表了Java线程池，前面我们介绍了<code>ThreadPoolExecutor</code>的构造器和几个核心概念，在本节中，我们着重介绍线程池的执行过程以及线程池的关闭</p>
@@ -1799,7 +2296,7 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
 
 <p>值得一提的是，在上面的<code>newFixedThreadPool()</code>的例子中，线程池提交完任务之后，并没有调用关闭方法，那么线程池能关闭么？</p>
 
-<p>通过上面的分析，例子中的线程在执行完任务后超时被销毁，此时池中没有线程在运行，队列中也没有任务，<strong>那么就意味着所有的逻辑都已经完成，并没有发生阻塞，线程池也关闭了</strong></p>
+<p>通过上面的分析，例子中的线程在执行完任务后超时被销毁，此时池中没有线程在运行，队列中也没有任务，<strong>那么就意味着所有的逻辑都已经完成，并没有发生阻塞，线程池中的线程数为0，任务队列为空</strong>，但是，线程池的状态还是<strong><em>RUNNING</em></strong>！线程池并没有终止，其还可以继续提交任务运行</p>
 
 <h2 id="3-3-如何合理地关闭线程池">3.3 如何合理地关闭线程池</h2>
 
@@ -2226,8 +2723,8 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2020-11-03
-        
+        2020-11-07
+        <a href="https://github.com/wangy325/my_blog/commit/e43944b531e3aeef9d5007f3ce4ea02d5f598667" title="执行器与线程池">(e43944b)</a>
     </span>
   </p>
   
