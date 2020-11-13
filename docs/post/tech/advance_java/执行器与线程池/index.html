@@ -47,7 +47,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangy325.github.io/endlessriver/post/tech/advance_java/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/" />
 <meta property="article:published_time" content="2020-11-03T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2020-11-07T00:28:37&#43;08:00"/>
+<meta property="article:modified_time" content="2020-11-12T23:55:38&#43;08:00"/>
 
 <meta itemprop="name" content="执行器与线程池—Java并发系列之七">
 <meta itemprop="description" content="本系列的文章到目前为止，虽然没有特别说明，但是使用执行器(Executor(s))的次数已经难以计数了，Executors提供了一些非常方便的静态方法，可以根据需要创建不同的ExecutorService，然后调用其execute(Runnable)或submit(Callable&lt;T&gt;)方法。在多线程的条件下，执行器还有一个非常明显的优势，它使用线程池管理线程，避免了系统创建和销毁线程的开销。在一般的Java并发过程中，也建议使用执行器完成任务而非显式地创建线程
@@ -56,8 +56,8 @@
 
 
 <meta itemprop="datePublished" content="2020-11-03T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-11-07T00:28:37&#43;08:00" />
-<meta itemprop="wordCount" content="16729">
+<meta itemprop="dateModified" content="2020-11-12T23:55:38&#43;08:00" />
+<meta itemprop="wordCount" content="16869">
 
 
 
@@ -146,7 +146,7 @@
             <a href="/endlessriver/categories/java/"> Java </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 16729 字 </span>
+          <span class="more-meta analyse"> 约 16869 字 </span>
           <span class="icomoonfree icon-clock"></span>
           <span class="more-meta analyse"> 预计阅读 34 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
@@ -156,7 +156,7 @@
 
     <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">目录</h2>
-  <div class="post-toc-content">
+  <div class="post-toc-content always-active">
     <nav id="TableOfContents">
 <ul>
 <li><a href="#1-executors">1 Executors</a></li>
@@ -1502,7 +1502,7 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
 
 <h2 id="3-1-线程池的运行状态">3.1 线程池的运行状态</h2>
 
-<p>线程池的运行状态表示了线程池的生命周期，它们用一个整数表示</p>
+<p>线程池的运行状态表示了线程池的生命周期，在代码实现中它们使用用一个整数表示</p>
 
 <table>
 <thead>
@@ -1540,7 +1540,7 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
 </tbody>
 </table>
 
-<p>为了判断线程池的运行状态，给上述线程池状态约定了单调的演化关系：</p>
+<p>为了方便地判断线程池的运行状态，给上述线程池状态约定了单调的演化关系：</p>
 
 <table>
 <thead>
@@ -1626,7 +1626,7 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
 <p><center  >
 <img src = "/endlessriver/img/executor_flow.svg" style= "zoom:0.8;"></img>
 </center>
-<p style="text-align:center;font-size:.9rem;font-style:italic">线程池执行流程图</sup></p></p>
+<p style="text-align:center;font-size:.9rem;font-style:italic">线程池执行流程图</p></p>
 
 <p>上面的流程图展示了任务提交到线程池到执行或被拒绝的过程，和在任务队列中的描述相当，接下来我们从源码的角度阐述这一过程</p>
 
@@ -1767,7 +1767,6 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
 </span><span class="lnt">123
 </span><span class="lnt">124
 </span><span class="lnt">125
-</span><span class="lnt">126
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">execute</span><span class="o">(</span><span class="n">Runnable</span> <span class="n">command</span><span class="o">)</span> <span class="o">{</span>
@@ -1815,10 +1814,9 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
 </span><span class="c1"></span>        <span class="c1">// 解释一下这个return false的逻辑
 </span><span class="c1"></span>        <span class="cm">/* 1. 若rs = runnning，继续添加worker
 </span><span class="cm">         * 2. 若rs &gt;= shutdown
-</span><span class="cm">         *      2.1 rs = shutdown 且firstTask = null 且workQueue为空，继续新建worker
-</span><span class="cm">         *      2.2 rs &gt;= stop 不新建worker(return false)
-</span><span class="cm">         *      2.3 rs = shutdown，firstTask != null，不新建worker
-</span><span class="cm">         *      2.4 rs = shutdown，firstTask = null，workQueue为空，不新建worker
+</span><span class="cm">         *      2.1 rs &gt;= stop 不新建worker(return false)
+</span><span class="cm">         *      2.2 rs = shutdown，firstTask != null，不新建worker (shutdown之后不接受新任务提交)
+</span><span class="cm">         *      2.3 rs = shutdown，firstTask = null，workQueue为空，不新建worker
 </span><span class="cm">         */</span>
         <span class="k">if</span> <span class="o">(</span><span class="n">rs</span> <span class="o">&gt;=</span> <span class="n">SHUTDOWN</span> <span class="o">&amp;&amp;</span>
             <span class="o">!</span> <span class="o">(</span><span class="n">rs</span> <span class="o">==</span> <span class="n">SHUTDOWN</span> <span class="o">&amp;&amp;</span>
@@ -1898,6 +1896,11 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
 <span class="o">}</span></code></pre></td></tr></table>
 </div>
 </div>
+<p><center>
+<img src="/endlessriver/img/thread_pool_add_worker.png" alt="xx" />
+<p style="text-align:center;font-size:.9rem;font-style:italic">线程池添加worker的流程</p>
+</center></p>
+
 <h3 id="3-2-2-创建空线程">3.2.2 创建空线程</h3>
 
 <p>前面介绍<a href="#核心线程池与最大线程池">核心概念</a>的时候说到，线程池初始化成功之后，池中是没有活动线程的，不过线程池具有很好的灵活性，可以进行动态配置。使用<code>prestartCoreThread()</code>和<code>prestartAllCoreThreads()</code>方法可以向线程池中添加<strong>核心</strong>线程，这些线程并没有使用任务初始化，不过其会尝试去队列中获取任务执行，若队列为空，这些线程就会挂起(waiting)<sup class="footnote-ref" id="fnref:7"><a href="#fn:7">6</a></sup></p>
@@ -2138,6 +2141,11 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
 <span class="o">}</span></code></pre></td></tr></table>
 </div>
 </div>
+<p><center>
+<img src="/endlessriver/img/thread_pool_run_task.png" alt="xx" />
+<p style="text-align:center;font-size:.9rem;font-style:italic">线程池执行任务的流程的流程</p>
+</center></p>
+
 <p>可以看到，线程池中的线程初始化之后，其执行任务的过程是阻塞的，也就是说，线程池中的线程一直处于“stand by”状态，除此之外，我们还可以得到以下信息：</p>
 
 <ul>
@@ -2296,7 +2304,7 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
 
 <p>值得一提的是，在上面的<code>newFixedThreadPool()</code>的例子中，线程池提交完任务之后，并没有调用关闭方法，那么线程池能关闭么？</p>
 
-<p>通过上面的分析，例子中的线程在执行完任务后超时被销毁，此时池中没有线程在运行，队列中也没有任务，<strong>那么就意味着所有的逻辑都已经完成，并没有发生阻塞，线程池中的线程数为0，任务队列为空</strong>，但是，线程池的状态还是<strong><em>RUNNING</em></strong>！线程池并没有终止，其还可以继续提交任务运行</p>
+<p>通过上面的分析，例子中的线程在执行完任务后超时被销毁，此时池中没有线程在运行，队列中也没有任务，<strong>那么就意味着所有的逻辑都已经完成，并没有发生阻塞，线程池中的线程数为0，任务队列为空</strong>，虽然如此，线程池的状态还是<strong><em>RUNNING</em></strong>！线程池并没有终止，其还可以继续提交任务运行，实际上，线程池回到了<em>初始化</em> 时的状态</p>
 
 <h2 id="3-3-如何合理地关闭线程池">3.3 如何合理地关闭线程池</h2>
 
@@ -2381,6 +2389,8 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
 </span><span class="lnt">76
 </span><span class="lnt">77
 </span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">shutdown</span><span class="o">()</span> <span class="o">{</span>
@@ -2392,6 +2402,8 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
         <span class="c1">// 修改线程池状态为SHUTDOWN
 </span><span class="c1"></span>        <span class="n">advanceRunState</span><span class="o">(</span><span class="n">SHUTDOWN</span><span class="o">);</span>
         <span class="c1">// 中断所有空闲（waiting）的线程
+</span><span class="c1"></span>        <span class="c1">// 在condition.await()上阻塞的线程能够响应中断，这就是线程池能够关闭而不阻塞的原因
+</span><span class="c1"></span>        <span class="c1">// 阻塞的线程被中断唤醒后继续在getTask()上继续执行，在线程池状态判断时return null而结束
 </span><span class="c1"></span>        <span class="n">interruptIdleWorkers</span><span class="o">();</span>
         <span class="n">onShutdown</span><span class="o">();</span> <span class="c1">// hook for ScheduledThreadPoolExecutor
 </span><span class="c1"></span>    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
@@ -2723,8 +2735,8 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2020-11-07
-        <a href="https://github.com/wangy325/my_blog/commit/e43944b531e3aeef9d5007f3ce4ea02d5f598667" title="执行器与线程池">(e43944b)</a>
+        2020-11-12
+        <a href="https://github.com/wangy325/my_blog/commit/390172ba23a2113e69d27067f6aefa5475934f7e" title="update线程池内容">(390172b)</a>
     </span>
   </p>
   
@@ -2749,7 +2761,11 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
           <a href="/endlessriver/tags/java%E8%BF%9B%E9%98%B6/">Java进阶</a>
           </div>
       <nav class="post-nav">
-        
+        <a class="prev" href="/endlessriver/post/tech/advance_java/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">计划执行任务—Java并发系列之八</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
         <a class="next" href="/endlessriver/post/tech/advance_java/%E6%AD%BB%E9%94%81/">
             <span class="next-text nav-default">死锁—Java并发系列之六</span>
             <span class="next-text nav-mobile">下一篇</span>
