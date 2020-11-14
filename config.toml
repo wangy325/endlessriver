@@ -2,7 +2,7 @@
 # If you want to see the full configuration, please check `full-config.toml` .
 # And see https://gohugo.io/getting-started/configuration/ .
 
-baseURL = "https://wangy325.github.io/endlessriver/"
+baseURL = "https://127.0.0.1/endlessriver/"
 title = "Endless River"
 publishDir = "docs"
 

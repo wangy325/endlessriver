@@ -2,3 +2,4 @@
 themes/*/node_modules/
 themes/*/.git/
 themes/*/.gitignore
+nohup.out
