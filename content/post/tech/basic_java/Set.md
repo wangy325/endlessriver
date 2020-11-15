@@ -29,7 +29,7 @@ Set是**不含重复元素的集**，严格来讲，Set不允许当`e1.equals(e2
 
 Java中的散列表是用**链表数组**实现的，每个链表称为**桶**
 
-<img src="/endlessriver/img/hash_table.png" alt="YSl88s.png" style="zoom:50%;margin-left: 300px" />
+<img src="/img/hash_table.png" alt="YSl88s.png" style="zoom:50%;margin-left: 300px" />
 
 <p style="text-align:center;font-size:.9rem;font-style:italic">散列表(hash table)  <sup> form Core Java</sup></p>
 
@@ -113,7 +113,7 @@ class java.util.HashMap
 
 HashSet的子类，与HashSet的 区别在于LinkedHashSet使用双端链表维护集中的元素，因此元素能够被有序迭代（迭代顺序是元素的插入顺序），当元素添加到集中时，便会并入LinkedList中
 
-<img src="/endlessriver/img/linked_hash.png" alt="YAQUu4.png" style="zoom:67%; margin-left: 260px" />
+<img src="/img/linked_hash.png" alt="YAQUu4.png" style="zoom:67%; margin-left: 260px" />
 
 <p style="text-align:center;font-size:.9rem;font-style:italic">链表散列表 <sup> from Core Java</sup></p>
 

@@ -28,15 +28,15 @@
 <meta name="generator" content="Hugo 0.55.6 with even 4.0.0" />
 
 
-<link rel="canonical" href="https://wangy325.github.io/endlessriver/post/tech/advance_java/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/" />
-<link rel="apple-touch-icon" sizes="180x180" href="/endlessriver/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/endlessriver/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/endlessriver/favicon-16x16.png">
-<link rel="manifest" href="/endlessriver/manifest.json">
-<link rel="mask-icon" href="/endlessriver/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="canonical" href="/post/tech/advance_java/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<link href="/endlessriver/dist/even.f64a7681.min.css" rel="stylesheet">
+<link href="/dist/even.f64a7681.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
@@ -45,13 +45,9 @@
 
 本文将从执行器开始，阐述Java中的线程池" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://wangy325.github.io/endlessriver/post/tech/advance_java/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/" />
+<meta property="og:url" content="/post/tech/advance_java/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/" />
 <meta property="article:published_time" content="2020-11-03T00:00:00&#43;00:00"/>
-<<<<<<< HEAD
 <meta property="article:modified_time" content="2020-11-13T23:19:11&#43;08:00"/>
-=======
-<meta property="article:modified_time" content="2020-11-03T00:00:00&#43;00:00"/>
->>>>>>> ec1dbdfb3f5b590805cd9f88babc2a2d8324f3c5
 
 <meta itemprop="name" content="执行器与线程池—Java并发系列之七">
 <meta itemprop="description" content="本系列的文章到目前为止，虽然没有特别说明，但是使用执行器(Executor(s))的次数已经难以计数了，Executors提供了一些非常方便的静态方法，可以根据需要创建不同的ExecutorService，然后调用其execute(Runnable)或submit(Callable&lt;T&gt;)方法。在多线程的条件下，执行器还有一个非常明显的优势，它使用线程池管理线程，避免了系统创建和销毁线程的开销。在一般的Java并发过程中，也建议使用执行器完成任务而非显式地创建线程
@@ -60,11 +56,7 @@
 
 
 <meta itemprop="datePublished" content="2020-11-03T00:00:00&#43;00:00" />
-<<<<<<< HEAD
 <meta itemprop="dateModified" content="2020-11-13T23:19:11&#43;08:00" />
-=======
-<meta itemprop="dateModified" content="2020-11-03T00:00:00&#43;00:00" />
->>>>>>> ec1dbdfb3f5b590805cd9f88babc2a2d8324f3c5
 <meta itemprop="wordCount" content="16869">
 
 
@@ -89,7 +81,7 @@
 <body>
   <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/endlessriver/" class="logo">Endless River</a>
+    <a href="/" class="logo">Endless River</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -99,15 +91,15 @@
 </div>
 <nav id="mobile-menu" class="mobile-menu slideout-menu">
   <ul class="mobile-menu-list">
-    <a href="/endlessriver/">
+    <a href="/">
         <li class="mobile-menu-item">主页</li>
-      </a><a href="/endlessriver/post/">
+      </a><a href="/post/">
         <li class="mobile-menu-item">归档</li>
-      </a><a href="/endlessriver/tags/">
+      </a><a href="/tags/">
         <li class="mobile-menu-item">标签</li>
-      </a><a href="/endlessriver/about/">
+      </a><a href="/about/">
         <li class="mobile-menu-item">关于</li>
-      </a><a href="/endlessriver/friendlink/">
+      </a><a href="/friendlink/">
         <li class="mobile-menu-item">友链</li>
       </a>
   </ul>
@@ -115,21 +107,21 @@
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
-  <a href="/endlessriver/" class="logo">Endless River</a>
+  <a href="/" class="logo">Endless River</a>
 </div>
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
     <li class="menu-item">
-        <a class="menu-item-link" href="/endlessriver/">主页</a>
+        <a class="menu-item-link" href="/">主页</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/endlessriver/post/">归档</a>
+        <a class="menu-item-link" href="/post/">归档</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/endlessriver/tags/">标签</a>
+        <a class="menu-item-link" href="/tags/">标签</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/endlessriver/about/">关于</a>
+        <a class="menu-item-link" href="/about/">关于</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/endlessriver/friendlink/">友链</a>
+        <a class="menu-item-link" href="/friendlink/">友链</a>
       </li>
   </ul>
 </nav>
@@ -151,14 +143,14 @@
 
         <div class="post-category">
               <span class="icomoonfree icon-folder"></span>
-            <a href="/endlessriver/categories/java/"> Java </a>
+            <a href="/categories/java/"> Java </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
           <span class="more-meta analyse"> 约 16869 字 </span>
           <span class="icomoonfree icon-clock"></span>
           <span class="more-meta analyse"> 预计阅读 34 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
-          <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/endlessriver/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+          <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
 
@@ -290,7 +282,7 @@
 <p>前文就已经提过，<code>Executors</code>构建的线程池包括不同实现，可以应对不同的场景，那么Java中包含哪些实现呢？</p>
 
 <p><center>
-<img src="/endlessriver/img/executor.png" alt="xx" />
+<img src="/img/executor.png" alt="xx" />
 </center>
 <p style="text-align:center; font-size:.9rem; font-style:italic">Executor框架组成</p></p>
 
@@ -298,7 +290,7 @@
 下图展示了Executor框架的执行逻辑[^2]
 
 <center>
-![xx](/endlessriver/img/executor_execution.png)
+![xx](/img/executor_execution.png)
 </center>
 <p style="text-align:center; font-size:.9rem; font-style:italic">Executor框架执行图</p>
 -->
@@ -386,7 +378,7 @@
 
 <!--
 <center>
-![xx](/endlessriver/img/executor_service_method_table.png)
+![xx](/img/executor_service_method_table.png)
 </center>
 <p style="text-align:center; font-size:.9rem; font-style:italic">ExecutorService方法表</p>
 -->
@@ -1003,7 +995,7 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
 </div>
 <p>正因为其是一个仅仅可以执行<code>ExecutorService</code>接口方法的包装类，其无法在线程池初始化之后再动态配置</p>
 
-<p>扩展阅读: <a href="/endlessriver/file/ThreadPoolExecutor_doc.pdf">ThreadPoolExecutor jdk1.8 Javadoc</a></p>
+<p>扩展阅读: <a href="//file/ThreadPoolExecutor_doc.pdf">ThreadPoolExecutor jdk1.8 Javadoc</a></p>
 
 <h2 id="2-4-completionservice">2.4 CompletionService</h2>
 
@@ -1632,7 +1624,7 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
 <p>在<a href="./#任务队列">任务队列</a>中，我们阐述了任务队列与线程池之间存在交互关系，这种交互关系体现了线程池执行任务的重要过程</p>
 
 <p><center  >
-<img src = "/endlessriver/img/executor_flow.svg" style= "zoom:0.8;"></img>
+<img src = "/img/executor_flow.svg" style= "zoom:0.8;"></img>
 </center>
 <p style="text-align:center;font-size:.9rem;font-style:italic">线程池执行流程图</p></p>
 
@@ -1905,7 +1897,7 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
 </div>
 </div>
 <p><center>
-<img src="/endlessriver/img/thread_pool_add_worker.png" alt="xx" />
+<img src="/img/thread_pool_add_worker.png" alt="xx" />
 <p style="text-align:center;font-size:.9rem;font-style:italic">线程池添加worker的流程</p>
 </center></p>
 
@@ -2150,7 +2142,7 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
 </div>
 </div>
 <p><center>
-<img src="/endlessriver/img/thread_pool_run_task.png" alt="xx" />
+<img src="/img/thread_pool_run_task.png" alt="xx" />
 <p style="text-align:center;font-size:.9rem;font-style:italic">线程池执行任务的流程的流程</p>
 </center></p>
 
@@ -2743,13 +2735,8 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-<<<<<<< HEAD
         2020-11-13
-        <a href="https://github.com/wangy325/endlessriver.git/commit/1470b90f0489f46a8a67d3e682d1cc32af7002b3" title="线程池 完结">(1470b90)</a>
-=======
-        2020-11-03
-        
->>>>>>> ec1dbdfb3f5b590805cd9f88babc2a2d8324f3c5
+        <a href="https://github.com/wangy325/endlessriver/commit/1470b90f0489f46a8a67d3e682d1cc32af7002b3" title="线程池 完结">(1470b90)</a>
     </span>
   </p>
   
@@ -2764,22 +2751,22 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
   <div class="qr-code">
     
     <label class="qr-code-image" for="reward">
-        <img class="image" src="/endlessriver/img/reward/wechat.png">
+        <img class="image" src="/img/reward/wechat.png">
         <span>微信打赏</span>
       </label>
     
   </div>
 </div><footer class="post-footer">
       <div class="post-tags">
-          <a href="/endlessriver/tags/java%E8%BF%9B%E9%98%B6/">Java进阶</a>
+          <a href="/tags/java%E8%BF%9B%E9%98%B6/">Java进阶</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/endlessriver/post/tech/advance_java/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/">
+        <a class="prev" href="/post/tech/advance_java/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/">
             <i class="iconfont icon-left"></i>
             <span class="prev-text nav-default">计划执行任务—Java并发系列之八</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
-        <a class="next" href="/endlessriver/post/tech/advance_java/%E6%AD%BB%E9%94%81/">
+        <a class="next" href="/post/tech/advance_java/%E6%AD%BB%E9%94%81/">
             <span class="next-text nav-default">死锁—Java并发系列之六</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
@@ -2814,7 +2801,7 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
       <div class="social-links">
       <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=u8za1dzCiImO_8rKldjU1g" class="iconfont icon-email" title="email"></a>
       <a href="https://github.com/wangy325" class="iconfont icon-github" title="github"></a>
-  <a href="https://wangy325.github.io/endlessriver/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
 </div>
 
 <div class="copyright">
@@ -2859,7 +2846,7 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
     timeago().render(document.querySelectorAll('.timeago'), languageCode);
     timeago.cancel();  
   </script>
-<script type="text/javascript" src="/endlessriver/dist/even.26188efa.min.js"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       showProcessingMessages: false,

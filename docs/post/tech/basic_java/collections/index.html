@@ -28,15 +28,15 @@
 <meta name="generator" content="Hugo 0.55.6 with even 4.0.0" />
 
 
-<link rel="canonical" href="https://wangy325.github.io/endlessriver/post/tech/basic_java/collections/" />
-<link rel="apple-touch-icon" sizes="180x180" href="/endlessriver/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/endlessriver/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/endlessriver/favicon-16x16.png">
-<link rel="manifest" href="/endlessriver/manifest.json">
-<link rel="mask-icon" href="/endlessriver/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="canonical" href="/post/tech/basic_java/collections/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<link href="/endlessriver/dist/even.f64a7681.min.css" rel="stylesheet">
+<link href="/dist/even.f64a7681.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
@@ -45,9 +45,9 @@
 
 由于视图是直接封装的Collection接口，因此其方法有些局限，并且由于特殊的设计，部分操作是不允许的（会抛出 UnsupportedOperationExceptin ）" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://wangy325.github.io/endlessriver/post/tech/basic_java/collections/" />
+<meta property="og:url" content="/post/tech/basic_java/collections/" />
 <meta property="article:published_time" content="2020-05-12T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2020-05-27T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2020-10-10T15:00:20&#43;08:00"/>
 
 <meta itemprop="name" content="Collections—Java集合框架系列之五">
 <meta itemprop="description" content="集合框架中一个重要的类，其实是Collection接口的伴随类，其中定义了许多实用方法，用来获取集合视图，或提供一些方便的操作集合元素的算法
@@ -56,7 +56,7 @@
 
 
 <meta itemprop="datePublished" content="2020-05-12T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-05-27T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-10-10T15:00:20&#43;08:00" />
 <meta itemprop="wordCount" content="1601">
 
 
@@ -81,7 +81,7 @@
 <body>
   <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/endlessriver/" class="logo">Endless River</a>
+    <a href="/" class="logo">Endless River</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -91,15 +91,15 @@
 </div>
 <nav id="mobile-menu" class="mobile-menu slideout-menu">
   <ul class="mobile-menu-list">
-    <a href="/endlessriver/">
+    <a href="/">
         <li class="mobile-menu-item">主页</li>
-      </a><a href="/endlessriver/post/">
+      </a><a href="/post/">
         <li class="mobile-menu-item">归档</li>
-      </a><a href="/endlessriver/tags/">
+      </a><a href="/tags/">
         <li class="mobile-menu-item">标签</li>
-      </a><a href="/endlessriver/about/">
+      </a><a href="/about/">
         <li class="mobile-menu-item">关于</li>
-      </a><a href="/endlessriver/friendlink/">
+      </a><a href="/friendlink/">
         <li class="mobile-menu-item">友链</li>
       </a>
   </ul>
@@ -107,21 +107,21 @@
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
-  <a href="/endlessriver/" class="logo">Endless River</a>
+  <a href="/" class="logo">Endless River</a>
 </div>
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
     <li class="menu-item">
-        <a class="menu-item-link" href="/endlessriver/">主页</a>
+        <a class="menu-item-link" href="/">主页</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/endlessriver/post/">归档</a>
+        <a class="menu-item-link" href="/post/">归档</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/endlessriver/tags/">标签</a>
+        <a class="menu-item-link" href="/tags/">标签</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/endlessriver/about/">关于</a>
+        <a class="menu-item-link" href="/about/">关于</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/endlessriver/friendlink/">友链</a>
+        <a class="menu-item-link" href="/friendlink/">友链</a>
       </li>
   </ul>
 </nav>
@@ -143,14 +143,14 @@
 
         <div class="post-category">
               <span class="icomoonfree icon-folder"></span>
-            <a href="/endlessriver/categories/java/"> Java </a>
+            <a href="/categories/java/"> Java </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
           <span class="more-meta analyse"> 约 1601 字 </span>
           <span class="icomoonfree icon-clock"></span>
           <span class="more-meta analyse"> 预计阅读 4 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
-          <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/endlessriver/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+          <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
 
@@ -187,7 +187,7 @@
 
 <p>顾名思义，一旦获取，其内容不再可以修改，Java集合框架中可以用于获取的不可修改视图有</p>
 
-<p><img src="/endlessriver/img/unmodifiable_view.png" alt="YMsn4e.png" /></p>
+<p><img src="/img/unmodifiable_view.png" alt="YMsn4e.png" /></p>
 
 <p style="text-align:center;font-size:.9rem;font-style:italic">Collections通过静态方法获取的8个不可修改视图</p>
 
@@ -420,7 +420,7 @@
 
 <p>因此同步视图就是用来处理并发访问的，除了同步视图之外，<code>java.util.concurrent</code>包里提供了线程安全的集合，用于并发环境</p>
 
-<p><img src="/endlessriver/img/Synchronized_view.png" alt="YQFoad.png" /></p>
+<p><img src="/img/Synchronized_view.png" alt="YQFoad.png" /></p>
 
 <p style="text-align:center;font-size:.9rem;font-style:italic">Collections通过静态方法获取的8个同步视图（不包含SynchronizedRandomAccessList）</p>
 
@@ -428,7 +428,7 @@
 
 <p>受查视图用来对泛型类发生问题时提供调试支持</p>
 
-<p><img src="/endlessriver/img/checked_view.png" alt="YQXSk8.png" /></p>
+<p><img src="/img/checked_view.png" alt="YQXSk8.png" /></p>
 
 <p style="text-align:center;font-size:.9rem;font-style:italic">Collections通过静态方法获取的9个受查视图（不包含checkededRandomAccessList）</p>
 
@@ -530,13 +530,8 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-<<<<<<< HEAD
         2020-10-10
-        <a href="https://github.com/wangy325/endlessriver.git/commit/b8b48cefb4799eef04dcb7df87e3bfabcdb25fb1" title="集合视图以及线程基础内容更新">(b8b48ce)</a>
-=======
-        2020-05-27
-        
->>>>>>> ec1dbdfb3f5b590805cd9f88babc2a2d8324f3c5
+        <a href="https://github.com/wangy325/endlessriver/commit/b8b48cefb4799eef04dcb7df87e3bfabcdb25fb1" title="集合视图以及线程基础内容更新">(b8b48ce)</a>
     </span>
   </p>
   
@@ -551,23 +546,23 @@
   <div class="qr-code">
     
     <label class="qr-code-image" for="reward">
-        <img class="image" src="/endlessriver/img/reward/wechat.png">
+        <img class="image" src="/img/reward/wechat.png">
         <span>微信打赏</span>
       </label>
     
   </div>
 </div><footer class="post-footer">
       <div class="post-tags">
-          <a href="/endlessriver/tags/java%E5%9F%BA%E7%A1%80/">Java基础</a>
-          <a href="/endlessriver/tags/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/">集合框架</a>
+          <a href="/tags/java%E5%9F%BA%E7%A1%80/">Java基础</a>
+          <a href="/tags/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/">集合框架</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/endlessriver/post/tech/advance_java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/">
+        <a class="prev" href="/post/tech/advance_java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/">
             <i class="iconfont icon-left"></i>
             <span class="prev-text nav-default">线程与任务—Java并发系列之一</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
-        <a class="next" href="/endlessriver/post/tech/basic_java/map/">
+        <a class="next" href="/post/tech/basic_java/map/">
             <span class="next-text nav-default">Map—Java集合框架系列之四</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
@@ -602,7 +597,7 @@
       <div class="social-links">
       <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=u8za1dzCiImO_8rKldjU1g" class="iconfont icon-email" title="email"></a>
       <a href="https://github.com/wangy325" class="iconfont icon-github" title="github"></a>
-  <a href="https://wangy325.github.io/endlessriver/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
 </div>
 
 <div class="copyright">
@@ -647,7 +642,7 @@
     timeago().render(document.querySelectorAll('.timeago'), languageCode);
     timeago.cancel();  
   </script>
-<script type="text/javascript" src="/endlessriver/dist/even.26188efa.min.js"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       showProcessingMessages: false,

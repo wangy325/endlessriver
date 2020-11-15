@@ -61,7 +61,7 @@ centOS7和centOS6使用不同的防火墙机制，前者使用`firewall`，后�
 
 了解更多关于redis-sentinel的相关内容，请参考[redis哨兵与高可用架构](#)。
 
-{{% figure class="center" src="/endlessriver/img/master-slave-vs-sentinel.png" title="redis的主从模式和哨兵模式" alt="img" %}}
+{{% figure class="center" src="/img/master-slave-vs-sentinel.png" title="redis的主从模式和哨兵模式" alt="img" %}}
 
 <!-- {{% admonition bug "bug" %}}
 此处用图片释义可能更明确

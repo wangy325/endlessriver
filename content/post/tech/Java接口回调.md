@@ -26,7 +26,7 @@ autoCollapseToc: false
 
 ### 1. 同步调用
 
-[![iZXPMQ.md.png](https://s1.ax1x.com/2018/09/18/iZXPMQ.md.png)](https://imgchr.com/i/iZXPMQ)
+[![iZXPMQ.md.png](https://s1.ax1x.com/2018/09/18/iZXPMQ.md.png)](https:/imgchr.com/i/iZXPMQ)
 
 ​						*方法A()调用方法B(),并且等待方法B()的返回,然后A()再执行下一步操作*
 
@@ -36,7 +36,7 @@ autoCollapseToc: false
 
 ### 2. 异步调用
 
-[![iZXAZn.md.png](https://s1.ax1x.com/2018/09/18/iZXAZn.md.png)](https://imgchr.com/i/iZXAZn)
+[![iZXAZn.md.png](https://s1.ax1x.com/2018/09/18/iZXAZn.md.png)](https:/imgchr.com/i/iZXAZn)
 
 为了解决A()方法调用B()方法造成流程阻塞而出现的，最典型的方式就是**开启新线程**。这样的话，A()方法不必等待B()方法的返回而**继续执行**。
 
@@ -44,7 +44,7 @@ autoCollapseToc: false
 
 ### 3. 回调
 
-[![iZXmGT.md.png](https://s1.ax1x.com/2018/09/18/iZXmGT.md.png)](https://imgchr.com/i/iZXmGT)
+[![iZXmGT.md.png](https://s1.ax1x.com/2018/09/18/iZXmGT.md.png)](https:/imgchr.com/i/iZXmGT)
 
 在回调模式中，
 >A()方法调用B()方法     
