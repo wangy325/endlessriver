@@ -29,15 +29,15 @@
 <meta name="generator" content="Hugo 0.55.6 with even 4.0.0" />
 
 
-<link rel="canonical" href="https://wangy325.github.io/endlessriver/post/tech/advance_java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" />
-<link rel="apple-touch-icon" sizes="180x180" href="/endlessriver/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/endlessriver/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/endlessriver/favicon-16x16.png">
-<link rel="manifest" href="/endlessriver/manifest.json">
-<link rel="mask-icon" href="/endlessriver/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="canonical" href="/post/tech/advance_java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<link href="/endlessriver/dist/even.f64a7681.min.css" rel="stylesheet">
+<link href="/dist/even.f64a7681.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
@@ -48,9 +48,9 @@
 
 在Java中，必须明白一点：线程由Thread类启动，但Thread类并不执行任何操作，它只是驱动赋予它的任务。因此将线程与任务的概念区分开，有利于理解并发" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://wangy325.github.io/endlessriver/post/tech/advance_java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" />
+<meta property="og:url" content="/post/tech/advance_java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" />
 <meta property="article:published_time" content="2020-05-15T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2020-05-27T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2020-10-23T11:11:03&#43;08:00"/>
 
 <meta itemprop="name" content="线程与任务—Java并发系列之一">
 <meta itemprop="description" content="并发是生产过程不可能绕过去的坎，要编写高性能的程序，必须使用并发
@@ -61,7 +61,7 @@
 
 
 <meta itemprop="datePublished" content="2020-05-15T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-05-27T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-10-23T11:11:03&#43;08:00" />
 <meta itemprop="wordCount" content="6230">
 
 
@@ -88,7 +88,7 @@
 <body>
   <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/endlessriver/" class="logo">Endless River</a>
+    <a href="/" class="logo">Endless River</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -98,15 +98,15 @@
 </div>
 <nav id="mobile-menu" class="mobile-menu slideout-menu">
   <ul class="mobile-menu-list">
-    <a href="/endlessriver/">
+    <a href="/">
         <li class="mobile-menu-item">主页</li>
-      </a><a href="/endlessriver/post/">
+      </a><a href="/post/">
         <li class="mobile-menu-item">归档</li>
-      </a><a href="/endlessriver/tags/">
+      </a><a href="/tags/">
         <li class="mobile-menu-item">标签</li>
-      </a><a href="/endlessriver/about/">
+      </a><a href="/about/">
         <li class="mobile-menu-item">关于</li>
-      </a><a href="/endlessriver/friendlink/">
+      </a><a href="/friendlink/">
         <li class="mobile-menu-item">友链</li>
       </a>
   </ul>
@@ -114,21 +114,21 @@
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
-  <a href="/endlessriver/" class="logo">Endless River</a>
+  <a href="/" class="logo">Endless River</a>
 </div>
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
     <li class="menu-item">
-        <a class="menu-item-link" href="/endlessriver/">主页</a>
+        <a class="menu-item-link" href="/">主页</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/endlessriver/post/">归档</a>
+        <a class="menu-item-link" href="/post/">归档</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/endlessriver/tags/">标签</a>
+        <a class="menu-item-link" href="/tags/">标签</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/endlessriver/about/">关于</a>
+        <a class="menu-item-link" href="/about/">关于</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/endlessriver/friendlink/">友链</a>
+        <a class="menu-item-link" href="/friendlink/">友链</a>
       </li>
   </ul>
 </nav>
@@ -150,14 +150,14 @@
 
         <div class="post-category">
               <span class="icomoonfree icon-folder"></span>
-            <a href="/endlessriver/categories/java/"> Java </a>
+            <a href="/categories/java/"> Java </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
           <span class="more-meta analyse"> 约 6230 字 </span>
           <span class="icomoonfree icon-clock"></span>
           <span class="more-meta analyse"> 预计阅读 13 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
-          <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/endlessriver/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+          <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
 
@@ -1567,13 +1567,8 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-<<<<<<< HEAD
         2020-10-23
-        <a href="https://github.com/wangy325/endlessriver.git/commit/8a28c36a504c907a39c1ff9b3a701831be778172" title="join可以使线程有序执行">(8a28c36)</a>
-=======
-        2020-05-27
-        
->>>>>>> ec1dbdfb3f5b590805cd9f88babc2a2d8324f3c5
+        <a href="https://github.com/wangy325/endlessriver/commit/8a28c36a504c907a39c1ff9b3a701831be778172" title="join可以使线程有序执行">(8a28c36)</a>
     </span>
   </p>
   
@@ -1588,22 +1583,22 @@
   <div class="qr-code">
     
     <label class="qr-code-image" for="reward">
-        <img class="image" src="/endlessriver/img/reward/wechat.png">
+        <img class="image" src="/img/reward/wechat.png">
         <span>微信打赏</span>
       </label>
     
   </div>
 </div><footer class="post-footer">
       <div class="post-tags">
-          <a href="/endlessriver/tags/java%E8%BF%9B%E9%98%B6/">Java进阶</a>
+          <a href="/tags/java%E8%BF%9B%E9%98%B6/">Java进阶</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/endlessriver/post/tech/advance_java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/">
+        <a class="prev" href="/post/tech/advance_java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/">
             <i class="iconfont icon-left"></i>
             <span class="prev-text nav-default">资源访问受限—Java并发系列之二</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
-        <a class="next" href="/endlessriver/post/tech/basic_java/collections/">
+        <a class="next" href="/post/tech/basic_java/collections/">
             <span class="next-text nav-default">Collections—Java集合框架系列之五</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
@@ -1638,7 +1633,7 @@
       <div class="social-links">
       <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=u8za1dzCiImO_8rKldjU1g" class="iconfont icon-email" title="email"></a>
       <a href="https://github.com/wangy325" class="iconfont icon-github" title="github"></a>
-  <a href="https://wangy325.github.io/endlessriver/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
 </div>
 
 <div class="copyright">
@@ -1683,7 +1678,7 @@
     timeago().render(document.querySelectorAll('.timeago'), languageCode);
     timeago.cancel();  
   </script>
-<script type="text/javascript" src="/endlessriver/dist/even.26188efa.min.js"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       showProcessingMessages: false,

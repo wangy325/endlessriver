@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>SpringBoot on Endless River</title>
-    <link>https://wangy325.github.io/endlessriver/categories/springboot/</link>
+    <link>/categories/springboot/</link>
     <description>Recent content in SpringBoot on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Sat, 14 Mar 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://wangy325.github.io/endlessriver/categories/springboot/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/springboot/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>基于Spring Boot的AOP demo</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/springboot_aop_demo/</link>
+      <link>/post/tech/springboot_aop_demo/</link>
       <pubDate>Sat, 14 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/post/tech/springboot_aop_demo/</guid>
+      <guid>/post/tech/springboot_aop_demo/</guid>
       <description>&lt;p&gt;有一个cd接口，其实体类用于播放歌曲，同时我们想在播放歌曲的时候记录每个曲目的播放次数。看起来，记录次数这个事和播放曲目是不相干的事情，当然，我们可以在每首歌曲播放完成之后记录，但是
 更好的办法是使用一个切面，切入到播放方法中，来完成这件事，这样可以减少无关逻辑对代码的侵入。&lt;/p&gt;
 

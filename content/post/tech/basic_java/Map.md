@@ -171,7 +171,7 @@ key: 2, value:风衣
 
 值得一提的事，和[SortedSet](../set/#2-treeset)的子集视图一样，**对原集合和视图的修改是相互的**，不会引发  *ConcurrentModificationException* ，但是其对映射的操作是有限的，比如`keySet.add(2)`就抛出 *UnsupportedOperationException* ，迭代器不支持操作。查看源码即可知：
 
-![YeQ7rT.png](/endlessriver/img/HashMap_1.png)
+![YeQ7rT.png](/img/HashMap_1.png)
 
 <p style="text-align:center;font-size:.9rem;font-style:italic">HashMap内部视图和迭代器方法表</p>
 
@@ -545,7 +545,7 @@ void afterNodeAccess(Node<K,V> e) { // move node to last
 ```
 上述方法的流程图为：
 
-<center>![afterNodeAccess](/endlessriver/img/afterNodeAccess_flow.svg)</center>
+<center>![afterNodeAccess](/img/afterNodeAccess_flow.svg)</center>
 
 ### 3 TreeMap
 

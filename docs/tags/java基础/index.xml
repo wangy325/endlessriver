@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Java基础 on Endless River</title>
-    <link>https://wangy325.github.io/endlessriver/tags/java%E5%9F%BA%E7%A1%80/</link>
+    <link>/tags/java%E5%9F%BA%E7%A1%80/</link>
     <description>Recent content in Java基础 on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 24 Sep 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://wangy325.github.io/endlessriver/tags/java%E5%9F%BA%E7%A1%80/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/java%E5%9F%BA%E7%A1%80/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>HashMap的源码分析（一）</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%80/</link>
+      <link>/post/tech/basic_java/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%80/</link>
       <pubDate>Thu, 24 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%80/</guid>
+      <guid>/post/tech/basic_java/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%80/</guid>
       <description>&lt;p&gt;本文内容简单分析了JDK8中HashMap源码的几个重要方法，便于理解散列表在Java集合框架中的具体应用。&lt;/p&gt;
 
 &lt;p&gt;HashMap基于散列表，散列表中每一个Node节点（桶）是链表，当两个条目（entry）的key的hash值对桶数（capacity）取模的值相等时，这两个entry会存储在同一个链表中。但当链表中元素达到一定数目时，链表结构会转变为&lt;strong&gt;树结构&lt;/strong&gt;。&lt;/p&gt;
@@ -26,10 +26,10 @@
     
     <item>
       <title>Collections—Java集合框架系列之五</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/collections/</link>
+      <link>/post/tech/basic_java/collections/</link>
       <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/collections/</guid>
+      <guid>/post/tech/basic_java/collections/</guid>
       <description>&lt;p&gt;集合框架中一个重要的类，其实是Collection接口的&lt;strong&gt;伴随类&lt;/strong&gt;，其中定义了许多实用方法，用来获取&lt;strong&gt;集合视图&lt;/strong&gt;，或提供一些方便的操作集合元素的&lt;strong&gt;算法&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;由于视图是直接封装的Collection接口，&lt;strong&gt;因此其方法有些局限&lt;/strong&gt;，并且由于特殊的设计，部分操作是不允许的（会抛出 &lt;em&gt;UnsupportedOperationExceptin&lt;/em&gt; ）&lt;/p&gt;</description>
@@ -37,19 +37,19 @@
     
     <item>
       <title>Map—Java集合框架系列之四</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/map/</link>
+      <link>/post/tech/basic_java/map/</link>
       <pubDate>Sun, 10 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/map/</guid>
+      <guid>/post/tech/basic_java/map/</guid>
       <description>&lt;p&gt;Map即映射，即键-值对，键不允许重复，并且一个键最多映射一个值&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Set—Java集合框架系列之三</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/set/</link>
+      <link>/post/tech/basic_java/set/</link>
       <pubDate>Wed, 06 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/set/</guid>
+      <guid>/post/tech/basic_java/set/</guid>
       <description>&lt;p&gt;Set是&lt;strong&gt;不含重复元素的集&lt;/strong&gt;，严格来讲，Set不允许当&lt;code&gt;e1.equals(e2)&lt;/code&gt;为真时， &lt;em&gt;e1&lt;/em&gt; 和 &lt;em&gt;e2&lt;/em&gt; 同时出现在集合中。Set最多允许一个&lt;code&gt;null&lt;/code&gt;元素&lt;/p&gt;
 
 &lt;p&gt;将&lt;strong&gt;可变对象&lt;/strong&gt;置入Set时需要特别小心，当对象的改动影响到了元素之间的&lt;code&gt;equals()&lt;/code&gt;比较的结果，那么Set的行为就变得不确定了。因此，&lt;strong&gt;不能将Set本身作为Set的元素&lt;/strong&gt;&lt;/p&gt;</description>
@@ -57,46 +57,46 @@
     
     <item>
       <title>Queue—Java集合框架系列之二</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/queue/</link>
+      <link>/post/tech/basic_java/queue/</link>
       <pubDate>Sat, 02 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/queue/</guid>
+      <guid>/post/tech/basic_java/queue/</guid>
       <description>&lt;p&gt;Queue（队列），实际开发过程中，在单线程环境下使用的情况下不多，Queue作为集合框架中重要组成似乎习惯性被忽略，队列总是先持有元素，再处理元素&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>List—Java集合框架系列之一</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/list/</link>
+      <link>/post/tech/basic_java/list/</link>
       <pubDate>Wed, 29 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/list/</guid>
+      <guid>/post/tech/basic_java/list/</guid>
       <description>&lt;p&gt;接下来的集合框架系列文章讲解了常见的集合框架实现，此系列涉及到的实现都是&lt;strong&gt;线程不安全&lt;/strong&gt;的&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>内部类—Java基础系列之九</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/%E5%86%85%E9%83%A8%E7%B1%BB/</link>
+      <link>/post/tech/basic_java/%E5%86%85%E9%83%A8%E7%B1%BB/</link>
       <pubDate>Thu, 23 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/%E5%86%85%E9%83%A8%E7%B1%BB/</guid>
+      <guid>/post/tech/basic_java/%E5%86%85%E9%83%A8%E7%B1%BB/</guid>
       <description>&lt;p&gt;将一个类定义在另一个类的内部，这就是内部类&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>lambda表达式—Java基础系列之八</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+      <link>/post/tech/basic_java/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
       <pubDate>Wed, 22 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
+      <guid>/post/tech/basic_java/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
       <description>&lt;p&gt;lambda表达式是一个&lt;strong&gt;可传递的代码块&lt;/strong&gt;，可以在以后执行&lt;strong&gt;一次或多次&lt;/strong&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>抽象类与接口—Java基础系列之七</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/</link>
+      <link>/post/tech/basic_java/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/</link>
       <pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/</guid>
+      <guid>/post/tech/basic_java/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/</guid>
       <description>&lt;p&gt;抽象类是由&lt;code&gt;abstract&lt;/code&gt;关键字修饰的类。将一个普通类用&lt;code&gt;abstract&lt;/code&gt;修饰，它就是抽象类&lt;/p&gt;
 
 &lt;p&gt;若使用&lt;code&gt;abstract&lt;/code&gt;修饰方法，那么称该方法为&lt;strong&gt;抽象方法&lt;/strong&gt;，抽象方法没有方法体&lt;/p&gt;</description>
@@ -104,28 +104,28 @@
     
     <item>
       <title>Object超类—Java基础系列之六</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/object%E8%B6%85%E7%B1%BB/</link>
+      <link>/post/tech/basic_java/object%E8%B6%85%E7%B1%BB/</link>
       <pubDate>Sun, 19 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/object%E8%B6%85%E7%B1%BB/</guid>
+      <guid>/post/tech/basic_java/object%E8%B6%85%E7%B1%BB/</guid>
       <description>&lt;p&gt;在Java中，如果一个类没有明确地指出超类，那么Object就是这个类的超类。实际上，Object类是所有类超类，这个类定义了一些重要的方法&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>动态绑定与静态绑定—Java基础系列之五</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/</link>
+      <link>/post/tech/basic_java/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/</link>
       <pubDate>Sat, 18 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/</guid>
+      <guid>/post/tech/basic_java/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/</guid>
       <description>&lt;p&gt;这是Java方法调用的2个术语，用来描述Java虚拟机方法调用的2种机制&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>final关键字-Java基础系列之四</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/final%E5%85%B3%E9%94%AE%E5%AD%97/</link>
+      <link>/post/tech/basic_java/final%E5%85%B3%E9%94%AE%E5%AD%97/</link>
       <pubDate>Fri, 17 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/final%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
+      <guid>/post/tech/basic_java/final%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;不同的使用环境下，&lt;code&gt;final&lt;/code&gt;关键字的含义有细微差别，但通常它指“这是无法改变的”&lt;/p&gt;
 &lt;/blockquote&gt;</description>
@@ -133,28 +133,28 @@
     
     <item>
       <title>传值还是传引用—Java基础系列之三</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/</link>
+      <link>/post/tech/basic_java/%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/</link>
       <pubDate>Wed, 15 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/</guid>
+      <guid>/post/tech/basic_java/%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/</guid>
       <description>&lt;p&gt;Java语言设计总是&lt;strong&gt;按值调用&lt;/strong&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>static关键字—Java基础系列之二</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/static%E5%85%B3%E9%94%AE%E5%AD%97/</link>
+      <link>/post/tech/basic_java/static%E5%85%B3%E9%94%AE%E5%AD%97/</link>
       <pubDate>Tue, 14 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/static%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
+      <guid>/post/tech/basic_java/static%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
       <description>&lt;p&gt;介绍static关键字&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>访问权限修饰符—Java基础系列之一</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/basic_java/%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/</link>
+      <link>/post/tech/basic_java/%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/</link>
       <pubDate>Mon, 13 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/post/tech/basic_java/%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/</guid>
+      <guid>/post/tech/basic_java/%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;本系列内容主要来自TIJ，Java核心技术卷以及Java SE 8 API&lt;/p&gt;
 &lt;/blockquote&gt;</description>
@@ -162,19 +162,19 @@
     
     <item>
       <title>比较器的「退化」</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/</link>
+      <link>/post/tech/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/</link>
       <pubDate>Tue, 27 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/post/tech/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/</guid>
+      <guid>/post/tech/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/</guid>
       <description>&lt;p&gt;在使用匿名内部类比较器的时候，idea提供了几个层次的比较器代码优化，给👴整懵逼了。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Java接口回调</title>
-      <link>https://wangy325.github.io/endlessriver/post/tech/java%E6%8E%A5%E5%8F%A3%E5%9B%9E%E8%B0%83/</link>
+      <link>/post/tech/java%E6%8E%A5%E5%8F%A3%E5%9B%9E%E8%B0%83/</link>
       <pubDate>Tue, 16 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/post/tech/java%E6%8E%A5%E5%8F%A3%E5%9B%9E%E8%B0%83/</guid>
+      <guid>/post/tech/java%E6%8E%A5%E5%8F%A3%E5%9B%9E%E8%B0%83/</guid>
       <description>&lt;p&gt;回调模式在web开发中用的较多，本文简单介绍了Java的回调机制，理解此文可以在生产中写出适应业务的回调模型。&lt;/p&gt;</description>
     </item>
     

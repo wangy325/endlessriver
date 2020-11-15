@@ -19,7 +19,7 @@ Queue（队列），实际开发过程中，在单线程环境下使用的情况
 
 <!--more-->
 
-![J7NBrQ.png](/endlessriver/img/Queue.png)
+![J7NBrQ.png](/img/Queue.png)
 
 <p style="text-align:center;font-size:.9rem;font-style:italic">Queue继承关系简图</p>
 
@@ -358,18 +358,18 @@ private void doubleCapacity() {
 当触发扩容时，将容量增加一倍，同时使用两次`System.arraycopy`将原数组拷贝到新数组中，现引用[ArrayDeque扩容](https://www.jianshu.com/p/b65c22587bdb)将其机制作简要阐述：
 
 > 假如默认容量16，此时数组情况如图
-> ![JOvQtx.png](/endlessriver/img/ArrayDeque_full.png)
+> ![JOvQtx.png](/img/ArrayDeque_full.png)
 >
 > 当再次调用`addFirst("G")`时，
 >
-> ![JOvUHA.png](/endlessriver/img/ArrayDeque_full_2.png)
+> ![JOvUHA.png](/img/ArrayDeque_full_2.png)
 >
 > 此时head==tail，触发扩容，将会创建一个大小为 **16*2** 的新数组，然后通过两次拷贝将原数组的数据复制到新数组
 >
 > - 第一次将***G-H***拷贝到新数组
 > - 第二次将***A-F***拷贝到新数组
 >
-> ![JOvXU1.jpg](/endlessriver/img/ArrayDeque_full_3.jpg)
+> ![JOvXU1.jpg](/img/ArrayDeque_full_3.jpg)
 >
 > <p style="text-align:center;font-style:italic;font-size:.9rem">ArrayDeque扩容图解<sup>  来源见水印</sup></p>
 

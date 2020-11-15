@@ -24,7 +24,7 @@ autoCollapseToc: false
 
 顾名思义，一旦获取，其内容不再可以修改，Java集合框架中可以用于获取的不可修改视图有
 
-![YMsn4e.png](/endlessriver/img/unmodifiable_view.png)
+![YMsn4e.png](/img/unmodifiable_view.png)
 
 <p style="text-align:center;font-size:.9rem;font-style:italic">Collections通过静态方法获取的8个不可修改视图</p>
 
@@ -150,7 +150,7 @@ public class UnmodifiableViewTest {
 
 因此同步视图就是用来处理并发访问的，除了同步视图之外，`java.util.concurrent`包里提供了线程安全的集合，用于并发环境
 
-![YQFoad.png](/endlessriver/img/Synchronized_view.png)
+![YQFoad.png](/img/Synchronized_view.png)
 
 <p style="text-align:center;font-size:.9rem;font-style:italic">Collections通过静态方法获取的8个同步视图（不包含SynchronizedRandomAccessList）</p>
 
@@ -158,7 +158,7 @@ public class UnmodifiableViewTest {
 
 受查视图用来对泛型类发生问题时提供调试支持
 
-![YQXSk8.png](/endlessriver/img/checked_view.png)
+![YQXSk8.png](/img/checked_view.png)
 
 <p style="text-align:center;font-size:.9rem;font-style:italic">Collections通过静态方法获取的9个受查视图（不包含checkededRandomAccessList）</p>
 

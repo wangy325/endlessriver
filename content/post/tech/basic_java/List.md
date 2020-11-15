@@ -19,7 +19,7 @@ autoCollapseToc: false
 
 <!--more-->
 
-![JXUL1s.png](/endlessriver/img/Collection.png)
+![JXUL1s.png](/img/Collection.png)
 
 <p style="text-align:center;font-style:italic;font-size:.9rem">Java集合框架简图</p>
 
@@ -56,7 +56,7 @@ ArrayList是Java集合框架中使用最为频繁的实现，其本质是一个*
 
 下图显示了ArrayList的继承关系
 
-![JIvHtH.png](/endlessriver/img/ArrayList.png)
+![JIvHtH.png](/img/ArrayList.png)
 
 <p style="text-align:center;font-style:italic;font-size:.9rem">ArrayList继承关系</p>
 
@@ -132,7 +132,7 @@ ArrayList的内容存储在`elementData`对象数组中，通过在运行时获�
 
 作为使用最广的集合实现，ArrayList可以获取 *Iterator* 和 *ListIterator* 的实现，后者继承了前者，在前者的基础上新增了一些用于可逆迭代（ *cursor在集合中来回穿梭* ）的特性，如`previous()`，`previousIndex()`等方法
 
-![JoCR9e.png](/endlessriver/img/Iterator.png)
+![JoCR9e.png](/img/Iterator.png)
 
 <p style="font-size:.9rem; text-align:center;font-style:italic">迭代器方法表</p>
 
@@ -235,7 +235,7 @@ final void checkForComodification() {
 
 2 不论是 *Iterator* 或 *ListIterator* 接口在Java集合框架中都没有**独立的实现类**，都是作为**集合具体实现的内部类**存在的，这种机制使得不同的集合类型，拥有“定制”的迭代器类型，这意味着方法表并不是一成不变的，如ArrayList.ListIterator就缺失`hasNext()`方法
 
-<img src="/endlessriver/img/listIterator_partial.png" alt="JfiSYj.png"  />
+<img src="/img/listIterator_partial.png" alt="JfiSYj.png"  />
 
 <p style="text-align:center;font-style:italic;font-size:.9rem"><span id="llterator">LinkedList</span>(左)和ArrayList(右)内部ListIterator的实现差异</p>
 
@@ -368,13 +368,13 @@ public void add(int index, E element) {
 
 LinkedList是基于**链表**的有序集合，~~其不能像ArrayList一样通过索引(*index*)访问元素~~，同时LinkedList还实现了双端队列Deque接口，意味着LinkedList可以**实现队列的操作**
 
-![JIv7Ae.png](/endlessriver/img/LinkedList.png)
+![JIv7Ae.png](/img/LinkedList.png)
 
 <p style="text-align:center;font-style:italic;font-size:.9rem">LinkedList继承关系图</p>
 
 链表将每个对象存放在独立的节点(Node)中，节点中还保存对序列中前、后节点的引用。理论上，LinkedList**没有容量限制**
 
-![J4sq7d.png](/endlessriver/img/doubly-linked_list.png)
+![J4sq7d.png](/img/doubly-linked_list.png)
 
 <p style="text-align:center;font-style:italic;font-size:.9rem">LinkedList的基本数据结构<sup>  from Core Java</sup></p>
 
@@ -494,7 +494,7 @@ void linkBefore(E e, Node<E> succ) {
 
 LinkedList没有 *Iterator* 的实现，只有 *ListIterator* 的实现，里面定义了相当充分的[操作元素的方法](#llterator)，由于LinkedList也是List的实现类，故也可调用接口定义的`iterator()`方法[^4]，不过其实际上返回的是 *LinkedList.ListIterator* 实例
 
-![JoCYkT.png](/endlessriver/img/LinkedList调用iterator的时序图.png)
+![JoCYkT.png](/img/LinkedList调用iterator的时序图.png)
 
 <p style="font-size:.9rem;font-style:italic;text-align:center">LinkedList调用iterator()的时序图</p>
 
@@ -604,7 +604,7 @@ Node<E> node(int index) {
 
 既然如此，LinkedList**插入和删除的效率如何高**呢？答案就是**使用迭代器**，由于迭代器持有指针(*cursor*)，**免去了遍历集合获取节点的时间消耗**，因而插入和删除只需要修改前后节点的引用即可：
 
-![JTEuRK.png](/endlessriver/img/linkedlist_remove.png)
+![JTEuRK.png](/img/linkedlist_remove.png)
 
 <p style="text-align:center;font-size:.9rem;font-style:italic">从LinkedList删除一个元素<sup> from Core Java</sup></sup></p>
 
@@ -612,7 +612,7 @@ Node<E> node(int index) {
 
 #### 2.4 作为双端队列
 
-LinkedList除了实现了List接口之外，还实现了Deque接口，也就是说，**LinkedList还是一个双端队列**，具体请参照[Queue—Java集合框架系列之二](/endlessriver/post/tech/basic_java/queue/)
+LinkedList除了实现了List接口之外，还实现了Deque接口，也就是说，**LinkedList还是一个双端队列**，具体请参照[Queue—Java集合框架系列之二](//post/tech/basic_java/queue/)
 
 
 [^1]: 集合框架所有迭代器都是如此

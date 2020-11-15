@@ -2,84 +2,84 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Endless River</title>
-    <link>https://wangy325.github.io/endlessriver/categories/</link>
+    <link>/categories/</link>
     <description>Recent content in Categories on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Tue, 10 Nov 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://wangy325.github.io/endlessriver/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Java</title>
-      <link>https://wangy325.github.io/endlessriver/categories/java/</link>
+      <link>/categories/java/</link>
       <pubDate>Tue, 10 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/categories/java/</guid>
+      <guid>/categories/java/</guid>
       <description></description>
     </item>
     
     <item>
       <title>SpringBoot</title>
-      <link>https://wangy325.github.io/endlessriver/categories/springboot/</link>
+      <link>/categories/springboot/</link>
       <pubDate>Sat, 14 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/categories/springboot/</guid>
+      <guid>/categories/springboot/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Server</title>
-      <link>https://wangy325.github.io/endlessriver/categories/server/</link>
+      <link>/categories/server/</link>
       <pubDate>Sat, 31 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/categories/server/</guid>
+      <guid>/categories/server/</guid>
       <description></description>
     </item>
     
     <item>
       <title>JS</title>
-      <link>https://wangy325.github.io/endlessriver/categories/js/</link>
+      <link>/categories/js/</link>
       <pubDate>Wed, 28 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/categories/js/</guid>
+      <guid>/categories/js/</guid>
       <description></description>
     </item>
     
     <item>
       <title>NOSQL</title>
-      <link>https://wangy325.github.io/endlessriver/categories/nosql/</link>
+      <link>/categories/nosql/</link>
       <pubDate>Wed, 14 Aug 2019 16:01:23 +0800</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/categories/nosql/</guid>
+      <guid>/categories/nosql/</guid>
       <description></description>
     </item>
     
     <item>
       <title>计算机</title>
-      <link>https://wangy325.github.io/endlessriver/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/</link>
+      <link>/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/</link>
       <pubDate>Wed, 17 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/</guid>
+      <guid>/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/</guid>
       <description></description>
     </item>
     
     <item>
       <title>SQL</title>
-      <link>https://wangy325.github.io/endlessriver/categories/sql/</link>
+      <link>/categories/sql/</link>
       <pubDate>Wed, 14 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/categories/sql/</guid>
+      <guid>/categories/sql/</guid>
       <description></description>
     </item>
     
     <item>
       <title>VCS</title>
-      <link>https://wangy325.github.io/endlessriver/categories/vcs/</link>
+      <link>/categories/vcs/</link>
       <pubDate>Thu, 20 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.github.io/endlessriver/categories/vcs/</guid>
+      <guid>/categories/vcs/</guid>
       <description></description>
     </item>
     

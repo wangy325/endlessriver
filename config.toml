@@ -2,7 +2,7 @@
 # If you want to see the full configuration, please check `full-config.toml` .
 # And see https://gohugo.io/getting-started/configuration/ .
 
-baseURL = "https://127.0.0.1/endlessriver/"
+# baseURL = "https://wangy325.top"
 title = "Endless River"
 publishDir = "docs"
 
@@ -66,7 +66,7 @@ defaultContentLanguage = "zh-cn"           # Default language to use
   rssFullContent = true     # if false, Rss feed instead of the summary
   # use public git repo url to link lastmod git commit, enableGitInfo should be true.
   # 指定 git 仓库地址，可以生成指向最近更新的 git commit 的链接，需要将 enableGitInfo 设置成 true.
-  gitRepo = "https://github.com/wangy325/endlessriver.git"
+  gitRepo = "https://github.com/wangy325/endlessriver"
 
   # site info (optional)                                  # 站点信息（可选，不需要的可以直接注释掉）
   # logoTitle = "wangy325"        # default: the title value    # 默认值: 上面设置的title值
@@ -194,8 +194,8 @@ defaultContentLanguage = "zh-cn"           # Default language to use
 
   [params.reward]                                         # 文章打赏
     enable = true
-    wechat = "/endlessriver/img/reward/wechat.png"           # 微信二维码
-    # alipay = "/endlessriver/img/reward/alipay.png"           # 支付宝二维码
+    wechat = "/img/reward/wechat.png"           # 微信二维码
+    # alipay = "/img/reward/alipay.png"           # 支付宝二维码
 
   [params.social]                                         # 社交链接
     a-email = "http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=u8za1dzCiImO_8rKldjU1g"
