@@ -1,5 +1,5 @@
 ---
-title: "Collections—Java集合框架系列之五"
+title: "Collections工具"
 date: 2020-05-12
 lastmod: 2020-05-27
 draft: false

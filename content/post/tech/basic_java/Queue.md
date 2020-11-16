@@ -1,5 +1,5 @@
 ---
-title: "Queue—Java集合框架系列之二"
+title: "Queue"
 date: 2020-05-02
 lastmod: 2020-05-27
 draft: false

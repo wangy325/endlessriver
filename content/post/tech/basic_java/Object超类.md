@@ -1,5 +1,5 @@
 ---
-title: "Object超类—Java基础系列之六"
+title: "Object超类（一）"
 date: 2020-04-19
 lastmod: 2020-05-27
 draft: false

@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>node.js on Endless River</title>
-    <link>/tags/node.js/</link>
+    <link>https://wangy325.top/tags/node.js/</link>
     <description>Recent content in node.js on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Wed, 28 Aug 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/node.js/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://wangy325.top/tags/node.js/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>关于forever启动node服务的问题</title>
-      <link>/post/tech/%E5%85%B3%E4%BA%8Eforever%E5%90%AF%E5%8A%A8node%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <link>https://wangy325.top/post/tech/%E5%85%B3%E4%BA%8Eforever%E5%90%AF%E5%8A%A8node%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</link>
       <pubDate>Wed, 28 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/tech/%E5%85%B3%E4%BA%8Eforever%E5%90%AF%E5%8A%A8node%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <guid>https://wangy325.top/post/tech/%E5%85%B3%E4%BA%8Eforever%E5%90%AF%E5%8A%A8node%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
       <description>&lt;p&gt;在使用jenkins自动构建node.js项目的时候，由于对forever的不熟悉，构建脚本一直存在一点小问题。&lt;/p&gt;</description>
     </item>
     

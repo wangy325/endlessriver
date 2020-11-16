@@ -1,5 +1,5 @@
 ---
-title: "List—Java集合框架系列之一"
+title: "List"
 date: 2020-04-29
 lastmod: 2020-05-27
 draft: false
