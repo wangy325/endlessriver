@@ -1,5 +1,3 @@
 .DS_Store
-themes/*/node_modules/
-themes/*/.git/
-themes/*/.gitignore
+themes/*
 nohup.out
