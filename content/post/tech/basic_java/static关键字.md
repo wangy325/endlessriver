@@ -1,5 +1,5 @@
 ---
-title: "static关键字—Java基础系列之二"
+title: "static关键字"
 date: 2020-04-14
 lastmod: 2020-05-27
 draft: false
@@ -91,7 +91,7 @@ public class TestStatic {
 
         for (Employee e : x) {
             e.setId();
-            System.out.println("id = " + e.getId() 
+            System.out.println("id = " + e.getId()
                 + " name = " + e.getName() + " salary = " + e.getSalary());
         }
         System.out.println("the nextId is:  " + Employee.getNextId());

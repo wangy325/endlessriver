@@ -2,7 +2,7 @@
 # If you want to see the full configuration, please check `full-config.toml` .
 # And see https://gohugo.io/getting-started/configuration/ .
 
-# baseURL = "https://wangy325.top"
+baseURL = "https://wangy325.top"
 title = "Endless River"
 publishDir = "docs"
 
@@ -193,7 +193,7 @@ defaultContentLanguage = "zh-cn"           # Default language to use
     pagePV = true
 
   [params.reward]                                         # 文章打赏
-    enable = true
+    enable = false
     wechat = "/img/reward/wechat.png"           # 微信二维码
     # alipay = "/img/reward/alipay.png"           # 支付宝二维码
 

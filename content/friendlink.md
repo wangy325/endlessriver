@@ -8,14 +8,14 @@ comment: false
 toc: false
 
 ---
-
-
-下面是一些有趣的个人博客站
-
+- [Hugo](https://gohugo.io/getting-started/quick-start/)
+- [博客主题](https://github.com/olOwOlo/hugo-theme-even)
 - [森亮号航海见识](http://see.sl088.com/wiki/首页)
 - [赫赫文王](https://kqh.me/)
 - [独影](http://www.doing.ws/)[^v1]
 - [琼·岗鉴](http://khangey.com/cn/)
 - [阮一峰的个人站](http://www.ruanyifeng.com/home.html)
+- [廖雪峰的官方网站](https://www.liaoxuefeng.com/)
+- [谢益辉](https://yihui.org/)
 
-[^v1]: 此站部分内容可能引起版权纠纷。
+[^v1]: 此站部分内容可能存在版权问题

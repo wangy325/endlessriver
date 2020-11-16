@@ -1,5 +1,5 @@
 ---
-title: "Map—Java集合框架系列之四"
+title: "Map"
 date: 2020-05-10
 lastmod: 2020-05-27
 draft: false

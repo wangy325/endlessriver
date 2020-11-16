@@ -1,5 +1,5 @@
 ---
-title: "lambda表达式—Java基础系列之八"
+title: "lambda表达式"
 date: 2020-04-22
 lastmod: 2020-05-27
 draft: false

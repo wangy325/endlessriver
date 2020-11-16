@@ -2,120 +2,120 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Endless River</title>
-    <link>/tags/</link>
+    <link>https://wangy325.top/tags/</link>
     <description>Recent content in Tags on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Tue, 10 Nov 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://wangy325.top/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Java进阶</title>
-      <link>/tags/java%E8%BF%9B%E9%98%B6/</link>
+      <link>https://wangy325.top/tags/java%E8%BF%9B%E9%98%B6/</link>
       <pubDate>Tue, 10 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/java%E8%BF%9B%E9%98%B6/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Java基础</title>
-      <link>/tags/java%E5%9F%BA%E7%A1%80/</link>
-      <pubDate>Thu, 24 Sep 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/java%E5%9F%BA%E7%A1%80/</guid>
+      <guid>https://wangy325.top/tags/java%E8%BF%9B%E9%98%B6/</guid>
       <description></description>
     </item>
     
     <item>
       <title>集合框架</title>
-      <link>/tags/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/</link>
+      <link>https://wangy325.top/tags/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/</link>
       <pubDate>Thu, 24 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/</guid>
+      <guid>https://wangy325.top/tags/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Java基础</title>
+      <link>https://wangy325.top/tags/java%E5%9F%BA%E7%A1%80/</link>
+      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/tags/java%E5%9F%BA%E7%A1%80/</guid>
       <description></description>
     </item>
     
     <item>
       <title>aop</title>
-      <link>/tags/aop/</link>
+      <link>https://wangy325.top/tags/aop/</link>
       <pubDate>Sat, 14 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/aop/</guid>
+      <guid>https://wangy325.top/tags/aop/</guid>
       <description></description>
     </item>
     
     <item>
       <title>fdfs</title>
-      <link>/tags/fdfs/</link>
+      <link>https://wangy325.top/tags/fdfs/</link>
       <pubDate>Sat, 31 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/fdfs/</guid>
+      <guid>https://wangy325.top/tags/fdfs/</guid>
       <description></description>
     </item>
     
     <item>
       <title>node.js</title>
-      <link>/tags/node.js/</link>
+      <link>https://wangy325.top/tags/node.js/</link>
       <pubDate>Wed, 28 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/node.js/</guid>
+      <guid>https://wangy325.top/tags/node.js/</guid>
       <description></description>
     </item>
     
     <item>
       <title>mysql</title>
-      <link>/tags/mysql/</link>
+      <link>https://wangy325.top/tags/mysql/</link>
       <pubDate>Fri, 16 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/mysql/</guid>
+      <guid>https://wangy325.top/tags/mysql/</guid>
       <description></description>
     </item>
     
     <item>
       <title>redis</title>
-      <link>/tags/redis/</link>
+      <link>https://wangy325.top/tags/redis/</link>
       <pubDate>Wed, 14 Aug 2019 16:01:23 +0800</pubDate>
       
-      <guid>/tags/redis/</guid>
+      <guid>https://wangy325.top/tags/redis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>JS</title>
-      <link>/tags/js/</link>
+      <link>https://wangy325.top/tags/js/</link>
       <pubDate>Thu, 25 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/js/</guid>
+      <guid>https://wangy325.top/tags/js/</guid>
       <description></description>
     </item>
     
     <item>
       <title>设计模式</title>
-      <link>/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+      <link>https://wangy325.top/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Wed, 05 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>https://wangy325.top/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</guid>
       <description></description>
     </item>
     
     <item>
       <title>mybatis</title>
-      <link>/tags/mybatis/</link>
+      <link>https://wangy325.top/tags/mybatis/</link>
       <pubDate>Fri, 21 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/mybatis/</guid>
+      <guid>https://wangy325.top/tags/mybatis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>git</title>
-      <link>/tags/git/</link>
+      <link>https://wangy325.top/tags/git/</link>
       <pubDate>Thu, 20 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/git/</guid>
+      <guid>https://wangy325.top/tags/git/</guid>
       <description></description>
     </item>
     
