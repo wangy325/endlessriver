@@ -6,26 +6,44 @@
     <description>Recent content in Posts on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 10 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Nov 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangy325.top/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>一些重要的并发组件</title>
+      <link>https://wangy325.top/post/tech/java/%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BB%84%E4%BB%B6/</link>
+      <pubDate>Mon, 16 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/java/%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BB%84%E4%BB%B6/</guid>
+      <description>&lt;p&gt;Java 1.5以后的并发类库新加入了一些用于解决并发问题的新构件，合理地使用这些构件能够帮助我们写出更加简单且健壮的并发程序。本节内容介绍&lt;code&gt;java.util.concurrent&lt;/code&gt;包中一些具有代表性的构件，包括&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;CountDownLatch&lt;/li&gt;
+&lt;li&gt;CyclicBarrier&lt;/li&gt;
+&lt;li&gt;Semaphore&lt;/li&gt;
+&lt;li&gt;Exchanger&lt;/li&gt;
+&lt;li&gt;DelayQueue&lt;/li&gt;
+&lt;li&gt;PriorityBlockingQueue&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
       <title>计划执行任务</title>
-      <link>https://wangy325.top/post/tech/advance_java/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</link>
+      <link>https://wangy325.top/post/tech/java/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</link>
       <pubDate>Tue, 10 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/advance_java/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</guid>
+      <guid>https://wangy325.top/post/tech/java/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</guid>
       <description>&lt;p&gt;除了ThreadPoolExecutor之外，Java执行器（Executor）框架还提供了可以在指定延迟之后执行一次或周期执行任务的接口&lt;code&gt;ScheduledExecutorService&lt;/code&gt;，较&lt;a href=&#34;https://docs.oracle.com/javase/8/docs/api/java/util/Timer.html&#34;&gt;java.util.Timer&lt;/a&gt;而言，它是更好的选择&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>执行器与线程池</title>
-      <link>https://wangy325.top/post/tech/advance_java/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/</link>
+      <link>https://wangy325.top/post/tech/java/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/</link>
       <pubDate>Tue, 03 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/advance_java/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/</guid>
+      <guid>https://wangy325.top/post/tech/java/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/</guid>
       <description>&lt;p&gt;本系列的文章到目前为止，虽然没有特别说明，但是使用执行器(Executor(s))的次数已经难以计数了，&lt;code&gt;Executors&lt;/code&gt;提供了一些非常方便的静态方法，可以根据需要创建不同的&lt;code&gt;ExecutorService&lt;/code&gt;，然后调用其&lt;code&gt;execute(Runnable)&lt;/code&gt;或&lt;code&gt;submit(Callable&amp;lt;T&amp;gt;)&lt;/code&gt;方法。在多线程的条件下，执行器还有一个非常明显的优势，它使用线程池管理线程，避免了系统创建和销毁线程的开销。在一般的Java并发过程中，也建议使用执行器完成任务而非显式地创建线程&lt;/p&gt;
 
 &lt;p&gt;本文将从执行器开始，阐述Java中的线程池&lt;/p&gt;</description>
@@ -33,21 +51,36 @@
     
     <item>
       <title>死锁</title>
-      <link>https://wangy325.top/post/tech/advance_java/%E6%AD%BB%E9%94%81/</link>
+      <link>https://wangy325.top/post/tech/java/%E6%AD%BB%E9%94%81/</link>
       <pubDate>Fri, 30 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/advance_java/%E6%AD%BB%E9%94%81/</guid>
+      <guid>https://wangy325.top/post/tech/java/%E6%AD%BB%E9%94%81/</guid>
       <description>&lt;p&gt;Java有能力使任务为等待某些条件成立而进入阻塞状态，所以就有可能出现这样一种情况：某个任务在等待另一个任务，而后者又在等待其他的任务，这样一直等待下去，直到等待链上的最后一个任务又在等待第一个任务释放锁，这样就出现了任务之间相互等待的连续循环现象，这种情况出现之后，没有哪个任务能够执行，于是 &lt;strong&gt;死锁&lt;/strong&gt; 出现&lt;/p&gt;
 
-&lt;p&gt;死锁之所以难以规避，其重要的原因就在于其不确定性，可能程序运行良好，但是有潜在的死锁风险，这个风险在某些域的初始条件变化时，变得特别大，导致程序很快死锁。同时，死锁的出现也很难复现，它就像埋在程序里的地雷&lt;/p&gt;</description>
+&lt;p&gt;死锁之所以难以规避，其重要的原因就在于其不确定性，可能程序运行良好，但是有潜在的死锁风险，这个风险在某些域的初始条件变化时，变得特别大，导致程序很快死锁。同时，死锁的出现也很难复现，它就像埋在程序里的地雷&lt;/p&gt;
+
+&lt;p&gt;我们不妨回顾在&lt;a href=&#34;../资源访问受限/#2-1-span-id-condition-条件-span&#34;&gt;转账问题&lt;/a&gt;中使用的等待条件——如账户余额不足时使任务等待，在余额足够的时候再进行转账。这个程序没有问题，因为有100个账户每个账户初始金额1000元，而转账金额&lt;strong&gt;不大于&lt;/strong&gt;初始金额，所以任一时刻都会有账户的金额满足转账条件。但是如果去除转账金额不大于1000的限制，死锁就会发生，这很容易理解&lt;/p&gt;
+
+&lt;p&gt;比如有2个账户&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;账户1 余额200元
+账户2 余额300元&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;账户1向账户2转账300元，余额不足，等待；账户2向账户1转账400，余额不足等待；程序就进入死锁&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Java内存模型与volatile关键字(转)</title>
-      <link>https://wangy325.top/post/tech/advance_java/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E4%B8%8Evolatile%E5%85%B3%E9%94%AE%E5%AD%97/</link>
+      <link>https://wangy325.top/post/tech/java/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E4%B8%8Evolatile%E5%85%B3%E9%94%AE%E5%AD%97/</link>
       <pubDate>Tue, 27 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/advance_java/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E4%B8%8Evolatile%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
+      <guid>https://wangy325.top/post/tech/java/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E4%B8%8Evolatile%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
       <description>&lt;p&gt;本文转自&lt;a href=&#34;http://www.cnblogs.com/dolphin0520/p/3920373.html&#34;&gt;Matrix海子&lt;/a&gt;，是描述&lt;code&gt;volatile&lt;/code&gt;关键字非常好的一篇文章，从Java的内存模型开始，归本溯源的阐述了&lt;code&gt;volatile&lt;/code&gt;关键字在并发中的作用与局限&lt;/p&gt;
 
 &lt;p&gt;此文部分内容参照了《深入理解Java虚拟机》&lt;/p&gt;</description>
@@ -55,10 +88,10 @@
     
     <item>
       <title>生产者-消费者与阻塞队列</title>
-      <link>https://wangy325.top/post/tech/advance_java/%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%8E%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97/</link>
+      <link>https://wangy325.top/post/tech/java/%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%8E%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97/</link>
       <pubDate>Mon, 26 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/advance_java/%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%8E%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97/</guid>
+      <guid>https://wangy325.top/post/tech/java/%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%8E%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97/</guid>
       <description>&lt;p&gt;在讨论线程协作的时候，已经讨论了生产者与消费者雏形，比如录音是生产者，而播放则是消费者；同样的，在汽车打蜡的模型中，打蜡可看作生产者，抛光可看作消费者；只是它们的关系是简单的生产-消费关系&lt;/p&gt;
 
 &lt;p&gt;除了简单的线程协同之外，Java提供了&lt;strong&gt;同步队列&lt;/strong&gt;来解决线程的协同问题，本节重点讨论这部分的内容&lt;/p&gt;</description>
@@ -66,10 +99,10 @@
     
     <item>
       <title>终结任务</title>
-      <link>https://wangy325.top/post/tech/advance_java/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</link>
+      <link>https://wangy325.top/post/tech/java/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</link>
       <pubDate>Fri, 23 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/advance_java/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</guid>
+      <guid>https://wangy325.top/post/tech/java/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</guid>
       <description>&lt;p&gt;一般地，如果程序运行良好，任务执行完所需操作后自然结束，任务终结&lt;/p&gt;
 
 &lt;p&gt;如果任务执行时出现异常，任务也会终结&lt;/p&gt;
@@ -81,19 +114,21 @@
     
     <item>
       <title>获取任务的返回值</title>
-      <link>https://wangy325.top/post/tech/advance_java/%E8%8E%B7%E5%8F%96%E4%BB%BB%E5%8A%A1%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC/</link>
+      <link>https://wangy325.top/post/tech/java/%E8%8E%B7%E5%8F%96%E4%BB%BB%E5%8A%A1%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC/</link>
       <pubDate>Tue, 20 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/advance_java/%E8%8E%B7%E5%8F%96%E4%BB%BB%E5%8A%A1%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC/</guid>
-      <description>要创建一个任务，通常实现Runnable接口。考虑一个经典的问题：用多线程分段计算0-100的加和，我们需要把每个线程计算的值汇总，然后再求</description>
+      <guid>https://wangy325.top/post/tech/java/%E8%8E%B7%E5%8F%96%E4%BB%BB%E5%8A%A1%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC/</guid>
+      <description>&lt;p&gt;要创建一个任务，通常实现Runnable接口。考虑一个经典的问题：用多线程分段计算0-100的加和，我们需要把每个线程计算的值汇总，然后再求和，那么应该怎样获取每个任务返回值呢？&lt;/p&gt;
+
+&lt;p&gt;Java提供了Callable和Future接口，使任务有提供返回值的能力&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>HashMap的源码分析（一）</title>
-      <link>https://wangy325.top/post/tech/basic_java/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%80/</link>
+      <link>https://wangy325.top/post/tech/java/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%80/</link>
       <pubDate>Thu, 24 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/basic_java/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%80/</guid>
+      <guid>https://wangy325.top/post/tech/java/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%80/</guid>
       <description>&lt;p&gt;本文内容简单分析了JDK8中HashMap源码的几个重要方法，便于理解散列表在Java集合框架中的具体应用。&lt;/p&gt;
 
 &lt;p&gt;HashMap基于散列表，散列表中每一个Node节点（桶）是链表，当两个条目（entry）的key的hash值对桶数（capacity）取模的值相等时，这两个entry会存储在同一个链表中。但当链表中元素达到一定数目时，链表结构会转变为&lt;strong&gt;树结构&lt;/strong&gt;。&lt;/p&gt;
@@ -103,10 +138,10 @@
     
     <item>
       <title>访问共享资源</title>
-      <link>https://wangy325.top/post/tech/advance_java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/</link>
+      <link>https://wangy325.top/post/tech/java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/</link>
       <pubDate>Wed, 20 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/advance_java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/</guid>
+      <guid>https://wangy325.top/post/tech/java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/</guid>
       <description>&lt;p&gt;在系列一中，虽然创建了多线程，并且线程之间出现了一些&lt;strong&gt;不可预测&lt;/strong&gt;的CPU调度，但是由于线程之间是&lt;strong&gt;相互隔离&lt;/strong&gt;的——&lt;strong&gt;线程没有访问共同的资源&lt;/strong&gt;，尽管在执行任务的过程可能被CPU剥夺运行权，但是当它们再次获得运行权时对运行结果并没有影响，它们是安全的&lt;/p&gt;
 
 &lt;p&gt;考虑一种情况，如果&lt;strong&gt;多个线程访问同一个资源&lt;/strong&gt;，并对资源内容进行修改，会发生什么情况？&lt;/p&gt;</description>
@@ -114,10 +149,10 @@
     
     <item>
       <title>线程与任务</title>
-      <link>https://wangy325.top/post/tech/advance_java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</link>
+      <link>https://wangy325.top/post/tech/java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</link>
       <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/advance_java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</guid>
+      <guid>https://wangy325.top/post/tech/java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</guid>
       <description>&lt;p&gt;并发是生产过程不可能绕过去的坎，&lt;del&gt;要编写高性能的程序，必须使用并发&lt;/del&gt;&lt;/p&gt;
 
 &lt;p&gt;并发的本质是多个线程同时处理任务&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;，不同于进程，线程之间的资源是共享的，当程序不够严谨时，使用多线程就可能带来问题，这是要反复讨论并发的原因之一&lt;/p&gt;
@@ -127,10 +162,10 @@
     
     <item>
       <title>Collections工具</title>
-      <link>https://wangy325.top/post/tech/basic_java/collections/</link>
+      <link>https://wangy325.top/post/tech/java/collections/</link>
       <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/basic_java/collections/</guid>
+      <guid>https://wangy325.top/post/tech/java/collections/</guid>
       <description>&lt;p&gt;集合框架中一个重要的类，其实是Collection接口的&lt;strong&gt;伴随类&lt;/strong&gt;，其中定义了许多实用方法，用来获取&lt;strong&gt;集合视图&lt;/strong&gt;，或提供一些方便的操作集合元素的&lt;strong&gt;算法&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;由于视图是直接封装的Collection接口，&lt;strong&gt;因此其方法有些局限&lt;/strong&gt;，并且由于特殊的设计，部分操作是不允许的（会抛出 &lt;em&gt;UnsupportedOperationExceptin&lt;/em&gt; ）&lt;/p&gt;</description>
@@ -138,19 +173,52 @@
     
     <item>
       <title>Map</title>
-      <link>https://wangy325.top/post/tech/basic_java/map/</link>
+      <link>https://wangy325.top/post/tech/java/map/</link>
       <pubDate>Sun, 10 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/basic_java/map/</guid>
-      <description>&lt;p&gt;Map即映射，即键-值对，键不允许重复，并且一个键最多映射一个值&lt;/p&gt;</description>
+      <guid>https://wangy325.top/post/tech/java/map/</guid>
+      <description>&lt;p&gt;Map即映射，即键-值对，键不允许重复，并且一个键最多映射一个值&lt;/p&gt;
+
+&lt;p&gt;映射提供3种&lt;strong&gt;集合视图&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;键集 （Set实现）&lt;/li&gt;
+&lt;li&gt;值集 （Collection实现）&lt;/li&gt;
+&lt;li&gt;Map.Entry集（Set实现）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;由于Map的键是Set，因此使用可变对象作为Map的key时，&lt;strong&gt;需要覆盖 &lt;em&gt;equals&lt;/em&gt; 和 &lt;em&gt;hashCode&lt;/em&gt; 方法&lt;/strong&gt;，&lt;strong&gt;Map不能使用自身作为key&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Java 8对Map接口进行了优化，新增了主要是针对&lt;strong&gt;函数式接口&lt;/strong&gt;的 &lt;em&gt;默认&lt;/em&gt; 方法（方法体被省略）：&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;default V &lt;strong&gt;&lt;em&gt;merge&lt;/em&gt;&lt;/strong&gt;(K key, V value,
+          BiFunction&amp;lt;? super V, ? super V, ? extends V&amp;gt; remappingFunction) {&amp;hellip;}&lt;/li&gt;
+&lt;li&gt;default V &lt;strong&gt;&lt;em&gt;compute&lt;/em&gt;&lt;/strong&gt;(K key,
+          BiFunction&amp;lt;? super K, ? super V, ? extends V&amp;gt; remappingFunction) {&amp;hellip;}&lt;/li&gt;
+&lt;li&gt;default V &lt;strong&gt;&lt;em&gt;computeIfPresent&lt;/em&gt;&lt;/strong&gt;(K key,
+          BiFunction&amp;lt;? super K, ? super V, ? extends V&amp;gt; remappingFunction) {&amp;hellip;}&lt;/li&gt;
+&lt;li&gt;default V &lt;strong&gt;&lt;em&gt;computeIfAbsent&lt;/em&gt;&lt;/strong&gt;(K key,
+          Function&amp;lt;? super K, ? extends V&amp;gt; mappingFunction) {&amp;hellip;}&lt;/li&gt;
+&lt;li&gt;default V &lt;strong&gt;&lt;em&gt;replace&lt;/em&gt;&lt;/strong&gt;(K key, V value) {&amp;hellip;}&lt;/li&gt;
+&lt;li&gt;default boolean &lt;strong&gt;&lt;em&gt;replace&lt;/em&gt;&lt;/strong&gt;(K key, V oldValue, V newValue) {&amp;hellip;}&lt;/li&gt;
+&lt;li&gt;default boolean &lt;strong&gt;&lt;em&gt;remove&lt;/em&gt;&lt;/strong&gt;(Object key, Object value) {&amp;hellip;}&lt;/li&gt;
+&lt;li&gt;default V &lt;strong&gt;&lt;em&gt;putIfAbsent&lt;/em&gt;&lt;/strong&gt;(K key, V value) {&amp;hellip;}&lt;/li&gt;
+&lt;li&gt;default void &lt;strong&gt;&lt;em&gt;replaceAll&lt;/em&gt;&lt;/strong&gt;(BiFunction&amp;lt;? super K, ? super V, ? extends V&amp;gt; function) {&amp;hellip;}&lt;/li&gt;
+&lt;li&gt;default V &lt;strong&gt;&lt;em&gt;getOrDefault&lt;/em&gt;&lt;/strong&gt;(Object key, V defaultValue) {&amp;hellip;}&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;上述方法使用的不多，主要用来对Map键值进行更新，按需查阅API文档&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Set</title>
-      <link>https://wangy325.top/post/tech/basic_java/set/</link>
+      <link>https://wangy325.top/post/tech/java/set/</link>
       <pubDate>Wed, 06 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/basic_java/set/</guid>
+      <guid>https://wangy325.top/post/tech/java/set/</guid>
       <description>&lt;p&gt;Set是&lt;strong&gt;不含重复元素的集&lt;/strong&gt;，严格来讲，Set不允许当&lt;code&gt;e1.equals(e2)&lt;/code&gt;为真时， &lt;em&gt;e1&lt;/em&gt; 和 &lt;em&gt;e2&lt;/em&gt; 同时出现在集合中。Set最多允许一个&lt;code&gt;null&lt;/code&gt;元素&lt;/p&gt;
 
 &lt;p&gt;将&lt;strong&gt;可变对象&lt;/strong&gt;置入Set时需要特别小心，当对象的改动影响到了元素之间的&lt;code&gt;equals()&lt;/code&gt;比较的结果，那么Set的行为就变得不确定了。因此，&lt;strong&gt;不能将Set本身作为Set的元素&lt;/strong&gt;&lt;/p&gt;</description>
@@ -158,70 +226,368 @@
     
     <item>
       <title>Queue</title>
-      <link>https://wangy325.top/post/tech/basic_java/queue/</link>
+      <link>https://wangy325.top/post/tech/java/queue/</link>
       <pubDate>Sat, 02 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/basic_java/queue/</guid>
-      <description>&lt;p&gt;Queue（队列），实际开发过程中，在单线程环境下使用的情况下不多，Queue作为集合框架中重要组成似乎习惯性被忽略，队列总是先持有元素，再处理元素&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;</description>
+      <guid>https://wangy325.top/post/tech/java/queue/</guid>
+      <description>&lt;p&gt;Queue（队列），实际开发过程中，在单线程环境下使用的情况下不多，Queue作为集合框架中重要组成似乎习惯性被忽略，队列总是先持有元素，再处理元素&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://wangy325.top/img/Queue.png&#34; alt=&#34;J7NBrQ.png&#34; /&gt;&lt;/p&gt;
+
+&lt;p style=&#34;text-align:center;font-size:.9rem;font-style:italic&#34;&gt;Queue继承关系简图&lt;/p&gt;
+
+&lt;p&gt;除了Collection定义的操作之外，Queue定义了额外的插入/删除/检查元素的操作，这些操作有2种形式：&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;center&#34;&gt;&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;&lt;em&gt;Throws Exception&lt;/em&gt;&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;&lt;em&gt;Returns special value&lt;/em&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;strong&gt;Insert&lt;/strong&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;add(e)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;offer(e)&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;strong&gt;Remove&lt;/strong&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;remove()&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;poll()&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;strong&gt;Examine&lt;/strong&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;element()&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;peek()&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;如表所示，add/remove/element方法失败后抛出异常。offer/poll/peek方法失败后返回一个特殊值（null或false，视具体操作不同），需要说明的是，&lt;code&gt;offer()&lt;/code&gt;方法主要是为&lt;strong&gt;有容量限制的队列&lt;/strong&gt;设计的&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>List</title>
-      <link>https://wangy325.top/post/tech/basic_java/list/</link>
+      <link>https://wangy325.top/post/tech/java/list/</link>
       <pubDate>Wed, 29 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/basic_java/list/</guid>
-      <description>&lt;p&gt;接下来的集合框架系列文章讲解了常见的集合框架实现，此系列涉及到的实现都是&lt;strong&gt;线程不安全&lt;/strong&gt;的&lt;/p&gt;</description>
+      <guid>https://wangy325.top/post/tech/java/list/</guid>
+      <description>&lt;p&gt;接下来的集合框架系列文章讲解了常见的集合框架实现，此系列涉及到的实现都是&lt;strong&gt;线程不安全&lt;/strong&gt;的&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://wangy325.top/img/Collection.png&#34; alt=&#34;JXUL1s.png&#34; /&gt;&lt;/p&gt;
+
+&lt;p style=&#34;text-align:center;font-style:italic;font-size:.9rem&#34;&gt;Java集合框架简图&lt;/p&gt;
+
+&lt;!-- &gt; 1. 未列出枚举集（EnumSet/EnumMap）
+&gt; 2. 未列出IdentityHashMap
+&gt; 3. 未列出java.util.concurrent包下的实现 --&gt;
+
+&lt;p&gt;上图列出了集合框架的常见实现，Java集合框架系列文章介绍了图中列出的大部分内容&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>内部类</title>
-      <link>https://wangy325.top/post/tech/basic_java/%E5%86%85%E9%83%A8%E7%B1%BB/</link>
+      <link>https://wangy325.top/post/tech/java/%E5%86%85%E9%83%A8%E7%B1%BB/</link>
       <pubDate>Thu, 23 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/basic_java/%E5%86%85%E9%83%A8%E7%B1%BB/</guid>
-      <description>&lt;p&gt;将一个类定义在另一个类的内部，这就是内部类&lt;/p&gt;</description>
+      <guid>https://wangy325.top/post/tech/java/%E5%86%85%E9%83%A8%E7%B1%BB/</guid>
+      <description>&lt;p&gt;将一个类定义在另一个类的内部，这就是内部类&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;定义言简意赅 ，内涵丰富多彩&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Flight2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+  	&lt;span class=&#34;c1&#34;&gt;// inner class
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Comp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;String&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;String&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;getName&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(){&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+        &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;setName&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;name&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Dest&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;String&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;Dest&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;to&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+        &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;String&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;showDest&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(){&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+	&lt;span class=&#34;c1&#34;&gt;// use method to get inner class instance
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Comp&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;comp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(){&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Comp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+	&lt;span class=&#34;c1&#34;&gt;// use method to get inner class instance
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Dest&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;dest&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;){&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Dest&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+
+    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;ship&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(){&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;Comp&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;c&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;comp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+      	&lt;span class=&#34;n&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;setName&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;South Air&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;Dest&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;d&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;dest&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;HK&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;the flight is &amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;getName&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34; to &amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;d&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;showDest&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;());&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+
+    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;Flight2&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;f2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Flight2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;f2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;ship&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+    	&lt;span class=&#34;c1&#34;&gt;// OuterClassName.InnerClassName to refer inner class
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;        &lt;span class=&#34;n&#34;&gt;Flight2&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;f2s&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;  &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Flight2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;Flight2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;Comp&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;comp&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;f2s&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;comp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;Flight2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;Dest&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;d2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;f2s&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;dest&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;New York&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;通过&lt;code&gt;new&lt;/code&gt;关键字实例化内部类和使用普通类并没有什么区别&lt;/p&gt;
+
+&lt;p&gt;需要说明的是：当创建一个内部类的引用时，需要使用&lt;code&gt;OuterClassName.InnerClassName&lt;/code&gt;这样的格式指明内部类的类型&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>lambda表达式</title>
-      <link>https://wangy325.top/post/tech/basic_java/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+      <link>https://wangy325.top/post/tech/java/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
       <pubDate>Wed, 22 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/basic_java/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
-      <description>&lt;p&gt;lambda表达式是一个&lt;strong&gt;可传递的代码块&lt;/strong&gt;，可以在以后执行&lt;strong&gt;一次或多次&lt;/strong&gt;&lt;/p&gt;</description>
+      <guid>https://wangy325.top/post/tech/java/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
+      <description>&lt;p&gt;lambda表达式是一个&lt;strong&gt;可传递的代码块&lt;/strong&gt;，可以在以后执行&lt;strong&gt;一次或多次&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;从一个比较器说起：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Intro&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]{&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;baidu&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;alibaba&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;tencent&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;baida&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;kingdee&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;};&lt;/span&gt;
+      	&lt;span class=&#34;c1&#34;&gt;// String类实现了Comparable接口，可以直接使用sort方法实现字典序排序
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;      	&lt;span class=&#34;c1&#34;&gt;// 为什么是字典序？因为String类的实现逻辑是字典序
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;        &lt;span class=&#34;n&#34;&gt;Arrays&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;sort&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Arrays&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;toString&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;));&lt;/span&gt;
+
+        &lt;span class=&#34;n&#34;&gt;Arrays&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;sort&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;StringLengthComparator&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;());&lt;/span&gt;
+      	&lt;span class=&#34;c1&#34;&gt;//等效使用lambda表达式实现
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;      	&lt;span class=&#34;c1&#34;&gt;//Arrays.sort(s, (o1, o2) -&amp;gt; o1.length() - o2.length());
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;        &lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Arrays&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;toString&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;));&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;// 比较器实现——先按字符串长度排序
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;StringLengthComparator&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;implements&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Comparator&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;{&lt;/span&gt;
+    &lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;compare&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;o1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;String&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;o2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;o1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;length&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;o2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;length&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;cm&#34;&gt;/* output
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;[alibaba, baida, baidu, kingdee, tencent]
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;[baida, baidu, alibaba, kingdee, tencent]
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;*/&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//:~&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;上例中，&lt;code&gt;compare&lt;/code&gt;方法不是立即调用，在数组完成排序之前，&lt;code&gt;sort&lt;/code&gt;方法会一直调用&lt;code&gt;compare&lt;/code&gt;方法，只要元素的排列顺序不正确就会重新排列元素&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;nl&#34;&gt;API:&lt;/span&gt;	 &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;sort&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Comparator&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;?&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;super&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;sort&lt;/code&gt;方法需要一个比较器作为参数，接口&lt;code&gt;Comparator&lt;/code&gt;&lt;strong&gt;只有一个抽象方法&lt;/strong&gt;&lt;code&gt;compare&lt;/code&gt;，要实现排序，实现&lt;code&gt;compare&lt;/code&gt;方法即可，这正是&lt;code&gt;StringLengthComparator&lt;/code&gt;类所做的事情&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>抽象类与接口</title>
-      <link>https://wangy325.top/post/tech/basic_java/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/</link>
+      <link>https://wangy325.top/post/tech/java/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/</link>
       <pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/basic_java/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/</guid>
+      <guid>https://wangy325.top/post/tech/java/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/</guid>
       <description>&lt;p&gt;抽象类是由&lt;code&gt;abstract&lt;/code&gt;关键字修饰的类。将一个普通类用&lt;code&gt;abstract&lt;/code&gt;修饰，它就是抽象类&lt;/p&gt;
 
-&lt;p&gt;若使用&lt;code&gt;abstract&lt;/code&gt;修饰方法，那么称该方法为&lt;strong&gt;抽象方法&lt;/strong&gt;，抽象方法没有方法体&lt;/p&gt;</description>
+&lt;p&gt;若使用&lt;code&gt;abstract&lt;/code&gt;修饰方法，那么称该方法为&lt;strong&gt;抽象方法&lt;/strong&gt;，抽象方法没有方法体&lt;/p&gt;
+
+&lt;h2 id=&#34;8-1-抽象类&#34;&gt;8.1 抽象类&lt;/h2&gt;
+
+&lt;p&gt;但是抽象类有一些特征：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;抽象类不能被实例化（虽然抽象类可以声明域和构造器）&lt;/li&gt;
+&lt;li&gt;抽象方法必须置于抽象类中&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;如果你继承某抽象类，但是却不想实现某个抽象方法，可以继续让方法保持抽象，如此做&lt;strong&gt;导出类也要被声明为抽象类&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;AbsTest&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;S&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;S&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+
+ &lt;span class=&#34;kd&#34;&gt;abstract&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;F&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;F&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;F constructor&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+
+    &lt;span class=&#34;kd&#34;&gt;abstract&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+
+    &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(){&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;F.g()&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;S&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;F&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;S&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;kd&#34;&gt;super&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;S constructor&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+
+    &lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;
+    &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;S.f()&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;cm&#34;&gt;/* output
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;F constructor
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;S constructor
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;S.f()
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;F.g()
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;*/&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//:~&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
     </item>
     
     <item>
       <title>Object超类（一）</title>
-      <link>https://wangy325.top/post/tech/basic_java/object%E8%B6%85%E7%B1%BB/</link>
+      <link>https://wangy325.top/post/tech/java/object%E8%B6%85%E7%B1%BB/</link>
       <pubDate>Sun, 19 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/basic_java/object%E8%B6%85%E7%B1%BB/</guid>
+      <guid>https://wangy325.top/post/tech/java/object%E8%B6%85%E7%B1%BB/</guid>
       <description>&lt;p&gt;在Java中，如果一个类没有明确地指出超类，那么Object就是这个类的超类。实际上，Object类是所有类超类，这个类定义了一些重要的方法&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>基于Spring Boot的AOP demo</title>
-      <link>https://wangy325.top/post/tech/springboot_aop_demo/</link>
-      <pubDate>Sat, 14 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangy325.top/post/tech/springboot_aop_demo/</guid>
-      <description>&lt;p&gt;有一个cd接口，其实体类用于播放歌曲，同时我们想在播放歌曲的时候记录每个曲目的播放次数。看起来，记录次数这个事和播放曲目是不相干的事情，当然，我们可以在每首歌曲播放完成之后记录，但是
-更好的办法是使用一个切面，切入到播放方法中，来完成这件事，这样可以减少无关逻辑对代码的侵入。&lt;/p&gt;
-
-&lt;p&gt;此程序分别使用了基于@Aspect注解和基于XML配置文件2种方式进行了切面注入，2种方式效果是等同的。&lt;/p&gt;</description>
     </item>
     
   </channel>

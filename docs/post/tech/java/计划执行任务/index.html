@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>计划执行任务 - Endless River</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="wangy325" /><meta name="description" content="除了ThreadPoolExecutor之外，Java执行器（Executor）框架还提供了可以在指定延迟之后执行一次或周期执行任务的接口ScheduledExecutorService，较java.util.Timer而言，它是更好的选择
+" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.55.6 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://wangy325.top/post/tech/java/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.f64a7681.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="计划执行任务" />
+<meta property="og:description" content="除了ThreadPoolExecutor之外，Java执行器（Executor）框架还提供了可以在指定延迟之后执行一次或周期执行任务的接口ScheduledExecutorService，较java.util.Timer而言，它是更好的选择" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangy325.top/post/tech/java/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/" />
+<meta property="article:published_time" content="2020-11-10T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2020-11-20T11:36:32&#43;08:00"/>
+
+<meta itemprop="name" content="计划执行任务">
+<meta itemprop="description" content="除了ThreadPoolExecutor之外，Java执行器（Executor）框架还提供了可以在指定延迟之后执行一次或周期执行任务的接口ScheduledExecutorService，较java.util.Timer而言，它是更好的选择">
+
+
+<meta itemprop="datePublished" content="2020-11-10T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-11-20T11:36:32&#43;08:00" />
+<meta itemprop="wordCount" content="9300">
+
+
+
+<meta itemprop="keywords" content="Java进阶," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="计划执行任务"/>
+<meta name="twitter:description" content="除了ThreadPoolExecutor之外，Java执行器（Executor）框架还提供了可以在指定延迟之后执行一次或周期执行任务的接口ScheduledExecutorService，较java.util.Timer而言，它是更好的选择"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Endless River</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a><a href="/friendlink/">
+        <li class="mobile-menu-item">友链</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Endless River</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/friendlink/">友链</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">计划执行任务</h1>
+
+      <div class="post-meta">
+          <span>
+              <span class="icomoonfree icon-calendar"></span>
+              <span class="post-time"> 2020-11-10</span>
+          </span>
+
+        <div class="post-category">
+              <span class="icomoonfree icon-folder"></span>
+            <a href="/categories/java/"> Java </a>
+            </div>
+          <span class="icomoonfree icon-sigma"></span>
+          <span class="more-meta analyse"> 约 9300 字 </span>
+          <span class="icomoonfree icon-clock"></span>
+          <span class="more-meta analyse"> 预计阅读 19 分钟 </span>
+        <span class="icomoonfree icon-eye"></span>
+          <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-scheduledexecutorservice">1 ScheduledExecutorService</a></li>
+<li><a href="#2-scheduledthreadpoolexecutor">2 ScheduledThreadPoolExecutor</a>
+<ul>
+<li><a href="#2-1-构造器">2.1 构造器</a></li>
+<li><a href="#2-2-域">2.2 域</a></li>
+<li><a href="#2-3-方法">2.3 方法</a></li>
+<li><a href="#2-4-由executors构造的scheduledthreadpoolexecutor">2.4 由Executors构造的ScheduledThreadPoolExecutor</a></li>
+</ul></li>
+<li><a href="#3-内部结构">3 内部结构</a>
+<ul>
+<li><a href="#3-1-scheduledfuturetask">3.1 ScheduledFutureTask</a>
+<ul>
+<li><a href="#3-1-1-域">3.1.1 域</a></li>
+<li><a href="#3-1-2-构造器">3.1.2 构造器</a></li>
+<li><a href="#3-1-3-方法">3.1.3 方法</a>
+<ul>
+<li><a href="#1-compareto"><strong>1 compareTo</strong></a></li>
+<li><a href="#2-setnextruntime"><strong>2 setNextRunTime</strong></a></li>
+<li><a href="#3-run"><strong>3 run</strong></a></li>
+</ul></li>
+</ul></li>
+<li><a href="#3-2-delayedworkqueue">3.2 DelayedWorkQueue</a></li>
+</ul></li>
+<li><a href="#4-任务执行流程">4 任务执行流程</a>
+<ul>
+<li><a href="#4-1-提交任务">4.1 提交任务</a></li>
+<li><a href="#4-2-任务入队">4.2 任务入队</a></li>
+<li><a href="#4-3-执行任务">4.3 执行任务</a></li>
+<li><a href="#4-4-任务出队">4.4 任务出队</a></li>
+</ul></li>
+<li><a href="#5-取消任务">5 取消任务</a></li>
+<li><a href="#6-关闭线程池">6 关闭线程池</a>
+<ul>
+<li><a href="#6-1-onshutdown方法">6.1 onShutDown方法</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>除了ThreadPoolExecutor之外，Java执行器（Executor）框架还提供了可以在指定延迟之后执行一次或周期执行任务的接口<code>ScheduledExecutorService</code>，较<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Timer.html">java.util.Timer</a>而言，它是更好的选择</p>
+
+<p>与<a href="../执行器与线程池/#3-线程池">线程池</a>不同的是，用于计划执行的<code>ScheduledThreadPoolExecutor</code>使用<code>ScheduledFutureTask</code>作为任务，使用<code>DelayedWorkQueue</code>作为任务队列，以实现计划（周期）执行的目的</p>
+
+<p><img src="/img/scheduledFutureTask.png" alt="xx" />
+<p style="text-align:center; font-size:.9rem; font-style:italic">ScheduledThreadPoolExecutor继承关系图</p></p>
+
+<p>从<code>ScheduledThreadPoolExecutor</code>的继承关系图可以看到，其是<code>ThreadPoolExecutor</code>的导出类，其提交任务和执行任务以及关闭线程池的逻辑应和线程池相差无几，其重点差别在于<strong>任务对象以及任务队列</strong>的封装上，后文将会详述<code>ScheduledThreadPoolExecutor</code>的任务计划执行以及周期执行机制</p>
+
+<h1 id="1-scheduledexecutorservice">1 ScheduledExecutorService</h1>
+
+<p>继承自<code>ExecutorService</code>接口，其方法定义了一个可以用于在指定延迟之后执行一次或周期执行的ExecutorService</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 继承自ExecutorService 和Executor的方法被省略
+</span><span class="c1"></span>
+<span class="cm">/* 在给定的延迟之后执行Callable任务，立即返回ScheduledFuture&lt;V&gt;，其可以获取任务的结果或者取消任务*/</span>
+<span class="o">&lt;</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">ScheduledFuture</span><span class="o">&lt;</span><span class="n">V</span><span class="o">&gt;</span> <span class="nf">schedule</span><span class="o">(</span><span class="n">Callable</span><span class="o">&lt;</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">callable</span><span class="o">,</span> <span class="kt">long</span> <span class="n">delay</span><span class="o">,</span> <span class="n">TimeUnit</span> <span class="n">unit</span><span class="o">)</span>
+
+<span class="cm">/* 在给定的延迟之后执行Runnable任务，立即返回ScheduledFuture&lt;?&gt;，其get()方法返回null*/</span>
+<span class="n">ScheduledFuture</span><span class="o">&lt;?&gt;</span> <span class="n">schedule</span><span class="o">(</span><span class="n">Runnable</span> <span class="n">command</span><span class="o">,</span> <span class="kt">long</span> <span class="n">delay</span><span class="o">,</span> <span class="n">TimeUnit</span> <span class="n">unit</span><span class="o">)</span>
+
+<span class="cm">/* 在给定的初始延迟initialDelay之后执行Runnable任务，接着在给定的时间间隔period之后再次执行任务，
+</span><span class="cm">接着再间隔period之后再次执行任务...
+</span><span class="cm">
+</span><span class="cm">如果某次任务的执行耗时 &gt; period，下次的计划执行将被延后，并不会同时执行多个任务
+</span><span class="cm">
+</span><span class="cm">如果某次执行抛出异常，那么接下来的执行将被中止。周期执行的任务只有线程池终止之后才会停止执行，也
+</span><span class="cm">就是说周期任务永远不会主动完成
+</span><span class="cm">
+</span><span class="cm">返回值ScheduledFuture&lt;?&gt;代表将要执行的任务，取消任务时，其get()方法会抛出异常*/</span>
+<span class="n">ScheduledFuture</span><span class="o">&lt;?&gt;</span> <span class="n">scheduleAtFixedRate</span><span class="o">(</span><span class="n">Runnable</span> <span class="n">command</span><span class="o">,</span> <span class="kt">long</span> <span class="n">initialDelay</span><span class="o">,</span>
+                                        <span class="kt">long</span> <span class="n">period</span><span class="o">,</span> <span class="n">TimeUnit</span> <span class="n">unit</span><span class="o">)</span>
+
+<span class="cm">/* 在给定的初始延迟之后执行Runnable任务，接着在任务完成之后延迟delay之后再次执行，接着在上一个
+</span><span class="cm">任务完成之后延迟delay再次执行...
+</span><span class="cm">
+</span><span class="cm">如果某次执行抛出异常，那么接下来的执行将被中止。周期执行的任务只有线程池终止之后才会停止执行，也
+</span><span class="cm">就是说周期任务永远不会主动完成
+</span><span class="cm">
+</span><span class="cm">返回值ScheduledFuture&lt;?&gt;代表将要执行的任务，取消任务时，其get()方法会抛出异常*/</span>
+<span class="n">ScheduledFuture</span><span class="o">&lt;?&gt;</span> <span class="n">scheduleWithFixedDelay</span><span class="o">(</span><span class="n">Runnable</span> <span class="n">command</span><span class="o">,</span> <span class="kt">long</span> <span class="n">initialDelay</span><span class="o">,</span>
+                                            <span class="kt">long</span> <span class="n">delay</span><span class="o">,</span> <span class="n">TimeUnit</span> <span class="n">unit</span><span class="o">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="2-scheduledthreadpoolexecutor">2 ScheduledThreadPoolExecutor</h1>
+
+<p>由于其是<code>ThreadPoolExecutor</code>的导出类，故其主要逻辑和其父类一致，本节的讨论着重于二者差异的部分</p>
+
+<h2 id="2-1-构造器">2.1 构造器</h2>
+
+<p><code>ScheduledThreadPoolExecutor</code>的构造器就不再赘述了，基本上是父类的构造参数中抽取了几个便于理解的构造器，将其分列如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">ScheduledThreadPoolExecutor</span><span class="o">(</span><span class="kt">int</span> <span class="n">corePoolSize</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">(</span><span class="n">corePoolSize</span><span class="o">,</span> <span class="n">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">NANOSECONDS</span><span class="o">,</span>
+          <span class="k">new</span> <span class="n">DelayedWorkQueue</span><span class="o">());</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="nf">ScheduledThreadPoolExecutor</span><span class="o">(</span><span class="kt">int</span> <span class="n">corePoolSize</span><span class="o">,</span>
+                               <span class="n">ThreadFactory</span> <span class="n">threadFactory</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">(</span><span class="n">corePoolSize</span><span class="o">,</span> <span class="n">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">NANOSECONDS</span><span class="o">,</span>
+          <span class="k">new</span> <span class="n">DelayedWorkQueue</span><span class="o">(),</span> <span class="n">threadFactory</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="nf">ScheduledThreadPoolExecutor</span><span class="o">(</span><span class="kt">int</span> <span class="n">corePoolSize</span><span class="o">,</span>
+                                   <span class="n">RejectedExecutionHandler</span> <span class="n">handler</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">(</span><span class="n">corePoolSize</span><span class="o">,</span> <span class="n">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">NANOSECONDS</span><span class="o">,</span>
+          <span class="k">new</span> <span class="n">DelayedWorkQueue</span><span class="o">(),</span> <span class="n">handler</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="nf">ScheduledThreadPoolExecutor</span><span class="o">(</span><span class="kt">int</span> <span class="n">corePoolSize</span><span class="o">,</span>
+                                   <span class="n">ThreadFactory</span> <span class="n">threadFactory</span><span class="o">,</span>
+                                   <span class="n">RejectedExecutionHandler</span> <span class="n">handler</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">(</span><span class="n">corePoolSize</span><span class="o">,</span> <span class="n">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">NANOSECONDS</span><span class="o">,</span>
+          <span class="k">new</span> <span class="n">DelayedWorkQueue</span><span class="o">(),</span> <span class="n">threadFactory</span><span class="o">,</span> <span class="n">handler</span><span class="o">);</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><code>ScheduledThreadPoolExecutor</code>的实例均使用Integer.MAX_VALUE作为最大线程池数，这是否意味着其可以使用无限制的线程去运行任务呢？答案是否定的，<code>ScheduledThreadPoolExecutor</code>保证了其池中的线程数不会超过<code>corePoolSize</code><sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup></p>
+
+<h2 id="2-2-域">2.2 域</h2>
+
+<p>除了构造器中指定的参数之外，<code>ScheduledThreadPoolExecutor</code>还有一些其他参数，这些参数都可以在<code>ScheduledThreadPoolExecutor</code>初始化完成之后再进行动态配置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="cm">/** 线程池shutdown之后是否继续执行周期任务，true执行，默认为false*/</span>
+<span class="kd">private</span> <span class="kd">volatile</span> <span class="kt">boolean</span> <span class="n">continueExistingPeriodicTasksAfterShutdown</span><span class="o">;</span>
+
+<span class="cm">/** 线程池shutdown之后是否继续执行计划任务，true执行，默认为true*/</span>
+<span class="kd">private</span> <span class="kd">volatile</span> <span class="kt">boolean</span> <span class="n">executeExistingDelayedTasksAfterShutdown</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+
+<span class="cm">/** 取消任务时是否将任务从队列中移除，true移除，默认false*/</span>
+<span class="kd">private</span> <span class="kd">volatile</span> <span class="kt">boolean</span> <span class="n">removeOnCancel</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+
+<span class="cm">/** 任务添加的顺序，初始化ScheduledFutureTask时使用*/</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">AtomicLong</span> <span class="n">sequencer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AtomicLong</span><span class="o">();</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="2-3-方法">2.3 方法</h2>
+
+<p><code>ScheduledThreadPoolExecutor</code>使用最多的还是实现自<code>ScheduledExecutorService</code>接口的4个方法，用于计划（周期）执行任务，其中，作为线程池的execute和submit方法全部直接调用了scheduleXX方法。值得一提的是，<code>ScheduledThreadPoolExecutor</code>覆盖了<code>ThreadPoolExecutor</code>的<code>onShutdown()</code>方法，用于关闭线程池时的额外操作，该方法在父类中是空方法</p>
+
+<h2 id="2-4-由executors构造的scheduledthreadpoolexecutor">2.4 由Executors构造的ScheduledThreadPoolExecutor</h2>
+
+<p>一般地，我们会使用<code>Executors</code>来获取线程池，<code>Executors</code>提供了2个基本方法(不包括重载方法)来获取计划执行任务的线程池</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="cm">/** 构造一个不可动态配置的ScheduledThreadPoolExecutor，其核心线程池数量为1*/</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="n">ScheduledExecutorService</span> <span class="nf">newSingleThreadScheduledExecutor</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">DelegatedScheduledExecutorService</span>
+        <span class="o">(</span><span class="k">new</span> <span class="n">ScheduledThreadPoolExecutor</span><span class="o">(</span><span class="n">1</span><span class="o">));</span>
+<span class="o">}</span>
+
+<span class="cm">/** 构造一个核心线程池为1的ScheduledThreadPoolExecutor*/</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="n">ScheduledExecutorService</span> <span class="nf">newScheduledThreadPool</span><span class="o">(</span><span class="kt">int</span> <span class="n">corePoolSize</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">ScheduledThreadPoolExecutor</span><span class="o">(</span><span class="n">corePoolSize</span><span class="o">);</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>我们可以自定义线程工厂(ThreadFactory)来调用其重载方法以自定义线程信息</p>
+
+<h1 id="3-内部结构">3 内部结构</h1>
+
+<h2 id="3-1-scheduledfuturetask">3.1 ScheduledFutureTask</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">class</span> <span class="nc">ScheduledFutureTask</span><span class="o">&lt;</span><span class="n">V</span><span class="o">&gt;</span>
+            <span class="kd">extends</span> <span class="n">FutureTask</span><span class="o">&lt;</span><span class="n">V</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">RunnableScheduledFuture</span><span class="o">&lt;</span><span class="n">V</span><span class="o">&gt;</span>
+            <span class="o">{...}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>提交给<code>ScheduledExecutorService</code>的任务都被包装成<code>ScheduledFutureTask</code>实例，相较FutureTask，其还实现了<code>RunnableScheduledFuture</code>接口，这个接口是RunnableFuture，ScheduledFuture的子接口，也就是Runnable，Future和Delay的实现类</p>
+
+<p>实现Delay接口是关键，它保证计划任务能够按时（周期）执行，并且任务能够按照执行顺序或者添加顺序被取出执行</p>
+
+<h3 id="3-1-1-域">3.1.1 域</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 每一个实例都有一个“序号”，用来维持其在队列中的位置
+</span><span class="c1"></span><span class="kd">private</span> <span class="kd">final</span> <span class="kt">long</span> <span class="n">sequenceNumber</span><span class="o">;</span>
+
+<span class="c1">// 任务下一次执行的时间，纳秒表示
+</span><span class="c1"></span><span class="kd">private</span> <span class="kt">long</span> <span class="n">time</span><span class="o">;</span>
+
+<span class="c1">// 任务周期执行的“周期”，纳秒表示，正数表示固定频率执行；
+</span><span class="c1">// 负数表示固定延迟执行，0表示不是周期执行的任务
+</span><span class="c1"></span><span class="kd">private</span> <span class="kd">final</span> <span class="kt">long</span> <span class="n">period</span><span class="o">;</span>
+
+<span class="c1">// 用来重新插入队列中的任务 （周期执行的任务）
+</span><span class="c1"></span><span class="n">RunnableScheduledFuture</span><span class="o">&lt;</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">outerTask</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
+
+<span class="c1">// 任务在队列中的索引（看出来是一个树）
+</span><span class="c1"></span><span class="kt">int</span> <span class="n">heapIndex</span><span class="o">;</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="3-1-2-构造器">3.1.2 构造器</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 构造一个单次执行的任务
+</span><span class="c1"></span><span class="n">ScheduledFutureTask</span><span class="o">(</span><span class="n">Runnable</span> <span class="n">r</span><span class="o">,</span> <span class="n">V</span> <span class="n">result</span><span class="o">,</span> <span class="kt">long</span> <span class="n">ns</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">time</span> <span class="o">=</span> <span class="n">ns</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">period</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">sequenceNumber</span> <span class="o">=</span> <span class="n">sequencer</span><span class="o">.</span><span class="na">getAndIncrement</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="c1">// 构造单次执行的任务
+</span><span class="c1"></span><span class="n">ScheduledFutureTask</span><span class="o">(</span><span class="n">Callable</span><span class="o">&lt;</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">callable</span><span class="o">,</span> <span class="kt">long</span> <span class="n">ns</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">(</span><span class="n">callable</span><span class="o">);</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">time</span> <span class="o">=</span> <span class="n">ns</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">period</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">sequenceNumber</span> <span class="o">=</span> <span class="n">sequencer</span><span class="o">.</span><span class="na">getAndIncrement</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="c1">// 构造周期执行的任务
+</span><span class="c1"></span><span class="n">ScheduledFutureTask</span><span class="o">(</span><span class="n">Runnable</span> <span class="n">r</span><span class="o">,</span> <span class="n">V</span> <span class="n">result</span><span class="o">,</span> <span class="kt">long</span> <span class="n">ns</span><span class="o">,</span> <span class="kt">long</span> <span class="n">period</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">time</span> <span class="o">=</span> <span class="n">ns</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">period</span> <span class="o">=</span> <span class="n">period</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">sequenceNumber</span> <span class="o">=</span> <span class="n">sequencer</span><span class="o">.</span><span class="na">getAndIncrement</span><span class="o">();</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>前2个构造器构造单次执行的任务，不过使用的任务不同罢了；第三个构造器构造周期执行的任务。每构造一个任务，任务的<code>sequenceNumber</code>便自增1</p>
+
+<h3 id="3-1-3-方法">3.1.3 方法</h3>
+
+<h4 id="1-compareto"><strong>1 compareTo</strong></h4>
+
+<p>由于Delay接口实现了Comparable接口，因此实现此方法对任务进行排序，其排序规则是：</p>
+
+<ul>
+<li>先比较<code>time</code>，先执行的任务在前</li>
+<li>若<code>time</code>相等，再比较<code>sequenceNumber</code>，先添加的任务在</li>
+</ul>
+
+<h4 id="2-setnextruntime"><strong>2 setNextRunTime</strong></h4>
+
+<p>设置周期任务下一次执行的时间</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">setNextRunTime</span><span class="o">()</span> <span class="o">{</span>
+   <span class="kt">long</span> <span class="n">p</span> <span class="o">=</span> <span class="n">period</span><span class="o">;</span>
+   <span class="k">if</span> <span class="o">(</span><span class="n">p</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span>
+       <span class="c1">//  固定周期执行，上一次执行时间+period即可
+</span><span class="c1"></span>       <span class="n">time</span> <span class="o">+=</span> <span class="n">p</span><span class="o">;</span>
+   <span class="k">else</span>
+       <span class="c1">// 固定delay执行
+</span><span class="c1"></span>       <span class="n">time</span> <span class="o">=</span> <span class="n">triggerTime</span><span class="o">(-</span><span class="n">p</span><span class="o">);</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h4 id="3-run"><strong>3 run</strong></h4>
+
+<p>执行任务的核心方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+    <span class="c1">// 检查是否周期任务
+</span><span class="c1"></span>    <span class="kt">boolean</span> <span class="n">periodic</span> <span class="o">=</span> <span class="n">isPeriodic</span><span class="o">();</span>
+    <span class="k">if</span> <span class="o">(!</span><span class="n">canRunInCurrentRunState</span><span class="o">(</span><span class="n">periodic</span><span class="o">))</span>
+        <span class="c1">// 当前状态不允许运行任务
+</span><span class="c1"></span>        <span class="n">cancel</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="o">(!</span><span class="n">periodic</span><span class="o">)</span>
+        <span class="c1">// 执行单次任务
+</span><span class="c1"></span>        <span class="n">ScheduledFutureTask</span><span class="o">.</span><span class="na">super</span><span class="o">.</span><span class="na">run</span><span class="o">();</span>
+    <span class="c1">// 执行周期任务使用了runAndReset方法
+</span><span class="c1"></span>    <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">ScheduledFutureTask</span><span class="o">.</span><span class="na">super</span><span class="o">.</span><span class="na">runAndReset</span><span class="o">())</span> <span class="o">{</span>
+        <span class="c1">// 周期任务执行完毕一次
+</span><span class="c1"></span>        <span class="c1">// 设置下次执行的时间
+</span><span class="c1"></span>        <span class="n">setNextRunTime</span><span class="o">();</span>
+        <span class="c1">// 将任务添加到队列
+</span><span class="c1"></span>        <span class="n">reExecutePeriodic</span><span class="o">(</span><span class="n">outerTask</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// 将已经执行的任务再次放入任务队列中
+</span><span class="c1"></span><span class="kt">void</span> <span class="nf">reExecutePeriodic</span><span class="o">(</span><span class="n">RunnableScheduledFuture</span><span class="o">&lt;?&gt;</span> <span class="n">task</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">canRunInCurrentRunState</span><span class="o">(</span><span class="kc">true</span><span class="o">))</span> <span class="o">{</span>
+        <span class="c1">// 再次入队
+</span><span class="c1"></span>        <span class="kd">super</span><span class="o">.</span><span class="na">getQueue</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="n">task</span><span class="o">);</span>
+        <span class="c1">// double check
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(!</span><span class="n">canRunInCurrentRunState</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">remove</span><span class="o">(</span><span class="n">task</span><span class="o">))</span>
+            <span class="c1">// 取消任务
+</span><span class="c1"></span>            <span class="n">task</span><span class="o">.</span><span class="na">cancel</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+        <span class="k">else</span>
+            <span class="c1">// 创建（如果需要）worker，保证有线程执行任务
+</span><span class="c1"></span>            <span class="n">ensurePrestart</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="3-2-delayedworkqueue">3.2 DelayedWorkQueue</h2>
+
+<p><code>ScheduledThreadPoolExecutor</code>使用<code>DeleyedWorkQueue</code>作为任务队列，它是一个特殊的<strong><em>delay queue</em></strong>，其维护一个有序的<code>ScheduledFutureTask</code>任务队列。在本节中，限于数据结构相关知识尚缺，将跳过叙述队列中的元素如何调整其在树中的位置，着重叙述任务入队及出队的逻辑</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">static</span> <span class="kd">class</span> <span class="nc">DelayedWorkQueue</span> <span class="kd">extends</span> <span class="n">AbstractQueue</span><span class="o">&lt;</span><span class="n">Runnable</span><span class="o">&gt;</span>
+        <span class="kd">implements</span> <span class="n">BlockingQueue</span><span class="o">&lt;</span><span class="n">Runnable</span><span class="o">&gt;</span> <span class="o">{</span>
+        <span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>该类中，有一个核心概念，它用一个私有域表示</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 这个域用来等待队列的队首元素出现
+</span><span class="c1"></span><span class="kd">private</span> <span class="n">Thread</span> <span class="n">leader</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>在<em>delay queue</em> 中，如果没有元素的delay超时，那么你将无法从队列中取出元素。当某个任务A的delay最先超时时，其将优先出队并执行，那么<code>leader</code>将被声明为执行任务A的线程TA，在该任务A超时之前，leader不会被重置，在这一段时间内，其他线程只能等待；若任务A超时出队，leader将被重置，此时线程TA将唤醒等待的其他线程，然后重复重置leader的过程。我们将在任务入队和出队时看到<code>leader</code>域的作用</p>
+
+<h1 id="4-任务执行流程">4 任务执行流程</h1>
+
+<p>前面介绍了<code>ScheduledFutureTask</code>和<code>DeleyedWorkQueue</code>这么多，都是为了更好地理解任务执行的流程，在这之前，我们不妨先看如下示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestScheduledPoolExecutor</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">AtomicInteger</span> <span class="n">sequence</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AtomicInteger</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+
+    <span class="kd">private</span> <span class="n">ScheduledThreadPoolExecutor</span> <span class="n">service</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">TestScheduledPoolExecutor</span><span class="o">(</span><span class="kt">int</span> <span class="n">poolSize</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">service</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ScheduledThreadPoolExecutor</span><span class="o">(</span><span class="n">poolSize</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">s</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34; &#34;</span> <span class="o">+</span> <span class="n">sequence</span><span class="o">.</span><span class="na">getAndIncrement</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">c</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34; c running&#34;</span><span class="o">);</span>
+        <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// never finish loop unless interrupted
+</span><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">interrupted</span><span class="o">())</span> <span class="o">{</span>
+                <span class="k">break</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;c interrupted&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@SneakyThrows</span>
+    <span class="kt">void</span> <span class="nf">basicTest</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">service</span><span class="o">.</span><span class="na">schedule</span><span class="o">(</span><span class="k">this</span><span class="o">::</span><span class="n">s</span><span class="o">,</span> <span class="n">2</span><span class="o">,</span> <span class="n">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">);</span>
+        <span class="n">service</span><span class="o">.</span><span class="na">schedule</span><span class="o">(</span><span class="k">this</span><span class="o">::</span><span class="n">c</span><span class="o">,</span> <span class="n">1</span><span class="o">,</span> <span class="n">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">);</span>
+        <span class="c1">// shutdown无法终止线程池
+</span><span class="c1"></span>        <span class="n">service</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
+        <span class="n">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">5</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">TestScheduledPoolExecutor</span> <span class="n">ts</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestScheduledPoolExecutor</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+        <span class="n">ts</span><span class="o">.</span><span class="na">basicTest</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>在上例中，我们创建了2个任务s和c，前者简单地获取并递增sequence，后者则是一个响应中断的死循环。当我们使用不同数量的<code>corePoolSize</code>去运行任务时，得到的结果不一样:</p>
+
+<blockquote>
+<p>当corePoolSize = 0时，输出为</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">Thread[pool-1-thread-1,5,main] c running</pre></td></tr></table>
+</div>
+</div>
+<p>当corePoolSize = 1时，输出为</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">Thread[pool-1-thread-1,5,main] c running</pre></td></tr></table>
+</div>
+</div>
+<p>当corePoolSize &gt; 1时，输出为</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">Thread[pool-1-thread-1,5,main] c running
+Thread[pool-1-thread-2,5,main] 1</pre></td></tr></table>
+</div>
+</div></blockquote>
+
+<h2 id="4-1-提交任务">4.1 提交任务</h2>
+
+<p>这种差异驱使我们去探索计划任务的提交与执行方式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 提交单次执行的任务
+</span><span class="c1"></span><span class="kd">public</span> <span class="n">ScheduledFuture</span><span class="o">&lt;?&gt;</span> <span class="n">schedule</span><span class="o">(</span><span class="n">Runnable</span> <span class="n">command</span><span class="o">,</span>
+                                  <span class="kt">long</span> <span class="n">delay</span><span class="o">,</span>
+                                  <span class="n">TimeUnit</span> <span class="n">unit</span><span class="o">)</span> <span class="o">{</span>
+   <span class="k">if</span> <span class="o">(</span><span class="n">command</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">unit</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+       <span class="k">throw</span> <span class="k">new</span> <span class="n">NullPointerException</span><span class="o">();</span>
+   <span class="c1">// t = new ScheduledFutureTask(..)
+</span><span class="c1"></span>   <span class="n">RunnableScheduledFuture</span><span class="o">&lt;?&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="n">decorateTask</span><span class="o">(</span><span class="n">command</span><span class="o">,</span>
+       <span class="k">new</span> <span class="n">ScheduledFutureTask</span><span class="o">&lt;</span><span class="n">Void</span><span class="o">&gt;(</span><span class="n">command</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span>
+                                     <span class="n">triggerTime</span><span class="o">(</span><span class="n">delay</span><span class="o">,</span> <span class="n">unit</span><span class="o">)));</span>
+   <span class="c1">// 执行任务的核心方法
+</span><span class="c1"></span>   <span class="n">delayedExecute</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+   <span class="k">return</span> <span class="n">t</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// 提交周期执行的任务
+</span><span class="c1"></span><span class="kd">public</span> <span class="n">ScheduledFuture</span><span class="o">&lt;?&gt;</span> <span class="n">scheduleWithFixedDelay</span><span class="o">(</span><span class="n">Runnable</span> <span class="n">command</span><span class="o">,</span>
+                                                 <span class="kt">long</span> <span class="n">initialDelay</span><span class="o">,</span>
+                                                 <span class="kt">long</span> <span class="n">delay</span><span class="o">,</span>
+                                                 <span class="n">TimeUnit</span> <span class="n">unit</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">command</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">unit</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="n">NullPointerException</span><span class="o">();</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">delay</span> <span class="o">&lt;=</span> <span class="n">0</span><span class="o">)</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalArgumentException</span><span class="o">();</span>
+    <span class="n">ScheduledFutureTask</span><span class="o">&lt;</span><span class="n">Void</span><span class="o">&gt;</span> <span class="n">sft</span> <span class="o">=</span>
+        <span class="k">new</span> <span class="n">ScheduledFutureTask</span><span class="o">&lt;</span><span class="n">Void</span><span class="o">&gt;(</span><span class="n">command</span><span class="o">,</span>
+                                      <span class="kc">null</span><span class="o">,</span>
+                                      <span class="n">triggerTime</span><span class="o">(</span><span class="n">initialDelay</span><span class="o">,</span> <span class="n">unit</span><span class="o">),</span>
+                                      <span class="n">unit</span><span class="o">.</span><span class="na">toNanos</span><span class="o">(-</span><span class="n">delay</span><span class="o">));</span>
+    <span class="c1">// t = sft
+</span><span class="c1"></span>    <span class="n">RunnableScheduledFuture</span><span class="o">&lt;</span><span class="n">Void</span><span class="o">&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="n">decorateTask</span><span class="o">(</span><span class="n">command</span><span class="o">,</span> <span class="n">sft</span><span class="o">);</span>
+    <span class="c1">// 任务执行后将再次入队
+</span><span class="c1"></span>    <span class="n">sft</span><span class="o">.</span><span class="na">outerTask</span> <span class="o">=</span> <span class="n">t</span><span class="o">;</span>
+    <span class="n">delayedExecute</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">t</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="kt">void</span> <span class="nf">delayedExecute</span><span class="o">(</span><span class="n">RunnableScheduledFuture</span><span class="o">&lt;?&gt;</span> <span class="n">task</span><span class="o">)</span> <span class="o">{</span>
+   <span class="k">if</span> <span class="o">(</span><span class="n">isShutdown</span><span class="o">())</span>
+        <span class="c1">// ctl &gt; running，不接受任务提交
+</span><span class="c1"></span>       <span class="n">reject</span><span class="o">(</span><span class="n">task</span><span class="o">);</span>
+   <span class="k">else</span> <span class="o">{</span>
+       <span class="c1">// 非空任务入队
+</span><span class="c1"></span>       <span class="kd">super</span><span class="o">.</span><span class="na">getQueue</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="n">task</span><span class="o">);</span>
+       <span class="c1">// double check
+</span><span class="c1"></span>       <span class="k">if</span> <span class="o">(</span><span class="n">isShutdown</span><span class="o">()</span> <span class="o">&amp;&amp;</span>
+           <span class="o">!</span><span class="n">canRunInCurrentRunState</span><span class="o">(</span><span class="n">task</span><span class="o">.</span><span class="na">isPeriodic</span><span class="o">())</span> <span class="o">&amp;&amp;</span>
+           <span class="n">remove</span><span class="o">(</span><span class="n">task</span><span class="o">))</span>
+           <span class="c1">// 如果任务入队之后，线程池关闭
+</span><span class="c1"></span>           <span class="c1">// 且关闭策略不允许关闭之后继续执行
+</span><span class="c1"></span>           <span class="c1">// 且任务从队列中移除
+</span><span class="c1"></span>           <span class="c1">// 则取消任务
+</span><span class="c1"></span>           <span class="n">task</span><span class="o">.</span><span class="na">cancel</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+       <span class="k">else</span>
+           <span class="c1">// add worker
+</span><span class="c1"></span>           <span class="n">ensurePrestart</span><span class="o">();</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// 此方法保证了即使corePoolSize = 0的情况下也创建worker
+</span><span class="c1"></span><span class="kt">void</span> <span class="nf">ensurePrestart</span><span class="o">()</span> <span class="o">{</span>
+    <span class="c1">// 获取当前工作线程数
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">wc</span> <span class="o">=</span> <span class="n">workerCountOf</span><span class="o">(</span><span class="n">ctl</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">wc</span> <span class="o">&lt;</span> <span class="n">corePoolSize</span><span class="o">)</span>
+        <span class="c1">// 尚可以新建核心线程
+</span><span class="c1"></span>        <span class="n">addWorker</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">wc</span> <span class="o">==</span> <span class="n">0</span><span class="o">)</span>
+        <span class="c1">// 新建非核心线程
+</span><span class="c1"></span>        <span class="n">addWorker</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><center>
+<img src="/img/scheduledThreadPool_submit_flow.png" alt="xx" />
+<p style="text-align:center; font-size:.9rem; font-style:italic">ScheduledThreadPoolExecutor任务提交流程图</p>
+</center></p>
+
+<p>我们可以从<code>ScheduledThreadPoolExecutor</code>的任务提交过程中总结几点规律：</p>
+
+<ol>
+<li>任务一定是先放入任务队列中的</li>
+<li>活动线程不可能超过核心线程池大小</li>
+<li>若<code>corePoolSize</code> &gt; 0，则池中不可能存在非核心线程</li>
+<li>非核心线程只有在<code>corePoolSize</code> = 0且当前工作线程数为0时才可以创建，<del>并且活动的非核心线程<strong>只能存在一个</strong></del></li>
+</ol>
+
+<p>上述规律的第4点容易得出线程池中<strong>非核心线程数至多为1</strong>的结论，这似乎是很合理的，因为想要创建非核心线程，wc必须为0。结合线程池的相关知识，我们知道非核心线程超时是会被销毁的，我们可以看看非核心线程在执行计划任务时的行为</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@SneakyThrows</span>
+<span class="kt">void</span> <span class="nf">howManyThreads</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(;</span> <span class="o">;</span> <span class="o">)</span> <span class="o">{</span>
+        <span class="n">ScheduledFuture</span><span class="o">&lt;?&gt;</span> <span class="n">schedule</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="na">schedule</span><span class="o">(</span><span class="k">this</span><span class="o">::</span><span class="n">s</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">TimeUnit</span><span class="o">.</span><span class="na">MILLISECONDS</span><span class="o">);</span>
+        <span class="c1">// TimeUnit.MILLISECONDS.sleep(5); // uncomment this to create new worker
+</span><span class="c1"></span>        <span class="k">for</span> <span class="o">(;</span> <span class="o">;</span> <span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">schedule</span><span class="o">.</span><span class="na">isDone</span><span class="o">())</span>
+                <span class="k">break</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">sequence</span><span class="o">.</span><span class="na">get</span><span class="o">()</span> <span class="o">&gt;=</span> <span class="n">10</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">schedule</span><span class="o">.</span><span class="na">cancel</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+            <span class="k">break</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;largest pool size: &#34;</span> <span class="o">+</span> <span class="n">service</span><span class="o">.</span><span class="na">getLargestPoolSize</span><span class="o">());</span>
+    <span class="n">service</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="cm">/* output(sample)
+</span><span class="cm">Thread[pool-1-thread-1,5,main] 1
+</span><span class="cm">Thread[pool-1-thread-1,5,main] 2
+</span><span class="cm">Thread[pool-1-thread-1,5,main] 3
+</span><span class="cm">Thread[pool-1-thread-2,5,main] 4
+</span><span class="cm">Thread[pool-1-thread-3,5,main] 5
+</span><span class="cm">Thread[pool-1-thread-4,5,main] 6
+</span><span class="cm">Thread[pool-1-thread-5,5,main] 7
+</span><span class="cm">Thread[pool-1-thread-7,5,main] 8
+</span><span class="cm">Thread[pool-1-thread-8,5,main] 9
+</span><span class="cm">Thread[pool-1-thread-10,5,main] 10
+</span><span class="cm">largest pool size: 2
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>在上例中，我们保证当前提交的任务在执行完成之后再进行下一次提交，那么下一次的任务应该新建线程执行才对。但实际的情况并非如此，执行上个任务的线程仍然有机会继续执行接下来提交的任务，这是由于任务的执行以及线程的销毁都是耗时操作，可能在线程销毁（执行CP1）之前新的任务已经添加到队列中了。除此之外，在所有任务执行完成之后，我们获取了线程池中同时执行任务的最大线程数，按照逻辑，这个值应该始终是1，实际的运行过程中却是一个不确定的数。这让人费解，新线程的创建前提是<code>workerCount==0</code>，即表明了池中是没有正在运行的线程，不过，可以猜测池中出现2个线程的过程大概出现在线程1即将销毁，执行<a href="../执行器与线程池/#3-2-3-执行任务">processWorkerExit</a>方法之前，将要销毁的worker还未从set中移除，而此时addworker读取到的size &gt; 1，于是出现了largestPoolSie&gt;1的情形</p>
+
+<p>如果取消上例中的休眠注释，就能规避上述的各种不确定情况，足够时长的休眠可以保证执行任务的线程执行任务并销毁</p>
+
+<h2 id="4-2-任务入队">4.2 任务入队</h2>
+
+<p>由于任务提交之后一定是先放入任务队列的，而基于<code>DelayedWorkQueue</code>的任务队列和普通的阻塞队列有些区别。任务队列通过调用<code>offer(Runnable x)</code>方法将任务放入队列中，只有在获取锁的情况下才能调用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">offer</span><span class="o">(</span><span class="n">Runnable</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">x</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="n">NullPointerException</span><span class="o">();</span>
+    <span class="n">RunnableScheduledFuture</span><span class="o">&lt;?&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="o">(</span><span class="n">RunnableScheduledFuture</span><span class="o">&lt;?&gt;)</span><span class="n">x</span><span class="o">;</span>
+    <span class="kd">final</span> <span class="n">ReentrantLock</span> <span class="n">lock</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">lock</span><span class="o">;</span>
+    <span class="n">lock</span><span class="o">.</span><span class="na">lock</span><span class="o">();</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">size</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="n">queue</span><span class="o">.</span><span class="na">length</span><span class="o">)</span>
+            <span class="c1">// 队列扩容 （grow 50%）
+</span><span class="c1"></span>            <span class="n">grow</span><span class="o">();</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">queue</span><span class="o">[</span><span class="n">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">e</span><span class="o">;</span>
+            <span class="n">setIndex</span><span class="o">(</span><span class="n">e</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">siftUp</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">// 入队之前，若队列为空，且没有线程在超时等待
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">queue</span><span class="o">[</span><span class="n">0</span><span class="o">]</span> <span class="o">==</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">leader</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="c1">// 唤醒等待的线程去获取任务执行（并非一定有线程等待）
+</span><span class="c1"></span>            <span class="n">available</span><span class="o">.</span><span class="na">signal</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+        <span class="n">lock</span><span class="o">.</span><span class="na">unlock</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>由于使用无界队列实现，<code>DelayedWorkQueue</code>任务入队的阻塞不会阻塞；但如果入队时队列为空，那么意味着：</p>
+
+<ol>
+<li>首个任务入队</li>
+<li>所有任务都已经出队</li>
+</ol>
+
+<p>成功入队之后，将会唤醒一个阻塞的线程(可能没有阻塞的线程)去获取任务执行</p>
+
+<h2 id="4-3-执行任务">4.3 执行任务</h2>
+
+<p>与<code>ThreadPoolExecutor</code>不同的是，<code>ScheduledThreadPoolExecutor</code>所有任务都是先添加到任务队列中的，并且任务队列是*delay queue*，从*delay queue*中取出任务比简单的阻塞队列稍显复杂。不过其执行任务的基本逻辑和<a href="../执行器与线程池/#3-2-3-执行任务"><code>ThreadPoolExecutor</code>的任务执行过程</a>是一致的</p>
+
+<p>而关于任务周期执行的机制，前文在阐述<a href="#3-run">ScheduledFutureTask</a>的<code>run()</code>方法时，已经提及，</p>
+
+<ul>
+<li>它调用<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/FutureTask.html">FutureTask.runAndReset</a>方法执行任务，保证任务可以重复运行；</li>
+<li>重新计算任务的下一次运行时间，并且将任务重新入队</li>
+</ul>
+
+<h2 id="4-4-任务出队">4.4 任务出队</h2>
+
+<p>任务出队有主要两个方法，<code>poll(long timeout)</code>和<code>take()</code>，前者用于非核心线程，后者用于核心线程；同样地，只有在获取锁的时候才能出队</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span><span class="lnt">97
+</span><span class="lnt">98
+</span><span class="lnt">99
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">RunnableScheduledFuture</span><span class="o">&lt;?&gt;</span> <span class="n">take</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+    <span class="kd">final</span> <span class="n">ReentrantLock</span> <span class="n">lock</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">lock</span><span class="o">;</span>
+    <span class="c1">// 注意此处可以被中断
+</span><span class="c1"></span>    <span class="n">lock</span><span class="o">.</span><span class="na">lockInterruptibly</span><span class="o">();</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="c1">// 循环执行
+</span><span class="c1"></span>        <span class="k">for</span> <span class="o">(;;)</span> <span class="o">{</span>
+            <span class="c1">// queue[0]是最先超时的任务
+</span><span class="c1"></span>            <span class="n">RunnableScheduledFuture</span><span class="o">&lt;?&gt;</span> <span class="n">first</span> <span class="o">=</span> <span class="n">queue</span><span class="o">[</span><span class="n">0</span><span class="o">];</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">first</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+                <span class="c1">// 队列为空，无限期等待，会被offer()方法唤醒
+</span><span class="c1"></span>                <span class="n">available</span><span class="o">.</span><span class="na">await</span><span class="o">();</span>
+            <span class="k">else</span> <span class="o">{</span>
+                <span class="kt">long</span> <span class="n">delay</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="na">getDelay</span><span class="o">(</span><span class="n">NANOSECONDS</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">delay</span> <span class="o">&lt;=</span> <span class="n">0</span><span class="o">)</span>
+                    <span class="c1">// 任务已超时，返回该任务
+</span><span class="c1"></span>                    <span class="k">return</span> <span class="n">finishPoll</span><span class="o">(</span><span class="n">first</span><span class="o">);</span>
+                <span class="n">first</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span> <span class="c1">// don&#39;t retain ref while waiting
+</span><span class="c1"></span>                <span class="c1">// 任务未超时
+</span><span class="c1"></span>                <span class="k">if</span> <span class="o">(</span><span class="n">leader</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+                    <span class="c1">// 当leader已设置时，当前线程只能无限期等待
+</span><span class="c1"></span>                    <span class="c1">// 因为在其之前还有任务未执行
+</span><span class="c1"></span>                    <span class="n">available</span><span class="o">.</span><span class="na">await</span><span class="o">();</span>
+                <span class="k">else</span> <span class="o">{</span>
+                    <span class="c1">// 否则将leader设置为当前（执行任务的）线程
+</span><span class="c1"></span>                    <span class="n">Thread</span> <span class="n">thisThread</span> <span class="o">=</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">();</span>
+                    <span class="n">leader</span> <span class="o">=</span> <span class="n">thisThread</span><span class="o">;</span>
+                    <span class="k">try</span> <span class="o">{</span>
+                        <span class="c1">// 等待任务超时
+</span><span class="c1"></span>                        <span class="n">available</span><span class="o">.</span><span class="na">awaitNanos</span><span class="o">(</span><span class="n">delay</span><span class="o">);</span>
+                    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+                        <span class="c1">// 任务超时之后，将leader置空，再次进入循环
+</span><span class="c1"></span>                        <span class="c1">// 之后将获取任务并返回
+</span><span class="c1"></span>                        <span class="c1">// 此时其他的线程将可以设置leader并进入超时等待
+</span><span class="c1"></span>                        <span class="k">if</span> <span class="o">(</span><span class="n">leader</span> <span class="o">==</span> <span class="n">thisThread</span><span class="o">)</span>
+                            <span class="n">leader</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">leader</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">queue</span><span class="o">[</span><span class="n">0</span><span class="o">]</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+            <span class="c1">//唤醒其他的线程去获取任务
+</span><span class="c1"></span>            <span class="n">available</span><span class="o">.</span><span class="na">signal</span><span class="o">();</span>
+        <span class="n">lock</span><span class="o">.</span><span class="na">unlock</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="n">RunnableScheduledFuture</span><span class="o">&lt;?&gt;</span> <span class="n">poll</span><span class="o">(</span><span class="kt">long</span> <span class="n">timeout</span><span class="o">,</span> <span class="n">TimeUnit</span> <span class="n">unit</span><span class="o">)</span>
+    <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+    <span class="c1">// nanos如果不进行动态配置，就是0
+</span><span class="c1"></span>    <span class="kt">long</span> <span class="n">nanos</span> <span class="o">=</span> <span class="n">unit</span><span class="o">.</span><span class="na">toNanos</span><span class="o">(</span><span class="n">timeout</span><span class="o">);</span>
+    <span class="kd">final</span> <span class="n">ReentrantLock</span> <span class="n">lock</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">lock</span><span class="o">;</span>
+    <span class="n">lock</span><span class="o">.</span><span class="na">lockInterruptibly</span><span class="o">();</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(;;)</span> <span class="o">{</span>
+            <span class="n">RunnableScheduledFuture</span><span class="o">&lt;?&gt;</span> <span class="n">first</span> <span class="o">=</span> <span class="n">queue</span><span class="o">[</span><span class="n">0</span><span class="o">];</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">first</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">nanos</span> <span class="o">&lt;=</span> <span class="n">0</span><span class="o">)</span>
+                    <span class="c1">// 若队列为空，且keepAliveTime&lt;=0，直接返回null
+</span><span class="c1"></span>                    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+                <span class="k">else</span>
+                    <span class="c1">// 否则限时等待之后进入下次循环
+</span><span class="c1"></span>                    <span class="n">nanos</span> <span class="o">=</span> <span class="n">available</span><span class="o">.</span><span class="na">awaitNanos</span><span class="o">(</span><span class="n">nanos</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="kt">long</span> <span class="n">delay</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="na">getDelay</span><span class="o">(</span><span class="n">NANOSECONDS</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">delay</span> <span class="o">&lt;=</span> <span class="n">0</span><span class="o">)</span>
+                    <span class="c1">// 运气好正好有任务到期，返回任务
+</span><span class="c1"></span>                    <span class="k">return</span> <span class="n">finishPoll</span><span class="o">(</span><span class="n">first</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">nanos</span> <span class="o">&lt;=</span> <span class="n">0</span><span class="o">)</span>
+                    <span class="c1">// 任务未到期且keepAliveTime&lt;=0，返回null
+</span><span class="c1"></span>                    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+                <span class="n">first</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span> <span class="c1">// don&#39;t retain ref while waiting
+</span><span class="c1"></span>                <span class="c1">// 以下是设置keepAliveTime的情形
+</span><span class="c1"></span>                <span class="k">if</span> <span class="o">(</span><span class="n">nanos</span> <span class="o">&lt;</span> <span class="n">delay</span> <span class="o">||</span> <span class="n">leader</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+                    <span class="c1">// 将nanos置0
+</span><span class="c1"></span>                    <span class="n">nanos</span> <span class="o">=</span> <span class="n">available</span><span class="o">.</span><span class="na">awaitNanos</span><span class="o">(</span><span class="n">nanos</span><span class="o">);</span>
+                <span class="k">else</span> <span class="o">{</span>
+                    <span class="n">Thread</span> <span class="n">thisThread</span> <span class="o">=</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">();</span>
+                    <span class="n">leader</span> <span class="o">=</span> <span class="n">thisThread</span><span class="o">;</span>
+                    <span class="k">try</span> <span class="o">{</span>
+                        <span class="c1">// 分段等待
+</span><span class="c1"></span>                        <span class="kt">long</span> <span class="n">timeLeft</span> <span class="o">=</span> <span class="n">available</span><span class="o">.</span><span class="na">awaitNanos</span><span class="o">(</span><span class="n">delay</span><span class="o">);</span>
+                        <span class="n">nanos</span> <span class="o">-=</span> <span class="n">delay</span> <span class="o">-</span> <span class="n">timeLeft</span><span class="o">;</span>
+                    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+                        <span class="c1">// 重重leader
+</span><span class="c1"></span>                        <span class="k">if</span> <span class="o">(</span><span class="n">leader</span> <span class="o">==</span> <span class="n">thisThread</span><span class="o">)</span>
+                            <span class="n">leader</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">leader</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">queue</span><span class="o">[</span><span class="n">0</span><span class="o">]</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+            <span class="c1">// 唤醒其他线程
+</span><span class="c1"></span>            <span class="n">available</span><span class="o">.</span><span class="na">signal</span><span class="o">();</span>
+        <span class="n">lock</span><span class="o">.</span><span class="na">unlock</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><center>
+<img src="/img/delayed_worker_queue_take.png" alt="xx" />
+<p style="text-align:center; font-size:.9rem; font-style:italic">ScheduledThreadPoolExecutor任务出队流程图</p>
+</center></p>
+
+<p>理解了任务的入队与出队，我们就可以解释<a href="#4-任务执行流程">本节开头示例</a>中不同<code>corePoolSize</code>引发的差异：</p>
+
+<p>在分析任务的执行时，要始终留意<code>getTask()</code>方法中的这一段代码，为了方便描述，将其记为<span id="cp1">CP1<span></p>
+
+<blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="k">if</span> <span class="o">((</span><span class="n">wc</span> <span class="o">&gt;</span> <span class="n">maximumPoolSize</span> <span class="o">||</span> <span class="o">(</span><span class="n">timed</span> <span class="o">&amp;&amp;</span> <span class="n">timedOut</span><span class="o">))</span>
+    <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">wc</span> <span class="o">&gt;</span> <span class="n">1</span> <span class="o">||</span> <span class="n">workQueue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">()))</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">compareAndDecrementWorkerCount</span><span class="o">(</span><span class="n">c</span><span class="o">))</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="k">continue</span><span class="o">;</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+
+<ul>
+<li><p>当<code>corePoolSize</code>为0时</p>
+
+<ul>
+<li>首次提交一个延迟2s的任务a，创建线程t1，显然a超时之前t1无法获取任务，但t1并不会因为keepAlive超时而在CP1处被结束（因为任务队列不为空），它只是一直在循环；</li>
+<li>接着提交一个延迟1s的任务b，由于t1未被销毁，所以提交任务b时并未新建线程，池中仍只有一个工作线程t1；</li>
+<li>任务b会先于a出队，故1s后b超时执行，由于b是死循环，无法结束，因此没有线程去执行超时的任务a</li>
+</ul></li>
+
+<li><p>当<code>corePoolSize</code>为1时，虽然输出结果与<code>corePoolSize</code>为0时一致，但是其执行过程却有很大差别</p>
+
+<ul>
+<li>首次提交一个延迟2s的任务a，创建线程t1，t1会在take()获取队列时设置<code>leader</code>并进入超时等待状态；</li>
+<li>接着提交一个延迟1s的任务b，由于<code>corePoolSize</code>的限制，并未能创建新线程，池中仍只有一个工作线程t1。在任务b入队后，会唤醒阻塞的t1线程；</li>
+<li>t1被唤醒之后清空<code>leader</code>，重新去队列中获取任务，由于b要比a先出队，此时t1会接着设置<code>leader</code>并在任务b的时间上超时等待；</li>
+<li>任务b超时之后开始执行，由于b是死循环，无法结束，因此没有线程去执行超时的任务a</li>
+</ul></li>
+
+<li><p>当<code>corePoolSize</code>&gt; 1时，情况又有所不同</p>
+
+<ul>
+<li>首次提交一个延迟2s的任务a，创建线程t1，t1会在take()获取队列时设置<code>leader</code>并进入超时等待状态；</li>
+<li>接着提交一个延迟1s的任务b，创建线程t2，池中有2个工作线程t1、t2。同样地，b入队后，会唤醒阻塞的t1；</li>
+<li>t1被唤醒之后清空<code>leader</code>，重新去队列中获取任务，由于b要比a先出队，此时t1会接着设置<code>leader</code>并在任务b的时间上超时等待；</li>
+<li>t1在超时等待时，由于<code>leader</code>已经被设置，t2只能无限阻塞；</li>
+<li>t1超时后，执行任务b，同时清空<code>leader</code>并唤醒t2，t2设置<code>leader</code>并在任务a的时间上超时等待；</li>
+<li>t2超时后，执行任务a</li>
+</ul></li>
+</ul>
+
+<h1 id="5-取消任务">5 取消任务</h1>
+
+<p>默认情况下，如果取消一个任务的执行，该任务不会从队列中移除，不过我们可以动态地配置<code>removeOnCancel</code>域，在取消任务时同时将任务从队列中移除。被取消的任务不能继续执行,在线程池关闭的时候将从队列中移除</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">cancelSchedule</span><span class="o">()</span> <span class="o">{</span>
+    <span class="c1">// default false
+</span><span class="c1"></span>    <span class="n">service</span><span class="o">.</span><span class="na">setRemoveOnCancelPolicy</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+    <span class="c1">// task to cancelled
+</span><span class="c1"></span>    <span class="n">service</span><span class="o">.</span><span class="na">schedule</span><span class="o">(</span><span class="k">this</span><span class="o">::</span><span class="n">s</span><span class="o">,</span> <span class="n">10</span><span class="o">,</span> <span class="n">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">);</span>
+    <span class="n">BlockingQueue</span><span class="o">&lt;</span><span class="n">Runnable</span><span class="o">&gt;</span> <span class="n">queue</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="na">getQueue</span><span class="o">();</span>
+    <span class="n">Runnable</span> <span class="n">task</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="na">peek</span><span class="o">();</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">task</span> <span class="k">instanceof</span> <span class="n">RunnableScheduledFuture</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">((</span><span class="n">FutureTask</span><span class="o">&lt;?&gt;)</span> <span class="n">task</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="n">service</span><span class="o">.</span><span class="na">schedule</span><span class="o">(</span><span class="k">this</span><span class="o">::</span><span class="n">s</span><span class="o">,</span> <span class="n">1</span><span class="o">,</span> <span class="n">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">);</span>
+    <span class="n">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">2</span><span class="o">);</span>
+    <span class="c1">// should be 1
+</span><span class="c1"></span>    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;queue size: &#34;</span> <span class="o">+</span> <span class="n">queue</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
+
+    <span class="n">service</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
+    <span class="c1">// removed by onShutdown hook method
+</span><span class="c1"></span>    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;queue size: &#34;</span> <span class="o">+</span> <span class="n">queue</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">TestScheduledPoolExecutor</span> <span class="n">ts</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestScheduledPoolExecutor</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+    <span class="n">ts</span><span class="o">.</span><span class="na">cancelSchedule</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="cm">/* output
+</span><span class="cm">Thread[pool-1-thread-1,5,main] 1
+</span><span class="cm">queue size: 1
+</span><span class="cm">queue size: 0
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>上例中，可以看到提交了2个任务，只有一个任务执行。首先提交的任务随即被取消了，第一次获取队列大小时，执行完一个任务，但是队列不为空，被取消的任务还在队列中，在线程池shutdown之后，任务随即被移除。如果使用<code>service.setRemoveOnCancelPolicy(true)</code>替换示例中的设置，那么两次获取的队列大小都是0</p>
+
+<p>这样的设计有一个好处，如果刻意取消一个任务，<strong>特定条件下可以避免重复的销毁和创建工作线程</strong>。在前面的讨论中，我们知道，核心线程空闲时是不会被销毁的，它会在任务队列上阻塞；但是非核心线程就不同了，如果队列为空，非核心线程会在<a href="#cp1">CP1</a>处结束运行，但是如果取消一个任务，并且任务没有从队列中移除的话，那么这个非核心线程就不会被销毁</p>
+
+<h1 id="6-关闭线程池">6 关闭线程池</h1>
+
+<p>除了继承<code>ThreadPoolExecutor</code>的<a href="../执行器与线程池/#3-3-如何合理地关闭线程池">线程池关闭</a>的逻辑之外，<code>ScheduledThreadPoolExecutor</code>关闭线程池和其基类还有些许差异，主要是其通过实现<code>onShutdown</code>方法，实现了新的关闭策略</p>
+
+<h2 id="6-1-onshutdown方法">6.1 onShutDown方法</h2>
+
+<p>调用<code>shutdown</code>和<code>shutdownNow</code>方法的基本逻辑和基类一致，不过<code>shutdown</code>过程中的<code>onShutdown</code>方法引入了新的关闭策略</p>
+
+<p>关闭策略由2个布尔值域控制，分别是</p>
+
+<ul>
+<li>executeExistingDelayedTasksAfterShutdown = true; shutdown之后默认执行计划（单次）任务</li>
+<li>continueExistingPeriodicTasksAfterShutdown;shutdown之后默认不执行周期任务</li>
+</ul>
+
+<p>这两个域可以在线程池初始化之后进行动态配置，默认情况下，调用<code>shutdown</code>方法之后，</p>
+
+<ul>
+<li>计划的（one-shot）任务将继续执行；</li>
+<li>如果是周期任务，将从任务队列中移除；</li>
+<li>已经取消的任务将会从队列中移除</li>
+</ul>
+
+<p>调用<code>shutdownNow</code>方法的逻辑则完全和基类一致，其会中断所有任务，返回丢弃的任务列表</p>
+
+<p>以下是<code>onShutdown</code>方法的具体实现：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Override</span> <span class="kt">void</span> <span class="nf">onShutdown</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">BlockingQueue</span><span class="o">&lt;</span><span class="n">Runnable</span><span class="o">&gt;</span> <span class="n">q</span> <span class="o">=</span> <span class="kd">super</span><span class="o">.</span><span class="na">getQueue</span><span class="o">();</span>
+        <span class="kt">boolean</span> <span class="n">keepDelayed</span> <span class="o">=</span>
+            <span class="n">getExecuteExistingDelayedTasksAfterShutdownPolicy</span><span class="o">();</span>
+        <span class="kt">boolean</span> <span class="n">keepPeriodic</span> <span class="o">=</span>
+            <span class="n">getContinueExistingPeriodicTasksAfterShutdownPolicy</span><span class="o">();</span>
+        <span class="c1">// 如果shutdown之后既不执行计划任务也不执行周期任务
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(!</span><span class="n">keepDelayed</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">keepPeriodic</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// 那么取消所有任务的执行，并清空队列
+</span><span class="c1"></span>            <span class="k">for</span> <span class="o">(</span><span class="n">Object</span> <span class="n">e</span> <span class="o">:</span> <span class="n">q</span><span class="o">.</span><span class="na">toArray</span><span class="o">())</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">e</span> <span class="k">instanceof</span> <span class="n">RunnableScheduledFuture</span><span class="o">&lt;?&gt;)</span>
+                    <span class="o">((</span><span class="n">RunnableScheduledFuture</span><span class="o">&lt;?&gt;)</span> <span class="n">e</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+            <span class="n">q</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">else</span> <span class="o">{</span>
+            <span class="c1">// Traverse snapshot to avoid iterator exceptions
+</span><span class="c1"></span>            <span class="k">for</span> <span class="o">(</span><span class="n">Object</span> <span class="n">e</span> <span class="o">:</span> <span class="n">q</span><span class="o">.</span><span class="na">toArray</span><span class="o">())</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">e</span> <span class="k">instanceof</span> <span class="n">RunnableScheduledFuture</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">RunnableScheduledFuture</span><span class="o">&lt;?&gt;</span> <span class="n">t</span> <span class="o">=</span>
+                        <span class="o">(</span><span class="n">RunnableScheduledFuture</span><span class="o">&lt;?&gt;)</span><span class="n">e</span><span class="o">;</span>
+                    <span class="c1">// 不管是在shutdown之后执行计划任务或者周期任务，都移除已经取消的任务
+</span><span class="c1"></span>                    <span class="c1">// 但是不移除计划执行的任务
+</span><span class="c1"></span>                    <span class="k">if</span> <span class="o">((</span><span class="n">t</span><span class="o">.</span><span class="na">isPeriodic</span><span class="o">()</span> <span class="o">?</span> <span class="o">!</span><span class="n">keepPeriodic</span> <span class="o">:</span> <span class="o">!</span><span class="n">keepDelayed</span><span class="o">)</span> <span class="o">||</span>
+                        <span class="n">t</span><span class="o">.</span><span class="na">isCancelled</span><span class="o">())</span> <span class="o">{</span> <span class="c1">// also remove if already cancelled
+</span><span class="c1"></span>                        <span class="k">if</span> <span class="o">(</span><span class="n">q</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">t</span><span class="o">))</span>
+                            <span class="n">t</span><span class="o">.</span><span class="na">cancel</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">tryTerminate</span><span class="o">();</span>
+    <span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>下面的示例中，我们重新设置了线程池的关闭策略，以观察线程池在关闭时候的行为</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@SneakyThrows</span>
+<span class="kt">void</span> <span class="nf">shutdownPolicy</span><span class="o">()</span> <span class="o">{</span>
+   <span class="c1">// 如果任务在shutdown()之后仍在delay，那么将值设置为false可以取消任务的执行
+</span><span class="c1"></span>   <span class="c1">// 其默认值为true
+</span><span class="c1"></span>   <span class="n">service</span><span class="o">.</span><span class="na">setExecuteExistingDelayedTasksAfterShutdownPolicy</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+   <span class="n">service</span><span class="o">.</span><span class="na">schedule</span><span class="o">(</span><span class="k">this</span><span class="o">::</span><span class="n">s</span><span class="o">,</span> <span class="n">1</span><span class="o">,</span> <span class="n">TimeUnit</span><span class="o">.</span><span class="na">MILLISECONDS</span><span class="o">);</span>
+
+   <span class="c1">// 如果是周期执行的任务，将此值设置为true可以在调用shutdown()之后让其继续执行，否则结束执行
+</span><span class="c1"></span>   <span class="c1">// 其默认值为false
+</span><span class="c1"></span>   <span class="n">service</span><span class="o">.</span><span class="na">setContinueExistingPeriodicTasksAfterShutdownPolicy</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+   <span class="n">service</span><span class="o">.</span><span class="na">scheduleWithFixedDelay</span><span class="o">(</span><span class="k">this</span><span class="o">::</span><span class="n">s</span><span class="o">,</span> <span class="n">2</span><span class="o">,</span> <span class="n">1</span><span class="o">,</span> <span class="n">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">);</span>
+
+   <span class="n">service</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
+   <span class="n">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">10</span><span class="o">);</span>
+   <span class="c1">// shutdownNow interrupt all tasks
+</span><span class="c1"></span>   <span class="n">service</span><span class="o">.</span><span class="na">shutdownNow</span><span class="o">();</span>
+   <span class="c1">// could be true or false
+</span><span class="c1"></span>   <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">service</span><span class="o">.</span><span class="na">isTerminated</span><span class="o">());</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>在<code>shutDown</code>之后，周期任务仍会一直执行，所以要使用<code>shutDownNow</code>来中止任务的执行</p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:1">特殊地，当<code>corePoolSize = 0</code>时，池中仅可允许一个线程执行任务
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+</ol>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">wangy325</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-11-20
+        <a href="https://github.com/wangy325/endlessriver/commit/7bea2562246dd5c50ef435cb65848b4fe29edb66" title="content directory update, combine all to /java">(7bea256)</a>
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/java%E8%BF%9B%E9%98%B6/">Java进阶</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/tech/java/%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BB%84%E4%BB%B6/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">一些重要的并发组件</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/tech/java/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/">
+            <span class="next-text nav-default">执行器与线程池</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'endlessriver';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=u8za1dzCiImO_8rKldjU1g" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangy325" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangy325.top/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wangy325</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

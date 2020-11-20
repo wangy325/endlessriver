@@ -17,8 +17,6 @@ autoCollapseToc: false
 
 接下来的集合框架系列文章讲解了常见的集合框架实现，此系列涉及到的实现都是**线程不安全**的
 
-<!--more-->
-
 ![JXUL1s.png](/img/Collection.png)
 
 <p style="text-align:center;font-style:italic;font-size:.9rem">Java集合框架简图</p>
@@ -29,6 +27,7 @@ autoCollapseToc: false
 
 上图列出了集合框架的常见实现，Java集合框架系列文章介绍了图中列出的大部分内容
 
+<!--more-->
 
 ## List
 
@@ -612,7 +611,7 @@ Node<E> node(int index) {
 
 #### 2.4 作为双端队列
 
-LinkedList除了实现了List接口之外，还实现了Deque接口，也就是说，**LinkedList还是一个双端队列**，具体请参照[Queue—Java集合框架系列之二](//post/tech/basic_java/queue/)
+LinkedList除了实现了List接口之外，还实现了Deque接口，也就是说，**LinkedList还是一个双端队列**，具体请参照[Queue—Java集合框架系列之二](../queue/)
 
 
 [^1]: 集合框架所有迭代器都是如此

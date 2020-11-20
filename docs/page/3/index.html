@@ -45,7 +45,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://wangy325.top/" />
 
-<meta property="og:updated_time" content="2020-11-10T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2020-11-16T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Endless River">
 <meta itemprop="description" content="">
@@ -119,7 +119,42 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/basic_java/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/">动态绑定与静态绑定</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/springboot_aop_demo/">基于Spring Boot的AOP demo</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-03-14 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/springboot/"> SpringBoot </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 1651 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 4 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>有一个cd接口，其实体类用于播放歌曲，同时我们想在播放歌曲的时候记录每个曲目的播放次数。看起来，记录次数这个事和播放曲目是不相干的事情，当然，我们可以在每首歌曲播放完成之后记录，但是
+更好的办法是使用一个切面，切入到播放方法中，来完成这件事，这样可以减少无关逻辑对代码的侵入。</p>
+
+<p>此程序分别使用了基于@Aspect注解和基于XML配置文件2种方式进行了切面注入，2种方式效果是等同的。</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/springboot_aop_demo/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/">动态绑定与静态绑定</a></h1>
     <div class="post-meta">
 
         <span>
@@ -142,16 +177,60 @@
   <div class="post-content">
     <div class="post-summary">
       <p>这是Java方法调用的2个术语，用来描述Java虚拟机方法调用的2种机制</p>
+
+<h2 id="6-1-span-id-m10-动态绑定-span">6.1 <span id = "m10">动态绑定</span></h2>
+
+<p>方法的<strong>名字</strong>和<strong>参数列表</strong>构成了方法的签名</p>
+
+<blockquote>
+<p>返回类型并不是方法签名的一部分，因此在覆盖方法时，允许将导出类的方法返回类型定义为基类返回类型的子类型</p>
+</blockquote>
+
+<p>方法调用时，虚拟机为每个类创建一个<strong>方法表</strong>，列出所有的方法签名和实际调用的方法，调用方法时按表查找即可，例如方法表可能是这样的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">FinalMethod:
+	f() -&gt; FinalMethod.f();
+	g() -&gt; FinalMethod.g();
+	p() -&gt; FinalMethod.p();
+	// skip Object method...
+FinalMethodExt
+	f() -&gt; FinalMethodExt.f();
+	p() -&gt; FinalMethodExt.p();
+	// skip Object method...</pre></td></tr></table>
+</div>
+</div>
+<p>当对象引用<code>o</code>调用方法时，其过程可归纳为：</p>
+
+<ul>
+<li>虚拟机提取<code>o</code>的<strong>实际类型</strong>的方法表</li>
+<li>在方法表中搜索调用的方法，若有满足，则直接调用</li>
+<li>若无满足，则在<code>o</code>实际类型的父类中搜索调用的方法</li>
+<li>调用方法或抛出异常</li>
+</ul>
+
+<p>从上面的描述可以看出，继承体系中的方法调用可能出现不同的结果（导出类覆盖和未覆盖基类方法时的差异现象）</p>
     </div>
     <div class="read-more">
-      <a href="/post/tech/basic_java/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/basic_java/final%E5%85%B3%E9%94%AE%E5%AD%97/">final关键字</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/final%E5%85%B3%E9%94%AE%E5%AD%97/">final关键字</a></h1>
     <div class="post-meta">
 
         <span>
@@ -176,16 +255,46 @@
       <blockquote>
 <p>不同的使用环境下，<code>final</code>关键字的含义有细微差别，但通常它指“这是无法改变的”</p>
 </blockquote>
+
+<h1 id="5-1-span-id-m3-final数据-span">5.1 <span id="m3">final数据</span></h1>
+
+<p>final关键字通常用来表示一块数据是恒定不变的：</p>
+
+<h2 id="5-1-1-常量">5.1.1 常量</h2>
+
+<ul>
+<li>比如一个永不改变的<code>编译时常量</code> &mdash;&gt; 对应前文所谓<code>静态常量</code></li>
+</ul>
+
+<p><code>public final double PI = 3.14</code></p>
+
+<p>如果使用<code>static final</code>来修饰变量，那么它就是一个标准的编译时常量（静态常量）</p>
+
+<p><code>public static final double PI = 3.14</code></p>
+
+<p>在Java中，编译时常量必须是<strong>基本数据类型</strong>或<strong>字符串</strong>，声明时必须赋值</p>
+
+<ul>
+<li>一个在<code>运行时被初始化</code>的值，你不希望它被改变</li>
+</ul>
+
+<p><code>public final int RANDOM = new Random().nextInt(47)</code></p>
+
+<p>一个既是<code>final</code>也是<code>static</code>的域只占用一段不能改变的存储空间</p>
+
+<p>当对非基本数据类型使用<code>final</code>时，其含义稍微有点变化，其使<strong>引用恒定不变</strong>，这就是说被<code>final</code>修饰的对象引用无法使其指向另一个对象，但是对象内容却是可以被修改的</p>
+
+<p>Java允许声明一个<code>空白final域</code>，但是这个final域在使用前必须使用构造器（常见）或表达式初始化</p>
     </div>
     <div class="read-more">
-      <a href="/post/tech/basic_java/final%E5%85%B3%E9%94%AE%E5%AD%97/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/final%E5%85%B3%E9%94%AE%E5%AD%97/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/basic_java/%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/">传值还是传引用</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/">传值还是传引用</a></h1>
     <div class="post-meta">
 
         <span>
@@ -208,16 +317,73 @@
   <div class="post-content">
     <div class="post-summary">
       <p>Java语言设计总是<strong>按值调用</strong></p>
+
+<blockquote>
+<p>按值调用：方法接收的是调用者提供的值</p>
+
+<p>按引用调用：方法接收的是调用者提供的变量地址</p>
+</blockquote>
+
+<p>一个方法可以修改传递引用所对应的变量值，但是不能修改传递值所对应的变量值</p>
+
+<h2 id="3-1-span-id-m11-基本数据类型参数-span">3.1 <span id = "m11">基本数据类型参数</span></h2>
+
+<blockquote>
+<p>一个方法不能修改一个基本数据类型的参数（数值类型或布尔值）</p>
+</blockquote>
+
+<p>参考如下代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// doesn&#39;t work
+</span><span class="c1"></span><span class="kd">class</span> <span class="nc">ByValue</span> <span class="o">{</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">tripleValue</span><span class="o">(</span><span class="kt">int</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">3</span> <span class="o">*</span> <span class="n">x</span><span class="o">;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;x = &#34;</span> <span class="o">+</span> <span class="n">x</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">10</span><span class="o">;</span>
+        <span class="n">tripleValue</span><span class="o">(</span><span class="n">10</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;y = &#34;</span> <span class="o">+</span> <span class="n">y</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/* output:
+</span><span class="cm">x = 30
+</span><span class="cm">y = 10
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>方法执行时，<code>x</code>被初始化为<code>y</code><strong>值的一个拷贝</strong>，方法执行后 ，<code>x</code>值变为30，<code>y</code>仍为10，之后<code>x</code>不再使用</p>
     </div>
     <div class="read-more">
-      <a href="/post/tech/basic_java/%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/basic_java/static%E5%85%B3%E9%94%AE%E5%AD%97/">static关键字</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/static%E5%85%B3%E9%94%AE%E5%AD%97/">static关键字</a></h1>
     <div class="post-meta">
 
         <span>
@@ -231,7 +397,7 @@
           <a href="/categories/java/"> Java </a>
           </div>
         <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 834 字 </span>
+        <span class="more-meta analyse"> 约 910 字 </span>
         <span class="icomoonfree icon-clock"></span>
         <span class="more-meta"> 预计阅读 2 分钟 </span>
     </div>
@@ -239,17 +405,40 @@
   
   <div class="post-content">
     <div class="post-summary">
-      <p>介绍static关键字</p>
+      <p>static关键字意为“静态的”，其语义可以理解为“类的对象”(不要理解为Class对象)，即不需要对象实例，可以直接通过<code>类名.staticDomain</code>的形式直接访问</p>
+
+<h2 id="2-1-静态域">2.1 静态域</h2>
+
+<p>如果将一个域定义为<code>static</code>，那么每个类中都只有一个这样的域。参考如下例子：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">Employee</span><span class="o">{</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">nextId</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kt">int</span> <span class="n">id</span><span class="o">;</span>
+  <span class="o">...</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>每一个<code>Employee</code>都有自己的一个<code>id</code>域，但是这个类的所有实例都共享一个<code>nextId</code>域。记住，即使没有<code>Employee</code>实例，静态域<code>nextId</code>也存在，它属于类而不属于任何对象。<code>static</code>域只在<strong>类加载的时候初始化一次</strong>，并且是先于非<code>static</code>域初始化的</p>
+
+<p>以下是一个简单的<code>static</code>关键字使用示例：</p>
     </div>
     <div class="read-more">
-      <a href="/post/tech/basic_java/static%E5%85%B3%E9%94%AE%E5%AD%97/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/static%E5%85%B3%E9%94%AE%E5%AD%97/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/basic_java/%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/">访问权限修饰符</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/">访问权限修饰符</a></h1>
     <div class="post-meta">
 
         <span>
@@ -274,9 +463,30 @@
       <blockquote>
 <p>本系列内容主要来自TIJ，Java核心技术卷以及Java SE 8 API</p>
 </blockquote>
+
+<h2 id="1-1-包访问权限">1.1 包访问权限</h2>
+
+<ul>
+<li>当前包中的所有其他类对该包内的某个类的成员具有访问权限，但这并不意味着<strong>能够访问到</strong>。是否访问到还要取决于类的成员的修饰符。若类的成员也是包访问权限或者public，那才能够访问到</li>
+<li>当前包中的所有类对这个包之外的所有<strong>非public权限的类</strong>没有访问权限</li>
+<li>类控制着哪些代码能够访问自己的成员，具体能否访问还需要看成员的权限</li>
+</ul>
+
+<h2 id="1-2-接口访问权限-public">1.2 接口访问权限 &ndash;public</h2>
+
+<ul>
+<li>使用public，意味着public之后声明的成员对每个人都是可用的</li>
+</ul>
+
+<h2 id="1-3-你无法访问-private">1.3 你无法访问 &ndash;private</h2>
+
+<ul>
+<li>使用private，意味着除了包含该成员的类之外，其他任何类都无法访问这个成员</li>
+<li>私有构造器可以<strong>阻止继承</strong></li>
+</ul>
     </div>
     <div class="read-more">
-      <a href="/post/tech/basic_java/%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
@@ -347,7 +557,7 @@
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/">比较器的「退化」</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/">比较器的「退化」</a></h1>
     <div class="post-meta">
 
         <span>
@@ -372,7 +582,7 @@
       <p>在使用匿名内部类比较器的时候，idea提供了几个层次的比较器代码优化，给👴整懵逼了。</p>
     </div>
     <div class="read-more">
-      <a href="/post/tech/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
@@ -405,38 +615,6 @@
     </div>
     <div class="read-more">
       <a href="/post/tech/%E8%87%AA%E5%BB%BAmysql/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/build-sentinel/">Redis Sentinel高可用实现</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2019-08-14 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/nosql/"> NOSQL </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 7615 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 16 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>Redis <a href="https://raw.githubusercontent.com/antirez/redis/2.8/00-RELEASENOTES">v2.8</a> 之后提供了高可用实现<code>Redis Sentinel</code>，实现了<strong>主从复制</strong>以及<del>被动</del><strong>主备切换</strong>。<a href="https://raw.githubusercontent.com/antirez/redis/3.0/00-RELEASENOTES">v3.0</a> 之后提供了分布式实现<code>Redis Cluster</code>。本文讨论的是使用Sentinel搭建Redis高可用服务。</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/build-sentinel/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>

@@ -8,39 +8,22 @@ categories: [Java]
 author: "wangy325"
 
 hasJCKLanguage: true
-# You can also close(false) or open(true) something for this content.
-# P.S. comment can only be closed
-comment: false
+
+comment: true
 toc: true
 autoCollapseToc: false
-postMetaInFooter: false
+postMetaInFooter: true
 hiddenFromHomePage: false
-# You can also define another contentCopyright. e.g. contentCopyright: "This is another copyright."
-contentCopyright: false
+contentCopyright: true
 reward: false
 mathjax: false
 mathjaxEnableSingleDollar: false
 mathjaxEnableAutoNumber: false
 
-# You unlisted posts you might want not want the header or footer to show
 hideHeaderAndFooter: false
-
-# You can enable or disable out-of-date content warning for individual post.
-# Comment this out to use the global config.
-#enableOutdatedInfoWarning: false
-
-flowchartDiagrams:
-  enable: false
-  options: ""
-
-sequenceDiagrams:
-  enable: false
-  options: ""
 ---
 
-介绍static关键字
-
-<!--more-->
+static关键字意为“静态的”，其语义可以理解为“类的对象”(不要理解为Class对象)，即不需要对象实例，可以直接通过`类名.staticDomain`的形式直接访问
 
 ## 2.1 静态域
 
@@ -54,9 +37,11 @@ class Employee{
 }
 ```
 
-每一个`Employee`都有自己的一个`id`域，但是这个类的所有实例都共享一个`nextId`域。记住，即使没有`Employee`实例，静态域`nextId`也存在，它属于类而不属于任何对象。静态域只在类加载的时候初始化一次，并且是先于非`static`域初始化的
+每一个`Employee`都有自己的一个`id`域，但是这个类的所有实例都共享一个`nextId`域。记住，即使没有`Employee`实例，静态域`nextId`也存在，它属于类而不属于任何对象。`static`域只在**类加载的时候初始化一次**，并且是先于非`static`域初始化的
 
 以下是一个简单的`static`关键字使用示例：
+
+<!--more-->
 
 ```java
 class Employee {
@@ -102,7 +87,7 @@ id = 0 name = alex salary = 5000
 id = 1 name = bob salary = 6000
 id = 2 name = cup salary = 7000
 the nextId is:  3
-///:~
+*///:~
 ```
 
 
@@ -121,6 +106,6 @@ Java对于`static`的语义可以理解为：
 
 > 属于类但是不属于对象的字段和方法
 
-## 2.4 工厂方法
+## 2.4 [工厂方法](抽象类与接口/#8-2-4-span-id-factory-接口与工厂-span)
 
 也是一种静态方法，不过其用来构造对象，因此被称为`静态工厂方法`，例如`NumberFormat.getCurrencyInstance()`就是一个利用工厂方法获取对象的例子

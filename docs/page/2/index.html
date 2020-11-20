@@ -45,7 +45,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://wangy325.top/" />
 
-<meta property="og:updated_time" content="2020-11-10T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2020-11-16T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Endless River">
 <meta itemprop="description" content="">
@@ -119,7 +119,43 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/basic_java/collections/">Collections工具</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/">线程与任务</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-05-15 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/java/"> Java </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 6230 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 13 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>并发是生产过程不可能绕过去的坎，<del>要编写高性能的程序，必须使用并发</del></p>
+
+<p>并发的本质是多个线程同时处理任务<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>，不同于进程，线程之间的资源是共享的，当程序不够严谨时，使用多线程就可能带来问题，这是要反复讨论并发的原因之一</p>
+
+<p>在Java中，必须明白一点：线程由Thread类启动，但Thread类并不执行任何操作，<strong>它只是驱动赋予它的任务</strong>。因此将<strong>线程与任务</strong>的概念区分开，有利于理解并发</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/collections/">Collections工具</a></h1>
     <div class="post-meta">
 
         <span>
@@ -146,14 +182,14 @@
 <p>由于视图是直接封装的Collection接口，<strong>因此其方法有些局限</strong>，并且由于特殊的设计，部分操作是不允许的（会抛出 <em>UnsupportedOperationExceptin</em> ）</p>
     </div>
     <div class="read-more">
-      <a href="/post/tech/basic_java/collections/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/collections/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/basic_java/map/">Map</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/map/">Map</a></h1>
     <div class="post-meta">
 
         <span>
@@ -176,16 +212,49 @@
   <div class="post-content">
     <div class="post-summary">
       <p>Map即映射，即键-值对，键不允许重复，并且一个键最多映射一个值</p>
+
+<p>映射提供3种<strong>集合视图</strong></p>
+
+<ul>
+<li>键集 （Set实现）</li>
+<li>值集 （Collection实现）</li>
+<li>Map.Entry集（Set实现）</li>
+</ul>
+
+<p>由于Map的键是Set，因此使用可变对象作为Map的key时，<strong>需要覆盖 <em>equals</em> 和 <em>hashCode</em> 方法</strong>，<strong>Map不能使用自身作为key</strong></p>
+
+<p>Java 8对Map接口进行了优化，新增了主要是针对<strong>函数式接口</strong>的 <em>默认</em> 方法（方法体被省略）：</p>
+
+<blockquote>
+<ul>
+<li>default V <strong><em>merge</em></strong>(K key, V value,
+          BiFunction&lt;? super V, ? super V, ? extends V&gt; remappingFunction) {&hellip;}</li>
+<li>default V <strong><em>compute</em></strong>(K key,
+          BiFunction&lt;? super K, ? super V, ? extends V&gt; remappingFunction) {&hellip;}</li>
+<li>default V <strong><em>computeIfPresent</em></strong>(K key,
+          BiFunction&lt;? super K, ? super V, ? extends V&gt; remappingFunction) {&hellip;}</li>
+<li>default V <strong><em>computeIfAbsent</em></strong>(K key,
+          Function&lt;? super K, ? extends V&gt; mappingFunction) {&hellip;}</li>
+<li>default V <strong><em>replace</em></strong>(K key, V value) {&hellip;}</li>
+<li>default boolean <strong><em>replace</em></strong>(K key, V oldValue, V newValue) {&hellip;}</li>
+<li>default boolean <strong><em>remove</em></strong>(Object key, Object value) {&hellip;}</li>
+<li>default V <strong><em>putIfAbsent</em></strong>(K key, V value) {&hellip;}</li>
+<li>default void <strong><em>replaceAll</em></strong>(BiFunction&lt;? super K, ? super V, ? extends V&gt; function) {&hellip;}</li>
+<li>default V <strong><em>getOrDefault</em></strong>(Object key, V defaultValue) {&hellip;}</li>
+</ul>
+</blockquote>
+
+<p>上述方法使用的不多，主要用来对Map键值进行更新，按需查阅API文档</p>
     </div>
     <div class="read-more">
-      <a href="/post/tech/basic_java/map/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/map/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/basic_java/set/">Set</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/set/">Set</a></h1>
     <div class="post-meta">
 
         <span>
@@ -212,14 +281,14 @@
 <p>将<strong>可变对象</strong>置入Set时需要特别小心，当对象的改动影响到了元素之间的<code>equals()</code>比较的结果，那么Set的行为就变得不确定了。因此，<strong>不能将Set本身作为Set的元素</strong></p>
     </div>
     <div class="read-more">
-      <a href="/post/tech/basic_java/set/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/set/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/basic_java/queue/">Queue</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/queue/">Queue</a></h1>
     <div class="post-meta">
 
         <span>
@@ -242,16 +311,54 @@
   <div class="post-content">
     <div class="post-summary">
       <p>Queue（队列），实际开发过程中，在单线程环境下使用的情况下不多，Queue作为集合框架中重要组成似乎习惯性被忽略，队列总是先持有元素，再处理元素<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup></p>
+
+<p><img src="/img/Queue.png" alt="J7NBrQ.png" /></p>
+
+<p style="text-align:center;font-size:.9rem;font-style:italic">Queue继承关系简图</p>
+
+<p>除了Collection定义的操作之外，Queue定义了额外的插入/删除/检查元素的操作，这些操作有2种形式：</p>
+
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"><em>Throws Exception</em></th>
+<th align="center"><em>Returns special value</em></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center"><strong>Insert</strong></td>
+<td align="center">add(e)</td>
+<td align="center">offer(e)</td>
+</tr>
+
+<tr>
+<td align="center"><strong>Remove</strong></td>
+<td align="center">remove()</td>
+<td align="center">poll()</td>
+</tr>
+
+<tr>
+<td align="center"><strong>Examine</strong></td>
+<td align="center">element()</td>
+<td align="center">peek()</td>
+</tr>
+</tbody>
+</table>
+
+<p>如表所示，add/remove/element方法失败后抛出异常。offer/poll/peek方法失败后返回一个特殊值（null或false，视具体操作不同），需要说明的是，<code>offer()</code>方法主要是为<strong>有容量限制的队列</strong>设计的</p>
     </div>
     <div class="read-more">
-      <a href="/post/tech/basic_java/queue/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/queue/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/basic_java/list/">List</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/list/">List</a></h1>
     <div class="post-meta">
 
         <span>
@@ -274,16 +381,26 @@
   <div class="post-content">
     <div class="post-summary">
       <p>接下来的集合框架系列文章讲解了常见的集合框架实现，此系列涉及到的实现都是<strong>线程不安全</strong>的</p>
+
+<p><img src="/img/Collection.png" alt="JXUL1s.png" /></p>
+
+<p style="text-align:center;font-style:italic;font-size:.9rem">Java集合框架简图</p>
+
+<!-- > 1. 未列出枚举集（EnumSet/EnumMap）
+> 2. 未列出IdentityHashMap
+> 3. 未列出java.util.concurrent包下的实现 -->
+
+<p>上图列出了集合框架的常见实现，Java集合框架系列文章介绍了图中列出的大部分内容</p>
     </div>
     <div class="read-more">
-      <a href="/post/tech/basic_java/list/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/list/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/basic_java/%E5%86%85%E9%83%A8%E7%B1%BB/">内部类</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E5%86%85%E9%83%A8%E7%B1%BB/">内部类</a></h1>
     <div class="post-meta">
 
         <span>
@@ -306,16 +423,119 @@
   <div class="post-content">
     <div class="post-summary">
       <p>将一个类定义在另一个类的内部，这就是内部类</p>
+
+<blockquote>
+<p>定义言简意赅 ，内涵丰富多彩</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Flight2</span> <span class="o">{</span>
+  	<span class="c1">// inner class
+</span><span class="c1"></span>    <span class="kd">class</span> <span class="nc">Comp</span><span class="o">{</span>
+        <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">(){</span>
+            <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">class</span> <span class="nc">Dest</span><span class="o">{</span>
+        <span class="kd">private</span> <span class="n">String</span> <span class="n">to</span><span class="o">;</span>
+        <span class="kd">public</span> <span class="nf">Dest</span><span class="o">(</span><span class="n">String</span> <span class="n">to</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">to</span> <span class="o">=</span> <span class="n">to</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">showDest</span><span class="o">(){</span>
+            <span class="k">return</span> <span class="n">to</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+	<span class="c1">// use method to get inner class instance
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Comp</span> <span class="nf">comp</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">Comp</span><span class="o">();</span>
+    <span class="o">}</span>
+	<span class="c1">// use method to get inner class instance
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Dest</span> <span class="nf">dest</span><span class="o">(</span><span class="n">String</span> <span class="n">to</span><span class="o">){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">Dest</span><span class="o">(</span><span class="n">to</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">ship</span><span class="o">(){</span>
+        <span class="n">Comp</span> <span class="n">c</span> <span class="o">=</span> <span class="n">comp</span><span class="o">();</span>
+      	<span class="n">c</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&#34;South Air&#34;</span><span class="o">)</span>
+        <span class="n">Dest</span> <span class="n">d</span> <span class="o">=</span> <span class="n">dest</span><span class="o">(</span><span class="s">&#34;HK&#34;</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;the flight is &#34;</span> <span class="o">+</span> <span class="n">c</span><span class="o">.</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34; to &#34;</span> <span class="o">+</span> <span class="n">d</span><span class="o">.</span><span class="na">showDest</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Flight2</span> <span class="n">f2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Flight2</span><span class="o">();</span>
+        <span class="n">f2</span><span class="o">.</span><span class="na">ship</span><span class="o">();</span>
+    	<span class="c1">// OuterClassName.InnerClassName to refer inner class
+</span><span class="c1"></span>        <span class="n">Flight2</span> <span class="n">f2s</span> <span class="o">=</span>  <span class="k">new</span> <span class="n">Flight2</span><span class="o">();</span>
+        <span class="n">Flight2</span><span class="o">.</span><span class="na">Comp</span> <span class="n">comp</span> <span class="o">=</span> <span class="n">f2s</span><span class="o">.</span><span class="na">comp</span><span class="o">();</span>
+        <span class="n">Flight2</span><span class="o">.</span><span class="na">Dest</span> <span class="n">d2</span> <span class="o">=</span> <span class="n">f2s</span><span class="o">.</span><span class="na">dest</span><span class="o">(</span><span class="s">&#34;New York&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>通过<code>new</code>关键字实例化内部类和使用普通类并没有什么区别</p>
+
+<p>需要说明的是：当创建一个内部类的引用时，需要使用<code>OuterClassName.InnerClassName</code>这样的格式指明内部类的类型</p>
     </div>
     <div class="read-more">
-      <a href="/post/tech/basic_java/%E5%86%85%E9%83%A8%E7%B1%BB/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/%E5%86%85%E9%83%A8%E7%B1%BB/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/basic_java/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">lambda表达式</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">lambda表达式</a></h1>
     <div class="post-meta">
 
         <span>
@@ -338,16 +558,84 @@
   <div class="post-content">
     <div class="post-summary">
       <p>lambda表达式是一个<strong>可传递的代码块</strong>，可以在以后执行<strong>一次或多次</strong></p>
+
+<p>从一个比较器说起：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Intro</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">String</span><span class="o">[]</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">[]{</span><span class="s">&#34;baidu&#34;</span><span class="o">,</span><span class="s">&#34;alibaba&#34;</span><span class="o">,</span><span class="s">&#34;tencent&#34;</span><span class="o">,</span><span class="s">&#34;baida&#34;</span><span class="o">,</span><span class="s">&#34;kingdee&#34;</span><span class="o">};</span>
+      	<span class="c1">// String类实现了Comparable接口，可以直接使用sort方法实现字典序排序
+</span><span class="c1"></span>      	<span class="c1">// 为什么是字典序？因为String类的实现逻辑是字典序
+</span><span class="c1"></span>        <span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">s</span><span class="o">));</span>
+
+        <span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="k">new</span> <span class="n">StringLengthComparator</span><span class="o">());</span>
+      	<span class="c1">//等效使用lambda表达式实现
+</span><span class="c1"></span>      	<span class="c1">//Arrays.sort(s, (o1, o2) -&gt; o1.length() - o2.length());
+</span><span class="c1"></span>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">s</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="c1">// 比较器实现——先按字符串长度排序
+</span><span class="c1"></span><span class="kd">class</span> <span class="nc">StringLengthComparator</span> <span class="kd">implements</span> <span class="n">Comparator</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compare</span><span class="o">(</span><span class="n">String</span> <span class="n">o1</span><span class="o">,</span> <span class="n">String</span> <span class="n">o2</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">o1</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">-</span> <span class="n">o2</span><span class="o">.</span><span class="na">length</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/* output
+</span><span class="cm">[alibaba, baida, baidu, kingdee, tencent]
+</span><span class="cm">[baida, baidu, alibaba, kingdee, tencent]
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>上例中，<code>compare</code>方法不是立即调用，在数组完成排序之前，<code>sort</code>方法会一直调用<code>compare</code>方法，只要元素的排列顺序不正确就会重新排列元素</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nl">API:</span>	 <span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">T</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span> <span class="n">Comparator</span><span class="o">&lt;?</span> <span class="kd">super</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">c</span><span class="o">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><code>sort</code>方法需要一个比较器作为参数，接口<code>Comparator</code><strong>只有一个抽象方法</strong><code>compare</code>，要实现排序，实现<code>compare</code>方法即可，这正是<code>StringLengthComparator</code>类所做的事情</p>
     </div>
     <div class="read-more">
-      <a href="/post/tech/basic_java/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/basic_java/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/">抽象类与接口</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/">抽象类与接口</a></h1>
     <div class="post-meta">
 
         <span>
@@ -372,16 +660,107 @@
       <p>抽象类是由<code>abstract</code>关键字修饰的类。将一个普通类用<code>abstract</code>修饰，它就是抽象类</p>
 
 <p>若使用<code>abstract</code>修饰方法，那么称该方法为<strong>抽象方法</strong>，抽象方法没有方法体</p>
+
+<h2 id="8-1-抽象类">8.1 抽象类</h2>
+
+<p>但是抽象类有一些特征：</p>
+
+<ul>
+<li>抽象类不能被实例化（虽然抽象类可以声明域和构造器）</li>
+<li>抽象方法必须置于抽象类中</li>
+</ul>
+
+<p>如果你继承某抽象类，但是却不想实现某个抽象方法，可以继续让方法保持抽象，如此做<strong>导出类也要被声明为抽象类</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">AbsTest</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">S</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">S</span><span class="o">();</span>
+        <span class="n">s</span><span class="o">.</span><span class="na">f</span><span class="o">();</span>
+        <span class="n">s</span><span class="o">.</span><span class="na">g</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+ <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">F</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">F</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;F constructor&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">f</span><span class="o">();</span>
+
+    <span class="kt">void</span> <span class="nf">g</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;F.g()&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">S</span> <span class="kd">extends</span> <span class="n">F</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">S</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;S constructor&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kt">void</span> <span class="nf">f</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;S.f()&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/* output
+</span><span class="cm">F constructor
+</span><span class="cm">S constructor
+</span><span class="cm">S.f()
+</span><span class="cm">F.g()
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
     </div>
     <div class="read-more">
-      <a href="/post/tech/basic_java/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/basic_java/object%E8%B6%85%E7%B1%BB/">Object超类（一）</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/object%E8%B6%85%E7%B1%BB/">Object超类（一）</a></h1>
     <div class="post-meta">
 
         <span>
@@ -406,42 +785,7 @@
       <p>在Java中，如果一个类没有明确地指出超类，那么Object就是这个类的超类。实际上，Object类是所有类超类，这个类定义了一些重要的方法</p>
     </div>
     <div class="read-more">
-      <a href="/post/tech/basic_java/object%E8%B6%85%E7%B1%BB/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/springboot_aop_demo/">基于Spring Boot的AOP demo</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2020-03-14 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/springboot/"> SpringBoot </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 1651 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 4 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>有一个cd接口，其实体类用于播放歌曲，同时我们想在播放歌曲的时候记录每个曲目的播放次数。看起来，记录次数这个事和播放曲目是不相干的事情，当然，我们可以在每首歌曲播放完成之后记录，但是
-更好的办法是使用一个切面，切入到播放方法中，来完成这件事，这样可以减少无关逻辑对代码的侵入。</p>
-
-<p>此程序分别使用了基于@Aspect注解和基于XML配置文件2种方式进行了切面注入，2种方式效果是等同的。</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/springboot_aop_demo/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/object%E8%B6%85%E7%B1%BB/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>

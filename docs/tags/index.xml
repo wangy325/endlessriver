@@ -6,7 +6,7 @@
     <description>Recent content in Tags on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 10 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Nov 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangy325.top/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Java进阶</title>
       <link>https://wangy325.top/tags/java%E8%BF%9B%E9%98%B6/</link>
-      <pubDate>Tue, 10 Nov 2020 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 16 Nov 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangy325.top/tags/java%E8%BF%9B%E9%98%B6/</guid>
       <description></description>
@@ -116,6 +116,15 @@
       <pubDate>Thu, 20 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://wangy325.top/tags/git/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Theme preview</title>
+      <link>https://wangy325.top/tags/theme-preview/</link>
+      <pubDate>Sat, 10 Jul 2010 00:00:00 +0800</pubDate>
+      
+      <guid>https://wangy325.top/tags/theme-preview/</guid>
       <description></description>
     </item>
     

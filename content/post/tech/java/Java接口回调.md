@@ -18,8 +18,6 @@ autoCollapseToc: false
 
 回调模式在web开发中用的较多，本文简单介绍了Java的回调机制，理解此文可以在生产中写出适应业务的回调模型。
 
-<!--more-->
-
 ## 模块之间的调用
 
 在一个应用系统中，必然存在模块之间的调用，调用的方式有几种:
@@ -33,6 +31,8 @@ autoCollapseToc: false
 
 
 此方法适用于B()方法**执行的时间不长**，如若不然，那么A()方法会长时间等待B()方法执行完成而处于**阻塞**状态，如此，可能会导致整个流程的阻塞。
+
+<!--more-->
 
 ### 2. 异步调用
 
@@ -289,7 +289,7 @@ public class Teacher implements Callback {
             }
         }).start();
     }
-    
+
     @Override
     public void tellAnswer(Student student , int a) {
         System.out.println("知道了,"+student.getName()+" 完成任务花了 " + a + " 秒");

@@ -17,7 +17,6 @@ autoCollapseToc: true
 
 lambda表达式是一个**可传递的代码块**，可以在以后执行**一次或多次**
 
-<!--more-->
 
 从一个比较器说起：
 
@@ -56,6 +55,8 @@ API:	 public static <T> void sort(T[] a, Comparator<? super T> c)
 ```
 
 `sort`方法需要一个比较器作为参数，接口`Comparator`**只有一个抽象方法**`compare`，要实现排序，实现`compare`方法即可，这正是`StringLengthComparator`类所做的事情
+
+<!--more-->
 
 由于`StringLengthComparator`类只有一个方法，这相当于将一段代码块（函数）传递给`sort`。实际上这就是Java处理函数式编程的方式：Java是面向对象语言，因此**必须构造一个对象，这个对象有一个方法包含所需的逻辑代码**
 
