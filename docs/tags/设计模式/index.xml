@@ -13,10 +13,10 @@
     
     <item>
       <title>代理模式</title>
-      <link>https://wangy325.top/post/tech/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</link>
+      <link>https://wangy325.top/post/tech/java/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Wed, 05 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>https://wangy325.top/post/tech/java/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</guid>
       <description>&lt;p&gt;代理可以简单理解为，B类托管A类的功能，并根据需求，对A类的访问作&lt;font color=red&gt;&lt;strong&gt;控制&lt;/strong&gt;&lt;/font&gt;，这里的&lt;font color=red&gt;&lt;strong&gt;控制&lt;/strong&gt;&lt;/font&gt;可以理解为对A类方法执行的流程的影响，包括但不限于：&lt;/p&gt;</description>
     </item>
     

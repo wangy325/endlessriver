@@ -17,8 +17,6 @@ autoCollapseToc: false
 
 Queue（队列），实际开发过程中，在单线程环境下使用的情况下不多，Queue作为集合框架中重要组成似乎习惯性被忽略，队列总是先持有元素，再处理元素[^注1]
 
-<!--more-->
-
 ![J7NBrQ.png](/img/Queue.png)
 
 <p style="text-align:center;font-size:.9rem;font-style:italic">Queue继承关系简图</p>
@@ -36,6 +34,8 @@ Queue（队列），实际开发过程中，在单线程环境下使用的情况
 
 
 如表所示，add/remove/element方法失败后抛出异常。offer/poll/peek方法失败后返回一个特殊值（null或false，视具体操作不同），需要说明的是，`offer()`方法主要是为**有容量限制的队列**设计的
+
+<!--more-->
 
 典型的队列遵从FIFO( *first-in-first-out* )原则，FIFO队列的新元素总是插入到队尾
 
@@ -132,7 +132,7 @@ Queue（队列），实际开发过程中，在单线程环境下使用的情况
    >
    > boolean removeLastOccurrence(Object o);
 
-### 1 PriorityQueue
+# 1 PriorityQueue
 
 **优先级队列**是一个有序队列，其**底层是由堆( *heap* )实现的**，堆是一个可以自我调整的**二叉树**。优先级队列的排序依据可以来自元素的自然排序（实现Comparable接口）或自定义比较器，当使用自然排序规则时，优先级队列不允许插入non-comparable对象
 
@@ -237,11 +237,11 @@ dell	lenovo	hp	samsung
 *///:~
 ```
 
-从结果来看，元素在PriorityQueue里**并不是全排序的**，不过其会自动将”最小“的元素移动至队首
+从结果来看，元素在PriorityQueue里**并不是全排序的**，不过其会自动将“最小”的元素移动至队首
 
 此例中，如果不在构造器中指定比较器，PriorityQueue会在运行时抛出 `ClassCastException`——试图将`PC`向上转型为Comparable时异常
 
-### 2 LinkedList
+# 2 LinkedList
 
 LinkedList是Deque的实现，可以作为双端队列使用，其实现了Deque声明的所有方法
 
@@ -253,7 +253,7 @@ Deque<String> deque = new LinkedList<>();
 
 LinkedList基于链表节点的灵活性，很容易就能够实现在首尾两端对元素进行操作
 
-### 3 ArrayDeque
+# 3 ArrayDeque
 
 ArrayDeque是由**循环数组**实现的双端队列，没有容量限制，并且能够自动扩容，**不允许** 插入`null`值
 

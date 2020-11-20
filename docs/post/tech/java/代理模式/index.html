@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>代理模式 - Endless River</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="wangy325" /><meta name="description" content="代理可以简单理解为，B类托管A类的功能，并根据需求，对A类的访问作控制，这里的控制可以理解为对A类方法执行的流程的影响，包括但不限于：
+" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.55.6 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://wangy325.top/post/tech/java/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.f64a7681.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="代理模式" />
+<meta property="og:description" content="代理可以简单理解为，B类托管A类的功能，并根据需求，对A类的访问作控制，这里的控制可以理解为对A类方法执行的流程的影响，包括但不限于：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangy325.top/post/tech/java/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" />
+<meta property="article:published_time" content="2018-12-05T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2020-11-20T11:36:32&#43;08:00"/>
+
+<meta itemprop="name" content="代理模式">
+<meta itemprop="description" content="代理可以简单理解为，B类托管A类的功能，并根据需求，对A类的访问作控制，这里的控制可以理解为对A类方法执行的流程的影响，包括但不限于：">
+
+
+<meta itemprop="datePublished" content="2018-12-05T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-11-20T11:36:32&#43;08:00" />
+<meta itemprop="wordCount" content="3489">
+
+
+
+<meta itemprop="keywords" content="设计模式," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="代理模式"/>
+<meta name="twitter:description" content="代理可以简单理解为，B类托管A类的功能，并根据需求，对A类的访问作控制，这里的控制可以理解为对A类方法执行的流程的影响，包括但不限于："/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Endless River</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a><a href="/friendlink/">
+        <li class="mobile-menu-item">友链</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Endless River</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/friendlink/">友链</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">代理模式</h1>
+
+      <div class="post-meta">
+          <span>
+              <span class="icomoonfree icon-calendar"></span>
+              <span class="post-time"> 2018-12-05</span>
+          </span>
+
+        <div class="post-category">
+              <span class="icomoonfree icon-folder"></span>
+            <a href="/categories/java/"> Java </a>
+            </div>
+          <span class="icomoonfree icon-sigma"></span>
+          <span class="more-meta analyse"> 约 3489 字 </span>
+          <span class="icomoonfree icon-clock"></span>
+          <span class="more-meta analyse"> 预计阅读 7 分钟 </span>
+        <span class="icomoonfree icon-eye"></span>
+          <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#静态代理">静态代理</a>
+<ul>
+<li><a href="#继承方式的静态代理">继承方式的静态代理</a></li>
+<li><a href="#包装器方式的静态代理">包装器方式的静态代理</a></li>
+</ul></li>
+<li><a href="#动态代理">动态代理</a>
+<ul>
+<li><a href="#jdk-动态代理">JDK 动态代理</a>
+<ul>
+<li><a href="#1-动态代理需要一个接口">1. 动态代理需要一个接口</a></li>
+<li><a href="#2-和一个简单的实现类">2. 和一个简单的实现类</a></li>
+<li><a href="#3-自定义代理处理程序-须实现-invocationhandler-接口">3. 自定义代理处理程序，须实现 InvocationHandler 接口</a></li>
+<li><a href="#4-客户端生成代理类对象并且调用委托类的方法">4. 客户端生成代理类对象并且调用委托类的方法</a></li>
+</ul></li>
+<li><a href="#cglib-动态代理">cglib 动态代理</a>
+<ul>
+<li><a href="#1-创建委托类">1.创建委托类</a></li>
+<li><a href="#2-自定义代理类生成程序">2. 自定义代理类生成程序</a></li>
+<li><a href="#3-客户端">3. 客户端</a></li>
+</ul></li>
+<li><a href="#jdk动态代理和cglib动态代理的区别">JDK动态代理和cglib动态代理的区别</a></li>
+</ul></li>
+<li><a href="#解析jdk动态代理">解析JDK动态代理</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>代理可以简单理解为，B类托管A类的功能，并根据需求，对A类的访问作<font color=red><strong>控制</strong></font>，这里的<font color=red><strong>控制</strong></font>可以理解为对A类方法执行的流程的影响，包括但不限于：</p>
+
+<blockquote>
+<p>在方法执行之前，先做其他事（前置通知）
+在方法执行之后，再做某事（后置通知）
+决定方法是否执行（环绕通知）
+&hellip;</p>
+</blockquote>
+
+<p>java中代理的主要应用体现在<code>权限控制</code>,<code>日志管理</code>,<code>事务控制</code>等</p>
+
+<p><center style="color:gray;font-style:italic"></p>
+
+<p><img src="https://s1.ax1x.com/2018/09/06/iCu1S0.md.png" alt="iCu1S0.md.png" /></p>
+
+<p>java 代理模式简单图解</p>
+
+<p></center></p>
+
+<h3 id="静态代理">静态代理</h3>
+
+<blockquote>
+<p><strong>静态代理</strong>的作用，可扩展性，可维护性相对较差。典型的静态代理可以通过<code>继承</code>和<code>包装器</code>两种方式来实现，包装器方式比起继承方式稍方便。</p>
+</blockquote>
+
+<h4 id="继承方式的静态代理">继承方式的静态代理</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="cm">/**
+</span><span class="cm"> * @author:wangy
+</span><span class="cm"> * @date: 2018/9/21 / 15:15
+</span><span class="cm"> * @description: 通过继承的方式实现java静态代理, 主要在于理解所谓&#34;代理&#34;的概念
+</span><span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">CellPhone</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">sendMessage</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="cm">/**
+</span><span class="cm"> * 模拟被代理类对象
+</span><span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Iphone5</span> <span class="kd">implements</span> <span class="n">CellPhone</span> <span class="o">{</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sendMessage</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;the sending message is in the air.&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="cm">/**
+</span><span class="cm"> * 模拟代理类对象
+</span><span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Iphone5S</span> <span class="kd">extends</span> <span class="n">Iphone5</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sendMessage</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;you need to unlock your phone first.&#34;</span><span class="o">);</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">sendMessage</span><span class="o">();</span>
+        <span class="c1">// 模拟短信发送
+</span><span class="c1"></span>        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">1000</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;message sent successful.&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="cm">/**
+</span><span class="cm"> *客户端
+</span><span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">CellPhone</span> <span class="n">phone</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Iphone5S</span><span class="o">();</span>
+        <span class="n">phone</span><span class="o">.</span><span class="na">sendMessage</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">///:~
+</span><span class="c1"></span><span class="n">you</span> <span class="n">need</span> <span class="n">to</span> <span class="n">unlock</span> <span class="n">your</span> <span class="n">phone</span> <span class="n">first</span><span class="o">.</span>
+<span class="n">the</span> <span class="n">sending</span> <span class="n">message</span> <span class="n">is</span> <span class="n">in</span> <span class="n">the</span> <span class="n">air</span><span class="o">.</span>
+<span class="n">message</span> <span class="n">sent</span> <span class="n">successful</span><span class="o">.</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>上例中，<code>Iphone5S</code> 类继承了<code>Iphone5</code>，并对5的功能“加了点椰果”，这就是最简单的代理模式。但是，如果我还想“加点奶油”，那么就需要再创建一个类，给5“加奶油”，如果有很多手机，要加很多功能，只能通过“硬编码”来完成，这样显然是不合适的。</p>
+
+<h4 id="包装器方式的静态代理">包装器方式的静态代理</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="cm">/**
+</span><span class="cm"> * @author:wangy
+</span><span class="cm"> * @date: 2018/9/21 / 15:15
+</span><span class="cm"> * @description: 通过包装器的方式实现java静态代理
+</span><span class="cm"> */</span>
+ <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IceCream</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">iceCreamMaker</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="cm">/**
+</span><span class="cm"> * 模拟被代理类对象
+</span><span class="cm"> */</span>
+ <span class="kd">public</span> <span class="kd">class</span> <span class="nc">BerryCream</span> <span class="kd">implements</span> <span class="n">IceCream</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">iceCreamMaker</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;this is a IceCream with blueberry juice.&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+ <span class="cm">/**
+</span><span class="cm">  * 模拟代理类对象
+</span><span class="cm">  */</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Jelly</span> <span class="kd">implements</span> <span class="n">IceCream</span> <span class="o">{</span>
+    <span class="c1">// 代理对象中封装了被代理对象
+</span><span class="c1"></span>    <span class="kd">private</span> <span class="n">BerryCream</span> <span class="n">berryCream</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Jelly</span><span class="o">(</span><span class="n">BerryCream</span> <span class="n">berryCream</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">berryCream</span> <span class="o">=</span> <span class="n">berryCream</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">iceCreamMaker</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;add Grass jelly into Berry IceCream&#34;</span><span class="o">);</span>
+        <span class="n">berryCream</span><span class="o">.</span><span class="na">iceCreamMaker</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;now it&#39;s a Grass-jelly-Berry-IceCream&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+ <span class="cm">/**
+</span><span class="cm">  * 模拟客户端
+</span><span class="cm">  */</span>
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="n">IceCream</span> <span class="n">iceCream</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Jelly</span><span class="o">(</span><span class="k">new</span> <span class="n">BerryCream</span><span class="o">());</span>
+        <span class="n">iceCream</span><span class="o">.</span><span class="na">iceCreamMaker</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="cm">/*
+</span><span class="cm">add Grass jelly into Berry IceCream
+</span><span class="cm">this is a IceCream with blueberry juice.
+</span><span class="cm">now it&#39;s a Grass-jelly-Berry-IceCream
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>在包装器模型中，被代理类对象被封装在代理类对象中。通过这种形式，如果我需要在“莓派冰激凌”上加上“烧仙草”和“珍珠果”，只需要将代码作一些改动，并且，其相对于继承模式的又是在于：继承是类似于一个<strong>链式</strong>的叠加，并且对于功能的改动比较麻烦（比如想先加珍珠果再加烧仙草，就需要改动继承关系）。而包装器设计就相对比较灵活了，只需要作简单改动：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 将代理类对象1的封装类直接改为接口
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Jelly</span> <span class="kd">implements</span> <span class="n">IceCream</span> <span class="o">{</span>
+    <span class="kd">private</span>  <span class="n">IceCream</span> <span class="n">iceCream</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Jelly</span><span class="o">(</span><span class="n">IceCream</span> <span class="n">iceCream</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">iceCream</span> <span class="o">=</span> <span class="n">iceCream</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">iceCreamMaker</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;add Grass jelly into Berry IceCream&#34;</span><span class="o">);</span>
+        <span class="n">iceCream</span><span class="o">.</span><span class="na">iceCreamMaker</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;now it&#39;s a Grass-jelly-Berry-IceCream&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// 添加代理对象2
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Pearl</span> <span class="kd">implements</span> <span class="n">IceCream</span> <span class="o">{</span>
+    <span class="kd">private</span>  <span class="n">IceCream</span> <span class="n">iceCream</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Pearl</span><span class="o">(</span><span class="n">IceCream</span> <span class="n">iceCream</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">iceCream</span> <span class="o">=</span> <span class="n">iceCream</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">iceCreamMaker</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;add pearl fruit into Berry Ice Cream.&#34;</span><span class="o">);</span>
+        <span class="n">iceCream</span><span class="o">.</span><span class="na">iceCreamMaker</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;now it&#39;s a what a icecream!&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// 测试类
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 如果想改变“加料”的顺序，只需要改变对象初始化的顺序就ok
+</span><span class="c1"></span>        <span class="n">IceCream</span> <span class="n">iceCream</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BerryCream</span><span class="o">();</span>
+        <span class="n">Pearl</span> <span class="n">pearl</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Pearl</span><span class="o">(</span><span class="n">iceCream</span><span class="o">);</span>
+        <span class="n">Jelly</span> <span class="n">jelly</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Jelly</span><span class="o">(</span><span class="n">pearl</span><span class="o">);</span>
+        <span class="n">jelly</span><span class="o">.</span><span class="na">iceCreamMaker</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">///:~
+</span><span class="c1"></span><span class="n">add</span> <span class="n">Grass</span> <span class="n">jelly</span> <span class="n">into</span> <span class="n">Berry</span> <span class="n">IceCream</span>
+<span class="n">add</span> <span class="n">pearl</span> <span class="n">fruit</span> <span class="n">into</span> <span class="n">Berry</span> <span class="n">Ice</span> <span class="n">Cream</span><span class="o">.</span>
+<span class="k">this</span> <span class="n">is</span> <span class="n">a</span> <span class="n">IceCream</span> <span class="n">with</span> <span class="n">blueberry</span> <span class="n">juice</span><span class="o">.</span>
+<span class="n">now</span> <span class="n">it</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">a</span> <span class="n">what</span> <span class="n">a</span> <span class="n">icecream</span><span class="o">!</span>
+<span class="n">now</span> <span class="n">it</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">a</span> <span class="n">Grass</span><span class="o">-</span><span class="n">jelly</span><span class="o">-</span><span class="n">Berry</span><span class="o">-</span><span class="n">IceCream</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="动态代理">动态代理</h3>
+
+<p>相较于静态代理，动态代理带来的好处是：一个代理工具（或者叫代理处理程序），能够有效地实现对不同委托类的代理，这样使代码更加灵活。代理模式一定程度上可以看作“功能增强”，而“功能增强”的需求本质上就是相对灵活的，这和动态代理的初衷相契合。</p>
+
+<h4 id="jdk-动态代理">JDK 动态代理</h4>
+
+<p>JDK 动态代理是比较常见的代理模式。其实现方法可大致总结为:</p>
+
+<ul>
+<li>1.创建一个实现接口InvocationHandler的类，它必须实现invoke方法</li>
+<li>2.创建被代理的类以及接口</li>
+<li>3.通过Proxy的静态方法 newProxyInstance(ClassLoaderloader, Class[] interfaces, InvocationHandler h)创建一个代理类实例</li>
+<li>4.通过代理类实例调用委托类方法</li>
+</ul>
+
+<h5 id="1-动态代理需要一个接口">1. 动态代理需要一个接口</h5>
+
+<p>这个接口供所有需要被代理的类实现</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Subject</span> <span class="o">{</span>
+
+    <span class="kt">void</span> <span class="nf">sayHallo</span><span class="o">();</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h5 id="2-和一个简单的实现类">2. 和一个简单的实现类</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RealSubject</span> <span class="kd">implements</span> <span class="n">Subject</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sayHallo</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;大家好!&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h5 id="3-自定义代理处理程序-须实现-invocationhandler-接口">3. 自定义代理处理程序，须实现 InvocationHandler 接口</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyProxyHandler</span> <span class="kd">implements</span> <span class="n">InvocationHandler</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Subject</span> <span class="n">subject</span><span class="o">;</span>
+
+    <span class="n">MyProxyHandler</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span>
+
+    <span class="n">MyProxyHandler</span><span class="o">(</span><span class="n">Subject</span> <span class="n">subject</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">subject</span> <span class="o">=</span> <span class="n">subject</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 此方法用于生成一个指定接口的代理类实例, 该接口可以将方法调用指派到 [指定的调用处理程序],
+</span><span class="cm">     * 这个所谓的 [调用处理程序] 就是 InvocationHandler的invoke()方法
+</span><span class="cm">     *
+</span><span class="cm">     * @param subject 需要被代理的类的实例对象(被代理接口的实现类)
+</span><span class="cm">     * @return 一个指定接口的代理类实例
+</span><span class="cm">     * 这里, 指定接口就是说的是 Subject 接口, 常说的JDK动态代理需要有一个接口,就是这个原因
+</span><span class="cm">     */</span>
+     <span class="n">Object</span> <span class="nf">bind</span><span class="o">(</span><span class="n">Subject</span> <span class="n">subject</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">subject</span> <span class="o">=</span> <span class="n">subject</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">Proxy</span><span class="o">.</span><span class="na">newProxyInstance</span><span class="o">(</span><span class="n">subject</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getClassLoader</span><span class="o">(),</span> <span class="n">subject</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getInterfaces</span><span class="o">(),</span> <span class="k">this</span><span class="o">);</span>
+        <span class="c1">// 此Proxy类的静态方法等价于
+</span><span class="c1"></span>        <span class="cm">/*try {
+</span><span class="cm">            // 获取实现指定接口的被代理类实例对象
+</span><span class="cm">            Class&lt;?&gt; proxyClass = Proxy.getProxyClass(Subject.class.getClassLoader(), Subject.class.getInterfaces());
+</span><span class="cm">            // 获取指定的 [调用处理程序对象] 的构造器
+</span><span class="cm">            Constructor&lt;?&gt; proxyClassConstructor = proxyClass.getConstructor(MyProxyHandler.class);
+</span><span class="cm">            // 通过指定的InvocationHandler实例创建实现指定接口的代理类实例对象
+</span><span class="cm">            return proxyClassConstructor.newInstance(new MyProxyHandler(subject));
+</span><span class="cm">        }catch(Exception e){
+</span><span class="cm">            e.printStackTrace();
+</span><span class="cm">        }*/</span>
+    <span class="o">}</span>
+
+    <span class="cm">/*  ********************************************
+</span><span class="cm">     *  java.lang.reflect.Proxy [extends Object implements Serializable] 类                                            
+</span><span class="cm">     *      -- 该类提供用于创建动态代理类和实例的静态方法, 它是由这些静态方法创建的动态代理类的超类
+</span><span class="cm">     *      -- 动态代理类(以下称为代理类)是一个实现 [在创建类时在运行时指定的接口列表] 的类                             
+</span><span class="cm">     *      -- 代理接口(Subject)是代理类实现的一个接口                                                                  
+</span><span class="cm">     *      -- 代理实例是代理类的一个实例, 每个代理实例都有一个关联的 [调用处理程序] 对象, 其实现接口 InvocationHandler    
+</span><span class="cm">     *      -- 代理实例调用方法(sayHallo())时, 会被指派到 [调用处理程序] 对象的 invoke() 方法                           
+</span><span class="cm">     *  ********************************************/</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * @param proxy  代理类对象
+</span><span class="cm">     * @param method 被代理类的方法实例
+</span><span class="cm">     * @param args   被代理类对象(subject)的方法实例method的参数
+</span><span class="cm">     * @return null
+</span><span class="cm">     * @throws Throwable
+</span><span class="cm">     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">invoke</span><span class="o">(</span><span class="n">Object</span> <span class="n">proxy</span><span class="o">,</span> <span class="n">Method</span> <span class="n">method</span><span class="o">,</span> <span class="n">Object</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;before...&#34;</span><span class="o">);</span>
+        <span class="n">method</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="n">subject</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;after...&#34;</span><span class="o">);</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h5 id="4-客户端生成代理类对象并且调用委托类的方法">4. 客户端生成代理类对象并且调用委托类的方法</h5>
+
+<p>这个client介绍了3种创建动态代理类的方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="cm">/**
+</span><span class="cm">     * 被代理类对象(接口)
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">Subject</span> <span class="n">subject</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RealSubject</span><span class="o">();</span>
+    <span class="cm">/**
+</span><span class="cm">     * 代理实例关联的调用处理程序对象实例
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">InvocationHandler</span> <span class="n">handler</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyProxyHandler</span><span class="o">(</span><span class="n">subject</span><span class="o">);</span>
+    <span class="cm">/**
+</span><span class="cm">     * 代理实例关联的调用处理程序对象, 一般是自定义的InvocationHandler类的实现类
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">MyProxyHandler</span> <span class="n">my_proxy</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyProxyHandler</span><span class="o">();</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">m1</span><span class="o">();</span>
+        <span class="n">m2</span><span class="o">();</span>
+        <span class="n">m3</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 通过 [代理类实例] 调用 [被代理类] 实例的指定方法时, 会被[自定义代理类处理程序]指派给 [调用处理程序](即invoke()方法),并且执行invoke方法的增强代码
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">m3</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">Subject</span> <span class="n">proxySubject</span> <span class="o">=</span> <span class="o">(</span><span class="n">Subject</span><span class="o">)</span> <span class="n">my_proxy</span><span class="o">.</span><span class="na">bind</span><span class="o">(</span><span class="n">subject</span><span class="o">);</span>
+        <span class="n">proxySubject</span><span class="o">.</span><span class="na">sayHallo</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">m2</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">Subject</span> <span class="n">proxy_subject</span> <span class="o">=</span> <span class="o">(</span><span class="n">Subject</span><span class="o">)</span> <span class="n">Proxy</span><span class="o">.</span><span class="na">newProxyInstance</span><span class="o">(</span><span class="n">subject</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getClassLoader</span><span class="o">(),</span> <span class="n">subject</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getInterfaces</span><span class="o">(),</span> <span class="n">handler</span><span class="o">);</span>
+        <span class="n">proxy_subject</span><span class="o">.</span><span class="na">sayHallo</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">m1</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">Subject</span> <span class="n">proxySubject</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">proxyClass</span> <span class="o">=</span> <span class="n">Proxy</span><span class="o">.</span><span class="na">getProxyClass</span><span class="o">(</span><span class="n">Subject</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getClassLoader</span><span class="o">(),</span> <span class="n">Subject</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+            <span class="n">Constructor</span><span class="o">&lt;?&gt;</span> <span class="n">constructor</span> <span class="o">=</span> <span class="n">proxyClass</span><span class="o">.</span><span class="na">getConstructor</span><span class="o">(</span><span class="n">InvocationHandler</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+            <span class="n">proxySubject</span> <span class="o">=</span> <span class="o">(</span><span class="n">Subject</span><span class="o">)</span> <span class="n">constructor</span><span class="o">.</span><span class="na">newInstance</span><span class="o">(</span><span class="n">handler</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="n">proxySubject</span><span class="o">.</span><span class="na">sayHallo</span><span class="o">();</span>
+    <span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h4 id="cglib-动态代理">cglib 动态代理</h4>
+
+<p>与JDK动态代理不同的是，cglib动态代理不需要委托类实现某个接口，其生成的代理类是委托类的子类。当然，cglib也有其局限：</p>
+
+<blockquote>
+<ol>
+<li>final 类不能通过cglib代理<br /></li>
+<li>final 修饰的方法不能通过cglib作增强处理</li>
+</ol>
+</blockquote>
+
+<p>cglib实现动态代理可简单地归纳为：</p>
+
+<ul>
+<li>1.创建委托类对象</li>
+<li>2.创建[自定义代理类生成程序]类，该类须实现MethodInterceptor</li>
+<li>3.通过Enhancer来创建代理类实例</li>
+<li>4.通过代理类实例调用委托类方法</li>
+</ul>
+
+<h5 id="1-创建委托类">1.创建委托类</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Flower</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">bloom</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;the flower will bloom...&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h5 id="2-自定义代理类生成程序">2. 自定义代理类生成程序</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProxyInterceptor</span> <span class="kd">implements</span> <span class="n">MethodInterceptor</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Enhancer</span> <span class="n">enhancer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Enhancer</span><span class="o">();</span>
+
+    <span class="n">Object</span> <span class="nf">getProxyClass</span><span class="o">(</span><span class="n">Class</span> <span class="n">clazz</span><span class="o">){</span>
+        <span class="n">enhancer</span><span class="o">.</span><span class="na">setSuperclass</span><span class="o">(</span><span class="n">clazz</span><span class="o">);</span>
+        <span class="n">enhancer</span><span class="o">.</span><span class="na">setCallback</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">enhancer</span><span class="o">.</span><span class="na">create</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">intercept</span><span class="o">(</span><span class="n">Object</span> <span class="n">o</span><span class="o">,</span> <span class="n">Method</span> <span class="n">method</span><span class="o">,</span> <span class="n">Object</span><span class="o">[]</span> <span class="n">objects</span><span class="o">,</span> <span class="n">MethodProxy</span> <span class="n">methodProxy</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;after you fertilized...&#34;</span><span class="o">);</span>
+        <span class="n">methodProxy</span><span class="o">.</span><span class="na">invokeSuper</span><span class="o">(</span><span class="n">o</span><span class="o">,</span> <span class="n">objects</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;and you will have a harvest.&#34;</span><span class="o">);</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h5 id="3-客户端">3. 客户端</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">ProxyInterceptor</span> <span class="n">proxyInterceptor</span> <span class="o">=</span>  <span class="k">new</span> <span class="n">ProxyInterceptor</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Flower</span> <span class="n">proxyClass</span> <span class="o">=</span> <span class="o">(</span><span class="n">Flower</span><span class="o">)</span> <span class="n">proxyInterceptor</span><span class="o">.</span><span class="na">getProxyClass</span><span class="o">(</span><span class="n">Flower</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="n">proxyClass</span><span class="o">.</span><span class="na">bloom</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h4 id="jdk动态代理和cglib动态代理的区别">JDK动态代理和cglib动态代理的区别</h4>
+
+<table>
+<thead>
+<tr>
+<th align="center">代理</th>
+<th align="center">特点</th>
+<th align="center">优点</th>
+<th align="center">缺点</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">JDK</td>
+<td align="center">代理类与委托类实现同一接口，主要是通过代理类实现InvocationHandler并重写invoke方法来进行动态代理的，在invoke方法中将对方法进行增强处理，底层使用反射机制进行方法的调用</td>
+<td align="center">不需要硬编码接口，代码复用率高</td>
+<td align="center">只能够代理实现了接口的委托类</td>
+</tr>
+
+<tr>
+<td align="center">cglib</td>
+<td align="center">代理类将委托类作为自己的父类并为其中的非final委托方法创建两个方法，一个是与委托方法签名相同的方法，它在方法中会通过super调用委托方法；另一个是代理类独有的方法。在代理方法中，它会判断是否存在实现了MethodInterceptor接口的对象，若存在则将调用intercept方法对委托方法进行代理，底层将方法全部存入一个数组中，通过数组索引直接进行方法调用</td>
+<td align="center">可以在运行时对类或者是接口进行增强操作，且委托类无需实现接口</td>
+<td align="center">不能对final类以及final方法进行代理</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">                                        *JDK和cglib动态代理的简易区别，引自[jianshu.com@EakonZhao](https://www.jianshu.com/p/9a61af393e41?from=timeline&amp;isappinstalled=0)*</pre></td></tr></table>
+</div>
+</div>
+<h3 id="解析jdk动态代理">解析JDK动态代理</h3>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">wangy325</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-11-20
+        <a href="https://github.com/wangy325/endlessriver/commit/7bea2562246dd5c50ef435cb65848b4fe29edb66" title="content directory update, combine all to /java">(7bea256)</a>
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/tech/%E5%B8%B8%E8%A7%81cron%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%A4%BA%E4%BE%8B/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">常见的cron表达式示例</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/tech/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84sql%E4%BC%98%E5%8C%96%E7%9A%84%E4%BE%8B%E5%AD%90/">
+            <span class="next-text nav-default">一个简单的sql优化示例</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'endlessriver';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=u8za1dzCiImO_8rKldjU1g" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangy325" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangy325.top/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wangy325</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
