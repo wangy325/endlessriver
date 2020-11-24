@@ -19,7 +19,9 @@ mathjax: true
 
 ---
 
-Redis [v2.8](https://raw.githubusercontent.com/antirez/redis/2.8/00-RELEASENOTES) 之后提供了高可用实现`Redis Sentinel`，实现了**主从复制**以及~~被动~~**主备切换**。[v3.0](https://raw.githubusercontent.com/antirez/redis/3.0/00-RELEASENOTES) 之后提供了分布式实现`Redis Cluster`。本文讨论的是使用Sentinel搭建Redis高可用服务。
+Redis [v2.8](https://raw.githubusercontent.com/antirez/redis/2.8/00-RELEASENOTES) 之后提供了高可用实现`Redis Sentinel`，实现了**主从复制**以及~~被动~~**主备切换**。[v3.0](https://raw.githubusercontent.com/antirez/redis/3.0/00-RELEASENOTES) 之后提供了分布式实现`Redis Cluster`。
+
+本文讨论的是使用Sentinel搭建Redis高可用服务。
 
 >If all redis and sentinel instances were deployed in same host, you just build a fake redis-sentinel *High-Availability* environment[^v1].
 
@@ -82,27 +84,36 @@ centOS7和centOS6使用不同的防火墙机制，前者使用`firewall`，后�
   mkdir /usr/local/redis
   make install PREFIX=/usr/local/redis
   # ---
-  #if all operations are right, you will see the output below:
+  # if all operations are right, you will see the output below:
   [root@shell ~]# cd /usr/local/redis ; ll
   total 68
-  drwxr-xr-x 2 root root  4096 Aug  4 15:19 bin         #the redis executable binary file folder.
-  -rw-r--r-- 1 root root    93 Aug  4 16:54 dump.rdb    #the dump of redis database, You can config where to save it later.
-  -rw-r--r-- 1 root root 58905 Aug  7 13:56 redis.conf  #the config file of a particular redis instance.
+  #the redis executable binary file folder
+  drwxr-xr-x 2 root root  4096 Aug  4 15:19 bin         
+  # the (RDB)dump file of redis database, You can config where to save it later
+  -rw-r--r-- 1 root root    93 Aug  4 16:54 dump.rdb     
+  # the config file of a particular redis instance
+  -rw-r--r-- 1 root root 58905 Aug  7 13:56 redis.conf  
   [root@shell redis]# cd /usr/local/redis/bin ; ll    
   total 21876
-  -rwxr-xr-x 1 root root 2452168 Aug  4 15:19 redis-benchmark                 #redis test tool
-  -rwxr-xr-x 1 root root 5775312 Aug  4 15:19 redis-check-aof                 #redis AOF persistent check tool
-  -rwxr-xr-x 1 root root 5775312 Aug  4 15:19 redis-check-rdb                 #redis RBD persistent check tool
-  -rwxr-xr-x 2 root root 2618192 Aug  4 15:19 redis-cli                       #launch a redis client
-  lrwxrwxrwx 1 root root      12 Aug  4 15:19 redis-sentinel -> redis-server  #launch a redis sentinel server
-  -rwxr-xr-x 3 root root 5775312 Aug  4 15:19 redis-server                    #launch a redis server(instance)
+  # redis test tool
+  -rwxr-xr-x 1 root root 2452168 Aug  4 15:19 redis-benchmark   
+  # redis AOF persistent check tool
+  -rwxr-xr-x 1 root root 5775312 Aug  4 15:19 redis-check-aof   
+  # redis RBD persistent check tool
+  -rwxr-xr-x 1 root root 5775312 Aug  4 15:19 redis-check-rdb   
+  # launch a redis client
+  -rwxr-xr-x 2 root root 2618192 Aug  4 15:19 redis-cli         
+  # link to redis-server, launch a redis sentinel
+  lrwxrwxrwx 1 root root      12 Aug  4 15:19 redis-sentinel -> redis-server   server
+  #launch a redis server(instance)
+  -rwxr-xr-x 3 root root 5775312 Aug  4 15:19 redis-server  
 ```
 
 两个`ll`命令显示了一个redis的全部内容。本文用到的几个文件分别是：
 
 - redis.conf： 配置文件，绝对的主角，它的戏谁都抢不走
-- redis-server： 🧹扫地僧，开局现身一次，不出意外将隐居
-- redis-client：谁都不用client，谁都是client
+- redis-server： 用于启动redis缓存服务
+- redis-client：command-line client tool
 
 ## 2.2 其他配置项
 
@@ -114,7 +125,7 @@ centOS7和centOS6使用不同的防火墙机制，前者使用`firewall`，后�
 
 但是为了方便启动服务，还需要做一些额外的操作：
 
-<p style="background-color:lightgray">复制redis二进制程序到系统环境变量并将redis设置为开机启动</p>
+### 1. 复制redis二进制程序到系统环境变量
 
 ```shell
 cd /usr/local/redis/bin/
@@ -122,7 +133,7 @@ cp redis-server redis-cli redis-sentinel /usr/local/bin
 ```
 如此，启动redis的时候便不需要指定程序路径; 此时，已经可以直接在终端运行`redis-server`了
 
-将redis设置为开机启动（可选操作）：
+### 2. 将redis设置为开机启动：
 
 ```shell
 # 安装完成后可以添加多个命令启动redis主从-哨兵系统
@@ -133,21 +144,23 @@ echo "redis-server /usr/local/redis.conf" >> /etc/rc.local
 
 {{% admonition question "question" %}}此处需要添加内容{{% /admonition %}} -->
 
-<p style="background-color:lightgray">开放防火墙端口</p>
+### 3. 开放防火墙端口
 
-{{% admonition tip "tip" %}}若主机未开启防火墙，则无需操作。{{% /admonition %}}
+{{% admonition tip "注释" %}}
+若主机未开启防火墙，则无需操作
+{{% /admonition %}}
 
 如果你的主机开启了防火墙，其他主机是无法连接上你的redis-server的，此时需要为其开放端口。
 
 前面说到，centOS7和centOS6的防火墙机制不一样，需要分别处理。
 
-若需知晓防火墙状态，请运行
+若需知晓防火墙状态，请运行[^v4]
 ```shell
 systemctl status serviceName
 ```
 centOS7 和centOS6的防火墙服务名分别为 `firewalld`和`iptables`
 
-- 对于centOS7：
+#### 对于centOS 7：
 
 ```shell
 # 查看开放端口
@@ -170,7 +183,7 @@ public
 [root@shell ~]# firewall-cmd --reload
 ```
 
-- centOS6[^v4]
+#### centOS 6
 
 ```shell
 # 添加规则
@@ -257,7 +270,8 @@ redis-server /usr/local/redis/redis.conf
 
 ```
 27552:C 04 Aug 16:12:58.912 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
-27552:C 04 Aug 16:12:58.912 # Redis version=4.0.11, bits=64, commit=00000000, modified=0, pid=27552, just started
+27552:C 04 Aug 16:12:58.912 # Redis version=4.0.11, bits=64, commit=00000000,
+ modified=0, pid=27552, just started
 27552:C 04 Aug 16:12:58.912 # Configuration loaded
                 _._                                                  
            _.-``__ ''-._                                             
@@ -277,10 +291,19 @@ redis-server /usr/local/redis/redis.conf
           `-._        _.-'                                           
               `-.__.-'                                               
 
-27553:M 04 Aug 16:12:58.915 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+27553:M 04 Aug 16:12:58.915 # WARNING: The TCP backlog setting of 511 cannot
+be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
 27553:M 04 Aug 16:12:58.916 # Server initialized
-27553:M 04 Aug 16:12:58.916 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
-27553:M 04 Aug 16:12:58.916 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+27553:M 04 Aug 16:12:58.916 # WARNING overcommit_memory is set to 0! Background
+save may fail under low memory condition. To fix this issue add
+'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the
+command 'sysctl vm.overcommit_memory=1' for this to take effect.
+27553:M 04 Aug 16:12:58.916 # WARNING you have Transparent Huge Pages (THP)
+ support enabled in your kernel. This will create latency and memory usage
+ issues with Redis. To fix this issue run the command
+ 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it
+  to your /etc/rc.local in order to retain the setting after a reboot.
+  Redis must be restarted after THP is disabled.
 27553:M 04 Aug 16:12:58.916 * Ready to accept connections
 ```
 
@@ -289,17 +312,25 @@ redis-server /usr/local/redis/redis.conf
 
 
 ```shell
-WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+WARNING: The TCP backlog setting of 511 cannot be enforced because
+ /proc/sys/net/core/somaxconn is set to the lower value of 128.
 # solution
 [root@shell ~]# echo 511 >/proc/sys/net/core/somaxconn
 [root@shell ~]# echo "net.core.somaxconn = 551" >> /etc/sysctl.conf
 
-WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+WARNING overcommit_memory is set to 0! Background save may fail under low
+memory condition. To fix this issue add 'vm.overcommit_memory = 1'
+to /etc/sysctl.conf and then reboot or run the command
+'sysctl vm.overcommit_memory=1' for this to take effect.
 #solution
 [root@shell ~]# echo 1 > /proc/sys/vm/overcommit_memory
 [root@shell ~]# echo "vm.overcommit_memory=1" >> /etc/sysctl.conf
 
-WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+WARNING you have Transparent Huge Pages (THP) support enabled in your kernel.
+This will create latency and memory usage issues with Redis. To fix this issue
+ run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as
+ root, and add it to your /etc/rc.local in order to retain the setting after a
+  reboot. Redis must be restarted after THP is disabled.
 #solution
 [root@shell ~]# echo never > /sys/kernel/mm/transparent_hugepage/enabled
 [root@shell ~]# vi /etc/rc.local
@@ -351,7 +382,9 @@ Set your preferences in ~/.redisclirc
 ```
 # 5 关闭redis-server
 
-{{% admonition warning "warning"  %}}不要使用kill -9 pid关闭redis server，这样会可能会丢失数据完整性 {{% /admonition %}}
+{{% admonition warning "warning"  %}}
+不要使用kill -9 pid关闭redis server，这样会可能会丢失数据完整性
+{{% /admonition %}}
 
 ```shell
 #关闭redis-server 可选参数nosave|save意为关闭服务之前是否保存数据到磁盘
@@ -360,7 +393,9 @@ Set your preferences in ~/.redisclirc
 
 # 6 艺术就是复制
 
-{{% admonition danger "danger" %}}以下配置是基于一台服务器的演示，如果要部署高可用环境，需要在不同的服务器上安装redis并作如下配置{{% /admonition %}}
+{{% admonition danger "danger" %}}
+以下配置是基于一台服务器的演示，如果要部署高可用环境，需要在不同的服务器上安装redis并作如下配置
+{{% /admonition %}}
 
 经过上述操作，一个redis-standalone服务就配置好了，如果要将redis系统高可用，只需要「复制」就好了。
 
@@ -423,7 +458,8 @@ cp redis-slave/slave-16379.conf redis-slave/slave-26379.conf
 
 ```
 30463:C 05 Aug 11:33:34.536 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
-30463:C 05 Aug 11:33:34.537 # Redis version=4.0.11, bits=64, commit=00000000, modified=0, pid=30463, just started
+30463:C 05 Aug 11:33:34.537 # Redis version=4.0.11, bits=64, commit=00000000,
+modified=0, pid=30463, just started
 30463:C 05 Aug 11:33:34.537 # Configuration loaded
                 _._                                                  
            _.-``__ ''-._                                             
@@ -450,8 +486,10 @@ cp redis-slave/slave-16379.conf redis-slave/slave-26379.conf
 30464:S 05 Aug 11:33:34.539 * MASTER <-> SLAVE sync started
 30464:S 05 Aug 11:33:34.539 * Non blocking connect for SYNC fired the event.
 30464:S 05 Aug 11:33:34.539 * Master replied to PING, replication can continue...
-30464:S 05 Aug 11:33:34.539 * Partial resynchronization not possible (no cached master)
-30464:S 05 Aug 11:33:34.540 * Full resync from master: 4e99dfc708f2035b3b39f34796434de5889f667b:308
+30464:S 05 Aug 11:33:34.539 * Partial resynchronization not possible
+ (no cached master)
+30464:S 05 Aug 11:33:34.540 * Full resync from master:
+4e99dfc708f2035b3b39f34796434de5889f667b:308
 30464:S 05 Aug 11:33:34.543 * MASTER <-> SLAVE sync: receiving 177 bytes from master
 30464:S 05 Aug 11:33:34.543 * MASTER <-> SLAVE sync: Flushing old data
 30464:S 05 Aug 11:33:34.543 * MASTER <-> SLAVE sync: Loading DB in memory
@@ -483,7 +521,7 @@ OK
 localhost:6379> get count
 "5"
 localhost:6379> incr count
-(error) READONLY You can't write against a read only slave.
+(error) READONLY You can\'t write against a read only slave.
 ```
 可以看到，主服务器将count值自减1之后，从服务器获取的count值也是自减后的值；同时，如果在从服务器上对count进行自增操作，会得到一条
 
@@ -516,15 +554,20 @@ sentinel auth-pass master yourpassword
 # sentinel down-after-milliseconds <master-name> <milliseconds>
 sentinel down-after-milliseconds master 30000  
 
-# 指定了在发生failover主备切换时，最多可以有多少个slave同时对新的master进行同步。这个数字越小，完成failover所需的时间就越长；反之，但是如果这个数字越大，就意味着越多的slave因为replication而不可用。可以通过将这个值设为1，来保证每次只有一个slave，处于不能处理命令请求的状态。
+# 指定了在发生failover主备切换时，最多可以有多少个slave同时对新的master进行同步。
+# 这个数字越小，完成failover所需的时间就越长；反之，但是如果这个数字越大，就意味着越多的
+# slave因为replication而不可用。可以通过将这个值设为1，来保证每次只有一个slave，处于不能
+# 处理命令请求的状态。
 # sentinel parallel-syncs <master-name> <numslaves>
 sentinel parallel-syncs master 1  
 
 # 故障转移的超时时间failover-timeout，默认三分钟，可以用在以下这些方面：
 ## 1. 同一个sentinel对同一个master两次failover之间的间隔时间。  
-## 2. 当一个slave从一个错误的master那里同步数据时开始，直到slave被纠正为从正确的master那里同步数据时结束。  
+## 2. 当一个slave从一个错误的master那里同步数据时开始，直到slave被纠正为从正确的master
+#   那里同步数据时结束。  
 ## 3. 当想要取消一个正在进行的failover时所需要的时间。
-## 4.当进行failover时，配置所有slaves指向新的master所需的最大时间。不过，即使过了这个超时，slaves依然会被正确配置为指向master，但是就不按parallel-syncs所配置的规则来同步数据了
+## 4.当进行failover时，配置所有slaves指向新的master所需的最大时间。不过，即使过了这个超时，
+#   slaves依然会被正确配置为指向master，但是就不按parallel-syncs所配置的规则来同步数据了
 # sentinel failover-timeout <master-name> <milliseconds>  
 sentinel failover-timeout master 180000
 
@@ -562,7 +605,8 @@ redis-server /usr/local/redis-sentinel/sentinel-6380.conf --sentinel
 以下是配置成功的`sentinel`启动日志其一
 ```
 8550:X 05 Aug 14:29:38.696 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
-8550:X 05 Aug 14:29:38.696 # Redis version=4.0.11, bits=64, commit=00000000, modified=0, pid=8550, just started
+8550:X 05 Aug 14:29:38.696 # Redis version=4.0.11, bits=64, commit=00000000,
+ modified=0, pid=8550, just started
 8550:X 05 Aug 14:29:38.696 # Configuration loaded
                 _._                                                  
            _.-``__ ''-._                                             
@@ -582,7 +626,8 @@ redis-server /usr/local/redis-sentinel/sentinel-6380.conf --sentinel
           `-._        _.-'                                           
               `-.__.-'                                               
 
-8551:X 05 Aug 14:29:38.702 # Sentinel ID is c3776869c9bc3998e45158d3933d8e7b7c60ea84
+8551:X 05 Aug 14:29:38.702 # Sentinel ID is
+c3776869c9bc3998e45158d3933d8e7b7c60ea84
 8551:X 05 Aug 14:29:38.702 # +monitor master master 127.0.0.1 6379 quorum 2
 ```
 
@@ -600,8 +645,8 @@ sentinel config-epoch master 1
 sentinel leader-epoch master 1
 sentinel known-slave master 127.0.0.1 16379
 sentinel known-slave master 127.0.0.1 26379
-sentinel known-sentinel master 127.0.0.1 26380 e615ce0f9e12531b83b3c7c7ff0e91e3c8873222
-sentinel known-sentinel master 127.0.0.1 6380 dcc9d7e345a7f4db3b304b032bd1b41a8a7fc706
+sentinel known-sentinel master 127.0.0.1 26380 e615ce
+sentinel known-sentinel master 127.0.0.1 6380 dcc9d7
 sentinel current-epoch 1
 ```
 上面的配置列出了
