@@ -6,10 +6,39 @@
     <description>Recent content in redis on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 14 Aug 2019 16:01:23 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 24 Nov 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangy325.top/tags/redis/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>redis必知必会(转)</title>
+      <link>https://wangy325.top/post/tech/redis-all/</link>
+      <pubDate>Tue, 24 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/redis-all/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;原文地址：&lt;a href=&#34;https://github.com/Snailclimb/JavaGuide/blob/master/docs/database/Redis/redis-all.md&#34;&gt;https://github.com/Snailclimb/JavaGuide/blob/master/docs/database/Redis/redis-all.md&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;此文总结了redis相关的基础性知识体系，但不包括redis主从、哨兵、集群相关内容&lt;/p&gt;
+
+&lt;h3 id=&#34;1-简单介绍一下-redis-呗&#34;&gt;1. 简单介绍一下 Redis 呗!&lt;/h3&gt;
+
+&lt;p&gt;简单来说 &lt;strong&gt;Redis 就是一个使用 C 语言开发的数据库&lt;/strong&gt;，不过与传统数据库不同的是 &lt;strong&gt;Redis 的数据是存在内存中的&lt;/strong&gt; ，也就是它是内存数据库，所以读写速度非常快，因此 Redis 被广泛应用于缓存方向。&lt;/p&gt;
+
+&lt;p&gt;另外，&lt;strong&gt;Redis 除了做缓存之外，Redis 也经常用来做分布式锁，甚至是消息队列。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Redis 提供了多种数据类型来支持不同的业务场景。Redis 还支持事务 、持久化、Lua 脚本、多种集群方案。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;2-分布式缓存常见的技术选型方案有哪些&#34;&gt;2. 分布式缓存常见的技术选型方案有哪些？&lt;/h3&gt;
+
+&lt;p&gt;分布式缓存的话，使用的比较多的主要是 &lt;strong&gt;Memcached&lt;/strong&gt; 和 &lt;strong&gt;Redis&lt;/strong&gt;。不过，现在基本没有看过还有项目使用 &lt;strong&gt;Memcached&lt;/strong&gt; 来做缓存，都是直接用 &lt;strong&gt;Redis&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;p&gt;Memcached 是分布式缓存最开始兴起的那会，比较常用的。后来，随着 Redis 的发展，大家慢慢都转而使用更加强大的 Redis 了。&lt;/p&gt;
+
+&lt;p&gt;分布式缓存主要解决的是单机缓存的容量受服务器限制并且无法保存通用的信息。因为，本地缓存只在当前服务里有效，比如如果你部署了两个相同的服务，他们两者之间的缓存数据是无法共同的。&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Redis Sentinel高可用实现</title>

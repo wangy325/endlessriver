@@ -6,10 +6,28 @@
     <description>Recent content in Tags on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 16 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Nov 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangy325.top/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>redis</title>
+      <link>https://wangy325.top/tags/redis/</link>
+      <pubDate>Tue, 24 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/tags/redis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>算法</title>
+      <link>https://wangy325.top/tags/%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Mon, 23 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/tags/%E7%AE%97%E6%B3%95/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Java进阶</title>
@@ -71,15 +89,6 @@
       <pubDate>Fri, 16 Aug 2019 00:00:00 +0000</pubDate>
       
       <guid>https://wangy325.top/tags/mysql/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>redis</title>
-      <link>https://wangy325.top/tags/redis/</link>
-      <pubDate>Wed, 14 Aug 2019 16:01:23 +0800</pubDate>
-      
-      <guid>https://wangy325.top/tags/redis/</guid>
       <description></description>
     </item>
     

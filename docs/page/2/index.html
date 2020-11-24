@@ -36,7 +36,7 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<link href="/dist/even.f64a7681.min.css" rel="stylesheet">
+<link href="/dist/even.20d339e5.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
@@ -45,7 +45,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://wangy325.top/" />
 
-<meta property="og:updated_time" content="2020-11-16T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2020-11-24T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Endless River">
 <meta itemprop="description" content="">
@@ -117,6 +117,76 @@
       <div class="content-wrapper">
         <div id="content" class="content">
           <section id="posts" class="posts">
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E8%8E%B7%E5%8F%96%E4%BB%BB%E5%8A%A1%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC/">获取任务的返回值</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-10-20 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/java/"> Java </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 3521 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 8 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>要创建一个任务，通常实现Runnable接口。考虑一个经典的问题：用多线程分段计算0-100的加和，我们需要把每个线程计算的值汇总，然后再求和，那么应该怎样获取每个任务返回值呢？</p>
+
+<p>Java提供了Callable和Future接口，使任务有提供返回值的能力</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/%E8%8E%B7%E5%8F%96%E4%BB%BB%E5%8A%A1%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%80/">HashMap的源码分析（一）</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-09-24 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/java/"> Java </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 4318 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 9 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>本文内容简单分析了JDK8中HashMap源码的几个重要方法，便于理解散列表在Java集合框架中的具体应用。</p>
+
+<p>HashMap基于散列表，散列表中每一个Node节点（桶）是链表，当两个条目（entry）的key的hash值对桶数（capacity）取模的值相等时，这两个entry会存储在同一个链表中。但当链表中元素达到一定数目时，链表结构会转变为<strong>树结构</strong>。</p>
+
+<p>此文中没有讨论HashMap中涉及到树结构的源码。</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%80/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
     <article class="post">
   <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/">访问共享资源</a></h1>
@@ -302,7 +372,7 @@
           <a href="/categories/java/"> Java </a>
           </div>
         <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 3019 字 </span>
+        <span class="more-meta analyse"> 约 3045 字 </span>
         <span class="icomoonfree icon-clock"></span>
         <span class="more-meta"> 预计阅读 7 分钟 </span>
     </div>
@@ -567,231 +637,6 @@
   </div>
 </article>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">lambda表达式</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2020-04-22 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/java/"> Java </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 2861 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 6 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>lambda表达式是一个<strong>可传递的代码块</strong>，可以在以后执行<strong>一次或多次</strong></p>
-
-<p>从一个比较器说起：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Intro</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">String</span><span class="o">[]</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">[]{</span><span class="s">&#34;baidu&#34;</span><span class="o">,</span><span class="s">&#34;alibaba&#34;</span><span class="o">,</span><span class="s">&#34;tencent&#34;</span><span class="o">,</span><span class="s">&#34;baida&#34;</span><span class="o">,</span><span class="s">&#34;kingdee&#34;</span><span class="o">};</span>
-      	<span class="c1">// String类实现了Comparable接口，可以直接使用sort方法实现字典序排序
-</span><span class="c1"></span>      	<span class="c1">// 为什么是字典序？因为String类的实现逻辑是字典序
-</span><span class="c1"></span>        <span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">s</span><span class="o">));</span>
-
-        <span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="k">new</span> <span class="n">StringLengthComparator</span><span class="o">());</span>
-      	<span class="c1">//等效使用lambda表达式实现
-</span><span class="c1"></span>      	<span class="c1">//Arrays.sort(s, (o1, o2) -&gt; o1.length() - o2.length());
-</span><span class="c1"></span>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">s</span><span class="o">));</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-<span class="c1">// 比较器实现——先按字符串长度排序
-</span><span class="c1"></span><span class="kd">class</span> <span class="nc">StringLengthComparator</span> <span class="kd">implements</span> <span class="n">Comparator</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;{</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compare</span><span class="o">(</span><span class="n">String</span> <span class="n">o1</span><span class="o">,</span> <span class="n">String</span> <span class="n">o2</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">o1</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">-</span> <span class="n">o2</span><span class="o">.</span><span class="na">length</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-<span class="cm">/* output
-</span><span class="cm">[alibaba, baida, baidu, kingdee, tencent]
-</span><span class="cm">[baida, baidu, alibaba, kingdee, tencent]
-</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
-</div>
-</div>
-<p>上例中，<code>compare</code>方法不是立即调用，在数组完成排序之前，<code>sort</code>方法会一直调用<code>compare</code>方法，只要元素的排列顺序不正确就会重新排列元素</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="nl">API:</span>	 <span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">T</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span> <span class="n">Comparator</span><span class="o">&lt;?</span> <span class="kd">super</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">c</span><span class="o">)</span></code></pre></td></tr></table>
-</div>
-</div>
-<p><code>sort</code>方法需要一个比较器作为参数，接口<code>Comparator</code><strong>只有一个抽象方法</strong><code>compare</code>，要实现排序，实现<code>compare</code>方法即可，这正是<code>StringLengthComparator</code>类所做的事情</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/java/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/">抽象类与接口</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2020-04-21 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/java/"> Java </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 1744 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 4 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>抽象类是由<code>abstract</code>关键字修饰的类。将一个普通类用<code>abstract</code>修饰，它就是抽象类</p>
-
-<p>若使用<code>abstract</code>修饰方法，那么称该方法为<strong>抽象方法</strong>，抽象方法没有方法体</p>
-
-<h2 id="8-1-抽象类">8.1 抽象类</h2>
-
-<p>但是抽象类有一些特征：</p>
-
-<ul>
-<li>抽象类不能被实例化（虽然抽象类可以声明域和构造器）</li>
-<li>抽象方法必须置于抽象类中</li>
-</ul>
-
-<p>如果你继承某抽象类，但是却不想实现某个抽象方法，可以继续让方法保持抽象，如此做<strong>导出类也要被声明为抽象类</strong></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">AbsTest</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">S</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">S</span><span class="o">();</span>
-        <span class="n">s</span><span class="o">.</span><span class="na">f</span><span class="o">();</span>
-        <span class="n">s</span><span class="o">.</span><span class="na">g</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-
- <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">F</span><span class="o">{</span>
-    <span class="kd">public</span> <span class="nf">F</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;F constructor&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">f</span><span class="o">();</span>
-
-    <span class="kt">void</span> <span class="nf">g</span><span class="o">(){</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;F.g()&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-
-<span class="kd">class</span> <span class="nc">S</span> <span class="kd">extends</span> <span class="n">F</span><span class="o">{</span>
-    <span class="kd">public</span> <span class="nf">S</span><span class="o">()</span> <span class="o">{</span>
-        <span class="kd">super</span><span class="o">();</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;S constructor&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kt">void</span> <span class="nf">f</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;S.f()&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-<span class="cm">/* output
-</span><span class="cm">F constructor
-</span><span class="cm">S constructor
-</span><span class="cm">S.f()
-</span><span class="cm">F.g()
-</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
-</div>
-</div>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/java/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
     </section>
   
   <nav class="pagination">
@@ -858,7 +703,8 @@
     var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
     timeago().render(document.querySelectorAll('.timeago'), languageCode);
     timeago.cancel();  
-  </script>
+  </script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
 <script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
 
 

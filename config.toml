@@ -178,12 +178,16 @@ defaultContentLanguage = "zh-cn"           # Default language to use
     placeholder = '说点什么吧...'
     visitor = false
 
-  [params.flowchartDiagrams]# see https://blog.olowolo.com/example-site/post/js-flowchart-diagrams/
-    enable = false
+  [params.flowchartDiagrams]#
+    enable = true
     options = ""
 
-  [params.sequenceDiagrams] # see https://blog.olowolo.com/example-site/post/js-sequence-diagrams/
-    enable = false
+    # mermaid charts support
+    #loadMermaidJS = true
+    #showSequenceNumbers = true
+
+  [params.sequenceDiagrams]
+    enable = true
     options = ""            # default: "{theme: 'simple'}"
 
   [params.busuanzi]         # count web traffic by busuanzi                             # 是否使用不蒜子统计站点访问量

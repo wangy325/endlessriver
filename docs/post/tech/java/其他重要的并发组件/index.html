@@ -35,7 +35,7 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<link href="/dist/even.f64a7681.min.css" rel="stylesheet">
+<link href="/dist/even.20d339e5.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
@@ -53,7 +53,7 @@ PriorityBlockingQueue
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangy325.top/post/tech/java/%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BB%84%E4%BB%B6/" />
 <meta property="article:published_time" content="2020-11-16T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2020-11-20T23:47:30&#43;08:00"/>
+<meta property="article:modified_time" content="2020-11-22T17:35:20&#43;08:00"/>
 
 <meta itemprop="name" content="一些重要的并发组件">
 <meta itemprop="description" content="Java 1.5以后的并发类库新加入了一些用于解决并发问题的新构件，合理地使用这些构件能够帮助我们写出更加简单且健壮的并发程序。本节内容介绍java.util.concurrent包中一些具有代表性的构件，包括
@@ -69,7 +69,7 @@ PriorityBlockingQueue
 
 
 <meta itemprop="datePublished" content="2020-11-16T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-11-20T23:47:30&#43;08:00" />
+<meta itemprop="dateModified" content="2020-11-22T17:35:20&#43;08:00" />
 <meta itemprop="wordCount" content="10739">
 
 
@@ -2452,8 +2452,8 @@ any synchronization needed to maintain the consistency of the pool itself.</em><
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2020-11-20
-        <a href="https://github.com/wangy325/endlessriver/commit/9a09a7ba130782d0b5d849fa7111a5a313f2c141" title="add concurrent tools, change doc directorys, and other file format change.">(9a09a7b)</a>
+        2020-11-22
+        <a href="https://github.com/wangy325/endlessriver/commit/d83ff2cb583f1fc6fbc74ab0161a2e6919cf311a" title="redemostrate code demo in Exchanger">(d83ff2c)</a>
     </span>
   </p>
   
@@ -2467,7 +2467,11 @@ any synchronization needed to maintain the consistency of the pool itself.</em><
           <a href="/tags/java%E8%BF%9B%E9%98%B6/">Java进阶</a>
           </div>
       <nav class="post-nav">
-        
+        <a class="prev" href="/post/tech/bloom-filter/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">布隆过滤器(转)</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
         <a class="next" href="/post/tech/java/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/">
             <span class="next-text nav-default">计划执行任务</span>
             <span class="next-text nav-mobile">下一篇</span>
@@ -2547,7 +2551,8 @@ any synchronization needed to maintain the consistency of the pool itself.</em><
     var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
     timeago().render(document.querySelectorAll('.timeago'), languageCode);
     timeago.cancel();  
-  </script>
+  </script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
 <script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
   <script type="text/javascript">
     window.MathJax = {

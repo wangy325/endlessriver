@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>布隆过滤器(转) - Endless River</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="wangy325" /><meta name="description" content=" 原文地址 https://github.com/Snailclimb/JavaGuide/blob/master/docs/dataStructures-algorithms/data-structure/bloom-filter.md
+ 海量数据处理以及缓存穿透这两个场景让我认识了 布隆过滤器 ，我查阅了一些资料来了解它，但是很多现成资料并不满足我的需求，所以就决定自己总结一篇关于布隆过滤器的文章。希望通过这篇文章让更多人了解布隆过滤器，并且会实际去使用它！
+下面我们将分为几个方面来介绍布隆过滤器：
+ 什么是布隆过滤器？ 布隆过滤器的原理介绍。 布隆过滤器使用场景。 通过 Java 编程手动实现布隆过滤器。 利用Google开源的Guava中自带的布隆过滤器。 Redis 中的布隆过滤器。  1.什么是布隆过滤器？ 首先，我们需要了解布隆过滤器的概念。
+布隆过滤器（Bloom Filter）是一个叫做 Bloom 的老哥于1970年提出的。我们可以把它看作由二进制向量（或者说位数组）和一系列随机映射函数（哈希函数）两部分组成的数据结构。相比于我们平时常用的的 List、Map 、Set 等数据结构，它占用空间更少并且效率更高，但是缺点是其返回的结果是概率性的，而不是非常准确的。理论情况下添加到集合中的元素越多，误报的可能性就越大。并且，存放在布隆过滤器的数据不容易删除。
+" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.55.6 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://wangy325.top/post/tech/bloom-filter/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.20d339e5.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="布隆过滤器(转)" />
+<meta property="og:description" content="
+原文地址 https://github.com/Snailclimb/JavaGuide/blob/master/docs/dataStructures-algorithms/data-structure/bloom-filter.md
+
+
+海量数据处理以及缓存穿透这两个场景让我认识了 布隆过滤器 ，我查阅了一些资料来了解它，但是很多现成资料并不满足我的需求，所以就决定自己总结一篇关于布隆过滤器的文章。希望通过这篇文章让更多人了解布隆过滤器，并且会实际去使用它！
+
+下面我们将分为几个方面来介绍布隆过滤器：
+
+
+什么是布隆过滤器？
+布隆过滤器的原理介绍。
+布隆过滤器使用场景。
+通过 Java 编程手动实现布隆过滤器。
+利用Google开源的Guava中自带的布隆过滤器。
+Redis 中的布隆过滤器。
+
+
+1.什么是布隆过滤器？
+
+首先，我们需要了解布隆过滤器的概念。
+
+布隆过滤器（Bloom Filter）是一个叫做 Bloom 的老哥于1970年提出的。我们可以把它看作由二进制向量（或者说位数组）和一系列随机映射函数（哈希函数）两部分组成的数据结构。相比于我们平时常用的的 List、Map 、Set 等数据结构，它占用空间更少并且效率更高，但是缺点是其返回的结果是概率性的，而不是非常准确的。理论情况下添加到集合中的元素越多，误报的可能性就越大。并且，存放在布隆过滤器的数据不容易删除。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangy325.top/post/tech/bloom-filter/" />
+<meta property="article:published_time" content="2020-11-23T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2020-11-23T23:03:04&#43;08:00"/>
+
+<meta itemprop="name" content="布隆过滤器(转)">
+<meta itemprop="description" content="
+原文地址 https://github.com/Snailclimb/JavaGuide/blob/master/docs/dataStructures-algorithms/data-structure/bloom-filter.md
+
+
+海量数据处理以及缓存穿透这两个场景让我认识了 布隆过滤器 ，我查阅了一些资料来了解它，但是很多现成资料并不满足我的需求，所以就决定自己总结一篇关于布隆过滤器的文章。希望通过这篇文章让更多人了解布隆过滤器，并且会实际去使用它！
+
+下面我们将分为几个方面来介绍布隆过滤器：
+
+
+什么是布隆过滤器？
+布隆过滤器的原理介绍。
+布隆过滤器使用场景。
+通过 Java 编程手动实现布隆过滤器。
+利用Google开源的Guava中自带的布隆过滤器。
+Redis 中的布隆过滤器。
+
+
+1.什么是布隆过滤器？
+
+首先，我们需要了解布隆过滤器的概念。
+
+布隆过滤器（Bloom Filter）是一个叫做 Bloom 的老哥于1970年提出的。我们可以把它看作由二进制向量（或者说位数组）和一系列随机映射函数（哈希函数）两部分组成的数据结构。相比于我们平时常用的的 List、Map 、Set 等数据结构，它占用空间更少并且效率更高，但是缺点是其返回的结果是概率性的，而不是非常准确的。理论情况下添加到集合中的元素越多，误报的可能性就越大。并且，存放在布隆过滤器的数据不容易删除。">
+
+
+<meta itemprop="datePublished" content="2020-11-23T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-11-23T23:03:04&#43;08:00" />
+<meta itemprop="wordCount" content="3669">
+
+
+
+<meta itemprop="keywords" content="算法," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="布隆过滤器(转)"/>
+<meta name="twitter:description" content="
+原文地址 https://github.com/Snailclimb/JavaGuide/blob/master/docs/dataStructures-algorithms/data-structure/bloom-filter.md
+
+
+海量数据处理以及缓存穿透这两个场景让我认识了 布隆过滤器 ，我查阅了一些资料来了解它，但是很多现成资料并不满足我的需求，所以就决定自己总结一篇关于布隆过滤器的文章。希望通过这篇文章让更多人了解布隆过滤器，并且会实际去使用它！
+
+下面我们将分为几个方面来介绍布隆过滤器：
+
+
+什么是布隆过滤器？
+布隆过滤器的原理介绍。
+布隆过滤器使用场景。
+通过 Java 编程手动实现布隆过滤器。
+利用Google开源的Guava中自带的布隆过滤器。
+Redis 中的布隆过滤器。
+
+
+1.什么是布隆过滤器？
+
+首先，我们需要了解布隆过滤器的概念。
+
+布隆过滤器（Bloom Filter）是一个叫做 Bloom 的老哥于1970年提出的。我们可以把它看作由二进制向量（或者说位数组）和一系列随机映射函数（哈希函数）两部分组成的数据结构。相比于我们平时常用的的 List、Map 、Set 等数据结构，它占用空间更少并且效率更高，但是缺点是其返回的结果是概率性的，而不是非常准确的。理论情况下添加到集合中的元素越多，误报的可能性就越大。并且，存放在布隆过滤器的数据不容易删除。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Endless River</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a><a href="/friendlink/">
+        <li class="mobile-menu-item">友链</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Endless River</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/friendlink/">友链</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">布隆过滤器(转)</h1>
+
+      <div class="post-meta">
+          <span>
+              <span class="icomoonfree icon-calendar"></span>
+              <span class="post-time"> 2020-11-23</span>
+          </span>
+
+        <div class="post-category">
+              <span class="icomoonfree icon-folder"></span>
+            <a href="/categories/java/"> Java </a>
+            </div>
+          <span class="icomoonfree icon-sigma"></span>
+          <span class="more-meta analyse"> 约 3669 字 </span>
+          <span class="icomoonfree icon-clock"></span>
+          <span class="more-meta analyse"> 预计阅读 8 分钟 </span>
+        <span class="icomoonfree icon-eye"></span>
+          <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#1-什么是布隆过滤器">1.什么是布隆过滤器？</a></li>
+<li><a href="#2-布隆过滤器的原理介绍">2.布隆过滤器的原理介绍</a></li>
+<li><a href="#3-布隆过滤器使用场景">3.布隆过滤器使用场景</a></li>
+<li><a href="#4-通过-java-编程手动实现布隆过滤器">4.通过 Java 编程手动实现布隆过滤器</a></li>
+<li><a href="#5-利用google开源的-guava中自带的布隆过滤器">5.利用Google开源的 Guava中自带的布隆过滤器</a></li>
+<li><a href="#6-redis-中的布隆过滤器">6.Redis 中的布隆过滤器</a>
+<ul>
+<li><a href="#6-1介绍">6.1介绍</a></li>
+<li><a href="#6-2使用docker安装">6.2使用Docker安装</a></li>
+<li><a href="#6-3常用命令一览">6.3常用命令一览</a></li>
+<li><a href="#6-4实际使用">6.4实际使用</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <blockquote>
+<p>原文地址 <a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/dataStructures-algorithms/data-structure/bloom-filter.md">https://github.com/Snailclimb/JavaGuide/blob/master/docs/dataStructures-algorithms/data-structure/bloom-filter.md</a></p>
+</blockquote>
+
+<p>海量数据处理以及缓存穿透这两个场景让我认识了 布隆过滤器 ，我查阅了一些资料来了解它，但是很多现成资料并不满足我的需求，所以就决定自己总结一篇关于布隆过滤器的文章。希望通过这篇文章让更多人了解布隆过滤器，并且会实际去使用它！</p>
+
+<p>下面我们将分为几个方面来介绍布隆过滤器：</p>
+
+<ol>
+<li>什么是布隆过滤器？</li>
+<li>布隆过滤器的原理介绍。</li>
+<li>布隆过滤器使用场景。</li>
+<li>通过 Java 编程手动实现布隆过滤器。</li>
+<li>利用Google开源的Guava中自带的布隆过滤器。</li>
+<li>Redis 中的布隆过滤器。</li>
+</ol>
+
+<h3 id="1-什么是布隆过滤器">1.什么是布隆过滤器？</h3>
+
+<p>首先，我们需要了解布隆过滤器的概念。</p>
+
+<p>布隆过滤器（Bloom Filter）是一个叫做 Bloom 的老哥于1970年提出的。我们可以把它看作由二进制向量（或者说位数组）和一系列随机映射函数（哈希函数）两部分组成的数据结构。相比于我们平时常用的的 List、Map 、Set 等数据结构，它占用空间更少并且效率更高，但是缺点是其返回的结果是概率性的，而不是非常准确的。理论情况下添加到集合中的元素越多，误报的可能性就越大。并且，存放在布隆过滤器的数据不容易删除。</p>
+
+<p><img src="/img/bloom-filter-1.png" alt="布隆过滤器示意图" /></p>
+
+<p>位数组中的每个元素都只占用 1 bit ，并且每个元素只能是 0 或者 1。这样申请一个 100w 个元素的位数组只占用  1000000Bit / 8 = 125000 Byte = <sup>125000</sup>&frasl;<sub>1024</sub> kb ≈ 122kb 的空间。</p>
+
+<p>总结：<strong>一个名叫 Bloom 的人提出了一种来检索元素是否在给定大集合中的数据结构，这种数据结构是高效且性能很好的，但缺点是具有一定的错误识别率和删除难度。并且，理论情况下，添加到集合中的元素越多，误报的可能性就越大。</strong></p>
+
+<h3 id="2-布隆过滤器的原理介绍">2.布隆过滤器的原理介绍</h3>
+
+<p><strong>当一个元素加入布隆过滤器中的时候，会进行如下操作：</strong></p>
+
+<ol>
+<li>使用布隆过滤器中的哈希函数对元素值进行计算，得到哈希值（有几个哈希函数得到几个哈希值）。</li>
+<li>根据得到的哈希值，在位数组中把对应下标的值置为 1。</li>
+</ol>
+
+<p><strong>当我们需要判断一个元素是否存在于布隆过滤器的时候，会进行如下操作：</strong></p>
+
+<ol>
+<li>对给定元素再次进行相同的哈希计算；</li>
+<li>得到值之后判断位数组中的每个元素是否都为 1，如果值都为 1，那么说明这个值在布隆过滤器中，如果存在一个值不为 1，说明该元素不在布隆过滤器中。</li>
+</ol>
+
+<p>举个简单的例子：</p>
+
+<p><img src="/img/bloom-filter-2.png" alt="布隆过滤器hash计算" /></p>
+
+<p>如图所示，当字符串存储要加入到布隆过滤器中时，该字符串首先由多个哈希函数生成不同的哈希值，然后在对应的位数组的下表的元素设置为 1（当位数组初始化时 ，所有位置均为0）。当第二次存储相同字符串时，因为先前的对应位置已设置为 1，所以很容易知道此值已经存在（去重非常方便）。</p>
+
+<p>如果我们需要判断某个字符串是否在布隆过滤器中时，只需要对给定字符串再次进行相同的哈希计算，得到值之后判断位数组中的每个元素是否都为 1，如果值都为 1，那么说明这个值在布隆过滤器中，如果存在一个值不为 1，说明该元素不在布隆过滤器中。</p>
+
+<p><strong>不同的字符串可能哈希出来的位置相同，这种情况我们可以适当增加位数组大小或者调整我们的哈希函数。</strong></p>
+
+<p>综上，我们可以得出：<strong>布隆过滤器说某个元素存在，小概率会误判。布隆过滤器说某个元素不在，那么这个元素一定不在。</strong></p>
+
+<h3 id="3-布隆过滤器使用场景">3.布隆过滤器使用场景</h3>
+
+<ol>
+<li>判断给定数据是否存在：比如判断一个数字是否存在于包含大量数字的数字集中（数字集很大，5亿以上！）、 防止缓存穿透（判断请求的数据是否有效避免直接绕过缓存请求数据库）等等、邮箱的垃圾邮件过滤、黑名单功能等等。</li>
+<li>去重：比如爬给定网址的时候对已经爬取过的 URL 去重。</li>
+</ol>
+
+<h3 id="4-通过-java-编程手动实现布隆过滤器">4.通过 Java 编程手动实现布隆过滤器</h3>
+
+<p>我们上面已经说了布隆过滤器的原理，知道了布隆过滤器的原理之后就可以自己手动实现一个了。</p>
+
+<p>如果你想要手动实现一个的话，你需要：</p>
+
+<ol>
+<li>一个合适大小的位数组保存数据</li>
+<li>几个不同的哈希函数</li>
+<li>添加元素到位数组（布隆过滤器）的方法实现</li>
+<li>判断给定元素是否存在于位数组（布隆过滤器）的方法实现。</li>
+</ol>
+
+<p>下面给出一个我觉得写的还算不错的代码（参考网上已有代码改进得到，对于所有类型对象皆适用）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">java.util.BitSet</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyBloomFilter</span> <span class="o">{</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 位数组的大小
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">DEFAULT_SIZE</span> <span class="o">=</span> <span class="n">2</span> <span class="o">&lt;&lt;</span> <span class="n">24</span><span class="o">;</span>
+    <span class="cm">/**
+</span><span class="cm">     * 通过这个数组可以创建 6 个不同的哈希函数
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">SEEDS</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="n">3</span><span class="o">,</span> <span class="n">13</span><span class="o">,</span> <span class="n">46</span><span class="o">,</span> <span class="n">71</span><span class="o">,</span> <span class="n">91</span><span class="o">,</span> <span class="n">134</span><span class="o">};</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 位数组。数组中的元素只能是 0 或者 1
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="n">BitSet</span> <span class="n">bits</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BitSet</span><span class="o">(</span><span class="n">DEFAULT_SIZE</span><span class="o">);</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 存放包含 hash 函数的类的数组
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="n">SimpleHash</span><span class="o">[]</span> <span class="n">func</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleHash</span><span class="o">[</span><span class="n">SEEDS</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 初始化多个包含 hash 函数的类的数组，每个类中的 hash 函数都不一样
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="nf">MyBloomFilter</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// 初始化多个不同的 Hash 函数
+</span><span class="c1"></span>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">SEEDS</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">func</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleHash</span><span class="o">(</span><span class="n">DEFAULT_SIZE</span><span class="o">,</span> <span class="n">SEEDS</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 添加元素到位数组
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">Object</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">SimpleHash</span> <span class="n">f</span> <span class="o">:</span> <span class="n">func</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">bits</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">f</span><span class="o">.</span><span class="na">hash</span><span class="o">(</span><span class="n">value</span><span class="o">),</span> <span class="kc">true</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 判断指定元素是否存在于位数组
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">contains</span><span class="o">(</span><span class="n">Object</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">boolean</span> <span class="n">ret</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">SimpleHash</span> <span class="n">f</span> <span class="o">:</span> <span class="n">func</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span> <span class="o">&amp;&amp;</span> <span class="n">bits</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">f</span><span class="o">.</span><span class="na">hash</span><span class="o">(</span><span class="n">value</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">ret</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 静态内部类。用于 hash 操作！
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">SimpleHash</span> <span class="o">{</span>
+
+        <span class="kd">private</span> <span class="kt">int</span> <span class="n">cap</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="kt">int</span> <span class="n">seed</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">SimpleHash</span><span class="o">(</span><span class="kt">int</span> <span class="n">cap</span><span class="o">,</span> <span class="kt">int</span> <span class="n">seed</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">cap</span> <span class="o">=</span> <span class="n">cap</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">seed</span> <span class="o">=</span> <span class="n">seed</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="cm">/**
+</span><span class="cm">         * 计算 hash 值
+</span><span class="cm">         */</span>
+        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">hash</span><span class="o">(</span><span class="n">Object</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">h</span><span class="o">;</span>
+            <span class="k">return</span> <span class="o">(</span><span class="n">value</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">?</span> <span class="n">0</span> <span class="o">:</span>
+                <span class="n">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">(</span><span class="n">seed</span> <span class="o">*</span> <span class="o">(</span><span class="n">cap</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">&amp;</span>
+                <span class="o">((</span><span class="n">h</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="na">hashCode</span><span class="o">())</span> <span class="o">^</span> <span class="o">(</span><span class="n">h</span> <span class="o">&gt;&gt;&gt;</span> <span class="n">16</span><span class="o">)));</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>测试：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">String</span> <span class="n">value1</span> <span class="o">=</span> <span class="s">&#34;https://javaguide.cn/&#34;</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">value2</span> <span class="o">=</span> <span class="s">&#34;https://github.com/Snailclimb&#34;</span><span class="o">;</span>
+<span class="n">MyBloomFilter</span> <span class="n">filter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyBloomFilter</span><span class="o">();</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">filter</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">value1</span><span class="o">));</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">filter</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">value2</span><span class="o">));</span>
+<span class="n">filter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">value1</span><span class="o">);</span>
+<span class="n">filter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">value2</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">filter</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">value1</span><span class="o">));</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">filter</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">value2</span><span class="o">));</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Output:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">false
+false
+true
+true</pre></td></tr></table>
+</div>
+</div>
+<p>测试：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">Integer</span> <span class="n">value1</span> <span class="o">=</span> <span class="n">13423</span><span class="o">;</span>
+<span class="n">Integer</span> <span class="n">value2</span> <span class="o">=</span> <span class="n">22131</span><span class="o">;</span>
+<span class="n">MyBloomFilter</span> <span class="n">filter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyBloomFilter</span><span class="o">();</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">filter</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">value1</span><span class="o">));</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">filter</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">value2</span><span class="o">));</span>
+<span class="n">filter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">value1</span><span class="o">);</span>
+<span class="n">filter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">value2</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">filter</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">value1</span><span class="o">));</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">filter</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">value2</span><span class="o">));</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Output:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kc">false</span>
+<span class="kc">false</span>
+<span class="kc">true</span>
+<span class="kc">true</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="5-利用google开源的-guava中自带的布隆过滤器">5.利用Google开源的 Guava中自带的布隆过滤器</h3>
+
+<p>自己实现的目的主要是为了让自己搞懂布隆过滤器的原理，Guava 中布隆过滤器的实现算是比较权威的，所以实际项目中我们不需要手动实现一个布隆过滤器。</p>
+
+<p>首先我们需要在项目中引入 Guava 的依赖：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">com</span><span class="o">.</span><span class="na">google</span><span class="o">.</span><span class="na">guava</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">guava</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="n">28</span><span class="o">.</span><span class="na">0</span><span class="o">-</span><span class="n">jre</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>实际使用如下：</p>
+
+<p>我们创建了一个最多存放 最多 1500个整数的布隆过滤器，并且我们可以容忍误判的概率为百分之（0.01）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 创建布隆过滤器对象
+</span><span class="c1"></span><span class="n">BloomFilter</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">filter</span> <span class="o">=</span> <span class="n">BloomFilter</span><span class="o">.</span><span class="na">create</span><span class="o">(</span>
+        <span class="n">Funnels</span><span class="o">.</span><span class="na">integerFunnel</span><span class="o">(),</span>
+        <span class="n">1500</span><span class="o">,</span>
+        <span class="n">0</span><span class="o">.</span><span class="na">01</span><span class="o">);</span>
+<span class="c1">// 判断指定元素是否存在
+</span><span class="c1"></span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">filter</span><span class="o">.</span><span class="na">mightContain</span><span class="o">(</span><span class="n">1</span><span class="o">));</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">filter</span><span class="o">.</span><span class="na">mightContain</span><span class="o">(</span><span class="n">2</span><span class="o">));</span>
+<span class="c1">// 将元素添加进布隆过滤器
+</span><span class="c1"></span><span class="n">filter</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+<span class="n">filter</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">2</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">filter</span><span class="o">.</span><span class="na">mightContain</span><span class="o">(</span><span class="n">1</span><span class="o">));</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">filter</span><span class="o">.</span><span class="na">mightContain</span><span class="o">(</span><span class="n">2</span><span class="o">));</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>在我们的示例中，当<code>mightContain（）</code> 方法返回*true*时，我们可以99％确定该元素在过滤器中，当过滤器返回*false*时，我们可以100％确定该元素不存在于过滤器中。</p>
+
+<p><strong>Guava 提供的布隆过滤器的实现还是很不错的（想要详细了解的可以看一下它的源码实现），但是它有一个重大的缺陷就是只能单机使用（另外，容量扩展也不容易），而现在互联网一般都是分布式的场景。为了解决这个问题，我们就需要用到 Redis 中的布隆过滤器了。</strong></p>
+
+<h3 id="6-redis-中的布隆过滤器">6.Redis 中的布隆过滤器</h3>
+
+<h4 id="6-1介绍">6.1介绍</h4>
+
+<p>Redis v4.0 之后有了 Module（模块/插件） 功能，Redis Modules 让 Redis 可以使用外部模块扩展其功能 。布隆过滤器就是其中的 Module。详情可以查看 Redis 官方对 Redis Modules 的介绍 ：<a href="https://redis.io/modules">https://redis.io/modules</a></p>
+
+<p>另外，官网推荐了一个 RedisBloom  作为 Redis 布隆过滤器的 Module,地址：<a href="https://github.com/RedisBloom/RedisBloom">https://github.com/RedisBloom/RedisBloom</a>. 其他还有：</p>
+
+<ul>
+<li>redis-lua-scaling-bloom-filter （lua 脚本实现）：<a href="https://github.com/erikdubbelboer/redis-lua-scaling-bloom-filter">https://github.com/erikdubbelboer/redis-lua-scaling-bloom-filter</a></li>
+<li>pyreBloom（Python中的快速Redis 布隆过滤器） ：<a href="https://github.com/seomoz/pyreBloom">https://github.com/seomoz/pyreBloom</a></li>
+<li>&hellip;&hellip;</li>
+</ul>
+
+<p>RedisBloom 提供了多种语言的客户端支持，包括：Python、Java、JavaScript 和 PHP。</p>
+
+<h4 id="6-2使用docker安装">6.2使用Docker安装</h4>
+
+<p>如果我们需要体验 Redis 中的布隆过滤器非常简单，通过 Docker  就可以了！我们直接在 Google 搜索<strong>docker redis bloomfilter</strong> 然后在排除广告的第一条搜素结果就找到了我们想要的答案（这是我平常解决问题的一种方式，分享一下），具体地址：<a href="https://hub.docker.com/r/redislabs/rebloom/">https://hub.docker.com/r/redislabs/rebloom/</a> （介绍的很详细 ）。</p>
+
+<p><strong>具体操作如下：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">➜  ~ docker run -p <span class="m">6379</span>:6379 --name redis-redisbloom redislabs/rebloom:latest
+➜  ~ docker <span class="nb">exec</span> -it redis-redisbloom bash
+root@21396d02c252:/data# redis-cli
+<span class="m">127</span>.0.0.1:6379&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<h4 id="6-3常用命令一览">6.3常用命令一览</h4>
+
+<blockquote>
+<p>注意：   key:布隆过滤器的名称，item : 添加的元素。</p>
+</blockquote>
+
+<ol>
+<li><strong><code>BF.ADD</code></strong>：将元素添加到布隆过滤器中，如果该过滤器尚不存在，则创建该过滤器。格式：<code>BF.ADD {key} {item}</code>。</li>
+<li><strong><code>BF.MADD</code></strong> : 将一个或多个元素添加到“布隆过滤器”中，并创建一个尚不存在的过滤器。该命令的操作方式<code>BF.ADD</code>与之相同，只不过它允许多个输入并返回多个值。格式：<code>BF.MADD {key} {item} [item ...]</code> 。</li>
+<li>**<code>BF.EXISTS</code> ** : 确定元素是否在布隆过滤器中存在。格式：<code>BF.EXISTS {key} {item}</code>。</li>
+<li><strong><code>BF.MEXISTS</code></strong> ： 确定一个或者多个元素是否在布隆过滤器中存在格式：<code>BF.MEXISTS {key} {item} [item ...]</code>。</li>
+</ol>
+
+<p>另外，<code>BF.RESERVE</code> 命令需要单独介绍一下：</p>
+
+<p>这个命令的格式如下：</p>
+
+<p><code>BF.RESERVE {key} {error_rate} {capacity} [EXPANSION expansion]</code>。</p>
+
+<p>下面简单介绍一下每个参数的具体含义：</p>
+
+<ol>
+<li>key：布隆过滤器的名称</li>
+<li>error_rate :误报的期望概率。这应该是介于0到1之间的十进制值。例如，对于期望的误报率0.1％（1000中为1），error_rate应该设置为0.001。该数字越接近零，则每个项目的内存消耗越大，并且每个操作的CPU使用率越高。</li>
+<li>capacity:  过滤器的容量。当实际存储的元素个数超过这个值之后，性能将开始下降。实际的降级将取决于超出限制的程度。随着过滤器元素数量呈指数增长，性能将线性下降。</li>
+</ol>
+
+<p>可选参数：</p>
+
+<ul>
+<li>expansion：如果创建了一个新的子过滤器，则其大小将是当前过滤器的大小乘以<code>expansion</code>。默认扩展值为2。这意味着每个后续子过滤器将是前一个子过滤器的两倍。</li>
+</ul>
+
+<h4 id="6-4实际使用">6.4实际使用</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="m">127</span>.0.0.1:6379&gt; BF.ADD myFilter java
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+<span class="m">127</span>.0.0.1:6379&gt; BF.ADD myFilter javaguide
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+<span class="m">127</span>.0.0.1:6379&gt; BF.EXISTS myFilter java
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+<span class="m">127</span>.0.0.1:6379&gt; BF.EXISTS myFilter javaguide
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+<span class="m">127</span>.0.0.1:6379&gt; BF.EXISTS myFilter github
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">0</span></code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">wangy325</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-11-23
+        <a href="https://github.com/wangy325/endlessriver/commit/577e6118da40f9f825e1429d28059167bec917f5" title="add file bloom-filter">(577e611)</a>
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/tech/redis-all/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">redis必知必会(转)</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/tech/java/%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BB%84%E4%BB%B6/">
+            <span class="next-text nav-default">一些重要的并发组件</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'endlessriver';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=u8za1dzCiImO_8rKldjU1g" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangy325" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangy325.top/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    
+    
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wangy325</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
