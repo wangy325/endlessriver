@@ -31,11 +31,11 @@ hideHeaderAndFooter: false
 #enableOutdatedInfoWarning: false
 
 flowchartDiagrams:
-  enable: false
+  enable: true
   options: ""
 
 sequenceDiagrams:
-  enable: false
+  enable: true
   options: ""
 
 ---

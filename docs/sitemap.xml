@@ -2,8 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wangy325.top/post/tech/redis-all/</loc>
+    <lastmod>2020-11-24T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangy325.top/post/tech/bloom-filter/</loc>
+    <lastmod>2020-11-23T23:03:04+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://wangy325.top/post/tech/java/%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BB%84%E4%BB%B6/</loc>
-    <lastmod>2020-11-20T23:47:30+08:00</lastmod>
+    <lastmod>2020-11-22T17:35:20+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -101,7 +115,7 @@
   
   <url>
     <loc>https://wangy325.top/post/tech/java/set/</loc>
-    <lastmod>2020-11-20T11:36:32+08:00</lastmod>
+    <lastmod>2020-11-23T23:03:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -178,49 +192,67 @@
   
   <url>
     <loc>https://wangy325.top/categories/</loc>
-    <lastmod>2020-11-21T21:00:12+08:00</lastmod>
+    <lastmod>2020-11-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.top/</loc>
-    <lastmod>2020-11-21T21:00:12+08:00</lastmod>
+    <lastmod>2020-11-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.top/categories/java/</loc>
-    <lastmod>2020-11-21T21:00:12+08:00</lastmod>
+    <lastmod>2020-11-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://wangy325.top/tags/java%E8%BF%9B%E9%98%B6/</loc>
-    <lastmod>2020-11-21T21:00:12+08:00</lastmod>
+    <loc>https://wangy325.top/categories/nosql/</loc>
+    <lastmod>2020-11-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.top/post/</loc>
-    <lastmod>2020-11-21T21:00:12+08:00</lastmod>
+    <lastmod>2020-11-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.top/tags/</loc>
-    <lastmod>2020-11-21T21:00:12+08:00</lastmod>
+    <lastmod>2020-11-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangy325.top/tags/redis/</loc>
+    <lastmod>2020-11-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangy325.top/tags/%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2020-11-23T23:03:04+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangy325.top/tags/java%E8%BF%9B%E9%98%B6/</loc>
+    <lastmod>2020-11-22T17:35:20+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.top/tags/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/</loc>
-    <lastmod>2020-11-20T23:47:30+08:00</lastmod>
+    <lastmod>2020-11-23T23:03:04+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.top/tags/java%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2020-11-20T23:47:30+08:00</lastmod>
+    <lastmod>2020-11-23T23:03:04+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -330,22 +362,10 @@
   </url>
   
   <url>
-    <loc>https://wangy325.top/categories/nosql/</loc>
-    <lastmod>2020-11-20T23:47:30+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://wangy325.top/post/tech/java/build-redis-sentinel/</loc>
     <lastmod>2020-11-20T23:47:30+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangy325.top/tags/redis/</loc>
-    <lastmod>2020-11-20T23:47:30+08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -468,13 +488,13 @@
   </url>
   
   <url>
-    <loc>https://wangy325.top/tags/theme-preview/</loc>
+    <loc>https://wangy325.top/categories/theme-preview/</loc>
     <lastmod>2020-11-20T23:47:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://wangy325.top/categories/theme-preview/</loc>
+    <loc>https://wangy325.top/tags/theme-preview/</loc>
     <lastmod>2020-11-20T23:47:30+08:00</lastmod>
     <priority>0</priority>
   </url>

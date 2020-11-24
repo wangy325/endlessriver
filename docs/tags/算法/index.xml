@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>算法 on Endless River</title>
+    <link>https://wangy325.top/tags/%E7%AE%97%E6%B3%95/</link>
+    <description>Recent content in 算法 on Endless River</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 23 Nov 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://wangy325.top/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>布隆过滤器(转)</title>
+      <link>https://wangy325.top/post/tech/bloom-filter/</link>
+      <pubDate>Mon, 23 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/bloom-filter/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;原文地址 &lt;a href=&#34;https://github.com/Snailclimb/JavaGuide/blob/master/docs/dataStructures-algorithms/data-structure/bloom-filter.md&#34;&gt;https://github.com/Snailclimb/JavaGuide/blob/master/docs/dataStructures-algorithms/data-structure/bloom-filter.md&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;海量数据处理以及缓存穿透这两个场景让我认识了 布隆过滤器 ，我查阅了一些资料来了解它，但是很多现成资料并不满足我的需求，所以就决定自己总结一篇关于布隆过滤器的文章。希望通过这篇文章让更多人了解布隆过滤器，并且会实际去使用它！&lt;/p&gt;
+
+&lt;p&gt;下面我们将分为几个方面来介绍布隆过滤器：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;什么是布隆过滤器？&lt;/li&gt;
+&lt;li&gt;布隆过滤器的原理介绍。&lt;/li&gt;
+&lt;li&gt;布隆过滤器使用场景。&lt;/li&gt;
+&lt;li&gt;通过 Java 编程手动实现布隆过滤器。&lt;/li&gt;
+&lt;li&gt;利用Google开源的Guava中自带的布隆过滤器。&lt;/li&gt;
+&lt;li&gt;Redis 中的布隆过滤器。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;1-什么是布隆过滤器&#34;&gt;1.什么是布隆过滤器？&lt;/h3&gt;
+
+&lt;p&gt;首先，我们需要了解布隆过滤器的概念。&lt;/p&gt;
+
+&lt;p&gt;布隆过滤器（Bloom Filter）是一个叫做 Bloom 的老哥于1970年提出的。我们可以把它看作由二进制向量（或者说位数组）和一系列随机映射函数（哈希函数）两部分组成的数据结构。相比于我们平时常用的的 List、Map 、Set 等数据结构，它占用空间更少并且效率更高，但是缺点是其返回的结果是概率性的，而不是非常准确的。理论情况下添加到集合中的元素越多，误报的可能性就越大。并且，存放在布隆过滤器的数据不容易删除。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
