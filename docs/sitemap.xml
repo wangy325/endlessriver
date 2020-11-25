@@ -2,8 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wangy325.top/post/tech/java/java-gc/</loc>
+    <lastmod>2020-11-25T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://wangy325.top/post/tech/redis-all/</loc>
-    <lastmod>2020-11-24T00:00:00+00:00</lastmod>
+    <lastmod>2020-11-24T18:12:22+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -192,55 +199,61 @@
   
   <url>
     <loc>https://wangy325.top/categories/</loc>
-    <lastmod>2020-11-24T00:00:00+00:00</lastmod>
+    <lastmod>2020-11-25T14:42:13+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.top/</loc>
-    <lastmod>2020-11-24T00:00:00+00:00</lastmod>
+    <lastmod>2020-11-25T14:42:13+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangy325.top/tags/jvm/</loc>
+    <lastmod>2020-11-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.top/categories/java/</loc>
-    <lastmod>2020-11-24T00:00:00+00:00</lastmod>
+    <lastmod>2020-11-25T14:42:13+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://wangy325.top/categories/nosql/</loc>
-    <lastmod>2020-11-24T00:00:00+00:00</lastmod>
+    <loc>https://wangy325.top/tags/java%E8%BF%9B%E9%98%B6/</loc>
+    <lastmod>2020-11-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.top/post/</loc>
-    <lastmod>2020-11-24T00:00:00+00:00</lastmod>
+    <lastmod>2020-11-25T14:42:13+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.top/tags/</loc>
-    <lastmod>2020-11-24T00:00:00+00:00</lastmod>
+    <lastmod>2020-11-25T14:42:13+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://wangy325.top/categories/nosql/</loc>
+    <lastmod>2020-11-25T01:23:37+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.top/tags/redis/</loc>
-    <lastmod>2020-11-24T00:00:00+00:00</lastmod>
+    <lastmod>2020-11-25T01:23:37+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wangy325.top/tags/%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2020-11-23T23:03:04+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://wangy325.top/tags/java%E8%BF%9B%E9%98%B6/</loc>
-    <lastmod>2020-11-22T17:35:20+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -252,7 +265,7 @@
   
   <url>
     <loc>https://wangy325.top/tags/java%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2020-11-23T23:03:04+08:00</lastmod>
+    <lastmod>2020-11-25T14:42:13+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -272,7 +285,7 @@
   
   <url>
     <loc>https://wangy325.top/post/tech/java/%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/</loc>
-    <lastmod>2020-11-20T23:47:30+08:00</lastmod>
+    <lastmod>2020-11-25T14:42:13+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -363,7 +376,7 @@
   
   <url>
     <loc>https://wangy325.top/post/tech/java/build-redis-sentinel/</loc>
-    <lastmod>2020-11-20T23:47:30+08:00</lastmod>
+    <lastmod>2020-11-25T01:23:37+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

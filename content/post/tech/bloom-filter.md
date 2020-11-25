@@ -15,7 +15,6 @@ mathjax: true
 autoCollapseToc: false
 ---
 
-> 原文地址 https://github.com/Snailclimb/JavaGuide/blob/master/docs/dataStructures-algorithms/data-structure/bloom-filter.md
 
 海量数据处理以及缓存穿透这两个场景让我认识了 布隆过滤器 ，我查阅了一些资料来了解它，但是很多现成资料并不满足我的需求，所以就决定自己总结一篇关于布隆过滤器的文章。希望通过这篇文章让更多人了解布隆过滤器，并且会实际去使用它！
 
@@ -317,3 +316,6 @@ root@21396d02c252:/data# redis-cli
 127.0.0.1:6379> BF.EXISTS myFilter github
 (integer) 0
 ```
+
+---
+原文地址 https://github.com/Snailclimb/JavaGuide/blob/master/docs/dataStructures-algorithms/data-structure/bloom-filter.md
