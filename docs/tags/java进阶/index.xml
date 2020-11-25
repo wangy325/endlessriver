@@ -6,10 +6,19 @@
     <description>Recent content in Java进阶 on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 16 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Nov 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangy325.top/tags/java%E8%BF%9B%E9%98%B6/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>JVM垃圾回收基础概要(转)</title>
+      <link>https://wangy325.top/post/tech/java/java-gc/</link>
+      <pubDate>Wed, 25 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/java/java-gc/</guid>
+      <description>本节常见面试题 问题答案在文中都有提到 如何判断对象是否死亡（两种方法）。 简单的介绍一下强引用、软引用、弱引用、虚引用（虚引用与软引用和弱引用的</description>
+    </item>
     
     <item>
       <title>一些重要的并发组件</title>
