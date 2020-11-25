@@ -15,7 +15,6 @@ mathjax: true
 autoCollapseToc: false
 ---
 
-> 原文地址：https://github.com/Snailclimb/JavaGuide/blob/master/docs/database/Redis/redis-all.md
 
 此文总结了redis相关的基础性知识体系，但不包括redis主从、哨兵、集群相关内容
 
@@ -27,6 +26,8 @@ autoCollapseToc: false
 
 **Redis 提供了多种数据类型来支持不同的业务场景。Redis 还支持事务 、持久化、Lua 脚本、多种集群方案。**
 
+<!--more-->
+
 ### 2. 分布式缓存常见的技术选型方案有哪些？
 
 分布式缓存的话，使用的比较多的主要是 **Memcached** 和 **Redis**。不过，现在基本没有看过还有项目使用 **Memcached** 来做缓存，都是直接用 **Redis**。
@@ -34,8 +35,6 @@ autoCollapseToc: false
 Memcached 是分布式缓存最开始兴起的那会，比较常用的。后来，随着 Redis 的发展，大家慢慢都转而使用更加强大的 Redis 了。
 
 分布式缓存主要解决的是单机缓存的容量受服务器限制并且无法保存通用的信息。因为，本地缓存只在当前服务里有效，比如如果你部署了两个相同的服务，他们两者之间的缓存数据是无法共同的。
-
-<!--more-->
 
 ### 3. 说一下 Redis 和 Memcached 的区别和共同点
 
@@ -708,3 +707,6 @@ Cache Aside Pattern 中遇到写请求是这样的：更新 DB，然后直接删
 * Redis 命令总结：http://Redisdoc.com/string/set.html
 * 通俗易懂的 Redis 数据结构基础教程：[https://juejin.im/post/5b53ee7e5188251aaa2d2e16](https://juejin.im/post/5b53ee7e5188251aaa2d2e16)
 * WHY Redis choose single thread (vs multi threads): [https://medium.com/@jychen7/sharing-redis-single-thread-vs-multi-threads-5870bd44d153](https://medium.com/@jychen7/sharing-redis-single-thread-vs-multi-threads-5870bd44d153)
+
+---
+原文地址：https://github.com/Snailclimb/JavaGuide/blob/master/docs/database/Redis/redis-all.md

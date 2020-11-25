@@ -45,7 +45,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://wangy325.top/" />
 
-<meta property="og:updated_time" content="2020-11-24T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2020-11-25T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Endless River">
 <meta itemprop="description" content="">
@@ -117,6 +117,38 @@
       <div class="content-wrapper">
         <div id="content" class="content">
           <section id="posts" class="posts">
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/%E5%AE%89%E8%A3%85%E5%8D%95%E6%9C%BA%E7%89%88fdfs%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/">安装单机版fdfs服务遇到的问题</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2019-08-31 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/server/"> Server </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 759 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 2 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>本文简单记录了2个在安装单机版fdfs服务遇到的问题，虽然报错信息不同，但是问题出在同一个地方：</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/%E5%AE%89%E8%A3%85%E5%8D%95%E6%9C%BA%E7%89%88fdfs%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
     <article class="post">
   <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/tech/%E5%85%B3%E4%BA%8Eforever%E5%90%AF%E5%8A%A8node%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/">关于forever启动node服务的问题</a></h1>
@@ -229,7 +261,7 @@
           <a href="/categories/nosql/"> NOSQL </a>
           </div>
         <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 7615 字 </span>
+        <span class="more-meta analyse"> 约 7642 字 </span>
         <span class="icomoonfree icon-clock"></span>
         <span class="more-meta"> 预计阅读 16 分钟 </span>
     </div>
@@ -237,7 +269,9 @@
   
   <div class="post-content">
     <div class="post-summary">
-      <p>Redis <a href="https://raw.githubusercontent.com/antirez/redis/2.8/00-RELEASENOTES">v2.8</a> 之后提供了高可用实现<code>Redis Sentinel</code>，实现了<strong>主从复制</strong>以及<del>被动</del><strong>主备切换</strong>。<a href="https://raw.githubusercontent.com/antirez/redis/3.0/00-RELEASENOTES">v3.0</a> 之后提供了分布式实现<code>Redis Cluster</code>。本文讨论的是使用Sentinel搭建Redis高可用服务。</p>
+      <p>Redis <a href="https://raw.githubusercontent.com/antirez/redis/2.8/00-RELEASENOTES">v2.8</a> 之后提供了高可用实现<code>Redis Sentinel</code>，实现了<strong>主从复制</strong>以及<del>被动</del><strong>主备切换</strong>。<a href="https://raw.githubusercontent.com/antirez/redis/3.0/00-RELEASENOTES">v3.0</a> 之后提供了分布式实现<code>Redis Cluster</code>。</p>
+
+<p>本文讨论的是使用Sentinel搭建Redis高可用服务。</p>
 
 <blockquote>
 <p>If all redis and sentinel instances were deployed in same host, you just build a fake redis-sentinel <em>High-Availability</em> environment<sup class="footnote-ref" id="fnref:v1"><a href="#fn:v1">1</a></sup>.</p>
@@ -427,50 +461,6 @@ apt-get install gcc</code></pre></td></tr></table>
   </div>
 </article>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/java%E6%8E%A5%E5%8F%A3%E5%9B%9E%E8%B0%83/">Java接口回调</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2018-10-16 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/java/"> Java </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 2923 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 6 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>回调模式在web开发中用的较多，本文简单介绍了Java的回调机制，理解此文可以在生产中写出适应业务的回调模型。</p>
-
-<h2 id="模块之间的调用">模块之间的调用</h2>
-
-<p>在一个应用系统中，必然存在模块之间的调用，调用的方式有几种:</p>
-
-<h3 id="1-同步调用">1. 同步调用</h3>
-
-<p><a href="https:/imgchr.com/i/iZXPMQ"><img src="https://s1.ax1x.com/2018/09/18/iZXPMQ.md.png" alt="iZXPMQ.md.png" /></a></p>
-
-<p>​                       <em>方法A()调用方法B(),并且等待方法B()的返回,然后A()再执行下一步操作</em></p>
-
-<p>此方法适用于B()方法<strong>执行的时间不长</strong>，如若不然，那么A()方法会长时间等待B()方法执行完成而处于<strong>阻塞</strong>状态，如此，可能会导致整个流程的阻塞。</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/java/java%E6%8E%A5%E5%8F%A3%E5%9B%9E%E8%B0%83/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
     </section>
   
   <nav class="pagination">
@@ -502,7 +492,7 @@ apt-get install gcc</code></pre></td></tr></table>
   </span>
   <span class="division">|</span>
   <span class="theme-info">
-    Theme - 
+    Theme -
     <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
   </span>
 
@@ -512,15 +502,17 @@ apt-get install gcc</code></pre></td></tr></table>
   </div>
 
   <span class="copyright-year">
-    &copy; 
-    2019 - 
+    <span class="author">wangy325</span>
+    &copy;
+    2019 -
     2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
-    <span class="author">wangy325</span>
+    <span class="copyright"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND</a></span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
