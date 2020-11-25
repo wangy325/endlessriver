@@ -45,7 +45,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://wangy325.top/" />
 
-<meta property="og:updated_time" content="2020-11-24T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2020-11-25T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Endless River">
 <meta itemprop="description" content="">
@@ -119,6 +119,38 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/java-gc/">JVM垃圾回收基础概要(转)</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-11-25 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/java/"> Java </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 9259 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 19 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      本节常见面试题 问题答案在文中都有提到 如何判断对象是否死亡（两种方法）。 简单的介绍一下强引用、软引用、弱引用、虚引用（虚引用与软引用和弱引用的
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/java-gc/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/tech/redis-all/">redis必知必会(转)</a></h1>
     <div class="post-meta">
 
@@ -142,11 +174,7 @@
   
   <div class="post-content">
     <div class="post-summary">
-      <blockquote>
-<p>原文地址：<a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/database/Redis/redis-all.md">https://github.com/Snailclimb/JavaGuide/blob/master/docs/database/Redis/redis-all.md</a></p>
-</blockquote>
-
-<p>此文总结了redis相关的基础性知识体系，但不包括redis主从、哨兵、集群相关内容</p>
+      <p>此文总结了redis相关的基础性知识体系，但不包括redis主从、哨兵、集群相关内容</p>
 
 <h3 id="1-简单介绍一下-redis-呗">1. 简单介绍一下 Redis 呗!</h3>
 
@@ -155,14 +183,6 @@
 <p>另外，<strong>Redis 除了做缓存之外，Redis 也经常用来做分布式锁，甚至是消息队列。</strong></p>
 
 <p><strong>Redis 提供了多种数据类型来支持不同的业务场景。Redis 还支持事务 、持久化、Lua 脚本、多种集群方案。</strong></p>
-
-<h3 id="2-分布式缓存常见的技术选型方案有哪些">2. 分布式缓存常见的技术选型方案有哪些？</h3>
-
-<p>分布式缓存的话，使用的比较多的主要是 <strong>Memcached</strong> 和 <strong>Redis</strong>。不过，现在基本没有看过还有项目使用 <strong>Memcached</strong> 来做缓存，都是直接用 <strong>Redis</strong>。</p>
-
-<p>Memcached 是分布式缓存最开始兴起的那会，比较常用的。后来，随着 Redis 的发展，大家慢慢都转而使用更加强大的 Redis 了。</p>
-
-<p>分布式缓存主要解决的是单机缓存的容量受服务器限制并且无法保存通用的信息。因为，本地缓存只在当前服务里有效，比如如果你部署了两个相同的服务，他们两者之间的缓存数据是无法共同的。</p>
     </div>
     <div class="read-more">
       <a href="/post/tech/redis-all/" class="read-more-link">阅读更多</a>
@@ -194,11 +214,7 @@
   
   <div class="post-content">
     <div class="post-summary">
-      <blockquote>
-<p>原文地址 <a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/dataStructures-algorithms/data-structure/bloom-filter.md">https://github.com/Snailclimb/JavaGuide/blob/master/docs/dataStructures-algorithms/data-structure/bloom-filter.md</a></p>
-</blockquote>
-
-<p>海量数据处理以及缓存穿透这两个场景让我认识了 布隆过滤器 ，我查阅了一些资料来了解它，但是很多现成资料并不满足我的需求，所以就决定自己总结一篇关于布隆过滤器的文章。希望通过这篇文章让更多人了解布隆过滤器，并且会实际去使用它！</p>
+      <p>海量数据处理以及缓存穿透这两个场景让我认识了 布隆过滤器 ，我查阅了一些资料来了解它，但是很多现成资料并不满足我的需求，所以就决定自己总结一篇关于布隆过滤器的文章。希望通过这篇文章让更多人了解布隆过滤器，并且会实际去使用它！</p>
 
 <p>下面我们将分为几个方面来介绍布隆过滤器：</p>
 
@@ -479,44 +495,6 @@
   </div>
 </article>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/">终结任务</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2020-10-23 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/java/"> Java </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 3278 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 7 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>一般地，如果程序运行良好，任务执行完所需操作后自然结束，任务终结</p>
-
-<p>如果任务执行时出现异常，任务也会终结</p>
-
-<p>在设计多个线程协同工作的任务时，需要判断任务终结的条件，以便合适地终结任务，这点尤为重要</p>
-
-<p>在本节中主要讨论在多线程协同工作的情况下，如何合适的终结任务</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/java/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
     </section>
   
   <nav class="pagination">
@@ -545,7 +523,7 @@
   </span>
   <span class="division">|</span>
   <span class="theme-info">
-    Theme - 
+    Theme -
     <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
   </span>
 
@@ -555,15 +533,17 @@
   </div>
 
   <span class="copyright-year">
-    &copy; 
-    2019 - 
+    <span class="author">wangy325</span>
+    &copy;
+    2019 -
     2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
-    <span class="author">wangy325</span>
+    <span class="copyright"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND</a></span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">

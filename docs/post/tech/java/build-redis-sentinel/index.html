@@ -16,7 +16,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="wangy325" /><meta name="description" content="Redis v2.8 之后提供了高可用实现Redis Sentinel，实现了主从复制以及被动主备切换。v3.0 之后提供了分布式实现Redis Cluster。本文讨论的是使用Sentinel搭建Redis高可用服务。
+<meta name="author" content="wangy325" /><meta name="description" content="Redis v2.8 之后提供了高可用实现Redis Sentinel，实现了主从复制以及被动主备切换。v3.0 之后提供了分布式实现Redis Cluster。
+本文讨论的是使用Sentinel搭建Redis高可用服务。
  If all redis and sentinel instances were deployed in same host, you just build a fake redis-sentinel High-Availability environment1.
  1 准备 1.1 linux主机 本文使用centOS7，需安装gcc：
 1 2 3  yum install gcc # or on ubuntu apt-get install gcc  " />
@@ -42,7 +43,9 @@
 
 
 <meta property="og:title" content="Redis Sentinel高可用实现" />
-<meta property="og:description" content="Redis v2.8 之后提供了高可用实现Redis Sentinel，实现了主从复制以及被动主备切换。v3.0 之后提供了分布式实现Redis Cluster。本文讨论的是使用Sentinel搭建Redis高可用服务。
+<meta property="og:description" content="Redis v2.8 之后提供了高可用实现Redis Sentinel，实现了主从复制以及被动主备切换。v3.0 之后提供了分布式实现Redis Cluster。
+
+本文讨论的是使用Sentinel搭建Redis高可用服务。
 
 
 If all redis and sentinel instances were deployed in same host, you just build a fake redis-sentinel High-Availability environment1.
@@ -68,10 +71,12 @@ apt-get install gcc
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangy325.top/post/tech/java/build-redis-sentinel/" />
 <meta property="article:published_time" content="2019-08-14T16:01:23&#43;08:00"/>
-<meta property="article:modified_time" content="2020-11-20T23:47:30&#43;08:00"/>
+<meta property="article:modified_time" content="2020-11-25T01:23:37&#43;08:00"/>
 
 <meta itemprop="name" content="Redis Sentinel高可用实现">
-<meta itemprop="description" content="Redis v2.8 之后提供了高可用实现Redis Sentinel，实现了主从复制以及被动主备切换。v3.0 之后提供了分布式实现Redis Cluster。本文讨论的是使用Sentinel搭建Redis高可用服务。
+<meta itemprop="description" content="Redis v2.8 之后提供了高可用实现Redis Sentinel，实现了主从复制以及被动主备切换。v3.0 之后提供了分布式实现Redis Cluster。
+
+本文讨论的是使用Sentinel搭建Redis高可用服务。
 
 
 If all redis and sentinel instances were deployed in same host, you just build a fake redis-sentinel High-Availability environment1.
@@ -97,15 +102,17 @@ apt-get install gcc
 
 
 <meta itemprop="datePublished" content="2019-08-14T16:01:23&#43;08:00" />
-<meta itemprop="dateModified" content="2020-11-20T23:47:30&#43;08:00" />
-<meta itemprop="wordCount" content="7615">
+<meta itemprop="dateModified" content="2020-11-25T01:23:37&#43;08:00" />
+<meta itemprop="wordCount" content="7642">
 
 
 
 <meta itemprop="keywords" content="redis," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Redis Sentinel高可用实现"/>
-<meta name="twitter:description" content="Redis v2.8 之后提供了高可用实现Redis Sentinel，实现了主从复制以及被动主备切换。v3.0 之后提供了分布式实现Redis Cluster。本文讨论的是使用Sentinel搭建Redis高可用服务。
+<meta name="twitter:description" content="Redis v2.8 之后提供了高可用实现Redis Sentinel，实现了主从复制以及被动主备切换。v3.0 之后提供了分布式实现Redis Cluster。
+
+本文讨论的是使用Sentinel搭建Redis高可用服务。
 
 
 If all redis and sentinel instances were deployed in same host, you just build a fake redis-sentinel High-Availability environment1.
@@ -207,7 +214,7 @@ apt-get install gcc
             <a href="/categories/nosql/"> NOSQL </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 7615 字 </span>
+          <span class="more-meta analyse"> 约 7642 字 </span>
           <span class="icomoonfree icon-clock"></span>
           <span class="more-meta analyse"> 预计阅读 16 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
@@ -230,7 +237,16 @@ apt-get install gcc
 <li><a href="#2-安装配置redis">2 安装配置Redis</a>
 <ul>
 <li><a href="#section-1">2.1 编译源码</a></li>
-<li><a href="#2-2-其他配置项">2.2 其他配置项</a></li>
+<li><a href="#2-2-其他配置项">2.2 其他配置项</a>
+<ul>
+<li><a href="#1-复制redis二进制程序到系统环境变量">1. 复制redis二进制程序到系统环境变量</a></li>
+<li><a href="#2-将redis设置为开机启动">2. 将redis设置为开机启动：</a></li>
+<li><a href="#3-开放防火墙端口">3. 开放防火墙端口</a>
+<ul>
+<li><a href="#对于centos-7">对于centOS 7：</a></li>
+<li><a href="#centos-6">centOS 6</a></li>
+</ul></li>
+</ul></li>
 <li><a href="#2-3-配置文件redis-conf">2.3 配置文件redis.conf</a></li>
 </ul></li>
 <li><a href="#3-启动redis">3 启动redis</a></li>
@@ -256,7 +272,9 @@ apt-get install gcc
   </div>
 </div>
     <div class="post-content">
-      <p>Redis <a href="https://raw.githubusercontent.com/antirez/redis/2.8/00-RELEASENOTES">v2.8</a> 之后提供了高可用实现<code>Redis Sentinel</code>，实现了<strong>主从复制</strong>以及<del>被动</del><strong>主备切换</strong>。<a href="https://raw.githubusercontent.com/antirez/redis/3.0/00-RELEASENOTES">v3.0</a> 之后提供了分布式实现<code>Redis Cluster</code>。本文讨论的是使用Sentinel搭建Redis高可用服务。</p>
+      <p>Redis <a href="https://raw.githubusercontent.com/antirez/redis/2.8/00-RELEASENOTES">v2.8</a> 之后提供了高可用实现<code>Redis Sentinel</code>，实现了<strong>主从复制</strong>以及<del>被动</del><strong>主备切换</strong>。<a href="https://raw.githubusercontent.com/antirez/redis/3.0/00-RELEASENOTES">v3.0</a> 之后提供了分布式实现<code>Redis Cluster</code>。</p>
+
+<p>本文讨论的是使用Sentinel搭建Redis高可用服务。</p>
 
 <blockquote>
 <p>If all redis and sentinel instances were deployed in same host, you just build a fake redis-sentinel <em>High-Availability</em> environment<sup class="footnote-ref" id="fnref:v1"><a href="#fn:v1">1</a></sup>.</p>
@@ -347,6 +365,15 @@ apt-get install gcc</code></pre></td></tr></table>
 </span><span class="lnt">19
 </span><span class="lnt">20
 </span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-shell" data-lang="shell">  tar -zxf redis-4.0.11.tar.gz
@@ -356,28 +383,37 @@ apt-get install gcc</code></pre></td></tr></table>
   mkdir /usr/local/redis
   make install <span class="nv">PREFIX</span><span class="o">=</span>/usr/local/redis
   <span class="c1"># ---</span>
-  <span class="c1">#if all operations are right, you will see the output below:</span>
+  <span class="c1"># if all operations are right, you will see the output below:</span>
   <span class="o">[</span>root@shell ~<span class="o">]</span><span class="c1"># cd /usr/local/redis ; ll</span>
   total <span class="m">68</span>
-  drwxr-xr-x <span class="m">2</span> root root  <span class="m">4096</span> Aug  <span class="m">4</span> <span class="m">15</span>:19 bin         <span class="c1">#the redis executable binary file folder.</span>
-  -rw-r--r-- <span class="m">1</span> root root    <span class="m">93</span> Aug  <span class="m">4</span> <span class="m">16</span>:54 dump.rdb    <span class="c1">#the dump of redis database, You can config where to save it later.</span>
-  -rw-r--r-- <span class="m">1</span> root root <span class="m">58905</span> Aug  <span class="m">7</span> <span class="m">13</span>:56 redis.conf  <span class="c1">#the config file of a particular redis instance.</span>
+  <span class="c1">#the redis executable binary file folder</span>
+  drwxr-xr-x <span class="m">2</span> root root  <span class="m">4096</span> Aug  <span class="m">4</span> <span class="m">15</span>:19 bin         
+  <span class="c1"># the (RDB)dump file of redis database, You can config where to save it later</span>
+  -rw-r--r-- <span class="m">1</span> root root    <span class="m">93</span> Aug  <span class="m">4</span> <span class="m">16</span>:54 dump.rdb     
+  <span class="c1"># the config file of a particular redis instance</span>
+  -rw-r--r-- <span class="m">1</span> root root <span class="m">58905</span> Aug  <span class="m">7</span> <span class="m">13</span>:56 redis.conf  
   <span class="o">[</span>root@shell redis<span class="o">]</span><span class="c1"># cd /usr/local/redis/bin ; ll</span>    
   total <span class="m">21876</span>
-  -rwxr-xr-x <span class="m">1</span> root root <span class="m">2452168</span> Aug  <span class="m">4</span> <span class="m">15</span>:19 redis-benchmark                 <span class="c1">#redis test tool</span>
-  -rwxr-xr-x <span class="m">1</span> root root <span class="m">5775312</span> Aug  <span class="m">4</span> <span class="m">15</span>:19 redis-check-aof                 <span class="c1">#redis AOF persistent check tool</span>
-  -rwxr-xr-x <span class="m">1</span> root root <span class="m">5775312</span> Aug  <span class="m">4</span> <span class="m">15</span>:19 redis-check-rdb                 <span class="c1">#redis RBD persistent check tool</span>
-  -rwxr-xr-x <span class="m">2</span> root root <span class="m">2618192</span> Aug  <span class="m">4</span> <span class="m">15</span>:19 redis-cli                       <span class="c1">#launch a redis client</span>
-  lrwxrwxrwx <span class="m">1</span> root root      <span class="m">12</span> Aug  <span class="m">4</span> <span class="m">15</span>:19 redis-sentinel -&gt; redis-server  <span class="c1">#launch a redis sentinel server</span>
-  -rwxr-xr-x <span class="m">3</span> root root <span class="m">5775312</span> Aug  <span class="m">4</span> <span class="m">15</span>:19 redis-server                    <span class="c1">#launch a redis server(instance)</span></code></pre></td></tr></table>
+  <span class="c1"># redis test tool</span>
+  -rwxr-xr-x <span class="m">1</span> root root <span class="m">2452168</span> Aug  <span class="m">4</span> <span class="m">15</span>:19 redis-benchmark   
+  <span class="c1"># redis AOF persistent check tool</span>
+  -rwxr-xr-x <span class="m">1</span> root root <span class="m">5775312</span> Aug  <span class="m">4</span> <span class="m">15</span>:19 redis-check-aof   
+  <span class="c1"># redis RBD persistent check tool</span>
+  -rwxr-xr-x <span class="m">1</span> root root <span class="m">5775312</span> Aug  <span class="m">4</span> <span class="m">15</span>:19 redis-check-rdb   
+  <span class="c1"># launch a redis client</span>
+  -rwxr-xr-x <span class="m">2</span> root root <span class="m">2618192</span> Aug  <span class="m">4</span> <span class="m">15</span>:19 redis-cli         
+  <span class="c1"># link to redis-server, launch a redis sentinel</span>
+  lrwxrwxrwx <span class="m">1</span> root root      <span class="m">12</span> Aug  <span class="m">4</span> <span class="m">15</span>:19 redis-sentinel -&gt; redis-server   server
+  <span class="c1">#launch a redis server(instance)</span>
+  -rwxr-xr-x <span class="m">3</span> root root <span class="m">5775312</span> Aug  <span class="m">4</span> <span class="m">15</span>:19 redis-server  </code></pre></td></tr></table>
 </div>
 </div>
 <p>两个<code>ll</code>命令显示了一个redis的全部内容。本文用到的几个文件分别是：</p>
 
 <ul>
 <li>redis.conf： 配置文件，绝对的主角，它的戏谁都抢不走</li>
-<li>redis-server： 🧹扫地僧，开局现身一次，不出意外将隐居</li>
-<li>redis-client：谁都不用client，谁都是client</li>
+<li>redis-server： 用于启动redis缓存服务</li>
+<li>redis-client：command-line client tool</li>
 </ul>
 
 <h2 id="2-2-其他配置项">2.2 其他配置项</h2>
@@ -393,7 +429,7 @@ apt-get install gcc</code></pre></td></tr></table>
 </div>
 <p>但是为了方便启动服务，还需要做一些额外的操作：</p>
 
-<p style="background-color:lightgray">复制redis二进制程序到系统环境变量并将redis设置为开机启动</p>
+<h3 id="1-复制redis二进制程序到系统环境变量">1. 复制redis二进制程序到系统环境变量</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
@@ -406,7 +442,7 @@ cp redis-server redis-cli redis-sentinel /usr/local/bin</code></pre></td></tr></
 </div>
 <p>如此，启动redis的时候便不需要指定程序路径; 此时，已经可以直接在终端运行<code>redis-server</code>了</p>
 
-<p>将redis设置为开机启动（可选操作）：</p>
+<h3 id="2-将redis设置为开机启动">2. 将redis设置为开机启动：</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
@@ -423,17 +459,19 @@ cp redis-server redis-cli redis-sentinel /usr/local/bin</code></pre></td></tr></
   此处需要添加内容
 </div> -->
 
-<p style="background-color:lightgray">开放防火墙端口</p>
+<h3 id="3-开放防火墙端口">3. 开放防火墙端口</h3>
 
-<div class="admonition tip"><p class="admonition-title">tip</p>
-  若主机未开启防火墙，则无需操作。
+<div class="admonition tip"><p class="admonition-title">注释</p>
+  
+若主机未开启防火墙，则无需操作
+
 </div>
 
 <p>如果你的主机开启了防火墙，其他主机是无法连接上你的redis-server的，此时需要为其开放端口。</p>
 
 <p>前面说到，centOS7和centOS6的防火墙机制不一样，需要分别处理。</p>
 
-<p>若需知晓防火墙状态，请运行</p>
+<p>若需知晓防火墙状态，请运行<sup class="footnote-ref" id="fnref:v4"><a href="#fn:v4">4</a></sup></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
@@ -444,9 +482,7 @@ cp redis-server redis-cli redis-sentinel /usr/local/bin</code></pre></td></tr></
 </div>
 <p>centOS7 和centOS6的防火墙服务名分别为 <code>firewalld</code>和<code>iptables</code></p>
 
-<ul>
-<li>对于centOS7：</li>
-</ul>
+<h4 id="对于centos-7">对于centOS 7：</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt"> 1
@@ -489,9 +525,7 @@ public
 <span class="o">[</span>root@shell ~<span class="o">]</span><span class="c1"># firewall-cmd --reload</span></code></pre></td></tr></table>
 </div>
 </div>
-<ul>
-<li>centOS6<sup class="footnote-ref" id="fnref:v4"><a href="#fn:v4">4</a></sup></li>
-</ul>
+<h4 id="centos-6">centOS 6</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
@@ -667,10 +701,21 @@ appendfsync everysec</code></pre></td></tr></table>
 </span><span class="lnt">24
 </span><span class="lnt">25
 </span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
 </span></pre></td>
 <td class="lntd">
 <pre class="chroma">27552:C 04 Aug 16:12:58.912 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
-27552:C 04 Aug 16:12:58.912 # Redis version=4.0.11, bits=64, commit=00000000, modified=0, pid=27552, just started
+27552:C 04 Aug 16:12:58.912 # Redis version=4.0.11, bits=64, commit=00000000,
+ modified=0, pid=27552, just started
 27552:C 04 Aug 16:12:58.912 # Configuration loaded
                 _._                                                  
            _.-``__ &#39;&#39;-._                                             
@@ -690,10 +735,19 @@ appendfsync everysec</code></pre></td></tr></table>
           `-._        _.-&#39;                                           
               `-.__.-&#39;                                               
 
-27553:M 04 Aug 16:12:58.915 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+27553:M 04 Aug 16:12:58.915 # WARNING: The TCP backlog setting of 511 cannot
+be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
 27553:M 04 Aug 16:12:58.916 # Server initialized
-27553:M 04 Aug 16:12:58.916 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add &#39;vm.overcommit_memory = 1&#39; to /etc/sysctl.conf and then reboot or run the command &#39;sysctl vm.overcommit_memory=1&#39; for this to take effect.
-27553:M 04 Aug 16:12:58.916 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command &#39;echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled&#39; as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+27553:M 04 Aug 16:12:58.916 # WARNING overcommit_memory is set to 0! Background
+save may fail under low memory condition. To fix this issue add
+&#39;vm.overcommit_memory = 1&#39; to /etc/sysctl.conf and then reboot or run the
+command &#39;sysctl vm.overcommit_memory=1&#39; for this to take effect.
+27553:M 04 Aug 16:12:58.916 # WARNING you have Transparent Huge Pages (THP)
+ support enabled in your kernel. This will create latency and memory usage
+ issues with Redis. To fix this issue run the command
+ &#39;echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled&#39; as root, and add it
+  to your /etc/rc.local in order to retain the setting after a reboot.
+  Redis must be restarted after THP is disabled.
 27553:M 04 Aug 16:12:58.916 * Ready to accept connections</pre></td></tr></table>
 </div>
 </div>
@@ -720,19 +774,35 @@ appendfsync everysec</code></pre></td></tr></table>
 </span><span class="lnt">18
 </span><span class="lnt">19
 </span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">WARNING: The TCP backlog setting of <span class="m">511</span> cannot be enforced because /proc/sys/net/core/somaxconn is <span class="nb">set</span> to the lower value of <span class="m">128</span>.
+<pre class="chroma"><code class="language-shell" data-lang="shell">WARNING: The TCP backlog setting of <span class="m">511</span> cannot be enforced because
+ /proc/sys/net/core/somaxconn is <span class="nb">set</span> to the lower value of <span class="m">128</span>.
 <span class="c1"># solution</span>
 <span class="o">[</span>root@shell ~<span class="o">]</span><span class="c1"># echo 511 &gt;/proc/sys/net/core/somaxconn</span>
 <span class="o">[</span>root@shell ~<span class="o">]</span><span class="c1"># echo &#34;net.core.somaxconn = 551&#34; &gt;&gt; /etc/sysctl.conf</span>
 
-WARNING overcommit_memory is <span class="nb">set</span> to <span class="m">0</span>! Background save may fail under low memory condition. To fix this issue add <span class="s1">&#39;vm.overcommit_memory = 1&#39;</span> to /etc/sysctl.conf and <span class="k">then</span> reboot or run the <span class="nb">command</span> <span class="s1">&#39;sysctl vm.overcommit_memory=1&#39;</span> <span class="k">for</span> this to take effect.
+WARNING overcommit_memory is <span class="nb">set</span> to <span class="m">0</span>! Background save may fail under low
+memory condition. To fix this issue add <span class="s1">&#39;vm.overcommit_memory = 1&#39;</span>
+to /etc/sysctl.conf and <span class="k">then</span> reboot or run the <span class="nb">command</span>
+<span class="s1">&#39;sysctl vm.overcommit_memory=1&#39;</span> <span class="k">for</span> this to take effect.
 <span class="c1">#solution</span>
 <span class="o">[</span>root@shell ~<span class="o">]</span><span class="c1"># echo 1 &gt; /proc/sys/vm/overcommit_memory</span>
 <span class="o">[</span>root@shell ~<span class="o">]</span><span class="c1"># echo &#34;vm.overcommit_memory=1&#34; &gt;&gt; /etc/sysctl.conf</span>
 
-WARNING you have Transparent Huge Pages <span class="o">(</span>THP<span class="o">)</span> support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the <span class="nb">command</span> <span class="s1">&#39;echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled&#39;</span> as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+WARNING you have Transparent Huge Pages <span class="o">(</span>THP<span class="o">)</span> support enabled in your kernel.
+This will create latency and memory usage issues with Redis. To fix this issue
+ run the <span class="nb">command</span> <span class="s1">&#39;echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled&#39;</span> as
+ root, and add it to your /etc/rc.local in order to retain the setting after a
+  reboot. Redis must be restarted after THP is disabled.
 <span class="c1">#solution</span>
 <span class="o">[</span>root@shell ~<span class="o">]</span><span class="c1"># echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled</span>
 <span class="o">[</span>root@shell ~<span class="o">]</span><span class="c1"># vi /etc/rc.local</span>
@@ -820,7 +890,9 @@ Set your preferences in ~/.redisclirc
 <h1 id="5-关闭redis-server">5 关闭redis-server</h1>
 
 <div class="admonition warning"><p class="admonition-title">warning</p>
-  不要使用kill -9 pid关闭redis server，这样会可能会丢失数据完整性 
+  
+不要使用kill -9 pid关闭redis server，这样会可能会丢失数据完整性
+
 </div>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -835,7 +907,9 @@ Set your preferences in ~/.redisclirc
 <h1 id="6-艺术就是复制">6 艺术就是复制</h1>
 
 <div class="admonition danger"><p class="admonition-title">danger</p>
-  以下配置是基于一台服务器的演示，如果要部署高可用环境，需要在不同的服务器上安装redis并作如下配置
+  
+以下配置是基于一台服务器的演示，如果要部署高可用环境，需要在不同的服务器上安装redis并作如下配置
+
 </div>
 
 <p>经过上述操作，一个redis-standalone服务就配置好了，如果要将redis系统高可用，只需要「复制」就好了。</p>
@@ -991,10 +1065,14 @@ cp redis-slave/slave-16379.conf redis-slave/slave-26379.conf</code></pre></td></
 </span><span class="lnt">32
 </span><span class="lnt">33
 </span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
 </span></pre></td>
 <td class="lntd">
 <pre class="chroma">30463:C 05 Aug 11:33:34.536 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
-30463:C 05 Aug 11:33:34.537 # Redis version=4.0.11, bits=64, commit=00000000, modified=0, pid=30463, just started
+30463:C 05 Aug 11:33:34.537 # Redis version=4.0.11, bits=64, commit=00000000,
+modified=0, pid=30463, just started
 30463:C 05 Aug 11:33:34.537 # Configuration loaded
                 _._                                                  
            _.-``__ &#39;&#39;-._                                             
@@ -1021,8 +1099,10 @@ cp redis-slave/slave-16379.conf redis-slave/slave-26379.conf</code></pre></td></
 30464:S 05 Aug 11:33:34.539 * MASTER &lt;-&gt; SLAVE sync started
 30464:S 05 Aug 11:33:34.539 * Non blocking connect for SYNC fired the event.
 30464:S 05 Aug 11:33:34.539 * Master replied to PING, replication can continue...
-30464:S 05 Aug 11:33:34.539 * Partial resynchronization not possible (no cached master)
-30464:S 05 Aug 11:33:34.540 * Full resync from master: 4e99dfc708f2035b3b39f34796434de5889f667b:308
+30464:S 05 Aug 11:33:34.539 * Partial resynchronization not possible
+ (no cached master)
+30464:S 05 Aug 11:33:34.540 * Full resync from master:
+4e99dfc708f2035b3b39f34796434de5889f667b:308
 30464:S 05 Aug 11:33:34.543 * MASTER &lt;-&gt; SLAVE sync: receiving 177 bytes from master
 30464:S 05 Aug 11:33:34.543 * MASTER &lt;-&gt; SLAVE sync: Flushing old data
 30464:S 05 Aug 11:33:34.543 * MASTER &lt;-&gt; SLAVE sync: Loading DB in memory
@@ -1074,7 +1154,7 @@ OK
 localhost:6379&gt; get count
 <span class="s2">&#34;5&#34;</span>
 localhost:6379&gt; incr count
-<span class="o">(</span>error<span class="o">)</span> READONLY You can<span class="err">&#39;</span>t write against a <span class="nb">read</span> only slave.</code></pre></td></tr></table>
+<span class="o">(</span>error<span class="o">)</span> READONLY You can<span class="se">\&#39;</span>t write against a <span class="nb">read</span> only slave.</code></pre></td></tr></table>
 </div>
 </div>
 <p>可以看到，主服务器将count值自减1之后，从服务器获取的count值也是自减后的值；同时，如果在从服务器上对count进行自增操作，会得到一条</p>
@@ -1125,6 +1205,11 @@ localhost:6379&gt; incr count
 </span><span class="lnt">22
 </span><span class="lnt">23
 </span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 哨兵sentinel监控的redis主节点的</span>
@@ -1140,15 +1225,20 @@ sentinel auth-pass master yourpassword
 <span class="c1"># sentinel down-after-milliseconds &lt;master-name&gt; &lt;milliseconds&gt;</span>
 sentinel down-after-milliseconds master <span class="m">30000</span>  
 
-<span class="c1"># 指定了在发生failover主备切换时，最多可以有多少个slave同时对新的master进行同步。这个数字越小，完成failover所需的时间就越长；反之，但是如果这个数字越大，就意味着越多的slave因为replication而不可用。可以通过将这个值设为1，来保证每次只有一个slave，处于不能处理命令请求的状态。</span>
+<span class="c1"># 指定了在发生failover主备切换时，最多可以有多少个slave同时对新的master进行同步。</span>
+<span class="c1"># 这个数字越小，完成failover所需的时间就越长；反之，但是如果这个数字越大，就意味着越多的</span>
+<span class="c1"># slave因为replication而不可用。可以通过将这个值设为1，来保证每次只有一个slave，处于不能</span>
+<span class="c1"># 处理命令请求的状态。</span>
 <span class="c1"># sentinel parallel-syncs &lt;master-name&gt; &lt;numslaves&gt;</span>
 sentinel parallel-syncs master <span class="m">1</span>  
 
 <span class="c1"># 故障转移的超时时间failover-timeout，默认三分钟，可以用在以下这些方面：</span>
 <span class="c1">## 1. 同一个sentinel对同一个master两次failover之间的间隔时间。</span>  
-<span class="c1">## 2. 当一个slave从一个错误的master那里同步数据时开始，直到slave被纠正为从正确的master那里同步数据时结束。</span>  
+<span class="c1">## 2. 当一个slave从一个错误的master那里同步数据时开始，直到slave被纠正为从正确的master</span>
+<span class="c1">#   那里同步数据时结束。</span>  
 <span class="c1">## 3. 当想要取消一个正在进行的failover时所需要的时间。</span>
-<span class="c1">## 4.当进行failover时，配置所有slaves指向新的master所需的最大时间。不过，即使过了这个超时，slaves依然会被正确配置为指向master，但是就不按parallel-syncs所配置的规则来同步数据了</span>
+<span class="c1">## 4.当进行failover时，配置所有slaves指向新的master所需的最大时间。不过，即使过了这个超时，</span>
+<span class="c1">#   slaves依然会被正确配置为指向master，但是就不按parallel-syncs所配置的规则来同步数据了</span>
 <span class="c1"># sentinel failover-timeout &lt;master-name&gt; &lt;milliseconds&gt;</span>  
 sentinel failover-timeout master <span class="m">180000</span></code></pre></td></tr></table>
 </div>
@@ -1229,10 +1319,13 @@ redis-server /usr/local/redis-sentinel/sentinel-6380.conf --sentinel</code></pre
 </span><span class="lnt">21
 </span><span class="lnt">22
 </span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
 </span></pre></td>
 <td class="lntd">
 <pre class="chroma">8550:X 05 Aug 14:29:38.696 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
-8550:X 05 Aug 14:29:38.696 # Redis version=4.0.11, bits=64, commit=00000000, modified=0, pid=8550, just started
+8550:X 05 Aug 14:29:38.696 # Redis version=4.0.11, bits=64, commit=00000000,
+ modified=0, pid=8550, just started
 8550:X 05 Aug 14:29:38.696 # Configuration loaded
                 _._                                                  
            _.-``__ &#39;&#39;-._                                             
@@ -1252,7 +1345,8 @@ redis-server /usr/local/redis-sentinel/sentinel-6380.conf --sentinel</code></pre
           `-._        _.-&#39;                                           
               `-.__.-&#39;                                               
 
-8551:X 05 Aug 14:29:38.702 # Sentinel ID is c3776869c9bc3998e45158d3933d8e7b7c60ea84
+8551:X 05 Aug 14:29:38.702 # Sentinel ID is
+c3776869c9bc3998e45158d3933d8e7b7c60ea84
 8551:X 05 Aug 14:29:38.702 # +monitor master master 127.0.0.1 6379 quorum 2</pre></td></tr></table>
 </div>
 </div>
@@ -1283,8 +1377,8 @@ sentinel config-epoch master 1
 sentinel leader-epoch master 1
 sentinel known-slave master 127.0.0.1 16379
 sentinel known-slave master 127.0.0.1 26379
-sentinel known-sentinel master 127.0.0.1 26380 e615ce0f9e12531b83b3c7c7ff0e91e3c8873222
-sentinel known-sentinel master 127.0.0.1 6380 dcc9d7e345a7f4db3b304b032bd1b41a8a7fc706
+sentinel known-sentinel master 127.0.0.1 26380 e615ce
+sentinel known-sentinel master 127.0.0.1 6380 dcc9d7
 sentinel current-epoch 1</pre></td></tr></table>
 </div>
 </div>
@@ -1487,22 +1581,16 @@ less /var/log/redis/sentinel-6380.log
     </div>
 
     <div class="post-copyright">
-  <p class="copyright-item">
-    <span class="item-title">文章作者</span>
-    <span class="item-content">wangy325</span>
-  </p>
-  <p class="copyright-item">
+  
+  <p class="copyright-item" style= text-align:right;>
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2020-11-20
-        <a href="https://github.com/wangy325/endlessriver/commit/9a09a7ba130782d0b5d849fa7111a5a313f2c141" title="add concurrent tools, change doc directorys, and other file format change.">(9a09a7b)</a>
+        2020-11-25
+        <a href="https://github.com/wangy325/endlessriver/commit/7a26e4cd3377b4b17bdb30543573595d93d4d1db" title="updat doc redis-sentinal">(7a26e4c)</a>
     </span>
   </p>
   
-  <p class="copyright-item">
-    <span class="item-title">许可协议</span>
-    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
-  </p>
+  
 </div>
 <footer class="post-footer">
       <div class="post-tags">
@@ -1558,7 +1646,7 @@ less /var/log/redis/sentinel-6380.log
   </span>
   <span class="division">|</span>
   <span class="theme-info">
-    Theme - 
+    Theme -
     <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
   </span>
 
@@ -1568,15 +1656,17 @@ less /var/log/redis/sentinel-6380.log
   </div>
 
   <span class="copyright-year">
-    &copy; 
-    2019 - 
+    <span class="author">wangy325</span>
+    &copy;
+    2019 -
     2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
-    <span class="author">wangy325</span>
+    <span class="copyright"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND</a></span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">

@@ -22,7 +22,7 @@
  一个方法可以修改传递引用所对应的变量值，但是不能修改传递值所对应的变量值
 3.1 基本数据类型参数  一个方法不能修改一个基本数据类型的参数（数值类型或布尔值）
  参考如下代码：
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17  // doesn&amp;#39;t work class ByValue { static void tripleValue(int x) { x = 3 * x; System.out.println(&amp;#34;x = &amp;#34; &#43; x); } public static void main(String[] args) { int y = 10; tripleValue(10); System.out.println(&amp;#34;y = &amp;#34; &#43; y); } } /* output: x = 30 y = 10 *///:~   方法执行时，x被初始化为y值的一个拷贝，方法执行后 ，x值变为30，y仍为10，之后x不再使用
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17  // doesn&amp;#39;t work class ByValue { static void tripleValue(int x) { x = 3 * x; System.out.println(&amp;#34;x = &amp;#34; &#43; x); } public static void main(String[] args) { int y = 10; tripleValue(y); System.out.println(&amp;#34;y = &amp;#34; &#43; y); } } /* output: x = 30 y = 10 *///:~   方法执行时，x被初始化为y值的一个拷贝，方法执行后 ，x值变为30，y仍为10，之后x不再使用
 " />
 
 
@@ -93,7 +93,7 @@ class ByValue {
 
     public static void main(String[] args) {
         int y = 10;
-        tripleValue(10);
+        tripleValue(y);
         System.out.println(&#34;y = &#34; &#43; y);
     }
 }
@@ -107,7 +107,7 @@ y = 10
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangy325.top/post/tech/java/%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/" />
 <meta property="article:published_time" content="2020-04-15T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2020-11-20T23:47:30&#43;08:00"/>
+<meta property="article:modified_time" content="2020-11-25T14:42:13&#43;08:00"/>
 
 <meta itemprop="name" content="传值还是传引用">
 <meta itemprop="description" content="Java语言设计总是按值调用
@@ -157,7 +157,7 @@ class ByValue {
 
     public static void main(String[] args) {
         int y = 10;
-        tripleValue(10);
+        tripleValue(y);
         System.out.println(&#34;y = &#34; &#43; y);
     }
 }
@@ -171,8 +171,8 @@ y = 10
 
 
 <meta itemprop="datePublished" content="2020-04-15T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-11-20T23:47:30&#43;08:00" />
-<meta itemprop="wordCount" content="1080">
+<meta itemprop="dateModified" content="2020-11-25T14:42:13&#43;08:00" />
+<meta itemprop="wordCount" content="1172">
 
 
 
@@ -226,7 +226,7 @@ class ByValue {
 
     public static void main(String[] args) {
         int y = 10;
-        tripleValue(10);
+        tripleValue(y);
         System.out.println(&#34;y = &#34; &#43; y);
     }
 }
@@ -316,7 +316,7 @@ y = 10
             <a href="/categories/java/"> Java </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 1080 字 </span>
+          <span class="more-meta analyse"> 约 1172 字 </span>
           <span class="icomoonfree icon-clock"></span>
           <span class="more-meta analyse"> 预计阅读 3 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
@@ -334,7 +334,7 @@ y = 10
 <li><a href="#3-1-span-id-m11-基本数据类型参数-span">3.1 <span id = "m11">基本数据类型参数</span></a></li>
 <li><a href="#3-2-对象引用">3.2 对象引用</a>
 <ul>
-<li><a href="#3-2-1-对象可变">3.2.1 对象可变</a></li>
+<li><a href="#3-2-1-引用的-对象可变">3.2.1 (引用的)对象可变</a></li>
 <li><a href="#3-2-2-引用不可变">3.2.2 引用不可变</a></li>
 </ul></li>
 </ul></li>
@@ -390,7 +390,7 @@ y = 10
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
         <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">10</span><span class="o">;</span>
-        <span class="n">tripleValue</span><span class="o">(</span><span class="n">10</span><span class="o">);</span>
+        <span class="n">tripleValue</span><span class="o">(</span><span class="n">y</span><span class="o">);</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;y = &#34;</span> <span class="o">+</span> <span class="n">y</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
@@ -404,7 +404,7 @@ y = 10
 
 <h2 id="3-2-对象引用">3.2 对象引用</h2>
 
-<h3 id="3-2-1-对象可变">3.2.1 对象可变</h3>
+<h3 id="3-2-1-引用的-对象可变">3.2.1 (引用的)对象可变</h3>
 
 <blockquote>
 <p>一个方法可以改变一个对象参数的状态</p>
@@ -488,11 +488,11 @@ y = 10
         <span class="k">this</span><span class="o">.</span><span class="na">salary</span> <span class="o">=</span> <span class="n">salary</span> <span class="o">*</span> <span class="n">multiple</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
-<span class="o">/*</span> <span class="nl">output:</span>
-<span class="n">before</span> <span class="n">salary</span> <span class="o">=</span> <span class="n">1200</span>
-<span class="n">after</span> <span class="n">salary</span> <span class="n">of</span> <span class="n">o</span> <span class="o">=</span> <span class="n">3600</span>
-<span class="n">after</span> <span class="n">salary</span> <span class="n">of</span> <span class="n">a</span> <span class="o">=</span> <span class="n">3600</span>
-<span class="o">///:~</span></code></pre></td></tr></table>
+<span class="cm">/* output:
+</span><span class="cm">before salary = 1200
+</span><span class="cm">after salary of o = 3600
+</span><span class="cm">after salary of a = 3600
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>方法执行时，<code>o</code>被初始化为<code>a</code><strong>值的拷贝</strong>，其中<code>a</code>的值为对象的引用；<code>raiseSalary</code>方法作用与<code>o</code>和<code>a</code>同时引用的那个对象；方法结束后，<code>o</code>对象不再使用，结果是<code>a</code>对象的<em>薪水涨至原来3倍</em></p>
@@ -528,17 +528,25 @@ y = 10
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
         <span class="n">Integer</span> <span class="n">y</span> <span class="o">=</span> <span class="n">10</span><span class="o">;</span>
-        <span class="n">tripleValue</span><span class="o">(</span><span class="n">10</span><span class="o">);</span>
+        <span class="n">tripleValue</span><span class="o">(</span><span class="n">y</span><span class="o">);</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;y = &#34;</span> <span class="o">+</span> <span class="n">y</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
-<span class="o">/*</span> <span class="nl">output:</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">30</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">10</span>
-<span class="o">///:~</span></code></pre></td></tr></table>
+<span class="cm">/* output:
+</span><span class="cm">x = 30
+</span><span class="cm">y = 10
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
-<p>非常遗憾，也失败了。这是因为<strong>包装器类型是<code>final</code></strong>的，同样，其<code>value</code>域也是<code>final</code>的。</p>
+<p>非常遗憾，也失败了。这是因为<strong>包装器类型是<code>final</code></strong>的，其<code>value</code>域(包装类型的值)也是<code>final</code>的</p>
+
+<div class="admonition warning"><p class="admonition-title">警告</p>
+  
+上例中的的测试是存在问题的，当使用<code>Integer y = 10;</code>初始化y时，Java会将y自动拆箱为int；
+<p>
+同样地，<code>x = 3 * x;</code>对Integer类型作操作符运算也会拆箱
+
+</div>
 
 <h3 id="3-2-2-引用不可变">3.2.2 引用不可变</h3>
 
@@ -601,14 +609,14 @@ y = 10
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;after swap b.name = &#34;</span> <span class="o">+</span> <span class="n">b</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
     <span class="o">}</span>
 <span class="o">}</span>
-<span class="o">/*</span> <span class="nl">output:</span>
-<span class="n">before</span> <span class="n">swap</span> <span class="n">j</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">ali</span>
-<span class="n">before</span> <span class="n">swap</span> <span class="n">k</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">bad</span>
-<span class="n">after</span> <span class="n">swap</span> <span class="n">j</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">bad</span>
-<span class="n">after</span> <span class="n">swap</span> <span class="n">k</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">ali</span>
-<span class="n">after</span> <span class="n">swap</span> <span class="n">a</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">ali</span>
-<span class="n">after</span> <span class="n">swap</span> <span class="n">b</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">bad</span>
-<span class="o">///:~</span></code></pre></td></tr></table>
+<span class="cm">/* output:
+</span><span class="cm">before swap j.name = ali
+</span><span class="cm">before swap k.name = bad
+</span><span class="cm">after swap j.name = bad
+</span><span class="cm">after swap k.name = ali
+</span><span class="cm">after swap a.name = ali
+</span><span class="cm">after swap b.name = bad
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>方法执行时，<code>j</code>和<code>k</code>分别是<code>a</code>和<code>b</code>值的拷贝，也就是说<code>j</code>和<code>k</code>分别是<code>a</code>和<code>b</code>的对象引用，<code>swap</code>方法交换了这两个拷贝，但是方法结束后，<code>j</code>和<code>k</code>不再使用，而<code>a</code>和<code>b</code>还是指向方法调用前所指向的对象</p>
@@ -627,22 +635,16 @@ y = 10
     </div>
 
     <div class="post-copyright">
-  <p class="copyright-item">
-    <span class="item-title">文章作者</span>
-    <span class="item-content">wangy325</span>
-  </p>
-  <p class="copyright-item">
+  
+  <p class="copyright-item" style= text-align:right;>
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2020-11-20
-        <a href="https://github.com/wangy325/endlessriver/commit/9a09a7ba130782d0b5d849fa7111a5a313f2c141" title="add concurrent tools, change doc directorys, and other file format change.">(9a09a7b)</a>
+        2020-11-25
+        <a href="https://github.com/wangy325/endlessriver/commit/a8226a72cc033c54ac14bd33c31209de289fbda4" title="fix some issues of doc java parameter transmit">(a8226a7)</a>
     </span>
   </p>
   
-  <p class="copyright-item">
-    <span class="item-title">许可协议</span>
-    <span class="item-content">true</span>
-  </p>
+  
 </div>
 <footer class="post-footer">
       <div class="post-tags">
@@ -681,7 +683,7 @@ y = 10
   </span>
   <span class="division">|</span>
   <span class="theme-info">
-    Theme - 
+    Theme -
     <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
   </span>
 
@@ -691,15 +693,17 @@ y = 10
   </div>
 
   <span class="copyright-year">
-    &copy; 
-    2019 - 
+    <span class="author">wangy325</span>
+    &copy;
+    2019 -
     2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
-    <span class="author">wangy325</span>
+    <span class="copyright"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND</a></span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">

@@ -45,7 +45,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://wangy325.top/" />
 
-<meta property="og:updated_time" content="2020-11-24T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2020-11-25T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Endless River">
 <meta itemprop="description" content="">
@@ -117,6 +117,141 @@
       <div class="content-wrapper">
         <div id="content" class="content">
           <section id="posts" class="posts">
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E5%86%85%E9%83%A8%E7%B1%BB/">内部类</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-04-23 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/java/"> Java </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 5212 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 11 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>将一个类定义在另一个类的内部，这就是内部类</p>
+
+<blockquote>
+<p>定义言简意赅 ，内涵丰富多彩</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Flight2</span> <span class="o">{</span>
+  	<span class="c1">// inner class
+</span><span class="c1"></span>    <span class="kd">class</span> <span class="nc">Comp</span><span class="o">{</span>
+        <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">(){</span>
+            <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">class</span> <span class="nc">Dest</span><span class="o">{</span>
+        <span class="kd">private</span> <span class="n">String</span> <span class="n">to</span><span class="o">;</span>
+        <span class="kd">public</span> <span class="nf">Dest</span><span class="o">(</span><span class="n">String</span> <span class="n">to</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">to</span> <span class="o">=</span> <span class="n">to</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">showDest</span><span class="o">(){</span>
+            <span class="k">return</span> <span class="n">to</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+	<span class="c1">// use method to get inner class instance
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Comp</span> <span class="nf">comp</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">Comp</span><span class="o">();</span>
+    <span class="o">}</span>
+	<span class="c1">// use method to get inner class instance
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">Dest</span> <span class="nf">dest</span><span class="o">(</span><span class="n">String</span> <span class="n">to</span><span class="o">){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">Dest</span><span class="o">(</span><span class="n">to</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">ship</span><span class="o">(){</span>
+        <span class="n">Comp</span> <span class="n">c</span> <span class="o">=</span> <span class="n">comp</span><span class="o">();</span>
+      	<span class="n">c</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&#34;South Air&#34;</span><span class="o">)</span>
+        <span class="n">Dest</span> <span class="n">d</span> <span class="o">=</span> <span class="n">dest</span><span class="o">(</span><span class="s">&#34;HK&#34;</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;the flight is &#34;</span> <span class="o">+</span> <span class="n">c</span><span class="o">.</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34; to &#34;</span> <span class="o">+</span> <span class="n">d</span><span class="o">.</span><span class="na">showDest</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Flight2</span> <span class="n">f2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Flight2</span><span class="o">();</span>
+        <span class="n">f2</span><span class="o">.</span><span class="na">ship</span><span class="o">();</span>
+    	<span class="c1">// OuterClassName.InnerClassName to refer inner class
+</span><span class="c1"></span>        <span class="n">Flight2</span> <span class="n">f2s</span> <span class="o">=</span>  <span class="k">new</span> <span class="n">Flight2</span><span class="o">();</span>
+        <span class="n">Flight2</span><span class="o">.</span><span class="na">Comp</span> <span class="n">comp</span> <span class="o">=</span> <span class="n">f2s</span><span class="o">.</span><span class="na">comp</span><span class="o">();</span>
+        <span class="n">Flight2</span><span class="o">.</span><span class="na">Dest</span> <span class="n">d2</span> <span class="o">=</span> <span class="n">f2s</span><span class="o">.</span><span class="na">dest</span><span class="o">(</span><span class="s">&#34;New York&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>通过<code>new</code>关键字实例化内部类和使用普通类并没有什么区别</p>
+
+<p>需要说明的是：当创建一个内部类的引用时，需要使用<code>OuterClassName.InnerClassName</code>这样的格式指明内部类的类型</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/%E5%86%85%E9%83%A8%E7%B1%BB/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
     <article class="post">
   <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/tech/java/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">lambda表达式</a></h1>
@@ -565,7 +700,7 @@ FinalMethodExt
           <a href="/categories/java/"> Java </a>
           </div>
         <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 1080 字 </span>
+        <span class="more-meta analyse"> 约 1172 字 </span>
         <span class="icomoonfree icon-clock"></span>
         <span class="more-meta"> 预计阅读 3 分钟 </span>
     </div>
@@ -620,7 +755,7 @@ FinalMethodExt
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
         <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">10</span><span class="o">;</span>
-        <span class="n">tripleValue</span><span class="o">(</span><span class="n">10</span><span class="o">);</span>
+        <span class="n">tripleValue</span><span class="o">(</span><span class="n">y</span><span class="o">);</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;y = &#34;</span> <span class="o">+</span> <span class="n">y</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
@@ -748,38 +883,6 @@ FinalMethodExt
   </div>
 </article>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/%E5%AE%89%E8%A3%85%E5%8D%95%E6%9C%BA%E7%89%88fdfs%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/">安装单机版fdfs服务遇到的问题</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2019-08-31 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/server/"> Server </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 759 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 2 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>本文简单记录了2个在安装单机版fdfs服务遇到的问题，虽然报错信息不同，但是问题出在同一个地方：</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/%E5%AE%89%E8%A3%85%E5%8D%95%E6%9C%BA%E7%89%88fdfs%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
     </section>
   
   <nav class="pagination">
@@ -811,7 +914,7 @@ FinalMethodExt
   </span>
   <span class="division">|</span>
   <span class="theme-info">
-    Theme - 
+    Theme -
     <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
   </span>
 
@@ -821,15 +924,17 @@ FinalMethodExt
   </div>
 
   <span class="copyright-year">
-    &copy; 
-    2019 - 
+    <span class="author">wangy325</span>
+    &copy;
+    2019 -
     2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
-    <span class="author">wangy325</span>
+    <span class="copyright"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND</a></span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
