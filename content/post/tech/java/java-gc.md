@@ -117,7 +117,11 @@ public class GCTest {
 ```java
 allocation2 = new byte[900*1024];
 ```
+<<<<<<< HEAD
 ![](/img/jvm-gc-test-4.jpeg)
+=======
+![](/img/jvm-gc-test-1.jpeg)
+>>>>>>> a8009e20eb94bf1cd9e32ef643f2c483e42c7f41
 
 **简单解释一下为什么会出现这种情况：** 因为给 allocation2 分配内存的时候 eden 区内存几乎已经被分配完了，我们刚刚讲了当 Eden 区没有足够空间进行分配时，虚拟机将发起一次 Minor GC.GC 期间虚拟机又发现 allocation1 无法存入 Survivor 空间，所以只好通过 **分配担保机制** 把新生代的对象提前转移到老年代中去，老年代上的空间足够存放 allocation1，所以不会出现 Full GC。执行 Minor GC 后，后面分配的对象如果能够存在 eden 区的话，还是会在 eden 区分配内存。可以执行如下代码验证：
 
@@ -353,11 +357,15 @@ graph TD
 
 ## 4 垃圾收集器
 
+<<<<<<< HEAD
 {{% mermaid %}}
 graph TD
     A[垃圾收集器分类]--> B[serial收集器]
      A -->C[ParNew收集器] & D[Parallel Scavenge收集器] & E[CMS收集器] & F[G1收集器]
 {{% /mermaid %}}
+=======
+![垃圾收集器分类](xxxx)
+>>>>>>> a8009e20eb94bf1cd9e32ef643f2c483e42c7f41
 
 **如果说收集算法是内存回收的方法论，那么垃圾收集器就是内存回收的具体实现。**
 
