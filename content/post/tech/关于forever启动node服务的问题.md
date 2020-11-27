@@ -2,14 +2,11 @@
 title: "关于forever启动node服务的问题"
 date: 2019-08-28
 draft: false
-tags: [node.js]
-categories: [JS]
+tags: [forever]
+categories: [server,node]
 author: "wangy325"
 
 hasJCKLanguage: true
-# You can also close(false) or open(true) something for this content.
-# P.S. comment can only be closed
-# comment: false
 toc: true
 autoCollapseToc: false
 
@@ -59,7 +56,7 @@ forever start -l /locate/of/log/alog.log -a /locate/of/startScript/satrt.js
 启动成功后，我们看一下后台进程和forever的list：
 
 ```shell
-ps aux | grep node 
+ps aux | grep node
 root     25573  0.0  0.9 571244 35412 ?        Ssl  15:50   0:00 /usr/local/node-v10.15.3-linux x64/bin/node /usr/local/node-v10.15.3-linux-x64/lib/node_modules/forever/bin/monitor ./bin/dev.js
 root     25580  0.0  0.8 604868 34252 ?        Sl   15:50   0:01 /usr/local/node-v10.15.3-linux-x64/bin/node /opt/webManager/bin/dev.js
 root     26236  0.0  0.0 112708   984 pts/1    S+   17:43   0:00 grep --color=auto node
@@ -67,7 +64,7 @@ root     26236  0.0  0.0 112708   984 pts/1    S+   17:43   0:00 grep --color=au
 forever list
 info:    Forever processes running
 data:  uid command      script     forever pid   id logfile         uptime               
-data:  [0] UNdQ /*/node  bin/dev.js 25573   25580    /*/a.log       0:2:18:18 
+data:  [0] UNdQ /*/node  bin/dev.js 25573   25580    /*/a.log       0:2:18:18
 ```
 
 可以看到一个node进程和一个monitor进程。

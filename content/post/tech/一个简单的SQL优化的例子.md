@@ -2,8 +2,8 @@
 title: "一个简单的sql优化示例"
 date: 2018-11-14
 draft: false
-tags: [mysql]
-categories: [SQL]
+tags: [慢查询优化]
+categories: [mysql]
 author: "wangy325"
 
 hasJCKLanguage: true
@@ -24,7 +24,7 @@ sql查询过程中，如果数据量过大，而查询条件又很简略的时�
 
 ```sql
 SELECT projectId FROM lywl_equip_package WHERE salesId in (
-		SELECT	
+		SELECT
 		t1.id
 		FROM
 			cmp_datapackage_user t1
@@ -51,7 +51,7 @@ SELECT projectId FROM lywl_equip_package WHERE salesId in (
 SELECT
 tt2.projectId
   FROM (
-  	SELECT	
+  	SELECT
   		t1.id
   	FROM
   		cmp_datapackage_user t1

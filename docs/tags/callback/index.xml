@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Callback on Endless River</title>
+    <link>https://wangy325.top/tags/callback/</link>
+    <description>Recent content in Callback on Endless River</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 16 Oct 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://wangy325.top/tags/callback/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Java接口回调</title>
+      <link>https://wangy325.top/post/tech/java/java%E6%8E%A5%E5%8F%A3%E5%9B%9E%E8%B0%83/</link>
+      <pubDate>Tue, 16 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/java/java%E6%8E%A5%E5%8F%A3%E5%9B%9E%E8%B0%83/</guid>
+      <description>&lt;p&gt;回调模式在web开发中用的较多，本文简单介绍了Java的回调机制，理解此文可以在生产中写出适应业务的回调模型。&lt;/p&gt;
+
+&lt;h2 id=&#34;模块之间的调用&#34;&gt;模块之间的调用&lt;/h2&gt;
+
+&lt;p&gt;在一个应用系统中，必然存在模块之间的调用，调用的方式有几种:&lt;/p&gt;
+
+&lt;h3 id=&#34;1-同步调用&#34;&gt;1. 同步调用&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https:/imgchr.com/i/iZXPMQ&#34;&gt;&lt;img src=&#34;https://s1.ax1x.com/2018/09/18/iZXPMQ.md.png&#34; alt=&#34;iZXPMQ.md.png&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;​                       &lt;em&gt;方法A()调用方法B(),并且等待方法B()的返回,然后A()再执行下一步操作&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;此方法适用于B()方法&lt;strong&gt;执行的时间不长&lt;/strong&gt;，如若不然，那么A()方法会长时间等待B()方法执行完成而处于&lt;strong&gt;阻塞&lt;/strong&gt;状态，如此，可能会导致整个流程的阻塞。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

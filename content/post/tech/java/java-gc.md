@@ -1,10 +1,10 @@
 ---
-title: "JVM垃圾回收基础概要(转)"
+title: "JVM垃圾回收概要(转)"
 date: 2020-11-25
 lastmod: 2020-11-25
 draft: false
-tags: [Java进阶,JVM]
-categories: [Java]
+tags: [java进阶,jvm]
+categories: [java]
 
 
 hasJCKLanguage: true
@@ -28,6 +28,8 @@ autoCollapseToc: false
 - 常见的垃圾回收器有哪些？
 - 介绍一下 CMS,G1 收集器。
 - Minor Gc 和 Full GC 有什么不同呢？
+
+<!--more-->
 
 ### 本文导火索
 

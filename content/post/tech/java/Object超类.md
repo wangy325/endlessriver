@@ -3,8 +3,8 @@ title: "Object超类（一）"
 date: 2020-04-19
 lastmod: 2020-05-27
 draft: false
-tags: [Java基础]
-categories: [Java]
+tags: [Java基础,object]
+categories: [java]
 author: "wangy325"
 
 hasJCKLanguage: true

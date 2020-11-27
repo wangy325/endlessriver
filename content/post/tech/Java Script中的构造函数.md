@@ -1,17 +1,13 @@
-
 ---
 title: "Java Script中的构造函数"
 date: 2019-07-25
 lastmod: 2019-10-21
 draft: false
-tags: [JS]
-categories: [JS]
+tags: [函数]
+categories: [JavaScript]
 author: "wangy325"
 
 hasJCKLanguage: true
-# You can also close(false) or open(true) something for this content.
-# P.S. comment can only be closed
-# comment: false
 toc: true
 autoCollapseToc: false
 

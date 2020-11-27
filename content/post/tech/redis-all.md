@@ -3,8 +3,8 @@ title: "redis必知必会(转)"
 date: 2020-11-24
 lastmod: 2020-11-24
 draft: false
-tags: [redis]
-categories: [Java,NOSQL]
+tags: [redis基础知识体系]
+categories: ['java','redis']
 author: "wangy325"
 
 hasJCKLanguage: true

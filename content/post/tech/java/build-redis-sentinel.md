@@ -3,8 +3,8 @@ title: "Redis Sentinel高可用实现"
 date: 2019-08-14T16:01:23+08:00
 lastmod: 2019-10-21T10:01:23+08:00
 draft: false
-tags: [redis]
-categories: [NOSQL]
+tags: ['redis复制','redis哨兵']
+categories: ['redis']
 author: "wangy325"
 
 # You can also close(false) or open(true) something for this content.

@@ -3,8 +3,8 @@ title: "HashMap的源码分析（一）"
 date: 2020-09-24
 lastmod: 2020-09-24
 draft: false
-tags: [Java进阶, 集合框架]
-categories: [Java]
+tags: [Java进阶, hashmap]
+categories: [java]
 author: "wangy325"
 
 hasJCKLanguage: true

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mysql on Endless River</title>
+    <link>https://wangy325.top/categories/mysql/</link>
+    <description>Recent content in mysql on Endless River</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 27 Nov 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://wangy325.top/categories/mysql/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>mysql事务与隔离级别</title>
+      <link>https://wangy325.top/post/tech/java/mysql%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/</link>
+      <pubDate>Fri, 27 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/java/mysql%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>自建mysql数据库</title>
+      <link>https://wangy325.top/post/tech/%E8%87%AA%E5%BB%BAmysql/</link>
+      <pubDate>Fri, 16 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/%E8%87%AA%E5%BB%BAmysql/</guid>
+      <description>&lt;p&gt;自建mysql数据库的安装配置及简单优化&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>一个简单的sql优化示例</title>
+      <link>https://wangy325.top/post/tech/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84sql%E4%BC%98%E5%8C%96%E7%9A%84%E4%BE%8B%E5%AD%90/</link>
+      <pubDate>Wed, 14 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84sql%E4%BC%98%E5%8C%96%E7%9A%84%E4%BE%8B%E5%AD%90/</guid>
+      <description>&lt;p&gt;sql查询过程中，如果数据量过大，而查询条件又很简略的时候，往往会导致查询过程非常痛苦&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>MyBatis的trim标签</title>
+      <link>https://wangy325.top/post/tech/mybatis%E4%B8%ADtrim%E6%A0%87%E7%AD%BE%E5%8A%A8%E6%80%81%E6%8B%BC%E6%8E%A5sql/</link>
+      <pubDate>Fri, 21 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/mybatis%E4%B8%ADtrim%E6%A0%87%E7%AD%BE%E5%8A%A8%E6%80%81%E6%8B%BC%E6%8E%A5sql/</guid>
+      <description>&lt;p&gt;trim标记是一个格式化的标记，可以完成set或者是where标记的功能&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>MySQL中的几个字符串处理函数</title>
+      <link>https://wangy325.top/post/tech/mysql%E7%9A%84%E5%87%A0%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Fri, 21 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/mysql%E7%9A%84%E5%87%A0%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/</guid>
+      <description>&lt;p&gt;如题&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

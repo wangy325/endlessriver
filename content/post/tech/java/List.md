@@ -3,8 +3,8 @@ title: "List"
 date: 2020-04-29
 lastmod: 2020-05-27
 draft: false
-tags: [Java基础, 集合框架]
-categories: [Java]
+tags: [Java基础, 集合框架,list]
+categories: [java]
 author: "wangy325"
 
 hasJCKLanguage: true

@@ -90,6 +90,8 @@
         <li class="mobile-menu-item">归档</li>
       </a><a href="/tags/">
         <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">主题</li>
       </a><a href="/about/">
         <li class="mobile-menu-item">关于</li>
       </a><a href="/friendlink/">
@@ -111,6 +113,8 @@
         <a class="menu-item-link" href="/post/">归档</a>
       </li><li class="menu-item">
         <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">主题</a>
       </li><li class="menu-item">
         <a class="menu-item-link" href="/about/">关于</a>
       </li><li class="menu-item">
@@ -136,7 +140,7 @@
 
         <div class="post-category">
               <span class="icomoonfree icon-folder"></span>
-            <a href="/categories/server/"> Server </a>
+            <a href="/categories/file-server/"> file-server </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
           <span class="more-meta analyse"> 约 759 字 </span>
@@ -193,9 +197,9 @@ module版本1.20</p>
 </span><span class="lnt">4
 </span></pre></td>
 <td class="lntd">
-<pre class="chroma"> [root@shell ~]# nginx -V 
+<pre class="chroma"> [root@shell ~]# nginx -V
  nginx version: nginx/1.12.1
- built by gcc 4.8.5 20150623 (Red Hat 4.8.5-36) (GCC) 
+ built by gcc 4.8.5 20150623 (Red Hat 4.8.5-36) (GCC)
  configure arguments: --add-module=/opt/fdfs/fastdfs-nginx-module-revise/src</pre></td></tr></table>
 </div>
 </div></li>
@@ -270,9 +274,9 @@ yum install -y openssl openssl-devel</pre></td></tr></table>
 </span><span class="lnt">11
 </span></pre></td>
 <td class="lntd">
-<pre class="chroma">[root@shell nginx-1.12.1]# ./configure --help 
+<pre class="chroma">[root@shell nginx-1.12.1]# ./configure --help
   --help                             print this message
-    
+
   --prefix=PATH                      set installation prefix
   --sbin-path=PATH                   set nginx binary pathname
   --modules-path=PATH                set modules path

@@ -49,15 +49,21 @@ defaultContentLanguage = "zh-cn"           # Default language to use
   identifier = "archive"
   url = "/post/"
 [[menu.main]]
-  name = "标签"
-  weight = 30
-  identifier = "tags"
-  url = "/tags/"
-# [[menu.main]]
-#   name = "主题"
-#   weight = 40
-#   identifier = "categorie"
-#   url = "/categories/"
+    # 主题是文章的大范围，比如java/mysql，所有文章的主题应该收缩
+    # 如有多个主题，可使用['theme1','theme2']的形式
+    # 主题不区分大小写；间隔号使用'-'而非'_'
+  name = "主题"
+  weight = 40
+  identifier = "categorie"
+  url = "/categories/"
+[[menu.main]]
+    # 标签是文章的细分主题，所有文章的标签应该扩散，长篇内容最好带有多个标签
+    # 标签内容应该细分，如'java进阶'应该细分为‘集合框架’和’并发’等等
+    # 标签应该能精确索引到和描述相关的一篇或多篇文章
+name = "标签"
+weight = 30
+identifier = "tags"
+url = "/tags/"
 
 
 [params]

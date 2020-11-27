@@ -4,7 +4,7 @@ date: 2020-11-23
 lastmod: 2020-11-23
 draft: false
 tags: [算法]
-categories: [Java]
+categories: [java,redis]
 author: "wangy325"
 
 hasJCKLanguage: true

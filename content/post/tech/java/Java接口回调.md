@@ -2,8 +2,8 @@
 title: "Java接口回调"
 date: 2018-10-16
 draft: false
-tags: [Java基础]
-categories: [Java]
+tags: [Java基础, Callback]
+categories: [java]
 author: "wangy325"
 
 hasJCKLanguage: true

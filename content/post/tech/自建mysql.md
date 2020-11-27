@@ -2,8 +2,8 @@
 title: "自建mysql数据库"
 date: 2019-08-16
 draft: false
-tags: [mysql]
-categories: [Server]
+tags: ['mysql安装与配置','mysql用户权限']
+categories: ['mysql','server']
 author: "wangy325"
 
 hasJCKLanguage: true
@@ -20,16 +20,16 @@ autoCollapseToc: false
 
 <!--more-->
 
-### 安装
+# 安装
 [在centOS上安装mysql 5.7](https://juejin.im/post/5c088b066fb9a049d4419985)
 
-[yum源,以及其他细节内容](https://dev.mysql.com/doc/refman/5.7/en/linux-installation-yum-repo.html)
-    
-### 配置
+[yum源，以及其他细节内容](https://dev.mysql.com/doc/refman/5.7/en/linux-installation-yum-repo.html)
 
-mysql的配置文件在`/etc/my.cnf`, 只是简单地配置了数据库编码为`utf8`;
+# 配置
 
-```sh
+mysql的配置文件在`/etc/my.cnf`， 只是简单地配置了数据库编码为`utf8`；
+
+```properties
 ### my.cnf配置内容
 # For advice on how to change settings please see
 # http://dev.mysql.com/doc/refman/5.7/en/server-configuration-defaults.html
@@ -51,95 +51,74 @@ datadir=/var/lib/mysql
 socket=/var/lib/mysql/mysql.sock
 ```
 
-mysql有默认配置账户以及测试数据库, root账户也会默认分配密码, 步骤1链接2官方文档中说明了默认账户密码:
+mysql有默认配置账户以及测试数据库， root账户也会默认分配密码， 步骤1链接2官方文档中说明了默认账户密码:
 
-```sh
+```shell
 # 在 /var/log/mysqld.log中记录了mysql root账户的默认密码
 [root@simple ~]# cat /var/log/mysqld.log | grep -i 'temporary password'
-2019-10-15T07:08:33.627866Z 1 [Note] A temporary password is generated for root@localhost: I6cpDa!wj.6&
-# 可以使用mysql_secure_installation进行初始化设置,程序会询问一些默认设置,包括重置密码,删除匿名账户,禁止root远程登录等等
+2019-10-15T07:08:33.627866Z 1 [Note] A temporary password is generated for
+root@localhost: I6cpDa!wj.6&
+# 可以使用mysql_secure_installation进行初始化设置，程序会询问一些默认设置，
+包括重置密码，删除匿名账户，禁止root远程登录等等
 [root@simple ~]# mysql_secure_installation
 
-Securing the MySQL server deployment.
-
-Enter password for user root:
-
-The existing password for the user account root has expired. Please set a new password.
-
-New password:
-
-Re-enter new password:
-The 'validate_password' plugin is installed on the server.
-The subsequent steps will run with the existing configuration
-of the plugin.
-Using existing password for root.
-
-Estimated strength of the password: 100
-Change the password for root ? ((Press y|Y for Yes, any other key for No) : y
-
-New password:
-
-Re-enter new password:
-
-Estimated strength of the password: 100
-Do you wish to continue with the password provided?(Press y|Y for Yes, any other key for No) : y
-By default, a MySQL installation has an anonymous user,
-allowing anyone to log into MySQL without having to have
-a user account created for them. This is intended only for
-testing, and to make the installation go a bit smoother.
-You should remove them before moving into a production
-...
 ```
-当然,也可以通过`set password`或者`mysqladmin`修改密码
 
->  `SET PASSWORD FOR 'username'@'scope' = PASSWORD('newpasswd');`
->  `mysqladmin -uroot -poldpass password newpass;`
+{{% admonition tip "注释" %}}
+还可以通过<code>set password</code>或者<code>mysqladmin</code>修改密码:
+<p>
+<code>
+SET PASSWORD FOR 'username'@'scope' = PASSWORD('newpasswd')
+<p>
+mysqladmin -uroot -poldpass password newpass;
+</code>
+{{% /admonition %}}
 
 其他的配置 比如设置数据库时间为服务器时间(默认为UTC时间)**并没有成功**
 
 
-### 账户与权限
+# 账户与权限
 
-前已述及,mysql默认配置root账户,并且已经只能本地登录(出于安全考虑),并且不建议使用root账户进行数据库连接;
+前已述及，mysql默认配置root账户，并且已经只能本地登录(出于安全考虑)，并且不建议使用root账户进行数据库连接；
 
-因此,需要新账户,并且要控制账户权限,防止一些不可预见的错误出现;
+因此，需要新账户，并且要控制账户权限，防止一些不可预见的错误出现；
 
-同时,账户创建之后需赋予适当的权限;
+同时，账户创建之后需赋予适当的权限；
 
-#### 账户
+## 账户
 
 使用以下命令创建账户:
-```
+
+```mysql
 create user username@'scope' IDENTIFIED BY 'passwd@';
 ```
 关于账户说明
 
--  mysql 5.7加入了`validate_password`机制,该机制迫使用户使用[强密码]--至少8位,且至少包含一个大写字母，一个小写字母，一个数字，一个特殊符号;若想关闭此功能,可在`my.cnf`中的[mysqld]栏下配置`validate_password=Off`;
+-  mysql 5.7加入了`validate_password`机制，该机制迫使用户使用[强密码]--至少8位，且至少包含一个大写字母，一个小写字母，一个数字，一个特殊符号；若想关闭此功能，可在`my.cnf`中的[mysqld]栏下配置`validate_password=Off`；
 
-- scope项指定用户可以从哪里登录,一般`localhost`只允许本地(或ssh登录),`%`允许任意ip位置登录,
+- scope项指定用户可以从哪里登录，一般`localhost`只允许本地(或ssh登录)，`%`允许任意ip位置登录，
 
-#### 权限
+## 权限
 
 mysql的权限可以简单介绍为:
 
-1. 全局权限 
-    privilege for all schemas; 信息保存在mysql.user表中;
-2. schema权限
-    privilege for all tables; 信息保存在mysql.db中;
-3. table权限
-    privilege for all columns; 信息保存在mysql.tables_priv中;
-4. column权限
-    privilege for column;信息保存在mysql.columns_priv中;
-5. 子程序权限-->?
+|权限|描述|
+|:--|:--|
+|全局权限|privilege for all schemas； 信息保存在mysql.user表中|
+| schema权限|privilege for all tables； 信息保存在mysql.db中|
+| table权限| privilege for all columns； 信息保存在mysql.tables_priv中|
+| column权限|privilege for column；信息保存在mysql.columns_priv中|
+| 子程序权限|?|
 
-权限的细致说明以及,各类权限所保存的表,可参考:
+权限的细致说明以及，各类权限所保存的表，可参考:
 
 1. [MySQL 查看用户授予的权限](https://www.cnblogs.com/kerrycode/p/7423850.html)
 2. [Privileges Provided by MySQL](https://dev.mysql.com/doc/refman/5.7/en/privileges-provided.html)
 3. [Grant Tables](https://dev.mysql.com/doc/refman/5.7/en/grant-tables.html)
 
 最简单的查看用户权限的方法
-```sh
+
+```shell
 show grants for user;
 show grants for user@'localhost';
 # 查看root的权限
@@ -153,12 +132,12 @@ mysql> show grants for root@'localhost';
 2 rows in set (0.00 sec)
 ```
 
-从上面可以看出,root有[\*.\*的所有权限],至于\*.\*,代表了ALLDB.ALLTABLES
+从上面可以看出，root有[\*.\*的所有权限]，至于\*.\*，代表了ALLDB.ALLTABLES
 
-或者,可以通过`select * from mysql.user where user='root'\G;`来查看权限明细
+或者，可以通过查询`user`表来获取权限信息
 
-```sh
-mysql> select * from mysql.user where user='root'\G;
+```sql
+select * from mysql.user where user='root'\G;
 *************************** 1. row ***************************
                   Host: localhost
                   User: root
@@ -166,12 +145,14 @@ mysql> select * from mysql.user where user='root'\G;
            Insert_priv: Y
            Update_priv: Y
            Delete_priv: Y
- ...
+# ignore others
 ```
-##### 给用户授予权限
 
-假设我们创建了一个用户`test`,并且没有授予任何权限,name,这个用户的权限是这样的;
-```sh
+### 给用户授予权限
+
+假设我们创建了一个用户`test`，并且没有授予任何权限，name，这个用户的权限是这样的；
+
+```shell
 mysql> show grants for test;
 +---------------------------------------+
 | Grants for hc_future@%                |
@@ -179,7 +160,11 @@ mysql> show grants for test;
 | GRANT USAGE ON *.* TO 'hc_future'@'%' |
 +---------------------------------------+
 1 row in set (0.00 sec)
+```
 
+可以看到，实际上`test`并没有任何权限；
+
+```sql
 mysql> select * from user where user='test'\G;
 *************************** 1. row ***************************
                   Host: %
@@ -188,22 +173,27 @@ mysql> select * from user where user='test'\G;
            Insert_priv: N
            Update_priv: N
            Delete_priv: N
-          ...
+*************************** 1. row ***************************
 ```
 
-可以看到,实际上`test`并没有任何权限; 尝试使用该账户对mysql进行任何操作都会得到一个`[42000][1044] Access denied for user 'hc_future'@'%' to database 'test'`错误
+尝试使用该账户对mysql进行任何操作都会得到一个错误信息：
 
-显然,我们应该给用户授予部分权限,已让其完成操作,mysql使用`grant`来给用户授予权限
+```sql
+[42000][1044] Access denied for user 'hc_future'@'%' to database 'test'
+```
 
-若我想给`test`授予全局select,update权限:
-```sh
-mysql> grant select, update on *.* to test@'%' identified by 'testT123!@#';
-Query OK, 0 rows affected, 1 warning (0.00 sec)
+显然，我们应该给用户授予部分权限，已让其完成操作，mysql使用`grant`来给用户授予权限
+
+若我想给`test`授予全局select，update权限:
+
+```sql
+mysql> grant select， update on *.* to test@'%' identified by 'testT123!@#';
+Query OK， 0 rows affected， 1 warning (0.00 sec)
 mysql> show grants for test;
 +------------------------------------------------+
 | Grants for test@%                         |
 +------------------------------------------------+
-| GRANT SELECT, UPDATE ON *.* TO 'test'@'%' |
+| GRANT SELECT， UPDATE ON *.* TO 'test'@'%' |
 +------------------------------------------------+
 1 row in set (0.00 sec)
 mysql> select * from user where user ='test'\G;
@@ -215,71 +205,64 @@ mysql> select * from user where user ='test'\G;
            Update_priv: Y
            Delete_priv: N
            Create_priv: N
-           ...
-
+           # ignore others
 ```
-**mysql 5.7.28中, 如果grant命令执行的用户没有被创建,会默认创建该用户**
 
-更多关于grant的使用,参考[GRANT Syntax]((https://dev.mysql.com/doc/refman/5.7/en/grant.html))
+**mysql 5.7.28中， 如果grant命令执行的用户没有被创建，会默认创建该用户**
 
-### 数据备份与导入
+更多关于grant的使用，参考[GRANT Syntax]((https://dev.mysql.com/doc/refman/5.7/en/grant.html))
+
+# 数据备份与导入
 
 主要使用`mysqldump`和`source`来进行数据库的备份和恢复
 
-数据库的备份主要分为结构和数据的备份,备份为`x.sql`形式的文件
+数据库的备份主要分为结构和数据的备份，备份为`x.sql`形式的文件
 
-从备份的结果来看,
+从备份的结果来看，
 
 - 备份结构主要生成`create table`语句
 - 备份数据生成`insert into`语句
 
-除此之外,备份的范围可从库到表之间多级变化, 总言之, `mysqldump`满足绝大多数备份需求;
+除此之外，备份的范围可从库到表之间多级变化， 总言之， `mysqldump`满足绝大多数备份需求；
 
-需要说明的是,若数据库中有视图,则需要谨慎行事了, 因为视图中存在一些对原数据库表的引用以及对[执行用户的DEFINER](https://www.cnblogs.com/zejin2008/p/4767531.html), 若恢复的数据库和备份的数据库名字以及用户一致,则不会存在问题,否则可能会出现找不到表的错误
+需要说明的是，若数据库中有视图，则需要谨慎行事了， 因为视图中存在一些对原数据库表的引用以及对[执行用户的DEFINER](https://www.cnblogs.com/zejin2008/p/4767531.html)， 若恢复的数据库和备份的数据库名字以及用户一致，则不会存在问题，否则可能会出现找不到表的错误
 
-而数据库的恢复则简单了,`source x.sql`即可
+而数据库的恢复则简单了，`source x.sql`即可
 
-更多关于数据库备份恢复的细节,查看: [mysqldump 导入/导出 结构&数据&存储过程&函数&事件&触发器](https://www.cnblogs.com/chevin/p/5683281.html)
+更多关于数据库备份恢复的细节，查看: [mysqldump 导入/导出 结构&数据&存储过程&函数&事件&触发器](https://www.cnblogs.com/chevin/p/5683281.html)
 
-### 使用SSL加密连接
+# 使用SSL加密连接
 
 在`jdbc`连接数据库的过程中可能会出现这样的警告:
 
-> Establishing SSL connection without server's identity verification is not recommended. 
-According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be 
-established by default if explicit option isn't set. For compliance with existing applications 
-not using SSL the verifyServerCertificate property is set to 'false'. You need either to 
-explicitly disable SSL by setting useSSL=false, or set useSSL=true and provide 
+> Establishing SSL connection without server's identity verification is not recommended.
+According to MySQL 5.5.45+， 5.6.26+ and 5.7.6+ requirements SSL connection must be
+established by default if explicit option isn't set. For compliance with existing applications
+not using SSL the verifyServerCertificate property is set to 'false'. You need either to
+explicitly disable SSL by setting useSSL=false， or set useSSL=true and provide
 truststore for server certificate verification.
 
-有时候,设置`useSSL=true`又会遇到这样的错误:
+有时候，设置`useSSL=true`又会遇到这样的错误:
 
 ```java
-Caused by: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+Caused by: javax.net.ssl.SSLHandshakeException:
+sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException:
+unable to find valid certification path to requested target
 	at sun.security.ssl.Alerts.getSSLException(Alerts.java:192)
 	at sun.security.ssl.SSLSocketImpl.fatal(SSLSocketImpl.java:1946)
 	at sun.security.ssl.Handshaker.fatalSE(Handshaker.java:316)
 	at sun.security.ssl.Handshaker.fatalSE(Handshaker.java:310)
-	at sun.security.ssl.ClientHandshaker.serverCertificate(ClientHandshaker.java:1639)
-	at sun.security.ssl.ClientHandshaker.processMessage(ClientHandshaker.java:223)
-	at sun.security.ssl.Handshaker.processLoop(Handshaker.java:1037)
-	at sun.security.ssl.Handshaker.process_record(Handshaker.java:965)
-	at sun.security.ssl.SSLSocketImpl.readRecord(SSLSocketImpl.java:1064)
-	at sun.security.ssl.SSLSocketImpl.performInitialHandshake(SSLSocketImpl.java:1367)
-	at sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:1395)
-	at sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:1379)
-	at com.mysql.jdbc.ExportControlled.transformSocketToSSLSocket(ExportControlled.java:90)
 	... 67 more
 ```
 
-上述错误的大意是没找到ssl证书, 那么问题出在了~~mysql配置~~服务端或者客户端的配置上
+上述错误的大意是没找到ssl证书， 那么问题出在了~~mysql配置~~服务端或者客户端的配置上
 
-由于mysql 5.7以上默认开启了ssl,验证一下
+由于mysql 5.7以上默认开启了ssl，验证一下
 
-#### 查看mysql SSL状态信息
+## 查看mysql SSL状态信息
 
-```sh
-# 使用root账户登录 mysql -u root -p 
+```sql
+# 使用root账户登录 mysql -u root -p
 # 查看ssl信息
 # Server version: 5.7.28 MySQL Community Server (GPL)
 mysql> show global variables like '%ssl%';
@@ -297,12 +280,12 @@ mysql> show global variables like '%ssl%';
 | ssl_key       | server-key.pem  |
 +---------------+-----------------+
 9 rows in set (0.00 sec)
-#have_ssl = YES, 说明ssl已经启用
+#have_ssl = YES， 说明ssl已经启用
 
 #查看当前用户的连接信息
 mysql> \s;
 --------------
-mysql  Ver 14.14 Distrib 5.7.28, for Linux (x86_64) using  EditLine wrapper
+mysql  Ver 14.14 Distrib 5.7.28， for Linux (x86_64) using  EditLine wrapper
 
 Connection id:		157
 Current database:
@@ -329,23 +312,23 @@ No query specified
 #SSL=Not in use 说明没有使用ssl连接
 ```
 
-结果显示, mysql 5.7.28已经启用了ssl,并且可以不使用ssl登录
+结果显示， mysql 5.7.28已经启用了ssl，并且可以不使用ssl登录
 
-根据上面的错误, jdbc连接错误的原因是由于*证书错误*, 做个测试:
+根据上面的错误， jdbc连接错误的原因是由于*证书错误*， 做个测试:
 
-```sh
+```shell
 [root@iZbp17pma26sz5vqqwb1v3Z ~]# mysql -u root -p --ssl-ca=
 Enter password:
 ERROR 2026 (HY000): SSL connection error: SSL_CTX_set_default_verify_paths failed
 ```
 当使用SSL登录而不指定证书的时候我们无法登录
 
-> 如果你的mysql没有开启SSL,当使用`mysql -u root -p --ssl`登录的时候,会得到如下错误:
+> 如果你的mysql没有开启SSL，当使用`mysql -u root -p --ssl`登录的时候，会得到如下错误:
 > `ERROR 2026(HY000): SSL connection error: SSL is required but the server doesn't support it`
 
-#### 配置SSL安全连接
+## 配置SSL安全连接
 
-那么, mysql的证书在哪里? 可能根据安装方式不同, 配置文件路径不一样, 使用yum源安装mysql时,实际上可以在`var/lib/mysql`里找到mysql的证书文件:
+那么， mysql的证书在哪里? 可能根据安装方式不同， 配置文件路径不一样， 使用yum源安装mysql时，实际上可以在`var/lib/mysql`里找到mysql的证书文件:
 
 ```sh
 [root@sample ~]# ll /var/lib/mysql/*.pem
@@ -366,10 +349,11 @@ Enter password:
 Welcome to the MySQL monitor.  Commands end with ; or \g.
 Your MySQL connection id is 161
 Server version: 5.7.28 MySQL Community Server (GPL)
-
+```
+```sql
 mysql> \s;
 --------------
-mysql  Ver 14.14 Distrib 5.7.28, for Linux (x86_64) using  EditLine wrapper
+mysql  Ver 14.14 Distrib 5.7.28， for Linux (x86_64) using  EditLine wrapper
 
 Connection id:		161
 Current database:
@@ -394,26 +378,26 @@ Threads: 3  Questions: 10335  Slow queries: 0  Opens: 5061  Flush tables: 1  Ope
 ERROR:
 No query specified
 ```
-可以看到, 连接信息的SSL信息变成了`Cipher in use is ECDHE-RSA-AES128-GCM-SHA256`, 说明mysql可以使用SSL登录
+可以看到， 连接信息的SSL信息变成了`Cipher in use is ECDHE-RSA-AES128-GCM-SHA256`， 说明mysql可以使用SSL登录
 
-关于mysql ssl证书的生成,参考[creating-ssl-files-using-openssl](https://dev.mysql.com/doc/refman/5.6/en/creating-ssl-files-using-openssl.html)
+关于mysql ssl证书的生成，参考[creating-ssl-files-using-openssl](https://dev.mysql.com/doc/refman/5.6/en/creating-ssl-files-using-openssl.html)
 
-既然可以指定证书使用SSL, jdbc为什么报错?
+既然可以指定证书使用SSL， jdbc为什么报错?
 
 `/etc/my.cnf`里没有ssl配置?
 
-如何使用SSL连接,参考[Use Encrypted Connections](https://dev.mysql.com/doc/refman/5.6/en/using-encrypted-connections.html)
+如何使用SSL连接，参考[Use Encrypted Connections](https://dev.mysql.com/doc/refman/5.6/en/using-encrypted-connections.html)
 
 在`/etc/my.cnf`中添加
 
-```
+```properties
 [mysqld]
 ssl-ca=ca.pem
 ssl-cert=server-cert.pem
 ssl-key=server-key.pem
 ```
 
-使用`service mysqld restart`重启mysql server, 让后看看服务端ssl配置是否生效:
+使用`service mysqld restart`重启mysql server， 让后看看服务端ssl配置是否生效:
 
 ```sh
 [root@sample ~]# service mysqld restart
@@ -426,7 +410,7 @@ Your MySQL connection id is 2
 Server version: 5.7.28 MySQL Community Server (GPL)
 mysql> \s;
 --------------
-mysql  Ver 14.14 Distrib 5.7.28, for Linux (x86_64) using  EditLine wrapper
+mysql  Ver 14.14 Distrib 5.7.28， for Linux (x86_64) using  EditLine wrapper
 
 Connection id:		2
 Current database:
@@ -449,16 +433,17 @@ Threads: 1  Questions: 5  Slow queries: 0  Opens: 105  Flush tables: 1  Open tab
 \--------------
 ```
 
-看到,我们使用ssl登录mysql,这一次并没有指定证书,而mysql连接成功,说明mysql服务端ssl配置成功了
+看到，我们使用ssl登录mysql，这一次并没有指定证书，而mysql连接成功，说明mysql服务端ssl配置成功了
 
 
-事实上,做到此步后,jdbc里使用
+事实上，做到此步后，jdbc里使用
+
 ```xml
 jdbc:mysql://47.110.226.247:3306/hcfuture_bundule?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=true
 ```
-这样的数据库url仍然得到同样的错误;个人认为是由于当客户端设置`useSSL=true`时,同样需要配置客户端的SSL证书信息
+这样的数据库url仍然得到同样的错误；个人认为是由于当客户端设置`useSSL=true`时，同样需要配置客户端的SSL证书信息
 
-如何在客户端使用SSL,可以参考[connector-j-reference-using-ssl](https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-using-ssl.html)
+如何在客户端使用SSL，可以参考[connector-j-reference-using-ssl](https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-using-ssl.html)
 
 以下内容摘自(https://www.sojpt.com/feedback/5723):
 
@@ -485,23 +470,23 @@ jdbc:mysql://47.110.226.247:3306/hcfuture_bundule?useUnicode=true&characterEncod
 >参考链接2：（官方但连不上不知道什么原因）https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-using-ssl.html
 >2. 修改mysql链接，指定链接方式为ssl
 >jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8&verifyServerCertificate=true&useSSL=true&requireSSL=true
->3. 加载生成的jks证书和密码到系统属性,要在ActiveRecordPlugin之前
+>3. 加载生成的jks证书和密码到系统属性，要在ActiveRecordPlugin之前
 >// keystore.jks和truststore.jks所在的路径，及创建时的密码
->System.setProperty("javax.net.ssl.keyStore", "path/keystore.jks");
->System.setProperty("javax.net.ssl.keyStorePassword", "password");
->System.setProperty("javax.net.ssl.trustStore","path/truststore.jks");
->System.setProperty("javax.net.ssl.trustStorePassword", "password");
+>System.setProperty("javax.net.ssl.keyStore"， "path/keystore.jks");
+>System.setProperty("javax.net.ssl.keyStorePassword"， "password");
+>System.setProperty("javax.net.ssl.trustStore"，"path/truststore.jks");
+>System.setProperty("javax.net.ssl.trustStorePassword"， "password");
 
-实在是很繁琐,不过我估计此法是可行的,实际上是配置客户端的certificate,我嫌繁琐并没有尝试
+实在是很繁琐，不过我估计此法是可行的，实际上是配置客户端的certificate，我嫌繁琐并没有尝试
 
-实际上,我在官方文档里看到了此段话:
+实际上，我在官方文档里看到了此段话:
 
->By default, Connector/J establishes secure connections with the MySQL servers. Note that MySQL servers 5.7 and 8.0, when compiled with OpenSSL, can automatically generate missing SSL files at startup and configure the SSL connection accordingly.
+>By default， Connector/J establishes secure connections with the MySQL servers. Note that MySQL servers 5.7 and 8.0， when compiled with OpenSSL， can automatically generate missing SSL files at startup and configure the SSL connection accordingly.
 >
->As long as the server is correctly configured to use SSL, there is no need to configure anything on the Connector/J client to use encrypted connections (the exception is when Connector/J is connecting to very old server versions like 5.6.25 and earlier or 5.7.5 and earlier, in which case the client must set the connection property useSSL=true in order to use encrypted connections). The client can demand SSL to be used by setting the connection property requireSSL=true; the connection then fails if the server is not configured to use SSL. Without requireSSL=true, the connection just falls back to non-encrypted mode if the server is not configured to use SSL.
+>As long as the server is correctly configured to use SSL， there is no need to configure anything on the Connector/J client to use encrypted connections (the exception is when Connector/J is connecting to very old server versions like 5.6.25 and earlier or 5.7.5 and earlier， in which case the client must set the connection property useSSL=true in order to use encrypted connections). The client can demand SSL to be used by setting the connection property requireSSL=true; the connection then fails if the server is not configured to use SSL. Without requireSSL=true， the connection just falls back to non-encrypted mode if the server is not configured to use SSL.
 
-实际上,此前我们mysql server的SSL已经成功配置,已经验证通过`mysql -u test -p -h your serverip`远程登录mysql后,通过`status`查看连接信息可以看到是通过SSL连接的
+实际上，此前我们mysql server的SSL已经成功配置，已经验证通过`mysql -u test -p -h your serverip`远程登录mysql后，通过`status`查看连接信息可以看到是通过SSL连接的
 
-结合此段声明, mysql 5.7以后的连接是加密的(需要服务端开启SSL),故无需费时在客户端进行ssl配置(特殊需求除外)
+结合此段声明， mysql 5.7以后的连接是加密的(需要服务端开启SSL)，故无需费时在客户端进行ssl配置(特殊需求除外)
 
-如果想使用jdbc连接配置SSL, 而不使用编码方式,可以参考[connector-j-reference-configuration-properties](https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-configuration-properties.html)
+如果想使用jdbc连接配置SSL， 而不使用编码方式，可以参考[connector-j-reference-configuration-properties](https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-configuration-properties.html)

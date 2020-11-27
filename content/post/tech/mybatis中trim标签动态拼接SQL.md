@@ -2,8 +2,8 @@
 title: "MyBatis的trim标签"
 date: 2018-09-21
 draft: false
-tags: [mybatis]
-categories: [SQL]
+tags: [trim标签]
+categories: ['mysql','mybatis']
 author: "wangy325"
 
 hasJCKLanguage: true
@@ -24,7 +24,7 @@ trim标记是一个格式化的标记，可以完成set或者是where标记的�
 ## 样例一
 
 ```
-　　select * from user 
+　　select * from user
 
 　　<trim prefix="WHERE" prefixoverride="AND |OR">
 
@@ -70,7 +70,7 @@ trim标记是一个格式化的标记，可以完成set或者是where标记的�
 ```
 insert into yd_submit_fail
 <trim prefix="(" suffix=")" suffixOverrides="," >  
-	<if test="id != null" >	
+	<if test="id != null" >
 		id,
 	</if>
 	<if test="createTime != null" >
