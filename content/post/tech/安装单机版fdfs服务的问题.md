@@ -1,10 +1,9 @@
-
 ---
 title: "安装单机版fdfs服务遇到的问题"
 date: 2019-08-31
 draft: false
 tags: [fdfs]
-categories: [Server]
+categories: [file-server]
 author: "wangy325"
 
 hasJCKLanguage: true
@@ -35,9 +34,9 @@ autoCollapseToc: false
 3. 模块安装成功的标志是
 
     ```
-     [root@shell ~]# nginx -V 
+     [root@shell ~]# nginx -V
      nginx version: nginx/1.12.1
-     built by gcc 4.8.5 20150623 (Red Hat 4.8.5-36) (GCC) 
+     built by gcc 4.8.5 20150623 (Red Hat 4.8.5-36) (GCC)
      configure arguments: --add-module=/opt/fdfs/fastdfs-nginx-module-revise/src
     ```
 
@@ -77,9 +76,9 @@ autoCollapseToc: false
 - 如果`./configure`命令后面不接[任何参数](https://blog.csdn.net/Eric1012/article/details/6052154)的话，nginx默认安装在`/usr/local/nginx`下，以及nginx启动需要的作用资源均在此目录下
 
     ```
-    [root@shell nginx-1.12.1]# ./configure --help 
+    [root@shell nginx-1.12.1]# ./configure --help
       --help                             print this message
-    
+
       --prefix=PATH                      set installation prefix
       --sbin-path=PATH                   set nginx binary pathname
       --modules-path=PATH                set modules path
@@ -95,4 +94,3 @@ autoCollapseToc: false
     题外：如果安装过程完全参照[这篇文章](https://www.cnblogs.com/chiangchou/p/fastdfs.html#_label2_0)的话，或许就不会有这个问题了
 
 [^1]: 使用[nginx官网推荐](#https://nginx.org/en/linux_packages.html#RHEL-CentOS)的方式安装最方便
-

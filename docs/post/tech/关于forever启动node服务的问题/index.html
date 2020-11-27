@@ -56,7 +56,7 @@
 
 
 
-<meta itemprop="keywords" content="node.js," />
+<meta itemprop="keywords" content="forever," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="关于forever启动node服务的问题"/>
 <meta name="twitter:description" content="在使用jenkins自动构建node.js项目的时候，由于对forever的不熟悉，构建脚本一直存在一点小问题。"/>
@@ -90,6 +90,8 @@
         <li class="mobile-menu-item">归档</li>
       </a><a href="/tags/">
         <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">主题</li>
       </a><a href="/about/">
         <li class="mobile-menu-item">关于</li>
       </a><a href="/friendlink/">
@@ -111,6 +113,8 @@
         <a class="menu-item-link" href="/post/">归档</a>
       </li><li class="menu-item">
         <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">主题</a>
       </li><li class="menu-item">
         <a class="menu-item-link" href="/about/">关于</a>
       </li><li class="menu-item">
@@ -136,7 +140,8 @@
 
         <div class="post-category">
               <span class="icomoonfree icon-folder"></span>
-            <a href="/categories/js/"> JS </a>
+            <a href="/categories/server/"> server </a>
+            <a href="/categories/node/"> node </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
           <span class="more-meta analyse"> 约 666 字 </span>
@@ -237,7 +242,7 @@ ln -sf /usr/local/node-v10.16.3-linux-x64/bin/forever /usr/bin</code></pre></td>
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">ps aux <span class="p">|</span> grep node 
+<pre class="chroma"><code class="language-shell" data-lang="shell">ps aux <span class="p">|</span> grep node
 root     <span class="m">25573</span>  <span class="m">0</span>.0  <span class="m">0</span>.9 <span class="m">571244</span> <span class="m">35412</span> ?        Ssl  <span class="m">15</span>:50   <span class="m">0</span>:00 /usr/local/node-v10.15.3-linux x64/bin/node /usr/local/node-v10.15.3-linux-x64/lib/node_modules/forever/bin/monitor ./bin/dev.js
 root     <span class="m">25580</span>  <span class="m">0</span>.0  <span class="m">0</span>.8 <span class="m">604868</span> <span class="m">34252</span> ?        Sl   <span class="m">15</span>:50   <span class="m">0</span>:01 /usr/local/node-v10.15.3-linux-x64/bin/node /opt/webManager/bin/dev.js
 root     <span class="m">26236</span>  <span class="m">0</span>.0  <span class="m">0</span>.0 <span class="m">112708</span>   <span class="m">984</span> pts/1    S+   <span class="m">17</span>:43   <span class="m">0</span>:00 grep --color<span class="o">=</span>auto node
@@ -245,7 +250,7 @@ root     <span class="m">26236</span>  <span class="m">0</span>.0  <span class="
 forever list
 info:    Forever processes running
 data:  uid <span class="nb">command</span>      script     forever pid   id logfile         uptime               
-data:  <span class="o">[</span><span class="m">0</span><span class="o">]</span> UNdQ /*/node  bin/dev.js <span class="m">25573</span>   <span class="m">25580</span>    /*/a.log       <span class="m">0</span>:2:18:18 </code></pre></td></tr></table>
+data:  <span class="o">[</span><span class="m">0</span><span class="o">]</span> UNdQ /*/node  bin/dev.js <span class="m">25573</span>   <span class="m">25580</span>    /*/a.log       <span class="m">0</span>:2:18:18</code></pre></td></tr></table>
 </div>
 </div>
 <p>可以看到一个node进程和一个monitor进程。</p>
@@ -286,7 +291,7 @@ data:  <span class="o">[</span><span class="m">0</span><span class="o">]</span> 
 </div>
 <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/node.js/">node.js</a>
+          <a href="/tags/forever/">forever</a>
           </div>
       <nav class="post-nav">
         <a class="prev" href="/post/tech/%E5%AE%89%E8%A3%85%E5%8D%95%E6%9C%BA%E7%89%88fdfs%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/">

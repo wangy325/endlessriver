@@ -3,8 +3,8 @@ title: "static关键字"
 date: 2020-04-14
 lastmod: 2020-05-27
 draft: false
-tags: [Java基础]
-categories: [Java]
+tags: [Java基础,static关键字]
+categories: [java]
 author: "wangy325"
 
 hasJCKLanguage: true

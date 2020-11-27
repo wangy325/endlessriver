@@ -3,8 +3,8 @@ title: "Queue"
 date: 2020-05-02
 lastmod: 2020-05-27
 draft: false
-tags: [Java基础, 集合框架]
-categories: [Java]
+tags: [Java基础, 集合框架,queue]
+categories: [java]
 author: "wangy325"
 
 hasJCKLanguage: true

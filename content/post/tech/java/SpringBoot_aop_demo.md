@@ -4,7 +4,7 @@ title: "基于Spring Boot的AOP demo"
 date: 2020-03-14
 draft: false
 tags: [aop]
-categories: [SpringBoot]
+categories: [springboot]
 author: "wangy325"
 
 hasJCKLanguage: true

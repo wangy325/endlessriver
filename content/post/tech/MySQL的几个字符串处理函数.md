@@ -2,8 +2,8 @@
 title: "MySQL中的几个字符串处理函数"
 date: 2018-09-21
 draft: false
-tags: [mysql]
-categories: [SQL]
+tags: [字符串处理, 函数]
+categories: [mysql]
 author: "wangy325"
 
 hasJCKLanguage: true
@@ -85,4 +85,3 @@ ALTER TABLE t1 MODIFY col1 BIGINT UNSIGNED DEFAULT 1 COMMENT 'my column';
 -- 修改字段名字和属性
 ALTER TABLE t1 CHANGE a b INT(11) DEFAULT 0 NOT NULL COMMENT 'comment';
 ```
-

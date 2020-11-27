@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>代理模式 on Endless River</title>
+    <link>https://wangy325.top/tags/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</link>
+    <description>Recent content in 代理模式 on Endless River</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 05 Dec 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://wangy325.top/tags/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>代理模式</title>
+      <link>https://wangy325.top/post/tech/java/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Wed, 05 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/java/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</guid>
+      <description>&lt;p&gt;代理可以简单理解为，B类托管A类的功能，并根据需求，对A类的访问作&lt;font color=red&gt;&lt;strong&gt;控制&lt;/strong&gt;&lt;/font&gt;，这里的&lt;font color=red&gt;&lt;strong&gt;控制&lt;/strong&gt;&lt;/font&gt;可以理解为对A类方法执行的流程的影响，包括但不限于：&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>file-server on Endless River</title>
+    <link>https://wangy325.top/categories/file-server/</link>
+    <description>Recent content in file-server on Endless River</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 31 Aug 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://wangy325.top/categories/file-server/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>安装单机版fdfs服务遇到的问题</title>
+      <link>https://wangy325.top/post/tech/%E5%AE%89%E8%A3%85%E5%8D%95%E6%9C%BA%E7%89%88fdfs%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Sat, 31 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/%E5%AE%89%E8%A3%85%E5%8D%95%E6%9C%BA%E7%89%88fdfs%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <description>&lt;p&gt;本文简单记录了2个在安装单机版fdfs服务遇到的问题，虽然报错信息不同，但是问题出在同一个地方：&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

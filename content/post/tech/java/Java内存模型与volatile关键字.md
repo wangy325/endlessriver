@@ -3,8 +3,8 @@ title: "Java内存模型与volatile关键字(转)"
 date: 2020-10-27
 lastmod: 2020-10-27
 draft: false
-tags: [Java进阶]
-categories: [Java]
+tags: [Java进阶, volatile, 内存模型]
+categories: [java]
 author: "wangy325"
 
 hasJCKLanguage: true
