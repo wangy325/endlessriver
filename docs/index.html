@@ -36,7 +36,7 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<link href="/dist/even.20d339e5.min.css" rel="stylesheet">
+<link href="/dist/even.ac664553.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
@@ -137,15 +137,25 @@
           <a href="/categories/mysql/"> mysql </a>
           </div>
         <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 0 字 </span>
+        <span class="more-meta analyse"> 约 3703 字 </span>
         <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 0 分钟 </span>
+        <span class="more-meta"> 预计阅读 8 分钟 </span>
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      
+      <p>mysql事务属于老生常谈的内容了，并不指望这一篇文章将其搞透，本篇文章只是将mysql事务的外衣扒了，让其看起来不再那么神秘与华丽。有时候，新手总是对“事务”这两个字怀有莫名的恐惧感，因为其藏在mysql内部，偷偷地工作着，就好像你没有凝视深渊，而深渊却在凝视你。</p>
+
+<p>事务的概念可以这样理解：</p>
+
+<blockquote>
+<p>在mysql中，有些操作必须要分步完成，那么我们可以把这些分步完成的操作声明为一个“事务”，用来保证mysql数据一致性。
+<p>
+    对于单条sql语句而言，mysql将其处理为一个「隐式事务」。</p>
+</blockquote>
+
+<p>看起来，事务的概念还是有些空泛。事实上，有了一定的并发基础后（这也是这篇文章写在java并发之后的原因），更加容易理解事务这个概念，这并不是说事务一个并发概念，不过，事务是有了并发之后才衍生的概念，这很容易理解。试想一个只容许一个客户端连接的mysql服务，是否需要“事务”呢？答案应该是否定的。单个客户端执行sql语句总是有序的，数据一致性就能得到保证了<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>。试想，如果是多客户端的系统（事实上正是如此）同时执行sql语句，就好似多线程同时访问资源一样，对于数据库系统而言，所有的数据表都是共享资源<sup class="footnote-ref" id="fnref:2"><a href="#fn:2">2</a></sup>，那么事务就像是那把保证并发安全的锁。</p>
     </div>
     <div class="read-more">
       <a href="/post/tech/java/mysql%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/" class="read-more-link">阅读更多</a>
