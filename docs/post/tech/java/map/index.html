@@ -543,7 +543,7 @@ default V getOrDefault(Object key, V defaultValue) {&hellip;}
 </div>
 <p>值得一提的事，和<a href="../set/#2-treeset">SortedSet</a>的子集视图一样，<strong>对原集合和视图的修改是相互的</strong>，不会引发  <em>ConcurrentModificationException</em> ，但是其对映射的操作是有限的，比如<code>keySet.add(2)</code>就抛出 <em>UnsupportedOperationException</em> ，迭代器不支持操作。查看源码即可知：</p>
 
-<p><img src="/img/HashMap_1.png" alt="YeQ7rT.png" /></p>
+<p><img src="/img/HashMap_1.jpg" alt="HashMap的迭代器" /></p>
 
 <p style="text-align:center;font-size:.9rem;font-style:italic">HashMap内部视图和迭代器方法表</p>
 

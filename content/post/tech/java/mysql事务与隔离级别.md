@@ -127,13 +127,12 @@ mysql事务属于老生常谈的内容了，并不指望这一篇文章将其搞
 </tbody>
 </table></div>
 
-# 实例
 
-## 查看数据库的基本信息
+# 查看数据库的基本信息
 
 在实例演示之前，需要查看几个基本信息，来确保测试环境的一致性与可行性。这些基本信息包括，数据库当前所使用的引擎，数据库当前的事务隔离级别。
 
-### 引擎
+## 引擎
 
 使用下面的命令查看当前数据库的引擎信息
 
@@ -178,7 +177,7 @@ Max_data_length: 0
 ```
 我们看到`vendors`表的引擎也是InnoDB。
 
-### 隔离级别
+## 隔离级别
 
 使用如下命令查看当前数据库的事务隔离级别
 
@@ -191,7 +190,7 @@ mysql> show variables like 'tx_isolation';
 +---------------+-----------------+
 1 row in set (0.01 sec)
 ```
-当前数据库的事务隔离级别为可重复读，加上InnoDB引擎的MVCC，基本上是满足事务的ACID特性的数据库系统。
+当前数据库的事务隔离级别为可重复读，加上InnoDB引擎的**MVCC**，基本上是满足事务的ACID特性的数据库系统。
 
 在进行测试时，我们可以通过
 
@@ -202,68 +201,141 @@ mysql> SET TRANSACTION ISOLATION LEVEL [tx_isolation];
 
 更多关于`set transaction`命令的内容：https://dev.mysql.com/doc/refman/8.0/en/set-transaction.html
 
-## 测试开始
-
 在测试过程中，涉及到的客户端命令有：
 
 - `begin`或者`start transaction`开始事务
 - `rollback`回滚/结束事务
 - `commit`提交/结束事务
 
-### 脏读
+# 读未提交 READ UNCOMMITTED
 
-![脏读](/img/mysql-tx-read-uncommitted.png)
+![脏读](/img/mysql-tx-read-uncommitted.jpg)
 
 从上面的执行图可以看到：
 
-- 会话1（左）和会话2（右）的事务隔离级别都设置为*READ UNCOMMITTED*；
+- 会话1（左）和会话2（右）的事务隔离级别都设置为***READ UNCOMMITTED***
 - 会话1将`vend_id`=1007对应的`vend_address`改为`sz`；
-- 此时会话2中去读取`vend_id`=1007的数据，已经读取到了会话1**未提交**的更改；
-- 接着会话1将更改回滚；
-- 会话2再次读取`vend_id`=1007的数据，发现数据列`vend_address`变为初始值。
+- 此时会话2中去读取`vend_id`=1007的数据，已经读取到了会话1**未提交**的更改；<span style=background-color:yellow;font-weight:bold><==脏读</span>
+- 接着会话1将更改**回滚**；
+- 会话2再次读取`vend_id`=1007的数据，发现数据列`vend_address`变为初始值。<span style=background-color:yellow;font-weight:bold><==不可重复读</span>
 
-上面的执行流程完整的演示了在*READ UNCOMMITTED*隔离级别下的脏读现象。
+上面的执行流程完整的演示了在***READ UNCOMMITTED***隔离级别下的**脏读**和**不可重复读**现象。
 
-### 不可重复读
+# 读已提交 READ COMMITTED
 
-![不可重复度](/img/mysql-tx-read-committed.png)
+![不可重复度](/img/mysql-tx-read-committed.jpg)
 
 从上面的执行图可以看到：
 
-- 会话1和会话2的事务隔离级别都设置为*READ COMMITTED*；
+- 会话1和会话2的事务隔离级别都设置为***READ COMMITTED***；
 - 会话1将`vend_id`=1007对应的`vend_address`改为`sz`；
-- 此时会话2中去读取`vend_id`=1007的数据，读取不到会话1**未提交**的更改；
-- 会话1提交更改
-- 会话2再次读取`vend_id`=1007的数据，读取到数据列`vend_address`的更改。
+- 此时会话2中去读取`vend_id`=1007的数据，不能读取到会话1**未提交**的更改；<span style=background-color:yellow;font-weight:bold><==结果1</span>
+- 会话1**提交**更改
+- 会话2再次读取`vend_id`=1007的数据，读取到数据列`vend_address`的更改。<span style=background-color:yellow;font-weight:bold><==结果2</span>
 
-上面的执行流程完整演示了在*READ COMMITTED*隔离级别下的**不可重复读**现象。
+上面的执行流程完整演示了在***READ COMMITTED***隔离级别下，两次读取到的结果不一致的现象，即在此隔离级别下**不可重复读**。
 
-### 可重复读
 
-![可重复读](/img/mysql-tx-repeatable-read.png)
+# 多版本并发控制（MVCC）
 
-从上面的执行图可以看到：
+前文提到，mysql的InnoDB引擎使用MVCC解决了在可重复读(*REPEATABLE READ*)隔离级别下幻读(*phantom read*)的问题。因此，在执行可重复读隔离级别的测试之前，先介绍一下多版本并发控制(**M**ulti **V**ersion **C**ocurrency **C**ontrol)[^5]。
 
-- 会话2在会话1插入新记录并提交之后，都无法从数据库中读取到对应的记录；
-- 会话2使用更新语句更新了那条会话1提交但会话2无法读取的数据；
-- 会话2成功读取到了那条记录；
-- 会话2提交；
-- 会话1也读取到了会话2的更改。
+可以认为，MVCC是**行级锁**的一个变种，但是其在很多情况下避免了加锁操作[^6]，因此可以节省部分开销，获得更好的性能。
 
-### 串行
+在InnoDB的MVCC中，通过在每行记录之后添加2个**隐藏的列**来实现的：
 
-![串行](/img/mysql-tx-serializable.png)
+<!--
+|\\|隐藏列1|隐藏列2|
+|:--:|:--:|:--:|
+|记录内容|行的创建时间|行的过期时间（删除时间）|
+-->
+
+<center>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th align="center">\\</th>
+<th align="center">隐藏列1</th>
+<th align="center">隐藏列2</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center"><span style=font-weight:bold>记录内容</span></td>
+<td align="center">行的创建时间</td>
+<td align="center">行的过期时间（删除时间）</td>
+</tr>
+</tbody>
+</table></div>
+</center>
+
+要注意的是，实际上存储的并不是实际的时间值，而是当前的**系统版本号**（system version number）。系统版本号有如下特征：
+
+- 每开始一个新事务，系统版本号都会**递增** ；
+- 事务**开始时**的版本号作为**事务的版本号**；
+- 事务的版本号用来和查询到的每条记录的版本号对比，决定语句的操作；
+
+在***REPEATABLE READ***隔离级别下，MVCC的具体行为是：
+
+- SELECT
+    InnoDB会根据一下条件检查每行记录：
+    1. InnoDB只查找版本号**早于**当前事务版本号的数据（小于等于事务的版本号） 。这样做，可以保证当前事务**只能读取**事务开始前已经存在的数据行，或者该事务**自身插入或者修改**的数据行；
+    2. 行的删除版本要么未定义，要么**大于**当前事务版本号。这可以保证事务开始前，读取到的行**未被删除**。
+
+- INSERT
+    InnoDB为新插入的每一行保存**当前系统版本号**所为**行版本号**。
+
+- DELETE
+    InnoDB为删除的每一行保存**当前系统版本号**作为**删除标识**。
+
+- INSERT
+    InnoDB为插入**一行新纪录**保存当前系统版本号作为**行版本号**，同时保存当前系统版本号到**原来的行**作为行删除标识
+
+事实上，MVCC是通过保存数据在某个时间点的**快照**（***snapshot***）来实现的，也就是说不管事务执行多长时间，其所能看到的数据都是一致的。这就可能造成一个现象：
+
+> 根据事务开始的时间的不同，**每个事务对同一张表，同一时刻看到的数据可能是不一致的**。
+
+在接下来的演示中，我们将会看到MVCC在事务执行过程中的行为。
+
+
+# 可重复读 REPEATABLE READ
+
+![可重复读](/img/mysql-tx-repeatable-read.jpg)
+
+这是一个相对完整的示例，演示了InnoDB引擎在默认事务隔离级别下，不同事务在处理同一行数据之间的表现，其中有一些结果出乎意料却又在MVCC以及事务隔离级别的“情理之中”。在这个示例中我们可以看到以下重要内容：
+
+1. 事务只能读取到在其开始之前就已经存在的数据，或者其自身修改的数据；
+2. 多个事务使用了**行级锁**来保证数据一致；
+3. 事务B可以修改事务A创建但未提交的数据，并且事务B随即可读取之，这验证了第1点；
+4. 事务A无法读取到事务B的修改（只要这个修改发生在事务A开始之后，无论事务B是否提交），这保证了**可重复读**；
+
+遗憾的是，笔者试图从MVCC“系统版本号”的概念去推断事务的执行，始终无法得出与预期一致的结果，所以关于MVCC“系统版本号”的工作机制，此文尚不能详述，不过，程序的执行期望却和前文描述的MVCC行为是一致的。其实，使用“快照”的概念去理解MVCC的行为，会显得更容易。
+
+# 串行 SERIALIZABLE
+
+![串行](/img/mysql-tx-serializable.jpg)
 
 当使用最高的事务级别同时开启2个事务时，2个事务只能一次执行，换言之，会话2会阻塞会话1的`insert`操作，只有当会话2`commit/rollback`之后，会话1才会结束阻塞。
 
-> 上图中第一次执行insert的时候，发现语句迟迟不返回，以为是语句故障，使用ctrl-c结束了语句执行，控制台输出了
+> 上图中第一次执行insert的时候，发现语句迟迟不返回，以为是语句故障，使用ctrl-c结束了语句执行，控制台输出：
 >
->> <code>ERROR 1317 (70100): Query execution was interrupted</code>
->
-看到interruptted，间接证明了insert操作确实是处于阻塞状态
+> ```SQL
+ERROR 1317 (70100): Query execution was interrupted
+> ```
+> 看到interruptted，间接证明了insert操作确实是处于阻塞状态
+
+# 参考
+
+- [高性能mysql 第3版](https://book.douban.com/subject/23008813/)
+- [廖雪峰的官方网站-数据库事务](https://www.liaoxuefeng.com/wiki/1177760294764384/1179611198786848)
+- [mysql document page](https://dev.mysql.com/doc/refman/8.0/en/set-transaction.html#set-transaction-scope)
+- [【推荐】数据库的事务和锁](https://juejin.cn/post/6844903645125820424#heading-15)
 
 
 [^1]: 类比资源的序列访问，可能不太恰当，大可不必过分纠结于此。
 [^2]: 当然可以使用权限控制将某个资源排除对特定连接的共享。
 [^3]: 这也是有些业务不需要事务支持，使用MyISAM(*indexed sequencial access method*)作为数据库引擎的原因。
 [^4]: 一些存储引擎在处理数据库死锁的时选用的方法。InnoDB并不是采用的此方法，其是将持有最少行锁的事务回滚。
+[^5]: 不仅仅mysql，很多数据库系统包括Oracle，PostGreSQL都实现了MVCC，尽管其实现机制不尽相同。
+[^6]: MVCC的并发控制有乐观加锁和悲观加锁两种方式，并不是所有的实现都不加锁，只有使用乐观锁是不加锁的。
