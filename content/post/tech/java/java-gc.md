@@ -3,7 +3,7 @@ title: "JVM垃圾回收概要(转)"
 date: 2020-11-25
 lastmod: 2020-11-25
 draft: false
-tags: [java进阶,jvm]
+tags: [java进阶,jvm,mermaid]
 categories: [java]
 
 

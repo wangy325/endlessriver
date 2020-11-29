@@ -4,7 +4,7 @@ date: 2020-11-24
 lastmod: 2020-11-24
 draft: false
 tags: [redis基础知识体系]
-categories: ['java','redis']
+categories: ['java','redis',mermaid]
 author: "wangy325"
 
 hasJCKLanguage: true
