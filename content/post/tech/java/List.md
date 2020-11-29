@@ -234,7 +234,7 @@ final void checkForComodification() {
 
 2 不论是 *Iterator* 或 *ListIterator* 接口在Java集合框架中都没有**独立的实现类**，都是作为**集合具体实现的内部类**存在的，这种机制使得不同的集合类型，拥有“定制”的迭代器类型，这意味着方法表并不是一成不变的，如ArrayList.ListIterator就缺失`hasNext()`方法
 
-<img src="/img/listIterator_partial.png" alt="JfiSYj.png"  />
+![list的迭代器（部分）](/img/listIterator_partial.jpg)
 
 <p style="text-align:center;font-style:italic;font-size:.9rem"><span id="llterator">LinkedList</span>(左)和ArrayList(右)内部ListIterator的实现差异</p>
 
@@ -603,7 +603,7 @@ Node<E> node(int index) {
 
 既然如此，LinkedList**插入和删除的效率如何高**呢？答案就是**使用迭代器**，由于迭代器持有指针(*cursor*)，**免去了遍历集合获取节点的时间消耗**，因而插入和删除只需要修改前后节点的引用即可：
 
-![JTEuRK.png](/img/linkedlist_remove.png)
+![JTEuRK.png](/img/linkedlist_remove.jpg)
 
 <p style="text-align:center;font-size:.9rem;font-style:italic">从LinkedList删除一个元素<sup> from Core Java</sup></sup></p>
 

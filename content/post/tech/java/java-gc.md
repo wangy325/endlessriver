@@ -190,7 +190,7 @@ public class GCTest {
 
 上面的说法已经在《深入理解Java虚拟机》第三版中被改正过来了。感谢R大的回答：
 
-![](/img/jvm-gc-zhihu.png)
+![](/img/jvm-gc-zhihu.jpg)
 
 **总结：**
 

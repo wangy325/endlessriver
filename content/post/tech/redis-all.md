@@ -435,7 +435,7 @@ OK
 
 Redis 通过一个叫做过期字典（可以看作是hash表）来保存数据过期的时间。过期字典的键指向Redis数据库中的某个key(键)，过期字典的值是一个long long类型的整数，这个整数保存了key所指向的数据库键的过期时间（毫秒精度的UNIX时间戳）。
 
-![redis过期字典](/img/redis-expire-dict.png)
+![redis过期字典](/img/redis-expire-dict.jpg)
 
 过期字典是存储在redisDb这个结构里的：
 
@@ -558,7 +558,7 @@ QUEUED
 
 Redis官网相关介绍 [https://redis.io/topics/transactions](https://redis.io/topics/transactions) 如下：
 
-![redis事务](/img/redis-transation.png)
+![redis事务](/img/redis-transation.jpg)
 
 但是，Redis 的事务和我们平时理解的关系型数据库的事务不同。我们知道事务具有四大特性： **1. 原子性**，**2. 隔离性**，**3. 持久性**，**4. 一致性**。
 
@@ -571,7 +571,7 @@ Redis官网相关介绍 [https://redis.io/topics/transactions](https://redis.io/
 
 Redis官网也解释了自己为啥不支持回滚。简单来说就是Redis开发者们觉得没必要支持回滚，这样更简单便捷并且性能更好。Redis开发者觉得即使命令执行错误也应该在开发过程中就被发现而不是生产过程中。
 
-![redis roll back](/img/redis-rollBack.png)
+![redis roll back](/img/redis-rollBack.jpg)
 
 你可以将Redis中的事务就理解为 ：**Redis事务提供了一种将多个命令请求打包的功能。然后，再按顺序执行打包的所有命令，并且不会被中途打断。**
 
