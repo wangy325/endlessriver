@@ -3,8 +3,8 @@ title: "JVM垃圾回收概要(转)"
 date: 2020-11-25
 lastmod: 2020-11-25
 draft: false
-tags: [java进阶,jvm,mermaid]
-categories: [java]
+tags: [jvm,mermaid,堆,GC roots,垃圾收集器]
+categories: [java,jvm]
 
 
 hasJCKLanguage: true
