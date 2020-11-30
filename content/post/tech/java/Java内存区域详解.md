@@ -10,7 +10,7 @@ hasJCKLanguage: true
 
 weight: 10
 mathjax: true
-autoCollapseToc: false
+autoCollapseToc: true
 
 ---
 
@@ -465,3 +465,7 @@ System.out.println("40=i5+i6   " + (40 == i5 + i6));   // true
 - <https://dzone.com/articles/jvm-permgen-%E2%80%93-where-art-thou>
 - <https://stackoverflow.com/questions/9095748/method-area-and-permgen>
 - 深入解析String#intern<https://tech.meituan.com/2014/03/06/in-depth-understanding-string-intern.html>
+
+---
+
+原文地址：https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/jvm/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F.md
