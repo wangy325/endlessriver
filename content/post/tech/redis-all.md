@@ -12,7 +12,7 @@ hasJCKLanguage: true
 
 weight: 10
 mathjax: true
-autoCollapseToc: false
+autoCollapseToc: true
 ---
 
 
