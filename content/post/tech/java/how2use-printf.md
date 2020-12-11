@@ -42,6 +42,8 @@ This produces the following output:
 
 As shown above, the format string contains plain text and two formatting rules. The first rule is used to format the string argument. The second rule adds a newline character to the end of the string.
 
+<!--more-->
+
 ## 2.1 Format Rules
 
 Let's have a look at format string more closely. It consists of literals and format specifiers. Format specifiers include flags, width, precision, and conversion characters in the following sequence:
