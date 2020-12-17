@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>jvm on Endless River</title>
+    <link>https://wangy325.top/categories/jvm/</link>
+    <description>Recent content in jvm on Endless River</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 30 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://wangy325.top/categories/jvm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java内存区域详解(转)</title>
+      <link>https://wangy325.top/post/tech/java/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E8%AF%A6%E8%A7%A3/</link>
+      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/java/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E8%AF%A6%E8%A7%A3/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;如果没有特殊说明，都是针对的是 HotSpot 虚拟机。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;写在前面-常见面试题&#34;&gt;写在前面 (常见面试题)&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;介绍下 Java 内存区域（运行时数据区）&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Java 对象的创建过程（五步，建议能默写出来并且要知道每一步虚拟机做了什么）&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;对象的访问定位的两种方式（句柄和直接指针两种方式）&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;String 类和常量池&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;8 种基本类型的包装类和常量池&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;一-概述&#34;&gt;一 概述&lt;/h1&gt;
+&lt;p&gt;对于 Java 程序员来说，在虚拟机自动内存管理机制下，不再需要像 C/C++程序开发程序员这样为每一个 new 操作去写对应的 delete/free 操作，不容易出现内存泄漏和内存溢出问题。正是因为 Java 程序员把内存控制权利交给 Java 虚拟机，一旦出现内存泄漏和溢出方面的问题，如果不了解虚拟机是怎样使用内存的，那么排查错误将会是一个非常艰巨的任务。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JVM垃圾回收概要(转)</title>
+      <link>https://wangy325.top/post/tech/java/java-gc/</link>
+      <pubDate>Wed, 25 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/java/java-gc/</guid>
+      <description>&lt;h1 id=&#34;本节常见面试题&#34;&gt;本节常见面试题&lt;/h1&gt;
+&lt;p&gt;问题答案在文中都有提到&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如何判断对象是否死亡（两种方法）。&lt;/li&gt;
+&lt;li&gt;简单的介绍一下强引用、软引用、弱引用、虚引用（虚引用与软引用和弱引用的区别、使用软引用能带来的好处）。&lt;/li&gt;
+&lt;li&gt;如何判断一个常量是废弃常量&lt;/li&gt;
+&lt;li&gt;如何判断一个类是无用的类&lt;/li&gt;
+&lt;li&gt;垃圾收集有哪些算法，各自的特点？&lt;/li&gt;
+&lt;li&gt;HotSpot 为什么要分为新生代和老年代？&lt;/li&gt;
+&lt;li&gt;常见的垃圾回收器有哪些？&lt;/li&gt;
+&lt;li&gt;介绍一下 CMS,G1 收集器。&lt;/li&gt;
+&lt;li&gt;Minor Gc 和 Full GC 有什么不同呢？&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>algorithem on Endless River</title>
+    <link>https://wangy325.top/categories/algorithem/</link>
+    <description>Recent content in algorithem on Endless River</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 04 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://wangy325.top/categories/algorithem/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>背包问题</title>
+      <link>https://wangy325.top/post/tech/algo/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Fri, 04 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/algo/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/</guid>
+      <description>&lt;p&gt;背包问题其实属于&lt;strong&gt;动态规划&lt;/strong&gt;（ &lt;em&gt;Dynamic Programming&lt;/em&gt; ）问题的一种。动态规划的手段是将大问题拆解为多个小问题，小问题解决之后，大问题也就随之而解。&lt;/p&gt;
+&lt;p&gt;背包问题的典型描述是：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;给定n种物品和一背包。物品 i 的重量似乎 wi，其价值为 vi，背包的容量为 c。问应该如何选择装入背包中的物品，
+使得装入背包中物品的总价值最大？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&#34;引例&#34;&gt;引例&lt;/h1&gt;
+&lt;p&gt;为了阐述问题方便，引用算法图解一书中关于此书的图解好了(没有比这更好的解释方法了)。首先引入问题：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;假设你是一个小偷，有一个可以装下4磅东西的背包，你可以偷窃的商品有:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;4磅的音响，价值3000&lt;/li&gt;
+&lt;li&gt;3磅的笔记本电脑，价值2000&lt;/li&gt;
+&lt;li&gt;1磅的吉他，价值1500&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;当然，这个问题很简单，就算是遍历所有的可能性，也不过8种而已($2^3$)，不过当商品的数量增加时，可能性是指数式增长的，所以这种计算方式的运算时间复杂度是$O(2^n)$。现在尝试使用动态规划的方法来解决问题。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
