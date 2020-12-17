@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GC roots on Endless River</title>
+    <link>https://wangy325.top/tags/gc-roots/</link>
+    <description>Recent content in GC roots on Endless River</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 25 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://wangy325.top/tags/gc-roots/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JVM垃圾回收概要(转)</title>
+      <link>https://wangy325.top/post/tech/java/java-gc/</link>
+      <pubDate>Wed, 25 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/java/java-gc/</guid>
+      <description>&lt;h1 id=&#34;本节常见面试题&#34;&gt;本节常见面试题&lt;/h1&gt;
+&lt;p&gt;问题答案在文中都有提到&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如何判断对象是否死亡（两种方法）。&lt;/li&gt;
+&lt;li&gt;简单的介绍一下强引用、软引用、弱引用、虚引用（虚引用与软引用和弱引用的区别、使用软引用能带来的好处）。&lt;/li&gt;
+&lt;li&gt;如何判断一个常量是废弃常量&lt;/li&gt;
+&lt;li&gt;如何判断一个类是无用的类&lt;/li&gt;
+&lt;li&gt;垃圾收集有哪些算法，各自的特点？&lt;/li&gt;
+&lt;li&gt;HotSpot 为什么要分为新生代和老年代？&lt;/li&gt;
+&lt;li&gt;常见的垃圾回收器有哪些？&lt;/li&gt;
+&lt;li&gt;介绍一下 CMS,G1 收集器。&lt;/li&gt;
+&lt;li&gt;Minor Gc 和 Full GC 有什么不同呢？&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>背包问题 - Endless River</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="wangy325" /><meta name="description" content="背包问题其实属于动态规划（ Dynamic Programming ）问题的一种。动态规划的手段是将大问题拆解为多个小问题，小问题解决之后，大问题也就随之而解。
+背包问题的典型描述是：
+ 给定n种物品和一背包。物品 i 的重量似乎 wi，其价值为 vi，背包的容量为 c。问应该如何选择装入背包中的物品， 使得装入背包中物品的总价值最大？
+ 引例 为了阐述问题方便，引用算法图解一书中关于此书的图解好了(没有比这更好的解释方法了)。首先引入问题：
+ 假设你是一个小偷，有一个可以装下4磅东西的背包，你可以偷窃的商品有:
+  4磅的音响，价值3000 3磅的笔记本电脑，价值2000 1磅的吉他，价值1500  当然，这个问题很简单，就算是遍历所有的可能性，也不过8种而已($2^3$)，不过当商品的数量增加时，可能性是指数式增长的，所以这种计算方式的运算时间复杂度是$O(2^n)$。现在尝试使用动态规划的方法来解决问题。
+" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.78.2 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://wangy325.top/post/tech/algo/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.886d4da2.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="背包问题" />
+<meta property="og:description" content="背包问题其实属于动态规划（ Dynamic Programming ）问题的一种。动态规划的手段是将大问题拆解为多个小问题，小问题解决之后，大问题也就随之而解。
+背包问题的典型描述是：
+
+给定n种物品和一背包。物品 i 的重量似乎 wi，其价值为 vi，背包的容量为 c。问应该如何选择装入背包中的物品，
+使得装入背包中物品的总价值最大？
+
+引例
+为了阐述问题方便，引用算法图解一书中关于此书的图解好了(没有比这更好的解释方法了)。首先引入问题：
+
+假设你是一个小偷，有一个可以装下4磅东西的背包，你可以偷窃的商品有:
+
+
+4磅的音响，价值3000
+3磅的笔记本电脑，价值2000
+1磅的吉他，价值1500
+
+当然，这个问题很简单，就算是遍历所有的可能性，也不过8种而已($2^3$)，不过当商品的数量增加时，可能性是指数式增长的，所以这种计算方式的运算时间复杂度是$O(2^n)$。现在尝试使用动态规划的方法来解决问题。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangy325.top/post/tech/algo/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" />
+<meta property="article:published_time" content="2020-12-04T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-12-07T17:17:21+08:00" />
+<meta itemprop="name" content="背包问题">
+<meta itemprop="description" content="背包问题其实属于动态规划（ Dynamic Programming ）问题的一种。动态规划的手段是将大问题拆解为多个小问题，小问题解决之后，大问题也就随之而解。
+背包问题的典型描述是：
+
+给定n种物品和一背包。物品 i 的重量似乎 wi，其价值为 vi，背包的容量为 c。问应该如何选择装入背包中的物品，
+使得装入背包中物品的总价值最大？
+
+引例
+为了阐述问题方便，引用算法图解一书中关于此书的图解好了(没有比这更好的解释方法了)。首先引入问题：
+
+假设你是一个小偷，有一个可以装下4磅东西的背包，你可以偷窃的商品有:
+
+
+4磅的音响，价值3000
+3磅的笔记本电脑，价值2000
+1磅的吉他，价值1500
+
+当然，这个问题很简单，就算是遍历所有的可能性，也不过8种而已($2^3$)，不过当商品的数量增加时，可能性是指数式增长的，所以这种计算方式的运算时间复杂度是$O(2^n)$。现在尝试使用动态规划的方法来解决问题。">
+<meta itemprop="datePublished" content="2020-12-04T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-12-07T17:17:21+08:00" />
+<meta itemprop="wordCount" content="4460">
+
+
+
+<meta itemprop="keywords" content="动态规划,背包问题," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="背包问题"/>
+<meta name="twitter:description" content="背包问题其实属于动态规划（ Dynamic Programming ）问题的一种。动态规划的手段是将大问题拆解为多个小问题，小问题解决之后，大问题也就随之而解。
+背包问题的典型描述是：
+
+给定n种物品和一背包。物品 i 的重量似乎 wi，其价值为 vi，背包的容量为 c。问应该如何选择装入背包中的物品，
+使得装入背包中物品的总价值最大？
+
+引例
+为了阐述问题方便，引用算法图解一书中关于此书的图解好了(没有比这更好的解释方法了)。首先引入问题：
+
+假设你是一个小偷，有一个可以装下4磅东西的背包，你可以偷窃的商品有:
+
+
+4磅的音响，价值3000
+3磅的笔记本电脑，价值2000
+1磅的吉他，价值1500
+
+当然，这个问题很简单，就算是遍历所有的可能性，也不过8种而已($2^3$)，不过当商品的数量增加时，可能性是指数式增长的，所以这种计算方式的运算时间复杂度是$O(2^n)$。现在尝试使用动态规划的方法来解决问题。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Endless River</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">主题</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a><a href="/friendlink/">
+        <li class="mobile-menu-item">友链</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Endless River</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">主题</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/friendlink/">友链</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">背包问题</h1>
+
+      <div class="post-meta">
+          <span>
+              <span class="icomoonfree icon-calendar"></span>
+              <span class="post-time"> 2020-12-04</span>
+          </span>
+
+        <div class="post-category">
+              <span class="icomoonfree icon-folder"></span>
+            <a href="/categories/algorithem/"> algorithem </a>
+            </div>
+          <span class="icomoonfree icon-sigma"></span>
+          <span class="more-meta analyse"> 约 4460 字 </span>
+          <span class="icomoonfree icon-clock"></span>
+          <span class="more-meta analyse"> 预计阅读 9 分钟 </span>
+        <span class="icomoonfree icon-eye"></span>
+          <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents"></nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>背包问题其实属于<strong>动态规划</strong>（ <em>Dynamic Programming</em> ）问题的一种。动态规划的手段是将大问题拆解为多个小问题，小问题解决之后，大问题也就随之而解。</p>
+<p>背包问题的典型描述是：</p>
+<blockquote>
+<p>给定n种物品和一背包。物品 i 的重量似乎 wi，其价值为 vi，背包的容量为 c。问应该如何选择装入背包中的物品，
+使得装入背包中物品的总价值最大？</p>
+</blockquote>
+<h1 id="引例">引例</h1>
+<p>为了阐述问题方便，引用算法图解一书中关于此书的图解好了(没有比这更好的解释方法了)。首先引入问题：</p>
+<blockquote>
+<p>假设你是一个小偷，有一个可以装下4磅东西的背包，你可以偷窃的商品有:</p>
+</blockquote>
+<ul>
+<li>4磅的音响，价值3000</li>
+<li>3磅的笔记本电脑，价值2000</li>
+<li>1磅的吉他，价值1500</li>
+</ul>
+<p>当然，这个问题很简单，就算是遍历所有的可能性，也不过8种而已($2^3$)，不过当商品的数量增加时，可能性是指数式增长的，所以这种计算方式的运算时间复杂度是$O(2^n)$。现在尝试使用动态规划的方法来解决问题。</p>
+<p>动态规划算法从一个网格开始，如下表的空白部分表示了示例问题中需要填充的表格：</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>比如音响行第1列表示<strong>重量为1的背包装入音响所能获取的最大价值</strong>，笔记本电脑行第2列的表示<strong>重量为2的背包装入音响和笔记本电脑所能获取的最大价值</strong>&hellip;以此类推。现在我们尝试填充此表格，按照行的顺序</p>
+<ol>
+<li>
+<p>音响行</p>
+<p>根据音响的重量，我们很容易就知道，重量为1、2、3的背包无法装下音响，当背包重量为4时，可以装下音响，此时的价值是3000，所以音响行填充完毕后，表格应该长这样：</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+</li>
+<li>
+<p>笔记本电脑行</p>
+<p>接下来继续填充笔记本电脑行，记住，此时背包<strong>可以选择的物品有音响和笔记本电脑2种</strong>。</p>
+<ul>
+<li>当背包重量为1、2时，装不下笔记本电脑和音响中的任意一件商品，最大价值为0；</li>
+<li>当背包重量为3时，不放入笔记本电脑时的最大价值为0（上一行已经计算得知），当放入笔记本电脑时，获得笔记本的电脑的价值2000，其剩余重量为0，无法装入音响；<code>2000&gt;0</code>，因此背包重量为3时获得的最大价值就是2000；</li>
+<li>当背包重量为4时，不放入笔记本电脑获得的最大价值是3000，当放入笔记本电脑时，获得笔记本的电脑的价值2000，其剩余重量为1，由音响行的计算结果可知，当背包重量为1时获得的最大价值是0（音响行第一列的值）；<code>3000&gt;2000+0</code>，因此背包重量为3时获得的最大价值就是3000；</li>
+</ul>
+<p>所以填充第二行之后的表格长这样：</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+</li>
+<li>
+<p>吉他行</p>
+<p>接下来填充吉他行，此时，背包可以<strong>选择的物品有音响、笔记本电脑和吉他3种</strong>。</p>
+<ul>
+<li>当背包重量为1时，恰好可以装入吉他，因此其获得的最大价值就是1500；</li>
+<li>当背包重量为2时，不放入吉他所能获得的最大价值是0，装入吉他之后，其获得价值1500；剩余重量为1，装入笔记本电脑和音响的最大价值就是0（笔记本电脑行的第1列）；因此最大价值是1500；</li>
+<li>当背包重量为3时，不放入吉他所能获得的最大价值是2000，装入吉他之后获得价值1500，剩余重量为2，装入笔记本电脑和音响所能获取的最大价值是0（笔记本电脑行的第2列）；因此最大价值是2000；</li>
+<li>当背包重量为4时，不放入吉他所能获取的最大价值是3000，装入吉他之后获得价值1500，剩余重量为3，装入笔记本电脑和音响所能获取的最大价值是2000（笔记本电脑行的第3列），<code>1500+2000&gt;3000</code>，故获得的最大价值是3500</li>
+</ul>
+<p>所以填充第三行之后的表格长这样：</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+</li>
+</ol>
+<p>到此为止，表格填充完毕，从表格中可以直观地看到容量为4的背包所能获取的最大价值是3500。除此之外，还可以看到，表格的行从左至右，列从上至下（填充顺序）所获得的最大价值都是递增的（或维持不变），不可能出现最大价值变小的情况！同时，计算容量较小的背包的最大价值这个工作并没有白费，它将用来帮助快速计算大容量的背包所能获取的最大价值。</p>
+<p>关于背包问题，行（商品）的顺序并不影响最终的结果。对上例而言，任意打乱行的顺序获得的结果都是一样的。</p>
+<blockquote>
+<p>上例中，若在可选商品列表中添加一个重1磅，价值2000美元的iphone，结果会如何呢？</p>
+</blockquote>
+<blockquote>
+<p>我们可以在已完成的表格中继续添加一个iphone行，得到的结果应该是这样的：</p>
+</blockquote>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>如果新增一个商品，重量为1.5磅，价值为2000元，动态规划表应该如何变化呢？
+<!-- raw HTML omitted -->
+只需要将动态规划表格的列粒度变为0.5，再重新规划即可</p>
+<!-- raw HTML omitted -->
+<h1 id="状态转移方程">状态转移方程</h1>
+<p>对于商品而言，其只有2个状态：放入背包或者不放入背包。动态规划的过程就是计算出不同承重的背包所能装入的最大价值，当考虑是否应当将物品装入背包时，比较其装入背包和不装入背包2种情况下获得的最大价值即可得到该背包的最大价值。</p>
+<p>我们可以使用一个二维数组<code>dp[i][j]</code>表示i件物品放入重量为j的背包所能获取的<strong>最大价值</strong>。</p>
+<p>如<code>dp[3][4]=3500</code>表示<strong>3件可选物品，放入容量为4的背包所获得的最大价值为3500</strong>。</p>
+<p>和前面讨论的一样，<code>dp[i][j]</code>的计算分为3步：</p>
+<ul>
+<li>该物品不放入背包的最大价值 <code>v1 = dp[i-1][j]</code></li>
+<li>该物品放入背包的最大价值 <code>v2 = vi + dp[i-1][j-wi]</code>，其中
+<ul>
+<li><code>vi</code>表示物品i的价值</li>
+<li><code>dp[i-1][j-wi]</code>表示前<code>i-1</code>件物品放入容量为<code>j-wi</code>的背包中获取的最大价值，<code>wi</code>为物品i的重量</li>
+</ul>
+</li>
+<li>比较<code>v1</code>和<code>v2</code>，取较大值作为<code>dp[i][j]</code></li>
+</ul>
+<p>综上，背包问题的状态转移方程可以总结为：</p>
+<p>$$
+dp[i][j] = max(dp[i-1][j],dp[i-1][j-w[i]]+v[i])
+$$</p>
+<h1 id="java代码示例">Java代码示例</h1>
+<p>了解了思路，我们就可以轻松地将其使用编程语言解释：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">PackIssue</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Good</span><span class="o">[]</span> <span class="n">gs</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Good</span><span class="o">[]{</span>
+            <span class="kc">null</span><span class="o">,</span>
+            <span class="k">new</span> <span class="n">Good</span><span class="o">(</span><span class="n">4</span><span class="o">,</span> <span class="n">3000</span><span class="o">),</span>
+            <span class="k">new</span> <span class="n">Good</span><span class="o">(</span><span class="n">3</span><span class="o">,</span> <span class="n">2000</span><span class="o">),</span>
+            <span class="k">new</span> <span class="n">Good</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">1500</span><span class="o">)</span>
+        <span class="o">};</span>
+        <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="n">4</span><span class="o">;</span> <span class="c1">// 背包最大容量
+</span><span class="c1"></span>        <span class="c1">// 物品数, 空一行是为了防止计算dp时数组指针越界
+</span><span class="c1"></span>        <span class="c1">// 不然计算dp时i = 0需要单独讨论
+</span><span class="c1"></span>        <span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">1</span><span class="o">;</span>
+
+        <span class="c1">// 最大价值表是一张N*m的二维表格，表格的每一格数据dp[i][j]表示i件物品放入容量为j的背包中
+</span><span class="c1"></span>        <span class="c1">// 所能获取的最大价值，这个最大价值的形成有2个条件：物品i要么放入背包，要么不放入背包
+</span><span class="c1"></span>        <span class="c1">// 典型的dp公式
+</span><span class="c1"></span>        <span class="c1">// dp[i][j] = max{dp[i-1][j], dp[i-1,j-w[i]] + v[i]}
+</span><span class="c1"></span>        <span class="c1">// N也无需从0开始，没有意义
+</span><span class="c1"></span>        <span class="kt">int</span><span class="o">[][]</span> <span class="n">dp</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">m</span> <span class="o">+</span> <span class="n">1</span><span class="o">][</span><span class="n">N</span> <span class="o">+</span> <span class="n">1</span><span class="o">];</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">w</span> <span class="o">=</span> <span class="n">gs</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">w</span><span class="o">;</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">N</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">j</span> <span class="o">&gt;=</span> <span class="n">w</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">dp</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span>
+                        <span class="n">dp</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">1</span><span class="o">][</span><span class="n">j</span><span class="o">],</span>
+                        <span class="n">dp</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">1</span><span class="o">][</span><span class="n">j</span> <span class="o">-</span> <span class="n">w</span><span class="o">]</span> <span class="o">+</span> <span class="n">gs</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">v</span>
+                    <span class="o">);</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="n">dp</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">dp</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">1</span><span class="o">][</span><span class="n">j</span><span class="o">];</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">N</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%5d\t&#34;</span><span class="o">,</span> <span class="n">dp</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]);</span>
+            <span class="o">}</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dp</span><span class="o">[</span><span class="n">m</span><span class="o">][</span><span class="n">N</span><span class="o">]);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Good</span> <span class="o">{</span>
+    <span class="c1">// 物品重量
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">w</span><span class="o">;</span>
+    <span class="c1">// 物品价值
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">v</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Good</span><span class="o">(</span><span class="kt">int</span> <span class="n">w</span><span class="o">,</span> <span class="kt">int</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">w</span> <span class="o">=</span> <span class="n">w</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/* output
+</span><span class="cm">   0	    0	    0	 3000
+</span><span class="cm">   0	    0	 2000	 3000
+</span><span class="cm">1500	 1500	 2000	 3500
+</span><span class="cm">3500
+</span><span class="cm">*/</span><span class="c1">//:~
+</span></code></pre></td></tr></table>
+</div>
+</div><h1 id="复杂的背包问题">复杂的背包问题</h1>
+<blockquote>
+<p>这个问题发现自华为的机试题库，来源：https://www.nowcoder.com/questionTerminal/f9c6f980eeec43ef85be20755ddbeaf4</p>
+</blockquote>
+<p>王强今天很开心，公司发给N元的年终奖。王强决定把年终奖用于购物，他把想买的物品分为两类：主件与附件，附件是从属于某个主件的，下表就是一些主件与附件的例子：</p>
+<table>
+<thead>
+<tr>
+<th>主件</th>
+<th>附件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>电脑</td>
+<td>打印机，扫描仪</td>
+</tr>
+<tr>
+<td>书柜</td>
+<td>图书</td>
+</tr>
+<tr>
+<td>书桌</td>
+<td>台灯，文具</td>
+</tr>
+<tr>
+<td>工作椅</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<p>如果要买归类为附件的物品，必须先买该附件所属的主件。每个主件可以<strong>有 0 个、 1 个或 2 个附件</strong>。附件不再有从属于自己的附件。王强想买的东西很多，为了不超出预算，他把每件物品规定了一个重要度，分为 5 等：用整数 1 ~ 5 表示，第 5 等最重要。他还从因特网上查到了每件物品的价格（都是 10 元的整数倍）。他希望在不超过 N 元（可以等于 N 元）的前提下，使每件物品的价格与重要度的乘积的总和最大。</p>
+<p>设第 j 件物品的价格为 v[j] ，重要度为 w[j] ，共选中了 k 件物品，编号依次为 j 1 ， j 2 ，……， j k ，则所求的总和为：
+v[j 1 ]*w[j 1 ]+v[j 2 ]*w[j 2 ]+ … +v[j k ]*w[j k ] 。（其中 * 为乘号）</p>
+<p>请你帮助王强设计一个满足要求的购物单。</p>
+<p>输入描述:</p>
+<blockquote>
+</blockquote>
+<ul>
+<li>输入的第 1 行，为两个正整数，用一个空格隔开：N m。（其中 N （ &lt;32000 ）表示总钱数， m （ &lt;60 ）为希望购买物品的个数。）</li>
+<li>从第 2 行到第 m+1 行，<!-- raw HTML omitted -->第 j 行给出了编号为 j-1 <!-- raw HTML omitted -->的物品的基本数据，每行有 3 个非负整数 v p q</li>
+<li>其中 v 表示该物品的价格（ v&lt;10000 ）， p 表示该物品的重要度（ 1 ~ 5 ）， q 表示该物品是主件还是附件。如果 q=0 ，表示该物品为主件，如果 q&gt;0 ，表示该物品为附件， q 是所属主件的编号</li>
+</ul>
+<p>输出描述:</p>
+<blockquote>
+<p>输出一个正整数，为不超过总钱数的物品的价格与重要度乘积的总和的最大值（ &lt;200000 ）。</p>
+</blockquote>
+<p>示例输入：</p>
+<blockquote>
+<p>1000 5<!-- raw HTML omitted -->
+800 2 0<!-- raw HTML omitted -->
+400 5 1<!-- raw HTML omitted -->
+300 5 1<!-- raw HTML omitted -->
+400 3 0<!-- raw HTML omitted -->
+500 2 0<!-- raw HTML omitted --></p>
+</blockquote>
+<p>示例输出：</p>
+<blockquote>
+<p>2200</p>
+</blockquote>
+<p>这个问题和简单的背包问题有诸多类似，差别在于，每一个物品多了附件，因此计算<code>dp[i][j]</code>时需要考虑的情况变得复杂了。将主件+附件看作一个整体计算dp，问题也就得到解决了。</p>
+<p>除了动态规划之外，这个题目的题干也给出了很多有用的信息（审题也很重要啊）：</p>
+<ul>
+<li>每个主件只有至多2个附件；</li>
+<li>每一行（n）输入的数据都有一个id（n-1）；</li>
+<li>若q = 0 并不是其id为0，而是指示其是主件，其id由输入次序指定；</li>
+<li>若q&gt;0，指示其是附件，q的值是其主件的id，其id由输入次序指定；</li>
+<li>物品价格是10的倍数——指定表格列的粒度</li>
+</ul>
+<p>获取并理解上面的信息，对于构建模型和录入数据都是非常有利的。就使用示例输入来分析，示例输入了5个物品，id为1～5。其中id=2和id=3的物品为id=1的附件，id=4和id=5的物品为主件。</p>
+<p>回归到背包问题，由于附件是绑定主件的，所以解题时直接将附件的价值归结到主件中，那么问题就变成了<strong>1000元购买3件物品所能获取的最大价值</strong>。而对应于每一个主件，其最大价值的组成有多种可能性，我们需要在所有的可能性中找出最大价值：</p>
+<ul>
+<li>不买主件，<code>dp[i][j] = dp[i-1][j]</code>；</li>
+<li>只买主件，<code>dp[i][j] = dp[i-1][j-wi] + vi</code>；</li>
+<li>买主件+附件1，<code>dp[i][j] = dp[i-1][j-wi-wa1i] + vi + va1i</code>；</li>
+<li>买主件+附件2，<code>dp[i][j] = dp[i-1][j-wi-wa2i] + vi + va2i</code>；</li>
+<li>买主件+附件1+附件2，<code>dp[i][j] = dp[i-1][j-wi-wa1i-wa2i] + vi + va1i + va2i</code>；</li>
+</ul>
+<p>以下是该问题的java语言解决方式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">PackIssue2</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Scanner</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Scanner</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+
+        <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span> <span class="c1">// price limit
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">N</span> <span class="o">&gt;=</span> <span class="n">32000</span><span class="o">)</span> <span class="k">return</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span> <span class="c1">// goods want buy
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">m</span> <span class="o">&gt;=</span> <span class="n">60</span><span class="o">)</span> <span class="k">return</span><span class="o">;</span>
+
+        <span class="n">Tar</span><span class="o">[]</span> <span class="n">tars</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Tar</span><span class="o">[</span><span class="n">m</span> <span class="o">+</span> <span class="n">1</span><span class="o">];</span> <span class="c1">// index from 1
+</span><span class="c1"></span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">v</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+            <span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+            <span class="kt">int</span> <span class="n">q</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+            <span class="n">Tar</span> <span class="n">tar</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Tar</span><span class="o">(</span><span class="n">v</span><span class="o">,</span> <span class="n">p</span><span class="o">,</span> <span class="n">q</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">q</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">tars</span><span class="o">[</span><span class="n">q</span><span class="o">].</span><span class="na">a1</span> <span class="o">==</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">tars</span><span class="o">[</span><span class="n">q</span><span class="o">].</span><span class="na">setA1</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="n">tars</span><span class="o">[</span><span class="n">q</span><span class="o">].</span><span class="na">setA2</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="c1">// add all goods to Tar[]
+</span><span class="c1"></span>            <span class="n">tars</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">tar</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="c1">// dp
+</span><span class="c1"></span>        <span class="kt">int</span><span class="o">[][]</span> <span class="n">dp</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">m</span> <span class="o">+</span> <span class="n">1</span><span class="o">][</span><span class="n">N</span> <span class="o">+</span> <span class="n">1</span><span class="o">];</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">Tar</span> <span class="n">tar</span> <span class="o">=</span> <span class="n">tars</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+            <span class="kt">int</span> <span class="n">vi</span> <span class="o">=</span> <span class="n">tar</span><span class="o">.</span><span class="na">v</span><span class="o">;</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">10</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">N</span> <span class="o">+</span> <span class="n">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">+=</span> <span class="n">10</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">tar</span><span class="o">.</span><span class="na">isAttach</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="c1">// skip attachments
+</span><span class="c1"></span>                    <span class="n">dp</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">dp</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">1</span><span class="o">][</span><span class="n">j</span><span class="o">];</span>
+                    <span class="k">continue</span><span class="o">;</span>
+                <span class="o">}</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">j</span> <span class="o">&gt;=</span> <span class="n">vi</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="c1">// only main
+</span><span class="c1"></span>                    <span class="kt">int</span> <span class="n">dp1</span> <span class="o">=</span> <span class="n">vi</span> <span class="o">*</span> <span class="n">tar</span><span class="o">.</span><span class="na">p</span><span class="o">;</span>
+                    <span class="kt">int</span> <span class="n">dp2</span> <span class="o">=</span> <span class="n">dp1</span><span class="o">,</span> <span class="n">dp3</span> <span class="o">=</span> <span class="n">dp1</span><span class="o">,</span> <span class="n">dp4</span> <span class="o">=</span> <span class="n">dp1</span><span class="o">;</span>
+                    <span class="kt">int</span> <span class="n">lv2</span> <span class="o">=</span> <span class="n">vi</span><span class="o">,</span> <span class="n">lv3</span> <span class="o">=</span> <span class="n">vi</span><span class="o">,</span> <span class="n">lv4</span> <span class="o">=</span> <span class="n">vi</span><span class="o">;</span>
+                    <span class="kt">int</span> <span class="n">lj</span> <span class="o">=</span> <span class="n">j</span> <span class="o">-</span> <span class="n">vi</span><span class="o">;</span>
+                    <span class="c1">// main + attachment1
+</span><span class="c1"></span>                    <span class="k">if</span> <span class="o">(</span><span class="n">tar</span><span class="o">.</span><span class="na">a1</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">Tar</span> <span class="n">a1</span> <span class="o">=</span> <span class="n">tars</span><span class="o">[</span><span class="n">tar</span><span class="o">.</span><span class="na">a1</span><span class="o">];</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="n">lj</span> <span class="o">&gt;=</span> <span class="n">a1</span><span class="o">.</span><span class="na">v</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="n">dp2</span> <span class="o">+=</span> <span class="n">a1</span><span class="o">.</span><span class="na">v</span> <span class="o">*</span> <span class="n">a1</span><span class="o">.</span><span class="na">p</span><span class="o">;</span>
+                            <span class="n">lv2</span> <span class="o">+=</span> <span class="n">a1</span><span class="o">.</span><span class="na">v</span><span class="o">;</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span>
+                    <span class="c1">// main + attachment2
+</span><span class="c1"></span>                    <span class="k">if</span> <span class="o">(</span><span class="n">tar</span><span class="o">.</span><span class="na">a2</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">Tar</span> <span class="n">a2</span> <span class="o">=</span> <span class="n">tars</span><span class="o">[</span><span class="n">tar</span><span class="o">.</span><span class="na">a2</span><span class="o">];</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="n">lj</span> <span class="o">&gt;=</span> <span class="n">a2</span><span class="o">.</span><span class="na">v</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="n">dp3</span> <span class="o">+=</span> <span class="n">a2</span><span class="o">.</span><span class="na">v</span> <span class="o">*</span> <span class="n">a2</span><span class="o">.</span><span class="na">p</span><span class="o">;</span>
+                            <span class="n">lv3</span> <span class="o">+=</span> <span class="n">a2</span><span class="o">.</span><span class="na">v</span><span class="o">;</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span>
+                    <span class="c1">// main + attachment1 + attachment2
+</span><span class="c1"></span>                    <span class="k">if</span> <span class="o">(</span><span class="n">tar</span><span class="o">.</span><span class="na">a1</span> <span class="o">&gt;</span> <span class="n">0</span> <span class="o">&amp;&amp;</span> <span class="n">tar</span><span class="o">.</span><span class="na">a2</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">Tar</span> <span class="n">a1</span> <span class="o">=</span> <span class="n">tars</span><span class="o">[</span><span class="n">tar</span><span class="o">.</span><span class="na">a1</span><span class="o">];</span>
+                        <span class="n">Tar</span> <span class="n">a2</span> <span class="o">=</span> <span class="n">tars</span><span class="o">[</span><span class="n">tar</span><span class="o">.</span><span class="na">a2</span><span class="o">];</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="n">lj</span> <span class="o">&gt;=</span> <span class="n">a1</span><span class="o">.</span><span class="na">v</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="n">dp4</span> <span class="o">+=</span> <span class="n">a1</span><span class="o">.</span><span class="na">v</span> <span class="o">*</span> <span class="n">a1</span><span class="o">.</span><span class="na">p</span><span class="o">;</span>
+                            <span class="n">lj</span> <span class="o">-=</span> <span class="n">a1</span><span class="o">.</span><span class="na">v</span><span class="o">;</span>
+                            <span class="n">lv4</span> <span class="o">+=</span> <span class="n">a1</span><span class="o">.</span><span class="na">v</span><span class="o">;</span>
+                            <span class="k">if</span> <span class="o">(</span><span class="n">lj</span> <span class="o">&gt;=</span> <span class="n">a2</span><span class="o">.</span><span class="na">v</span><span class="o">)</span> <span class="o">{</span>
+                                <span class="n">dp4</span> <span class="o">+=</span> <span class="n">a2</span><span class="o">.</span><span class="na">v</span> <span class="o">*</span> <span class="n">a2</span><span class="o">.</span><span class="na">p</span><span class="o">;</span>
+                                <span class="n">lv4</span> <span class="o">+=</span> <span class="n">a2</span><span class="o">.</span><span class="na">v</span><span class="o">;</span>
+                            <span class="o">}</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span>
+                    <span class="n">dp</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">dp</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">1</span><span class="o">][</span><span class="n">j</span><span class="o">],</span> <span class="n">dp</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">1</span><span class="o">][</span><span class="n">j</span> <span class="o">-</span> <span class="n">vi</span><span class="o">]</span> <span class="o">+</span> <span class="n">dp1</span><span class="o">);</span>
+                    <span class="n">dp</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">dp</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">],</span> <span class="n">dp</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">1</span><span class="o">][</span><span class="n">j</span> <span class="o">-</span> <span class="n">lv2</span><span class="o">]</span> <span class="o">+</span> <span class="n">dp2</span><span class="o">);</span>
+                    <span class="n">dp</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">dp</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">],</span> <span class="n">dp</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">1</span><span class="o">][</span><span class="n">j</span> <span class="o">-</span> <span class="n">lv3</span><span class="o">]</span> <span class="o">+</span> <span class="n">dp3</span><span class="o">);</span>
+                    <span class="n">dp</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">dp</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">],</span> <span class="n">dp</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">1</span><span class="o">][</span><span class="n">j</span> <span class="o">-</span> <span class="n">lv4</span><span class="o">]</span> <span class="o">+</span> <span class="n">dp4</span><span class="o">);</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="n">dp</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">dp</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">1</span><span class="o">][</span><span class="n">j</span><span class="o">];</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dp</span><span class="o">[</span><span class="n">m</span><span class="o">][</span><span class="n">N</span><span class="o">]);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Tar</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">v</span><span class="o">;</span> <span class="c1">// price
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">p</span><span class="o">;</span> <span class="c1">// priority, from 1-5
+</span><span class="c1"></span>    <span class="kt">boolean</span> <span class="n">isAttach</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">a1</span><span class="o">;</span> <span class="c1">// index of attachment 1 in Tar[]
+</span><span class="c1"></span>    <span class="kt">int</span> <span class="n">a2</span><span class="o">;</span> <span class="c1">// index of attachment 2 in Tar[]
+</span><span class="c1"></span>
+    <span class="kd">public</span> <span class="nf">Tar</span><span class="o">(</span><span class="kt">int</span> <span class="n">p</span><span class="o">,</span> <span class="kt">int</span> <span class="n">w</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">isAttach</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">v</span> <span class="o">=</span> <span class="n">p</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">p</span> <span class="o">=</span> <span class="n">w</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">isAttach</span> <span class="o">=</span> <span class="n">isAttach</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setA1</span><span class="o">(</span><span class="kt">int</span> <span class="n">a1</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">a1</span> <span class="o">=</span> <span class="n">a1</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setA2</span><span class="o">(</span><span class="kt">int</span> <span class="n">a2</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">a2</span> <span class="o">=</span> <span class="n">a2</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="参考">参考</h1>
+<ul>
+<li><a href="https://www.jianshu.com/p/a66d5ce49df5">0-1背包问题</a></li>
+<li><a href="https://blog.nowcoder.net/n/82b5f014a8654c8b8dbff4fe4fa727bd?f=comment">购物车问题</a></li>
+<li><a href="https://book.douban.com/subject/26979890/">算法图解-<em>像小说一样有趣的算法入门书</em></a></li>
+</ul>
+    </div>
+
+    <div class="post-copyright">
+  
+  <p class="copyright-item" style= text-align:right;>
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-12-07
+        <a href="https://github.com/wangy325/endlessriver/commit/926460a80c6344d32270593e4cdc20f0768682e2" title="enable mathjax; add dynamic programming doc">(926460a)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a>
+          <a href="/tags/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">背包问题</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/tech/java/how2use-printf/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">How to Use printf in Java (reprinted)</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/tech/java/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E8%AF%A6%E8%A7%A3/">
+            <span class="next-text nav-default">Java内存区域详解(转)</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'endlessriver';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=u8za1dzCiImO_8rKldjU1g" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangy325" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangy325.top/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme -
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    
+    
+  </div>
+
+  <span class="copyright-year">
+    <span class="author">wangy325</span>
+    &copy;
+    2019 -
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="copyright"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
