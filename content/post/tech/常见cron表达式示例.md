@@ -21,13 +21,13 @@ cron表达式用于配置cronTrigger的实例。cron表达式实际上是由七�
 
 <!--more-->
 
-> 1.Seconds （秒）
-> 2.Minutes（分）
-> 3.Hours（小时）
-> 4.Day-of-Month （天）
-> 5.Month（月）
-> 6.Day-of-Week （周）
-> 7.Year（年）
+1. Seconds （秒）
+2. Minutes（分）
+3. Hours（小时）
+4. Day-of-Month （天）
+5. Month（月）
+6. Day-of-Week （周）
+7. Year（年）
 
 *例："0 0 12 ? \* WED” 意思是：每个星期三的中午12点执行*
 
@@ -35,13 +35,14 @@ cron表达式用于配置cronTrigger的实例。cron表达式实际上是由七�
 
 **子表达式范围：**
 
-> 1.Seconds (0~59)
-> 2.Minutes (0~59)
-> 3.Hours (0~23)
-> 4.Day-of-Month (1~31,但是要注意有些月份没有31天)
-> 5.Month (0~11，或者"JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV,DEC")
-> 6.Day-of-Week (1~7,1=SUN 或者"SUN, MON, TUE, WED, THU, FRI, SAT”)
-> 7.Year (1970~2099)
+>
+1. Seconds (0~59)
+2. Minutes (0~59)
+3. Hours (0~23)
+4. Day-of-Month (1~31,但是要注意有些月份没有31天)
+5. Month (0~11，或者"JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV,DEC")
+6. Day-of-Week (1~7,1=SUN 或者"SUN, MON, TUE, WED, THU, FRI, SAT”)
+7. Year (1970~2099)
 
 ## 格式
 
