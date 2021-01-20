@@ -1,5 +1,5 @@
 ---
-title: "自建mysql数据库"
+title: "在centOS上安装并配置mysql数据库"
 date: 2019-08-16
 draft: false
 tags: ['mysql安装与配置','mysql用户权限']
@@ -16,20 +16,20 @@ autoCollapseToc: false
 # reward: false
 ---
 
-自建mysql数据库的安装配置及简单优化
+文章介绍了在centOS7上安装mysql数据库服务的配置及简单优化过程。在服务器上安装mysql服务网络上能够找到的资源很多了，因此本文没有作详细介绍，本文的重点在于后续的优化配置方面。
 
 <!--more-->
 
-# 安装
-[在centOS上安装mysql 5.7](https://juejin.im/post/5c088b066fb9a049d4419985)
+# 安装MySQL
 
-[yum源，以及其他细节内容](https://dev.mysql.com/doc/refman/5.7/en/linux-installation-yum-repo.html)
+- [在centOS上安装mysql 5.7-juejin](https://juejin.im/post/5c088b066fb9a049d4419985)
+- <span id=hook></span>[通过yum命令安装并进行初始化设置-dev.mysql.com](https://dev.mysql.com/doc/refman/5.7/en/linux-installation-yum-repo.html)
 
 # 配置
 
 mysql的配置文件在`/etc/my.cnf`， 只是简单地配置了数据库编码为`utf8`；
 
-```properties
+```shell
 ### my.cnf配置内容
 # For advice on how to change settings please see
 # http://dev.mysql.com/doc/refman/5.7/en/server-configuration-defaults.html
@@ -38,7 +38,6 @@ default-character-set=utf8
 
 [mysql]
 default-character-set=utf8
-
 
 [mysqld]
 collation-server = utf8_unicode_ci
@@ -51,18 +50,24 @@ datadir=/var/lib/mysql
 socket=/var/lib/mysql/mysql.sock
 ```
 
-mysql有默认配置账户以及测试数据库， root账户也会默认分配密码， 步骤1链接2官方文档中说明了默认账户密码:
+mysql有默认配置账户以及测试数据库， root账户也会默认分配密码， 安装[指引链接2](#hook)**官方文档**中说明了默认账户密码:
+
+1） 在 `/var/log/mysqld.log`中记录了mysql root账户的默认密码
 
 ```shell
-# 在 /var/log/mysqld.log中记录了mysql root账户的默认密码
-[root@simple ~]# cat /var/log/mysqld.log | grep -i 'temporary password'
-2019-10-15T07:08:33.627866Z 1 [Note] A temporary password is generated for
-root@localhost: I6cpDa!wj.6&
-# 可以使用mysql_secure_installation进行初始化设置，程序会询问一些默认设置，
-包括重置密码，删除匿名账户，禁止root远程登录等等
-[root@simple ~]# mysql_secure_installation
-
+[root@simple ~] cat /var/log/mysqld.log | grep -i 'temporary password'
+# 2019-10-15T07:08:33.627866Z 1 [Note] A temporary password is generated for
+# root@localhost: I6cpDa!wj.6&
 ```
+
+2） 可以使用`mysql_secure_installation`命令进行初始化设置，程序会询问一些默认设置，包括重置密码，删除匿名账户，禁止root远程登录等等配置
+
+```shell
+[root@simple ~] mysql_secure_installation
+...
+```
+
+
 
 {{% admonition tip "注释" %}}
 还可以通过<code>set password</code>或者<code>mysqladmin</code>修改密码:
@@ -74,12 +79,14 @@ mysqladmin -uroot -poldpass password newpass;
 </code>
 {{% /admonition %}}
 
-其他的配置 比如设置数据库时间为服务器时间(默认为UTC时间)**并没有成功**
 
+{{% admonition question "问题"%}}
+其他的配置 比如设置数据库时间为服务器时间(默认为UTC时间)<b>并没有成功</b>
+{{% /admonition %}}
 
 # 账户与权限
 
-前已述及，mysql默认配置root账户，并且已经只能本地登录(出于安全考虑)，并且不建议使用root账户进行数据库连接；
+前已述及，mysql默认配置root账户，并且已经**只能本地登录**(出于安全考虑)，并且不建议使用root账户进行数据库连接；
 
 因此，需要新账户，并且要控制账户权限，防止一些不可预见的错误出现；
 
@@ -103,7 +110,7 @@ create user username@'scope' IDENTIFIED BY 'passwd@';
 mysql的权限可以简单介绍为:
 
 |权限|描述|
-|:--|:--|
+|:--:|:--:|
 |全局权限|privilege for all schemas； 信息保存在mysql.user表中|
 | schema权限|privilege for all tables； 信息保存在mysql.db中|
 | table权限| privilege for all columns； 信息保存在mysql.tables_priv中|
@@ -132,9 +139,9 @@ mysql> show grants for root@'localhost';
 2 rows in set (0.00 sec)
 ```
 
-从上面可以看出，root有[\*.\*的所有权限]，至于\*.\*，代表了ALLDB.ALLTABLES
+从上面可以看出，root有[\*.\*的**所有权限**]，至于\*.\*，代表了ALLDB.ALLTABLES-即**所有数据库的所有表**，这是最高权限。
 
-或者，可以通过查询`user`表来获取权限信息
+或者，可以通过查询`mysql.user`表来获取权限信息
 
 ```sql
 select * from mysql.user where user='root'\G;
@@ -210,7 +217,7 @@ mysql> select * from user where user ='test'\G;
 
 **mysql 5.7.28中， 如果grant命令执行的用户没有被创建，会默认创建该用户**
 
-更多关于grant的使用，参考[GRANT Syntax]((https://dev.mysql.com/doc/refman/5.7/en/grant.html))
+更多关于grant的使用，参考官方文档[GRANT Syntax]((https://dev.mysql.com/doc/refman/5.7/en/grant.html))
 
 # 数据备份与导入
 
