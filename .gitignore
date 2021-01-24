@@ -3,3 +3,4 @@ themes/*
 nohup.out
 *.tgz
 /docs/post/tech/*_java
+.vscode/
