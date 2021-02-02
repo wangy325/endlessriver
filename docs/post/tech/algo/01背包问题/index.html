@@ -21,7 +21,7 @@
  给定n种物品和一背包。物品 i 的重量似乎 wi，其价值为 vi，背包的容量为 c。问应该如何选择装入背包中的物品， 使得装入背包中物品的总价值最大？
  引例 为了阐述问题方便，引用算法图解一书中关于此书的图解好了(没有比这更好的解释方法了)。首先引入问题：
  假设你是一个小偷，有一个可以装下4磅东西的背包，你可以偷窃的商品有:
-  4磅的音响，价值3000 3磅的笔记本电脑，价值2000 1磅的吉他，价值1500  当然，这个问题很简单，就算是遍历所有的可能性，也不过8种而已($2^3$)，不过当商品的数量增加时，可能性是指数式增长的，所以这种计算方式的运算时间复杂度是$O(2^n)$。现在尝试使用动态规划的方法来解决问题。
+ 4磅的音响，价值3000 3磅的笔记本电脑，价值2000 1磅的吉他，价值1500   当然，这个问题很简单，就算是遍历所有的可能性，也不过8种而已($2^3$)，不过当商品的数量增加时，可能性是指数式增长的，所以这种计算方式的运算时间复杂度是$O(2^n)$。现在尝试使用动态规划的方法来解决问题。
 " />
 
 
@@ -29,7 +29,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.78.2 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.55.6 with even 4.0.0" />
 
 
 <link rel="canonical" href="https://wangy325.top/post/tech/algo/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" />
@@ -46,13 +46,18 @@
 
 <meta property="og:title" content="背包问题" />
 <meta property="og:description" content="背包问题其实属于动态规划（ Dynamic Programming ）问题的一种。动态规划的手段是将大问题拆解为多个小问题，小问题解决之后，大问题也就随之而解。
+
 背包问题的典型描述是：
+
 
 给定n种物品和一背包。物品 i 的重量似乎 wi，其价值为 vi，背包的容量为 c。问应该如何选择装入背包中的物品，
 使得装入背包中物品的总价值最大？
 
+
 引例
+
 为了阐述问题方便，引用算法图解一书中关于此书的图解好了(没有比这更好的解释方法了)。首先引入问题：
+
 
 假设你是一个小偷，有一个可以装下4磅东西的背包，你可以偷窃的商品有:
 
@@ -60,21 +65,29 @@
 4磅的音响，价值3000
 3磅的笔记本电脑，价值2000
 1磅的吉他，价值1500
+
+
 
 当然，这个问题很简单，就算是遍历所有的可能性，也不过8种而已($2^3$)，不过当商品的数量增加时，可能性是指数式增长的，所以这种计算方式的运算时间复杂度是$O(2^n)$。现在尝试使用动态规划的方法来解决问题。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangy325.top/post/tech/algo/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" />
-<meta property="article:published_time" content="2020-12-04T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-12-07T17:17:21+08:00" />
+<meta property="article:published_time" content="2020-12-04T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2020-12-07T17:17:21&#43;08:00"/>
+
 <meta itemprop="name" content="背包问题">
 <meta itemprop="description" content="背包问题其实属于动态规划（ Dynamic Programming ）问题的一种。动态规划的手段是将大问题拆解为多个小问题，小问题解决之后，大问题也就随之而解。
+
 背包问题的典型描述是：
+
 
 给定n种物品和一背包。物品 i 的重量似乎 wi，其价值为 vi，背包的容量为 c。问应该如何选择装入背包中的物品，
 使得装入背包中物品的总价值最大？
 
+
 引例
+
 为了阐述问题方便，引用算法图解一书中关于此书的图解好了(没有比这更好的解释方法了)。首先引入问题：
+
 
 假设你是一个小偷，有一个可以装下4磅东西的背包，你可以偷窃的商品有:
 
@@ -83,10 +96,14 @@
 3磅的笔记本电脑，价值2000
 1磅的吉他，价值1500
 
+
+
 当然，这个问题很简单，就算是遍历所有的可能性，也不过8种而已($2^3$)，不过当商品的数量增加时，可能性是指数式增长的，所以这种计算方式的运算时间复杂度是$O(2^n)$。现在尝试使用动态规划的方法来解决问题。">
-<meta itemprop="datePublished" content="2020-12-04T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2020-12-07T17:17:21+08:00" />
-<meta itemprop="wordCount" content="4460">
+
+
+<meta itemprop="datePublished" content="2020-12-04T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-12-07T17:17:21&#43;08:00" />
+<meta itemprop="wordCount" content="4612">
 
 
 
@@ -94,13 +111,18 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="背包问题"/>
 <meta name="twitter:description" content="背包问题其实属于动态规划（ Dynamic Programming ）问题的一种。动态规划的手段是将大问题拆解为多个小问题，小问题解决之后，大问题也就随之而解。
+
 背包问题的典型描述是：
+
 
 给定n种物品和一背包。物品 i 的重量似乎 wi，其价值为 vi，背包的容量为 c。问应该如何选择装入背包中的物品，
 使得装入背包中物品的总价值最大？
 
+
 引例
+
 为了阐述问题方便，引用算法图解一书中关于此书的图解好了(没有比这更好的解释方法了)。首先引入问题：
+
 
 假设你是一个小偷，有一个可以装下4磅东西的背包，你可以偷窃的商品有:
 
@@ -108,6 +130,8 @@
 4磅的音响，价值3000
 3磅的笔记本电脑，价值2000
 1磅的吉他，价值1500
+
+
 
 当然，这个问题很简单，就算是遍历所有的可能性，也不过8种而已($2^3$)，不过当商品的数量增加时，可能性是指数式增长的，所以这种计算方式的运算时间复杂度是$O(2^n)$。现在尝试使用动态规划的方法来解决问题。"/>
 
@@ -193,9 +217,9 @@
             <a href="/categories/algorithem/"> algorithem </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 4460 字 </span>
+          <span class="more-meta analyse"> 约 4612 字 </span>
           <span class="icomoonfree icon-clock"></span>
-          <span class="more-meta analyse"> 预计阅读 9 分钟 </span>
+          <span class="more-meta analyse"> 预计阅读 10 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
           <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -204,110 +228,369 @@
     <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">目录</h2>
   <div class="post-toc-content always-active">
-    <nav id="TableOfContents"></nav>
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#引例">引例</a></li>
+<li><a href="#状态转移方程">状态转移方程</a></li>
+<li><a href="#java代码示例">Java代码示例</a></li>
+<li><a href="#复杂的背包问题">复杂的背包问题</a></li>
+<li><a href="#参考">参考</a></li>
+</ul>
+</nav>
   </div>
 </div>
     <div class="post-content">
       <p>背包问题其实属于<strong>动态规划</strong>（ <em>Dynamic Programming</em> ）问题的一种。动态规划的手段是将大问题拆解为多个小问题，小问题解决之后，大问题也就随之而解。</p>
+
 <p>背包问题的典型描述是：</p>
+
 <blockquote>
 <p>给定n种物品和一背包。物品 i 的重量似乎 wi，其价值为 vi，背包的容量为 c。问应该如何选择装入背包中的物品，
 使得装入背包中物品的总价值最大？</p>
 </blockquote>
+
 <h1 id="引例">引例</h1>
+
 <p>为了阐述问题方便，引用算法图解一书中关于此书的图解好了(没有比这更好的解释方法了)。首先引入问题：</p>
+
 <blockquote>
 <p>假设你是一个小偷，有一个可以装下4磅东西的背包，你可以偷窃的商品有:</p>
-</blockquote>
+
 <ul>
 <li>4磅的音响，价值3000</li>
 <li>3磅的笔记本电脑，价值2000</li>
 <li>1磅的吉他，价值1500</li>
 </ul>
+</blockquote>
+
 <p>当然，这个问题很简单，就算是遍历所有的可能性，也不过8种而已($2^3$)，不过当商品的数量增加时，可能性是指数式增长的，所以这种计算方式的运算时间复杂度是$O(2^n)$。现在尝试使用动态规划的方法来解决问题。</p>
+
 <p>动态规划算法从一个网格开始，如下表的空白部分表示了示例问题中需要填充的表格：</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th><sub>重量</sub></th>
+<th><sub>价值</sub></th>
+<th><sub>商品</sub> \ <sup>背包重量</sup></th>
+<th><sup>1</sup></th>
+<th><sup>2</sup></th>
+<th><sup>3</sup></th>
+<th><sup>4</sup></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>4</td>
+<td>3000</td>
+<td>音响</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>2000</td>
+<td>笔记本电脑</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>1500</td>
+<td>吉他</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+
 <p>比如音响行第1列表示<strong>重量为1的背包装入音响所能获取的最大价值</strong>，笔记本电脑行第2列的表示<strong>重量为2的背包装入音响和笔记本电脑所能获取的最大价值</strong>&hellip;以此类推。现在我们尝试填充此表格，按照行的顺序</p>
+
 <ol>
-<li>
-<p>音响行</p>
+<li><p>音响行</p>
+
 <p>根据音响的重量，我们很容易就知道，重量为1、2、3的背包无法装下音响，当背包重量为4时，可以装下音响，此时的价值是3000，所以音响行填充完毕后，表格应该长这样：</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-</li>
-<li>
-<p>笔记本电脑行</p>
+
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th><sub>重量</sub></th>
+<th><sub>价值</sub></th>
+<th><sub>商品</sub> \ <sup>背包重量</sup></th>
+<th><sup>1</sup></th>
+<th><sup>2</sup></th>
+<th><sup>3</sup></th>
+<th><sup>4</sup></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>4</td>
+<td>3000</td>
+<td>音响</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3000</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>2000</td>
+<td>笔记本电脑</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>1500</td>
+<td>吉他</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div></li>
+
+<li><p>笔记本电脑行</p>
+
 <p>接下来继续填充笔记本电脑行，记住，此时背包<strong>可以选择的物品有音响和笔记本电脑2种</strong>。</p>
+
 <ul>
 <li>当背包重量为1、2时，装不下笔记本电脑和音响中的任意一件商品，最大价值为0；</li>
 <li>当背包重量为3时，不放入笔记本电脑时的最大价值为0（上一行已经计算得知），当放入笔记本电脑时，获得笔记本的电脑的价值2000，其剩余重量为0，无法装入音响；<code>2000&gt;0</code>，因此背包重量为3时获得的最大价值就是2000；</li>
 <li>当背包重量为4时，不放入笔记本电脑获得的最大价值是3000，当放入笔记本电脑时，获得笔记本的电脑的价值2000，其剩余重量为1，由音响行的计算结果可知，当背包重量为1时获得的最大价值是0（音响行第一列的值）；<code>3000&gt;2000+0</code>，因此背包重量为3时获得的最大价值就是3000；</li>
 </ul>
+
 <p>所以填充第二行之后的表格长这样：</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-</li>
-<li>
-<p>吉他行</p>
+
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th><sub>重量</sub></th>
+<th><sub>价值</sub></th>
+<th><sub>商品</sub> \ <sup>背包重量</sup></th>
+<th><sup>1</sup></th>
+<th><sup>2</sup></th>
+<th><sup>3</sup></th>
+<th><sup>4</sup></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>4</td>
+<td>3000</td>
+<td>音响</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3000</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>2000</td>
+<td>笔记本电脑</td>
+<td>0</td>
+<td>0</td>
+<td>2000</td>
+<td>3000</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>1500</td>
+<td>吉他</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div></li>
+
+<li><p>吉他行</p>
+
 <p>接下来填充吉他行，此时，背包可以<strong>选择的物品有音响、笔记本电脑和吉他3种</strong>。</p>
+
 <ul>
 <li>当背包重量为1时，恰好可以装入吉他，因此其获得的最大价值就是1500；</li>
 <li>当背包重量为2时，不放入吉他所能获得的最大价值是0，装入吉他之后，其获得价值1500；剩余重量为1，装入笔记本电脑和音响的最大价值就是0（笔记本电脑行的第1列）；因此最大价值是1500；</li>
 <li>当背包重量为3时，不放入吉他所能获得的最大价值是2000，装入吉他之后获得价值1500，剩余重量为2，装入笔记本电脑和音响所能获取的最大价值是0（笔记本电脑行的第2列）；因此最大价值是2000；</li>
 <li>当背包重量为4时，不放入吉他所能获取的最大价值是3000，装入吉他之后获得价值1500，剩余重量为3，装入笔记本电脑和音响所能获取的最大价值是2000（笔记本电脑行的第3列），<code>1500+2000&gt;3000</code>，故获得的最大价值是3500</li>
 </ul>
+
 <p>所以填充第三行之后的表格长这样：</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-</li>
+
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th><sub>重量</sub></th>
+<th><sub>价值</sub></th>
+<th><sub>商品</sub> \ <sup>背包重量</sup></th>
+<th><sup>1</sup></th>
+<th><sup>2</sup></th>
+<th><sup>3</sup></th>
+<th><sup>4</sup></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>4</td>
+<td>3000</td>
+<td>音响</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3000</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>2000</td>
+<td>笔记本电脑</td>
+<td>0</td>
+<td>0</td>
+<td>2000</td>
+<td>3000</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>1500</td>
+<td>吉他</td>
+<td>1500</td>
+<td>1500</td>
+<td>2000</td>
+<td>3500</td>
+</tr>
+</tbody>
+</table></div></li>
 </ol>
+
 <p>到此为止，表格填充完毕，从表格中可以直观地看到容量为4的背包所能获取的最大价值是3500。除此之外，还可以看到，表格的行从左至右，列从上至下（填充顺序）所获得的最大价值都是递增的（或维持不变），不可能出现最大价值变小的情况！同时，计算容量较小的背包的最大价值这个工作并没有白费，它将用来帮助快速计算大容量的背包所能获取的最大价值。</p>
+
 <p>关于背包问题，行（商品）的顺序并不影响最终的结果。对上例而言，任意打乱行的顺序获得的结果都是一样的。</p>
+
 <blockquote>
 <p>上例中，若在可选商品列表中添加一个重1磅，价值2000美元的iphone，结果会如何呢？</p>
-</blockquote>
-<blockquote>
+
 <p>我们可以在已完成的表格中继续添加一个iphone行，得到的结果应该是这样的：</p>
+
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th><sub>重量</sub></th>
+<th><sub>价值</sub></th>
+<th><sub>商品</sub> \ <sup>背包重量</sup></th>
+<th><sup>1</sup></th>
+<th><sup>2</sup></th>
+<th><sup>3</sup></th>
+<th><sup>4</sup></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>4</td>
+<td>3000</td>
+<td>音响</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3000</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>2000</td>
+<td>笔记本电脑</td>
+<td>0</td>
+<td>0</td>
+<td>2000</td>
+<td>3000</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>1500</td>
+<td>吉他</td>
+<td>1500</td>
+<td>1500</td>
+<td>2000</td>
+<td>3500</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>2000</td>
+<td>iphone</td>
+<td>2000</td>
+<td>3500</td>
+<td>3500</td>
+<td>4000</td>
+</tr>
+</tbody>
+</table></div>
 </blockquote>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<p>如果新增一个商品，重量为1.5磅，价值为2000元，动态规划表应该如何变化呢？
-<!-- raw HTML omitted -->
-只需要将动态规划表格的列粒度变为0.5，再重新规划即可</p>
-<!-- raw HTML omitted -->
+
+<div class="admonition question"><p class="admonition-title">问题</p>
+  
+如果新增一个商品，重量为1.5磅，价值为2000元，动态规划表应该如何变化呢？
+<br>
+只需要将动态规划表格的列粒度变为0.5，再重新规划即可
+
+</div>
+
 <h1 id="状态转移方程">状态转移方程</h1>
+
 <p>对于商品而言，其只有2个状态：放入背包或者不放入背包。动态规划的过程就是计算出不同承重的背包所能装入的最大价值，当考虑是否应当将物品装入背包时，比较其装入背包和不装入背包2种情况下获得的最大价值即可得到该背包的最大价值。</p>
+
 <p>我们可以使用一个二维数组<code>dp[i][j]</code>表示i件物品放入重量为j的背包所能获取的<strong>最大价值</strong>。</p>
+
 <p>如<code>dp[3][4]=3500</code>表示<strong>3件可选物品，放入容量为4的背包所获得的最大价值为3500</strong>。</p>
+
 <p>和前面讨论的一样，<code>dp[i][j]</code>的计算分为3步：</p>
+
 <ul>
 <li>该物品不放入背包的最大价值 <code>v1 = dp[i-1][j]</code></li>
 <li>该物品放入背包的最大价值 <code>v2 = vi + dp[i-1][j-wi]</code>，其中
+
 <ul>
 <li><code>vi</code>表示物品i的价值</li>
 <li><code>dp[i-1][j-wi]</code>表示前<code>i-1</code>件物品放入容量为<code>j-wi</code>的背包中获取的最大价值，<code>wi</code>为物品i的重量</li>
-</ul>
-</li>
+</ul></li>
 <li>比较<code>v1</code>和<code>v2</code>，取较大值作为<code>dp[i][j]</code></li>
 </ul>
+
 <p>综上，背包问题的状态转移方程可以总结为：</p>
+
 <p>$$
 dp[i][j] = max(dp[i-1][j],dp[i-1][j-w[i]]+v[i])
 $$</p>
+
 <h1 id="java代码示例">Java代码示例</h1>
+
 <p>了解了思路，我们就可以轻松地将其使用编程语言解释：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -430,14 +713,17 @@ $$</p>
 </span><span class="cm">   0	    0	 2000	 3000
 </span><span class="cm">1500	 1500	 2000	 3500
 </span><span class="cm">3500
-</span><span class="cm">*/</span><span class="c1">//:~
-</span></code></pre></td></tr></table>
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
 </div>
-</div><h1 id="复杂的背包问题">复杂的背包问题</h1>
+</div>
+<h1 id="复杂的背包问题">复杂的背包问题</h1>
+
 <blockquote>
-<p>这个问题发现自华为的机试题库，来源：https://www.nowcoder.com/questionTerminal/f9c6f980eeec43ef85be20755ddbeaf4</p>
+<p>这个问题发现自华为的机试题库，来源：<a href="https://www.nowcoder.com/questionTerminal/f9c6f980eeec43ef85be20755ddbeaf4">https://www.nowcoder.com/questionTerminal/f9c6f980eeec43ef85be20755ddbeaf4</a></p>
 </blockquote>
+
 <p>王强今天很开心，公司发给N元的年终奖。王强决定把年终奖用于购物，他把想买的物品分为两类：主件与附件，附件是从属于某个主件的，下表就是一些主件与附件的例子：</p>
+
 <table>
 <thead>
 <tr>
@@ -445,56 +731,74 @@ $$</p>
 <th>附件</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td>电脑</td>
 <td>打印机，扫描仪</td>
 </tr>
+
 <tr>
 <td>书柜</td>
 <td>图书</td>
 </tr>
+
 <tr>
 <td>书桌</td>
 <td>台灯，文具</td>
 </tr>
+
 <tr>
 <td>工作椅</td>
 <td>无</td>
 </tr>
 </tbody>
 </table>
+
 <p>如果要买归类为附件的物品，必须先买该附件所属的主件。每个主件可以<strong>有 0 个、 1 个或 2 个附件</strong>。附件不再有从属于自己的附件。王强想买的东西很多，为了不超出预算，他把每件物品规定了一个重要度，分为 5 等：用整数 1 ~ 5 表示，第 5 等最重要。他还从因特网上查到了每件物品的价格（都是 10 元的整数倍）。他希望在不超过 N 元（可以等于 N 元）的前提下，使每件物品的价格与重要度的乘积的总和最大。</p>
+
 <p>设第 j 件物品的价格为 v[j] ，重要度为 w[j] ，共选中了 k 件物品，编号依次为 j 1 ， j 2 ，……， j k ，则所求的总和为：
 v[j 1 ]*w[j 1 ]+v[j 2 ]*w[j 2 ]+ … +v[j k ]*w[j k ] 。（其中 * 为乘号）</p>
+
 <p>请你帮助王强设计一个满足要求的购物单。</p>
+
 <p>输入描述:</p>
+
 <blockquote>
-</blockquote>
 <ul>
 <li>输入的第 1 行，为两个正整数，用一个空格隔开：N m。（其中 N （ &lt;32000 ）表示总钱数， m （ &lt;60 ）为希望购买物品的个数。）</li>
-<li>从第 2 行到第 m+1 行，<!-- raw HTML omitted -->第 j 行给出了编号为 j-1 <!-- raw HTML omitted -->的物品的基本数据，每行有 3 个非负整数 v p q</li>
-<li>其中 v 表示该物品的价格（ v&lt;10000 ）， p 表示该物品的重要度（ 1 ~ 5 ）， q 表示该物品是主件还是附件。如果 q=0 ，表示该物品为主件，如果 q&gt;0 ，表示该物品为附件， q 是所属主件的编号</li>
+<li>从第 2 行到第 m+1 行，<b>第 j 行给出了编号为 j-1 </b>的物品的基本数据，每行有 3 个非负整数 v p q</li>
+<li>其中 v 表示该物品的价格（ v<10000 ）， p 表示该物品的重要度（ 1 ~ 5 ）， q 表示该物品是主件还是附件。如果 q=0 ，表示该物品为主件，如果 q>0 ，表示该物品为附件， q 是所属主件的编号</li>
 </ul>
+</blockquote>
+
 <p>输出描述:</p>
+
 <blockquote>
 <p>输出一个正整数，为不超过总钱数的物品的价格与重要度乘积的总和的最大值（ &lt;200000 ）。</p>
 </blockquote>
+
 <p>示例输入：</p>
+
 <blockquote>
-<p>1000 5<!-- raw HTML omitted -->
-800 2 0<!-- raw HTML omitted -->
-400 5 1<!-- raw HTML omitted -->
-300 5 1<!-- raw HTML omitted -->
-400 3 0<!-- raw HTML omitted -->
-500 2 0<!-- raw HTML omitted --></p>
+<p>1000 5<br>
+800 2 0<br>
+400 5 1<br>
+300 5 1<br>
+400 3 0<br>
+500 2 0<br></p>
 </blockquote>
+
 <p>示例输出：</p>
+
 <blockquote>
 <p>2200</p>
 </blockquote>
+
 <p>这个问题和简单的背包问题有诸多类似，差别在于，每一个物品多了附件，因此计算<code>dp[i][j]</code>时需要考虑的情况变得复杂了。将主件+附件看作一个整体计算dp，问题也就得到解决了。</p>
+
 <p>除了动态规划之外，这个题目的题干也给出了很多有用的信息（审题也很重要啊）：</p>
+
 <ul>
 <li>每个主件只有至多2个附件；</li>
 <li>每一行（n）输入的数据都有一个id（n-1）；</li>
@@ -502,8 +806,11 @@ v[j 1 ]*w[j 1 ]+v[j 2 ]*w[j 2 ]+ … +v[j k ]*w[j k ] 。（其中 * 为乘号�
 <li>若q&gt;0，指示其是附件，q的值是其主件的id，其id由输入次序指定；</li>
 <li>物品价格是10的倍数——指定表格列的粒度</li>
 </ul>
+
 <p>获取并理解上面的信息，对于构建模型和录入数据都是非常有利的。就使用示例输入来分析，示例输入了5个物品，id为1～5。其中id=2和id=3的物品为id=1的附件，id=4和id=5的物品为主件。</p>
+
 <p>回归到背包问题，由于附件是绑定主件的，所以解题时直接将附件的价值归结到主件中，那么问题就变成了<strong>1000元购买3件物品所能获取的最大价值</strong>。而对应于每一个主件，其最大价值的组成有多种可能性，我们需要在所有的可能性中找出最大价值：</p>
+
 <ul>
 <li>不买主件，<code>dp[i][j] = dp[i-1][j]</code>；</li>
 <li>只买主件，<code>dp[i][j] = dp[i-1][j-wi] + vi</code>；</li>
@@ -511,10 +818,11 @@ v[j 1 ]*w[j 1 ]+v[j 2 ]*w[j 2 ]+ … +v[j k ]*w[j k ] 。（其中 * 为乘号�
 <li>买主件+附件2，<code>dp[i][j] = dp[i-1][j-wi-wa2i] + vi + va2i</code>；</li>
 <li>买主件+附件1+附件2，<code>dp[i][j] = dp[i-1][j-wi-wa1i-wa2i] + vi + va1i + va2i</code>；</li>
 </ul>
+
 <p>以下是该问题的java语言解决方式：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">  1
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt">  1
 </span><span class="lnt">  2
 </span><span class="lnt">  3
 </span><span class="lnt">  4
@@ -735,10 +1043,11 @@ v[j 1 ]*w[j 1 ]+v[j 2 ]*w[j 2 ]+ … +v[j k ]*w[j k ] 。（其中 * 为乘号�
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setA2</span><span class="o">(</span><span class="kt">int</span> <span class="n">a2</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">this</span><span class="o">.</span><span class="na">a2</span> <span class="o">=</span> <span class="n">a2</span><span class="o">;</span>
     <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<span class="o">}</span></code></pre></td></tr></table>
 </div>
-</div><h1 id="参考">参考</h1>
+</div>
+<h1 id="参考">参考</h1>
+
 <ul>
 <li><a href="https://www.jianshu.com/p/a66d5ce49df5">0-1背包问题</a></li>
 <li><a href="https://blog.nowcoder.net/n/82b5f014a8654c8b8dbff4fe4fa727bd?f=comment">购物车问题</a></li>
@@ -766,7 +1075,7 @@ v[j 1 ]*w[j 1 ]+v[j 2 ]*w[j 2 ]+ … +v[j k ]*w[j k ] 。（其中 * 为乘号�
       <nav class="post-nav">
         <a class="prev" href="/post/tech/java/how2use-printf/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">How to Use printf in Java (reprinted)</span>
+            <span class="prev-text nav-default">How to Use printf in Java (转)</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
         <a class="next" href="/post/tech/java/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E8%AF%A6%E8%A7%A3/">
@@ -826,7 +1135,7 @@ v[j 1 ]*w[j 1 ]+v[j 2 ]*w[j 2 ]+ … +v[j k ]*w[j k ] 。（其中 * 为乘号�
     <span class="author">wangy325</span>
     &copy;
     2019 -
-    2020
+    2021
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>

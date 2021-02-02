@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>开源框架 on Endless River</title>
+    <link>https://wangy325.top/tags/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/</link>
+    <description>Recent content in 开源框架 on Endless River</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 25 Jan 2021 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://wangy325.top/tags/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>在xxl-job中使用分片任务</title>
+      <link>https://wangy325.top/post/tech/java/xxl-sharding-job/</link>
+      <pubDate>Mon, 25 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/java/xxl-sharding-job/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.xuxueli.com/xxl-job/#%E3%80%8A%E5%88%86%E5%B8%83%E5%BC%8F%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E5%B9%B3%E5%8F%B0XXL-JOB%E3%80%8B&#34;&gt;xxl-job&lt;/a&gt;是国内开发者提供的一款轻量级分布式任务调度平台，开发者是大众点评的工程师，其目前维护一个&lt;a href=&#34;https://www.xuxueli.com/&#34;&gt;开源社区&lt;/a&gt;，里面还有很多已经发布或尚在孵化的开源项目。&lt;/p&gt;
+
+&lt;p&gt;本文介绍在如何在xxl-job中使用创建并使用分片任务。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;任务分片&lt;/strong&gt;是一个以空间换时间的概念，旨在将耗时任务进行拆分，然后同时执行，拆分之后执行的结果对任务任务原来不分片执行的结果没有影响。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;比如要核对id从1-1000的用户的邮箱信息，找出无效的邮箱信息。可以将id分成合适的多小段，1-100，101-200，&amp;hellip;，901-1000，然后交给不同的任务去执行。这就是任务分片的简单模型。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;在阅读此文之前，需要理解xxl-job的基本模型与工作流程，其核心概念有2:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;调度中心&lt;/p&gt;
+
+&lt;p&gt;负责管理调度信息，按照调度配置发出调度请求，自身&lt;strong&gt;不承担&lt;/strong&gt;业务代码。调度系统与任务&lt;strong&gt;解耦&lt;/strong&gt;，提高了系统可用性和稳定性，同时调度系统性能不再受限于任务模块；&lt;/p&gt;
+
+&lt;p&gt;支持可视化、简单且动态的管理调度信息，包括任务新建，更新，删除，GLUE开发和任务报警等，所有上述操作都会&lt;strong&gt;实时生效&lt;/strong&gt;，同时支持监控调度结果以及执行日志，支持执行器Failover。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;执行器&lt;/p&gt;
+
+&lt;p&gt;负责接收调度请求并执行任务逻辑。任务模块专注于任务的执行等操作，开发和维护更加简单和高效；接收“调度中心”的&lt;strong&gt;执行请求、终止请求和日志请求&lt;/strong&gt;等。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;调度中心&lt;strong&gt;自动发现并注册&lt;/strong&gt;执行器，并且通过执行器提供的api对任务进行调度（执行/终止等操作）。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

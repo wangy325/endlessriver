@@ -6,10 +6,189 @@
     <description>Recent content on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 27 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Feb 2021 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangy325.top/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Java8中的新日期和时间工具库（转）</title>
+      <link>https://wangy325.top/post/tech/java/java-new-time-api/</link>
+      <pubDate>Tue, 02 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/java/java-new-time-api/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;mybatis自 3.4.5 开始，已经支持使用LocaldateTime作为时间查询入参，映射类型为TimeStamp，参考地址: &lt;a href=&#34;https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers&#34;&gt;https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;1-前言&#34;&gt;1 前言&lt;/h1&gt;
+
+&lt;p&gt;在介绍Java SE 8中新的日期时间库前，先了解下Java 8之前的日期时间工具的诟病。&lt;/p&gt;
+
+&lt;p&gt;在Java SE 8前，日期时间工具库在&lt;code&gt;java.util&lt;/code&gt;包中，包括：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;java.util.Date&lt;/code&gt;：表示日期和时间&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;java.util.Calendar&lt;/code&gt;以及其实现子类：表示各种日历系统，常用的是格林威治日历&lt;code&gt;java.util.GregorianCalendar&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;java.util.TimeZone&lt;/code&gt;以及其实现子类：表示时区偏移量和夏令时&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;以及辅助其进行格式化和解析的工具库在java.text包中，包括：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;java.text.DateFormat&lt;/code&gt;：格式化日期时间和解析日期时间的工具抽象类&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;java.text.SimpleDateFormat&lt;/code&gt;：DateDateFormat的实现&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>在xxl-job中使用分片任务</title>
+      <link>https://wangy325.top/post/tech/java/xxl-sharding-job/</link>
+      <pubDate>Mon, 25 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/java/xxl-sharding-job/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.xuxueli.com/xxl-job/#%E3%80%8A%E5%88%86%E5%B8%83%E5%BC%8F%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E5%B9%B3%E5%8F%B0XXL-JOB%E3%80%8B&#34;&gt;xxl-job&lt;/a&gt;是国内开发者提供的一款轻量级分布式任务调度平台，开发者是大众点评的工程师，其目前维护一个&lt;a href=&#34;https://www.xuxueli.com/&#34;&gt;开源社区&lt;/a&gt;，里面还有很多已经发布或尚在孵化的开源项目。&lt;/p&gt;
+
+&lt;p&gt;本文介绍在如何在xxl-job中使用创建并使用分片任务。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;任务分片&lt;/strong&gt;是一个以空间换时间的概念，旨在将耗时任务进行拆分，然后同时执行，拆分之后执行的结果对任务任务原来不分片执行的结果没有影响。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;比如要核对id从1-1000的用户的邮箱信息，找出无效的邮箱信息。可以将id分成合适的多小段，1-100，101-200，&amp;hellip;，901-1000，然后交给不同的任务去执行。这就是任务分片的简单模型。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;在阅读此文之前，需要理解xxl-job的基本模型与工作流程，其核心概念有2:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;调度中心&lt;/p&gt;
+
+&lt;p&gt;负责管理调度信息，按照调度配置发出调度请求，自身&lt;strong&gt;不承担&lt;/strong&gt;业务代码。调度系统与任务&lt;strong&gt;解耦&lt;/strong&gt;，提高了系统可用性和稳定性，同时调度系统性能不再受限于任务模块；&lt;/p&gt;
+
+&lt;p&gt;支持可视化、简单且动态的管理调度信息，包括任务新建，更新，删除，GLUE开发和任务报警等，所有上述操作都会&lt;strong&gt;实时生效&lt;/strong&gt;，同时支持监控调度结果以及执行日志，支持执行器Failover。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;执行器&lt;/p&gt;
+
+&lt;p&gt;负责接收调度请求并执行任务逻辑。任务模块专注于任务的执行等操作，开发和维护更加简单和高效；接收“调度中心”的&lt;strong&gt;执行请求、终止请求和日志请求&lt;/strong&gt;等。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;调度中心&lt;strong&gt;自动发现并注册&lt;/strong&gt;执行器，并且通过执行器提供的api对任务进行调度（执行/终止等操作）。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>2020年度总结</title>
+      <link>https://wangy325.top/post/chaos/annual-summary-2020/</link>
+      <pubDate>Thu, 31 Dec 2020 20:57:00 +0800</pubDate>
+      
+      <guid>https://wangy325.top/post/chaos/annual-summary-2020/</guid>
+      <description>2020，无论于全球，中国，以及每一个人，都是残酷的。疫情的肆虐带走了人们的牵挂，带来了新的危机。我，作为一个处于危机边缘而不自觉的人，果不</description>
+    </item>
+    
+    <item>
+      <title>How to Use printf in Java (转)</title>
+      <link>https://wangy325.top/post/tech/java/how2use-printf/</link>
+      <pubDate>Thu, 10 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/java/how2use-printf/</guid>
+      <description>&lt;h1 id=&#34;1-introduction&#34;&gt;1 Introduction&lt;/h1&gt;
+
+&lt;p&gt;In this tutorial, we&amp;rsquo;ll demonstrate different examples of formatting with the printf() method.&lt;/p&gt;
+
+&lt;p&gt;The method is part of the java.io.PrintStream class and provides String formatting similar to the printf() function in C.&lt;/p&gt;
+
+&lt;h1 id=&#34;2-syntax&#34;&gt;2 Syntax&lt;/h1&gt;
+
+&lt;p&gt;We can use one of the following PrintStream methods to format the output:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;format&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;arguments&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;locale&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;format&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;arguments&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;We specify the formatting rules using the format parameter. Rules start with the &lt;code&gt;%&lt;/code&gt; character.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s look at a quick example before we dive into the details of the various formatting rules:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Hello %s!%n&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;World&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;This produces the following output:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;Hello World!&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;As shown above, the format string contains plain text and two formatting rules. The first rule is used to format the string argument. The second rule adds a newline character to the end of the string.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>背包问题</title>
+      <link>https://wangy325.top/post/tech/algo/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Fri, 04 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/algo/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/</guid>
+      <description>&lt;p&gt;背包问题其实属于&lt;strong&gt;动态规划&lt;/strong&gt;（ &lt;em&gt;Dynamic Programming&lt;/em&gt; ）问题的一种。动态规划的手段是将大问题拆解为多个小问题，小问题解决之后，大问题也就随之而解。&lt;/p&gt;
+
+&lt;p&gt;背包问题的典型描述是：&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定n种物品和一背包。物品 i 的重量似乎 wi，其价值为 vi，背包的容量为 c。问应该如何选择装入背包中的物品，
+使得装入背包中物品的总价值最大？&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;引例&#34;&gt;引例&lt;/h1&gt;
+
+&lt;p&gt;为了阐述问题方便，引用算法图解一书中关于此书的图解好了(没有比这更好的解释方法了)。首先引入问题：&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;假设你是一个小偷，有一个可以装下4磅东西的背包，你可以偷窃的商品有:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;4磅的音响，价值3000&lt;/li&gt;
+&lt;li&gt;3磅的笔记本电脑，价值2000&lt;/li&gt;
+&lt;li&gt;1磅的吉他，价值1500&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;当然，这个问题很简单，就算是遍历所有的可能性，也不过8种而已($2^3$)，不过当商品的数量增加时，可能性是指数式增长的，所以这种计算方式的运算时间复杂度是$O(2^n)$。现在尝试使用动态规划的方法来解决问题。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java内存区域详解(转)</title>
+      <link>https://wangy325.top/post/tech/java/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E8%AF%A6%E8%A7%A3/</link>
+      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/java/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E8%AF%A6%E8%A7%A3/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;如果没有特殊说明，都是针对的是 HotSpot 虚拟机。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;写在前面-常见面试题&#34;&gt;写在前面 (常见面试题)&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;介绍下 Java 内存区域（运行时数据区）&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Java 对象的创建过程（五步，建议能默写出来并且要知道每一步虚拟机做了什么）&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;对象的访问定位的两种方式（句柄和直接指针两种方式）&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;String 类和常量池&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;8 种基本类型的包装类和常量池&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;一-概述&#34;&gt;一 概述&lt;/h1&gt;
+
+&lt;p&gt;对于 Java 程序员来说，在虚拟机自动内存管理机制下，不再需要像 C/C++程序开发程序员这样为每一个 new 操作去写对应的 delete/free 操作，不容易出现内存泄漏和内存溢出问题。正是因为 Java 程序员把内存控制权利交给 Java 虚拟机，一旦出现内存泄漏和溢出方面的问题，如果不了解虚拟机是怎样使用内存的，那么排查错误将会是一个非常艰巨的任务。&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>mysql事务与隔离级别</title>
@@ -36,7 +215,7 @@
       <pubDate>Wed, 25 Nov 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangy325.top/post/tech/java/java-gc/</guid>
-      <description>&lt;h3 id=&#34;本节常见面试题&#34;&gt;本节常见面试题&lt;/h3&gt;
+      <description>&lt;h1 id=&#34;本节常见面试题&#34;&gt;本节常见面试题&lt;/h1&gt;
 
 &lt;p&gt;问题答案在文中都有提到&lt;/p&gt;
 
@@ -111,7 +290,15 @@
 &lt;li&gt;Exchanger&lt;/li&gt;
 &lt;li&gt;DelayQueue&lt;/li&gt;
 &lt;li&gt;PriorityBlockingQueue&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;countdownlatch&#34;&gt;CountDownLatch&lt;/h1&gt;
+
+&lt;p&gt;在讨论线程的基本概念时，我们说过&lt;code&gt;join()&lt;/code&gt;方法可使当前线程等待调用join方法的线程执行完，可以实现简单的&lt;a href=&#34;../线程基础概念/#9-加入一个线程&#34;&gt;无锁同步&lt;/a&gt;，使用CountDownLatch可以更加简单的实现这一目的。毕竟，&lt;code&gt;join()&lt;/code&gt;方法的语义“加入一个线程”不是很容易就能让人理解。相较于&lt;code&gt;join()&lt;/code&gt;方法，CountDownLatch的语义就明确多了&lt;/p&gt;
+
+&lt;p&gt;在有些文档上，将CountDownLatch译为&amp;rdquo;倒计时门闩【shuān】&amp;rdquo;，其维护一个计数器，这个计数器在CountDownLatch初始化之后便&lt;strong&gt;不能重置&lt;/strong&gt;。在CountDownLatch上调用&lt;code&gt;countDown()&lt;/code&gt;方法来将计数值减1，调用这个方法并不会引起阻塞。不过，在这个计数器为0之前，任何调用CountDownLatch的&lt;code&gt;await()&lt;/code&gt;方法的任务都将阻塞&lt;/p&gt;
+
+&lt;p&gt;CountDownLatch的典型用法是将一个任务分割为n个可以独立解决的部分，并创建一个计数器值为n的CountDownLatch，在每个任务完成时，调用&lt;code&gt;countDown()&lt;/code&gt;方法将计数器减1，在等待所有任务完成的线程上调用&lt;code&gt;await()&lt;/code&gt;方法，将任务阻塞，知道计数器为0之后再继续运行&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -120,16 +307,14 @@
       <pubDate>Tue, 10 Nov 2020 00:00:00 +0000</pubDate>
       
       <guid>https://wangy325.top/post/tech/java/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</guid>
-      <description>&lt;p&gt;除了ThreadPoolExecutor之外，Java执行器（Executor）框架还提供了可以在指定延迟之后执行一次或周期执行任务的接口&lt;code&gt;ScheduledExecutorService&lt;/code&gt;，较&lt;a href=&#34;https://docs.oracle.com/javase/8/docs/api/java/util/Timer.html&#34;&gt;java.util.Timer&lt;/a&gt;而言，它是更好的选择&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>并发安全的集合—Java并发系列之九</title>
-      <link>https://wangy325.top/post/tech/java/%E5%B9%B6%E5%8F%91%E5%AE%89%E5%85%A8%E7%9A%84%E9%9B%86%E5%90%88/</link>
-      <pubDate>Tue, 03 Nov 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangy325.top/post/tech/java/%E5%B9%B6%E5%8F%91%E5%AE%89%E5%85%A8%E7%9A%84%E9%9B%86%E5%90%88/</guid>
-      <description></description>
+      <description>&lt;p&gt;除了ThreadPoolExecutor之外，Java执行器（Executor）框架还提供了可以在指定延迟之后执行一次或周期执行任务的接口&lt;code&gt;ScheduledExecutorService&lt;/code&gt;，较&lt;a href=&#34;https://docs.oracle.com/javase/8/docs/api/java/util/Timer.html&#34;&gt;java.util.Timer&lt;/a&gt;而言，它是更好的选择&lt;/p&gt;
+
+&lt;p&gt;与&lt;a href=&#34;../执行器与线程池/#3-线程池&#34;&gt;线程池&lt;/a&gt;不同的是，用于计划执行的&lt;code&gt;ScheduledThreadPoolExecutor&lt;/code&gt;使用&lt;code&gt;ScheduledFutureTask&lt;/code&gt;作为任务，使用&lt;code&gt;DelayedWorkQueue&lt;/code&gt;作为任务队列，以实现计划（周期）执行的目的&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://wangy325.top/img/scheduledFutureTask.png&#34; alt=&#34;xx&#34; /&gt;
+&lt;p style=&#34;text-align:center; font-size:.9rem; font-style:italic&#34;&gt;ScheduledThreadPoolExecutor继承关系图&lt;/p&gt;&lt;/p&gt;
+
+&lt;p&gt;从&lt;code&gt;ScheduledThreadPoolExecutor&lt;/code&gt;的继承关系图可以看到，其是&lt;code&gt;ThreadPoolExecutor&lt;/code&gt;的导出类，其提交任务和执行任务以及关闭线程池的逻辑应和线程池相差无几，其重点差别在于&lt;strong&gt;任务对象以及任务队列&lt;/strong&gt;的封装上，后文将会详述&lt;code&gt;ScheduledThreadPoolExecutor&lt;/code&gt;的任务计划执行以及周期执行机制&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -140,7 +325,51 @@
       <guid>https://wangy325.top/post/tech/java/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/</guid>
       <description>&lt;p&gt;本系列的文章到目前为止，虽然没有特别说明，但是使用执行器(Executor(s))的次数已经难以计数了，&lt;code&gt;Executors&lt;/code&gt;提供了一些非常方便的静态方法，可以根据需要创建不同的&lt;code&gt;ExecutorService&lt;/code&gt;，然后调用其&lt;code&gt;execute(Runnable)&lt;/code&gt;或&lt;code&gt;submit(Callable&amp;lt;T&amp;gt;)&lt;/code&gt;方法。在多线程的条件下，执行器还有一个非常明显的优势，它使用线程池管理线程，避免了系统创建和销毁线程的开销。在一般的Java并发过程中，也建议使用执行器完成任务而非显式地创建线程&lt;/p&gt;
 
-&lt;p&gt;本文将从执行器开始，阐述Java中的线程池&lt;/p&gt;</description>
+&lt;p&gt;本文将从执行器开始，阐述Java中的线程池&lt;/p&gt;
+
+&lt;h1 id=&#34;1-executors&#34;&gt;1 Executors&lt;/h1&gt;
+
+&lt;p&gt;&lt;code&gt;java.util.concurrent.Executors&lt;/code&gt;类提供了许多静态方法来获取不同类型的 &lt;strong&gt;线程池&lt;/strong&gt;，下表列出其常用方法&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;：&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;方法&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;概要&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;newFixedThreadPool&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;创建固定大小的线程池，线程会一直保留&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;newCachedThreadPool&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;创建线程池，该线程池在必要时创建新线程，旧线程也会被重用，线程空闲60s被销毁&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;newSingleThreadExecutor&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;相当于newFixedThreadPool(1)，其能保证任务顺序执行&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;newScheduledThreadPool&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;用于预定执行一次或周期执行的线程池&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;newSingleThreadScheduledExecutor&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;用于预定执行一次或周期执行的单线程池&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p style=&#34;text-align:center; font-size:.9rem; font-style:italic&#34;&gt;Executors用于构造线程池的部分方法&lt;/p&gt;
+
+&lt;p&gt;上表中的前3个方法返回&lt;code&gt;ThreadPoolExecutor&lt;/code&gt;实例，后面2个方法返回&lt;code&gt;ScheduledExecutorService&lt;/code&gt;接口的实例，不管是ThreadPoolExecutor或是ScheduledExecutorService，都是&lt;code&gt;ExecutorService&lt;/code&gt;的实现，&lt;code&gt;ExecutorService&lt;/code&gt;接口是设计用来处理任务的接口，其顶层接口是&lt;code&gt;java.util.concurrent.Executor&lt;/code&gt;，该接口简单地定义了一个执行任务的方法：&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -239,130 +468,6 @@
       <description>&lt;p&gt;在系列一中，虽然创建了多线程，并且线程之间出现了一些&lt;strong&gt;不可预测&lt;/strong&gt;的CPU调度，但是由于线程之间是&lt;strong&gt;相互隔离&lt;/strong&gt;的——&lt;strong&gt;线程没有访问共同的资源&lt;/strong&gt;，尽管在执行任务的过程可能被CPU剥夺运行权，但是当它们再次获得运行权时对运行结果并没有影响，它们是安全的&lt;/p&gt;
 
 &lt;p&gt;考虑一种情况，如果&lt;strong&gt;多个线程访问同一个资源&lt;/strong&gt;，并对资源内容进行修改，会发生什么情况？&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>线程与任务</title>
-      <link>https://wangy325.top/post/tech/java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</link>
-      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangy325.top/post/tech/java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</guid>
-      <description>&lt;p&gt;并发是生产过程不可能绕过去的坎，&lt;del&gt;要编写高性能的程序，必须使用并发&lt;/del&gt;&lt;/p&gt;
-
-&lt;p&gt;并发的本质是多个线程同时处理任务&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;，不同于进程，线程之间的资源是共享的，当程序不够严谨时，使用多线程就可能带来问题，这是要反复讨论并发的原因之一&lt;/p&gt;
-
-&lt;p&gt;在Java中，必须明白一点：线程由Thread类启动，但Thread类并不执行任何操作，&lt;strong&gt;它只是驱动赋予它的任务&lt;/strong&gt;。因此将&lt;strong&gt;线程与任务&lt;/strong&gt;的概念区分开，有利于理解并发&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Collections工具</title>
-      <link>https://wangy325.top/post/tech/java/collections/</link>
-      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangy325.top/post/tech/java/collections/</guid>
-      <description>&lt;p&gt;集合框架中一个重要的类，其实是Collection接口的&lt;strong&gt;伴随类&lt;/strong&gt;，其中定义了许多实用方法，用来获取&lt;strong&gt;集合视图&lt;/strong&gt;，或提供一些方便的操作集合元素的&lt;strong&gt;算法&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;由于视图是直接封装的Collection接口，&lt;strong&gt;因此其方法有些局限&lt;/strong&gt;，并且由于特殊的设计，部分操作是不允许的（会抛出 &lt;em&gt;UnsupportedOperationExceptin&lt;/em&gt; ）&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Map</title>
-      <link>https://wangy325.top/post/tech/java/map/</link>
-      <pubDate>Sun, 10 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangy325.top/post/tech/java/map/</guid>
-      <description>&lt;p&gt;Map即映射，即键-值对，键不允许重复，并且一个键最多映射一个值&lt;/p&gt;
-
-&lt;p&gt;映射提供3种&lt;strong&gt;集合视图&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;键集 （Set实现）&lt;/li&gt;
-&lt;li&gt;值集 （Collection实现）&lt;/li&gt;
-&lt;li&gt;Map.Entry集（Set实现）&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;由于Map的键是Set，因此使用可变对象作为Map的key时，&lt;strong&gt;需要覆盖 &lt;em&gt;equals&lt;/em&gt; 和 &lt;em&gt;hashCode&lt;/em&gt; 方法&lt;/strong&gt;，&lt;strong&gt;Map不能使用自身作为key&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Java 8对Map接口进行了优化，新增了主要是针对&lt;strong&gt;函数式接口&lt;/strong&gt;的 &lt;em&gt;默认&lt;/em&gt; 方法（方法体被省略）：&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;default V &lt;strong&gt;&lt;em&gt;merge&lt;/em&gt;&lt;/strong&gt;(K key, V value,
-          BiFunction&amp;lt;? super V, ? super V, ? extends V&amp;gt; remappingFunction) {&amp;hellip;}&lt;/li&gt;
-&lt;li&gt;default V &lt;strong&gt;&lt;em&gt;compute&lt;/em&gt;&lt;/strong&gt;(K key,
-          BiFunction&amp;lt;? super K, ? super V, ? extends V&amp;gt; remappingFunction) {&amp;hellip;}&lt;/li&gt;
-&lt;li&gt;default V &lt;strong&gt;&lt;em&gt;computeIfPresent&lt;/em&gt;&lt;/strong&gt;(K key,
-          BiFunction&amp;lt;? super K, ? super V, ? extends V&amp;gt; remappingFunction) {&amp;hellip;}&lt;/li&gt;
-&lt;li&gt;default V &lt;strong&gt;&lt;em&gt;computeIfAbsent&lt;/em&gt;&lt;/strong&gt;(K key,
-          Function&amp;lt;? super K, ? extends V&amp;gt; mappingFunction) {&amp;hellip;}&lt;/li&gt;
-&lt;li&gt;default V &lt;strong&gt;&lt;em&gt;replace&lt;/em&gt;&lt;/strong&gt;(K key, V value) {&amp;hellip;}&lt;/li&gt;
-&lt;li&gt;default boolean &lt;strong&gt;&lt;em&gt;replace&lt;/em&gt;&lt;/strong&gt;(K key, V oldValue, V newValue) {&amp;hellip;}&lt;/li&gt;
-&lt;li&gt;default boolean &lt;strong&gt;&lt;em&gt;remove&lt;/em&gt;&lt;/strong&gt;(Object key, Object value) {&amp;hellip;}&lt;/li&gt;
-&lt;li&gt;default V &lt;strong&gt;&lt;em&gt;putIfAbsent&lt;/em&gt;&lt;/strong&gt;(K key, V value) {&amp;hellip;}&lt;/li&gt;
-&lt;li&gt;default void &lt;strong&gt;&lt;em&gt;replaceAll&lt;/em&gt;&lt;/strong&gt;(BiFunction&amp;lt;? super K, ? super V, ? extends V&amp;gt; function) {&amp;hellip;}&lt;/li&gt;
-&lt;li&gt;default V &lt;strong&gt;&lt;em&gt;getOrDefault&lt;/em&gt;&lt;/strong&gt;(Object key, V defaultValue) {&amp;hellip;}&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;上述方法使用的不多，主要用来对Map键值进行更新，按需查阅API文档&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Set</title>
-      <link>https://wangy325.top/post/tech/java/set/</link>
-      <pubDate>Wed, 06 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangy325.top/post/tech/java/set/</guid>
-      <description>&lt;p&gt;Set是&lt;strong&gt;不含重复元素的集&lt;/strong&gt;，严格来讲，Set不允许当&lt;code&gt;e1.equals(e2)&lt;/code&gt;为真时， &lt;em&gt;e1&lt;/em&gt; 和 &lt;em&gt;e2&lt;/em&gt; 同时出现在集合中。Set最多允许一个&lt;code&gt;null&lt;/code&gt;元素&lt;/p&gt;
-
-&lt;p&gt;将&lt;strong&gt;可变对象&lt;/strong&gt;置入Set时需要特别小心，当对象的改动影响到了元素之间的&lt;code&gt;equals()&lt;/code&gt;比较的结果，那么Set的行为就变得不确定了。因此，&lt;strong&gt;不能将Set本身作为Set的元素&lt;/strong&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Queue</title>
-      <link>https://wangy325.top/post/tech/java/queue/</link>
-      <pubDate>Sat, 02 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangy325.top/post/tech/java/queue/</guid>
-      <description>&lt;p&gt;Queue（队列），实际开发过程中，在单线程环境下使用的情况下不多，Queue作为集合框架中重要组成似乎习惯性被忽略，队列总是先持有元素，再处理元素&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://wangy325.top/img/Queue.png&#34; alt=&#34;J7NBrQ.png&#34; /&gt;&lt;/p&gt;
-
-&lt;p style=&#34;text-align:center;font-size:.9rem;font-style:italic&#34;&gt;Queue继承关系简图&lt;/p&gt;
-
-&lt;p&gt;除了Collection定义的操作之外，Queue定义了额外的插入/删除/检查元素的操作，这些操作有2种形式：&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align=&#34;center&#34;&gt;&lt;/th&gt;
-&lt;th align=&#34;center&#34;&gt;&lt;em&gt;Throws Exception&lt;/em&gt;&lt;/th&gt;
-&lt;th align=&#34;center&#34;&gt;&lt;em&gt;Returns special value&lt;/em&gt;&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td align=&#34;center&#34;&gt;&lt;strong&gt;Insert&lt;/strong&gt;&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;add(e)&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;offer(e)&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td align=&#34;center&#34;&gt;&lt;strong&gt;Remove&lt;/strong&gt;&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;remove()&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;poll()&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td align=&#34;center&#34;&gt;&lt;strong&gt;Examine&lt;/strong&gt;&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;element()&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;peek()&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;如表所示，add/remove/element方法失败后抛出异常。offer/poll/peek方法失败后返回一个特殊值（null或false，视具体操作不同），需要说明的是，&lt;code&gt;offer()&lt;/code&gt;方法主要是为&lt;strong&gt;有容量限制的队列&lt;/strong&gt;设计的&lt;/p&gt;</description>
     </item>
     
   </channel>

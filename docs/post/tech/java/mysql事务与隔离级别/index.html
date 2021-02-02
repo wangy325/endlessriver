@@ -38,7 +38,7 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<link href="/dist/even.ac664553.min.css" rel="stylesheet">
+<link href="/dist/even.886d4da2.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
@@ -57,7 +57,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangy325.top/post/tech/java/mysql%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/" />
 <meta property="article:published_time" content="2020-11-27T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2020-11-28T01:17:20&#43;08:00"/>
+<meta property="article:modified_time" content="2020-12-07T17:17:21&#43;08:00"/>
 
 <meta itemprop="name" content="mysql事务与隔离级别">
 <meta itemprop="description" content="mysql事务属于老生常谈的内容了，并不指望这一篇文章将其搞透，本篇文章只是将mysql事务的外衣扒了，让其看起来不再那么神秘与华丽。有时候，新手总是对“事务”这两个字怀有莫名的恐惧感，因为其藏在mysql内部，偷偷地工作着，就好像你没有凝视深渊，而深渊却在凝视你。
@@ -74,8 +74,8 @@
 
 
 <meta itemprop="datePublished" content="2020-11-27T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-11-28T01:17:20&#43;08:00" />
-<meta itemprop="wordCount" content="5007">
+<meta itemprop="dateModified" content="2020-12-07T17:17:21&#43;08:00" />
+<meta itemprop="wordCount" content="5126">
 
 
 
@@ -176,9 +176,9 @@
             <a href="/categories/mysql/"> mysql </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 5007 字 </span>
+          <span class="more-meta analyse"> 约 5126 字 </span>
           <span class="icomoonfree icon-clock"></span>
-          <span class="more-meta analyse"> 预计阅读 10 分钟 </span>
+          <span class="more-meta analyse"> 预计阅读 11 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
           <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -567,9 +567,10 @@ InnoDB为插入<strong>一行新纪录</strong>保存当前系统版本号作为
 
 <ol>
 <li>事务只能读取到在其开始之前就已经存在的数据，或者其自身修改的数据；</li>
-<li>多个事务使用了<strong>行级锁</strong>来保证数据一致；</li>
+<li>事务使用了<strong>行级锁</strong>来保证数据一致；</li>
 <li>事务B可以修改事务A创建但未提交的数据，并且事务B随即可读取之，这验证了第1点；</li>
 <li>事务A无法读取到事务B的修改（只要这个修改发生在事务A开始之后，无论事务B是否提交），这保证了<strong>可重复读</strong>；</li>
+<li>如果数据行在事务A在开始前已经存在，但随即被事务B<strong>删除</strong>，那么事务A无法再对数据行进行修改。但是事务A依旧可以读取到数据行的内容。这就是“快照”的概念在MVCC中的行为。</li>
 </ol>
 
 <p>遗憾的是，笔者试图从MVCC“系统版本号”的概念去推断事务的执行，始终无法得出与预期一致的结果，所以关于MVCC“系统版本号”的工作机制，此文尚不能详述，不过，程序的执行期望却和前文描述的MVCC行为是一致的。其实，使用“快照”的概念去理解MVCC的行为，会显得更容易。</p>
@@ -578,7 +579,7 @@ InnoDB为插入<strong>一行新纪录</strong>保存当前系统版本号作为
 
 <p><img src="/img/mysql-tx-serializable.jpg" alt="串行" /></p>
 
-<p>当使用最高的事务级别同时开启2个事务时，2个事务只能一次执行，换言之，会话2会阻塞会话1的<code>insert</code>操作，只有当会话2<code>commit/rollback</code>之后，会话1才会结束阻塞。</p>
+<p>当使用最高的事务级别同时开启2个事务时，2个事务只能依次执行，换言之，会话2会阻塞会话1的<code>insert</code>操作，只有当会话2<code>commit/rollback</code>之后，会话1才会结束阻塞。</p>
 
 <blockquote>
 <p>上图中第一次执行insert的时候，发现语句迟迟不返回，以为是语句故障，使用ctrl-c结束了语句执行，控制台输出：</p>
@@ -599,7 +600,7 @@ InnoDB为插入<strong>一行新纪录</strong>保存当前系统版本号作为
 <li><a href="https://book.douban.com/subject/23008813/">高性能mysql 第3版</a></li>
 <li><a href="https://www.liaoxuefeng.com/wiki/1177760294764384/1179611198786848">廖雪峰的官方网站-数据库事务</a></li>
 <li><a href="https://dev.mysql.com/doc/refman/8.0/en/set-transaction.html#set-transaction-scope">mysql document page</a></li>
-<li><a href="https://juejin.cn/post/6844903645125820424#heading-15">【推荐】数据库的事务和锁</a></li>
+<li><a href="https://juejin.cn/post/6844903645125820424#heading-15">【推荐】数据库的事务和锁</a><sup class="footnote-ref" id="fnref:7"><a href="#fn:7">7</a></sup></li>
 </ul>
 <div class="footnotes">
 
@@ -618,6 +619,8 @@ InnoDB为插入<strong>一行新纪录</strong>保存当前系统版本号作为
  <a class="footnote-return" href="#fnref:5"><sup>[return]</sup></a></li>
 <li id="fn:6">MVCC的并发控制有乐观加锁和悲观加锁两种方式，并不是所有的实现都不加锁，只有使用乐观锁是不加锁的。
  <a class="footnote-return" href="#fnref:6"><sup>[return]</sup></a></li>
+<li id="fn:7">此链接正文部分关于索引的讨论有些谬误，这些谬误在评论区可找到相关讨论。
+ <a class="footnote-return" href="#fnref:7"><sup>[return]</sup></a></li>
 </ol>
 </div>
     </div>
@@ -627,8 +630,8 @@ InnoDB为插入<strong>一行新纪录</strong>保存当前系统版本号作为
   <p class="copyright-item" style= text-align:right;>
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2020-11-28
-        <a href="https://github.com/wangy325/endlessriver/commit/c7a794af0c6c5c2a757884ca64f63d9b8bb307a1" title="add doc &#39;mysql tx and isolation level&#39;, change main color of site.">(c7a794a)</a>
+        2020-12-07
+        <a href="https://github.com/wangy325/endlessriver/commit/926460a80c6344d32270593e4cdc20f0768682e2" title="enable mathjax; add dynamic programming doc">(926460a)</a>
     </span>
   </p>
   
@@ -640,7 +643,11 @@ InnoDB为插入<strong>一行新纪录</strong>保存当前系统版本号作为
           <a href="/tags/tx-isolation/">tx-isolation</a>
           </div>
       <nav class="post-nav">
-        
+        <a class="prev" href="/post/tech/java/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E8%AF%A6%E8%A7%A3/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Java内存区域详解(转)</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
         <a class="next" href="/post/tech/java/java-gc/">
             <span class="next-text nav-default">JVM垃圾回收概要(转)</span>
             <span class="next-text nav-mobile">下一篇</span>
@@ -698,7 +705,7 @@ InnoDB为插入<strong>一行新纪录</strong>保存当前系统版本号作为
     <span class="author">wangy325</span>
     &copy;
     2019 -
-    2020
+    2021
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -727,6 +734,8 @@ InnoDB为插入<strong>一行新纪录</strong>保存当前系统版本号作为
 <script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
   <script type="text/javascript">
     window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
       showProcessingMessages: false,
       messageStyle: 'none'
     };

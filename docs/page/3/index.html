@@ -36,7 +36,7 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<link href="/dist/even.ac664553.min.css" rel="stylesheet">
+<link href="/dist/even.886d4da2.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
@@ -45,7 +45,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://wangy325.top/" />
 
-<meta property="og:updated_time" content="2020-11-27T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2021-02-02T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Endless River">
 <meta itemprop="description" content="">
@@ -121,6 +121,209 @@
       <div class="content-wrapper">
         <div id="content" class="content">
           <section id="posts" class="posts">
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/collections/">Collections工具</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-05-12 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/java/"> java </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 1601 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 4 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>集合框架中一个重要的类，其实是Collection接口的<strong>伴随类</strong>，其中定义了许多实用方法，用来获取<strong>集合视图</strong>，或提供一些方便的操作集合元素的<strong>算法</strong></p>
+
+<p>由于视图是直接封装的Collection接口，<strong>因此其方法有些局限</strong>，并且由于特殊的设计，部分操作是不允许的（会抛出 <em>UnsupportedOperationExceptin</em> ）</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/collections/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/map/">Map</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-05-10 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/java/"> java </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 6280 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 13 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>Map即映射，即键-值对，键不允许重复，并且一个键最多映射一个值</p>
+
+<p>映射提供3种<strong>集合视图</strong></p>
+
+<ul>
+<li>键集 （Set实现）</li>
+<li>值集 （Collection实现）</li>
+<li>Map.Entry集（Set实现）</li>
+</ul>
+
+<p>由于Map的键是Set，因此使用可变对象作为Map的key时，<strong>需要覆盖 <em>equals</em> 和 <em>hashCode</em> 方法</strong>，<strong>Map不能使用自身作为key</strong></p>
+
+<p>Java 8对Map接口进行了优化，新增了主要是针对<strong>函数式接口</strong>的 <em>默认</em> 方法（方法体被省略）：</p>
+
+<blockquote>
+<ul>
+<li>default V <strong><em>merge</em></strong>(K key, V value,
+          BiFunction&lt;? super V, ? super V, ? extends V&gt; remappingFunction) {&hellip;}</li>
+<li>default V <strong><em>compute</em></strong>(K key,
+          BiFunction&lt;? super K, ? super V, ? extends V&gt; remappingFunction) {&hellip;}</li>
+<li>default V <strong><em>computeIfPresent</em></strong>(K key,
+          BiFunction&lt;? super K, ? super V, ? extends V&gt; remappingFunction) {&hellip;}</li>
+<li>default V <strong><em>computeIfAbsent</em></strong>(K key,
+          Function&lt;? super K, ? extends V&gt; mappingFunction) {&hellip;}</li>
+<li>default V <strong><em>replace</em></strong>(K key, V value) {&hellip;}</li>
+<li>default boolean <strong><em>replace</em></strong>(K key, V oldValue, V newValue) {&hellip;}</li>
+<li>default boolean <strong><em>remove</em></strong>(Object key, Object value) {&hellip;}</li>
+<li>default V <strong><em>putIfAbsent</em></strong>(K key, V value) {&hellip;}</li>
+<li>default void <strong><em>replaceAll</em></strong>(BiFunction&lt;? super K, ? super V, ? extends V&gt; function) {&hellip;}</li>
+<li>default V <strong><em>getOrDefault</em></strong>(Object key, V defaultValue) {&hellip;}</li>
+</ul>
+</blockquote>
+
+<p>上述方法使用的不多，主要用来对Map键值进行更新，按需查阅API文档</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/map/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/set/">Set</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-05-06 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/java/"> java </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 3045 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 7 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>Set是<strong>不含重复元素的集</strong>，严格来讲，Set不允许当<code>e1.equals(e2)</code>为真时， <em>e1</em> 和 <em>e2</em> 同时出现在集合中。Set最多允许一个<code>null</code>元素</p>
+
+<p>将<strong>可变对象</strong>置入Set时需要特别小心，当对象的改动影响到了元素之间的<code>equals()</code>比较的结果，那么Set的行为就变得不确定了。因此，<strong>不能将Set本身作为Set的元素</strong></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/set/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/queue/">Queue</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-05-02 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/java/"> java </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 3845 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 8 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>Queue（队列），实际开发过程中，在单线程环境下使用的情况下不多，Queue作为集合框架中重要组成似乎习惯性被忽略，队列总是先持有元素，再处理元素<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup></p>
+
+<p><img src="/img/Queue.png" alt="J7NBrQ.png" /></p>
+
+<p style="text-align:center;font-size:.9rem;font-style:italic">Queue继承关系简图</p>
+
+<p>除了Collection定义的操作之外，Queue定义了额外的插入/删除/检查元素的操作，这些操作有2种形式：</p>
+
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"><em>Throws Exception</em></th>
+<th align="center"><em>Returns special value</em></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center"><strong>Insert</strong></td>
+<td align="center">add(e)</td>
+<td align="center">offer(e)</td>
+</tr>
+
+<tr>
+<td align="center"><strong>Remove</strong></td>
+<td align="center">remove()</td>
+<td align="center">poll()</td>
+</tr>
+
+<tr>
+<td align="center"><strong>Examine</strong></td>
+<td align="center">element()</td>
+<td align="center">peek()</td>
+</tr>
+</tbody>
+</table>
+
+<p>如表所示，add/remove/element方法失败后抛出异常。offer/poll/peek方法失败后返回一个特殊值（null或false，视具体操作不同），需要说明的是，<code>offer()</code>方法主要是为<strong>有容量限制的队列</strong>设计的</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/queue/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
     <article class="post">
   <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/tech/java/list/">List</a></h1>
@@ -571,305 +774,40 @@
           <a href="/categories/springboot/"> springboot </a>
           </div>
         <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 1651 字 </span>
+        <span class="more-meta analyse"> 约 2095 字 </span>
         <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 4 分钟 </span>
+        <span class="more-meta"> 预计阅读 5 分钟 </span>
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      <p>有一个cd接口，其实体类用于播放歌曲，同时我们想在播放歌曲的时候记录每个曲目的播放次数。看起来，记录次数这个事和播放曲目是不相干的事情，当然，我们可以在每首歌曲播放完成之后记录，但是
-更好的办法是使用一个切面，切入到播放方法中，来完成这件事，这样可以减少无关逻辑对代码的侵入。</p>
+      <p>有一个cd接口，其实体类用于播放歌曲，同时我们想在播放歌曲的时候记录每个曲目的播放次数。看起来，记录次数这个事和播放曲目是不相干的事情，当然，我们可以在每首歌曲播放完成之后记录，但是更好的办法是使用一个切面，切入到播放方法中，来完成这件事，这样可以减少无关逻辑对代码的侵入。</p>
 
 <p>此程序分别使用了基于@Aspect注解和基于XML配置文件2种方式进行了切面注入，2种方式效果是等同的。</p>
+
+<p>此程序使用的是Spring AOP，并没有使用功能更加丰富的AspectJ，Spring AOP很大部分借鉴了AspectJ，如果只是简单的方法层面的织入，那么Spring AOP就能够满足需求。如果需要构造器或者属性拦截，或者需要为spring bean引入新方法，那么就需要使用AspectJ了。</p>
+
+<h1 id="开始">开始</h1>
+
+<p>从<a href="https://start.spring.io">start.spring.io</a>下载空项目，引入Spring AOP依赖：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-aop<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
     </div>
     <div class="read-more">
       <a href="/post/tech/java/springboot_aop_demo/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/">动态绑定与静态绑定</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2020-04-18 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/java/"> java </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 438 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 1 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>这是Java方法调用的2个术语，用来描述Java虚拟机方法调用的2种机制</p>
-
-<h2 id="6-1-span-id-m10-动态绑定-span">6.1 <span id = "m10">动态绑定</span></h2>
-
-<p>方法的<strong>名字</strong>和<strong>参数列表</strong>构成了方法的签名</p>
-
-<blockquote>
-<p>返回类型并不是方法签名的一部分，因此在覆盖方法时，允许将导出类的方法返回类型定义为基类返回类型的子类型</p>
-</blockquote>
-
-<p>方法调用时，虚拟机为每个类创建一个<strong>方法表</strong>，列出所有的方法签名和实际调用的方法，调用方法时按表查找即可，例如方法表可能是这样的：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">FinalMethod:
-	f() -&gt; FinalMethod.f();
-	g() -&gt; FinalMethod.g();
-	p() -&gt; FinalMethod.p();
-	// skip Object method...
-FinalMethodExt
-	f() -&gt; FinalMethodExt.f();
-	p() -&gt; FinalMethodExt.p();
-	// skip Object method...</pre></td></tr></table>
-</div>
-</div>
-<p>当对象引用<code>o</code>调用方法时，其过程可归纳为：</p>
-
-<ul>
-<li>虚拟机提取<code>o</code>的<strong>实际类型</strong>的方法表</li>
-<li>在方法表中搜索调用的方法，若有满足，则直接调用</li>
-<li>若无满足，则在<code>o</code>实际类型的父类中搜索调用的方法</li>
-<li>调用方法或抛出异常</li>
-</ul>
-
-<p>从上面的描述可以看出，继承体系中的方法调用可能出现不同的结果（导出类覆盖和未覆盖基类方法时的差异现象）</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/java/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/final%E5%85%B3%E9%94%AE%E5%AD%97/">final关键字</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2020-04-17 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/java/"> java </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 1393 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 3 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <blockquote>
-<p>不同的使用环境下，<code>final</code>关键字的含义有细微差别，但通常它指“这是无法改变的”</p>
-</blockquote>
-
-<h1 id="5-1-span-id-m3-final数据-span">5.1 <span id="m3">final数据</span></h1>
-
-<p>final关键字通常用来表示一块数据是恒定不变的：</p>
-
-<h2 id="5-1-1-常量">5.1.1 常量</h2>
-
-<ul>
-<li>比如一个永不改变的<code>编译时常量</code> &mdash;&gt; 对应前文所谓<code>静态常量</code></li>
-</ul>
-
-<p><code>public final double PI = 3.14</code></p>
-
-<p>如果使用<code>static final</code>来修饰变量，那么它就是一个标准的编译时常量（静态常量）</p>
-
-<p><code>public static final double PI = 3.14</code></p>
-
-<p>在Java中，编译时常量必须是<strong>基本数据类型</strong>或<strong>字符串</strong>，声明时必须赋值</p>
-
-<ul>
-<li>一个在<code>运行时被初始化</code>的值，你不希望它被改变</li>
-</ul>
-
-<p><code>public final int RANDOM = new Random().nextInt(47)</code></p>
-
-<p>一个既是<code>final</code>也是<code>static</code>的域只占用一段不能改变的存储空间</p>
-
-<p>当对非基本数据类型使用<code>final</code>时，其含义稍微有点变化，其使<strong>引用恒定不变</strong>，这就是说被<code>final</code>修饰的对象引用无法使其指向另一个对象，但是对象内容却是可以被修改的</p>
-
-<p>Java允许声明一个<code>空白final域</code>，但是这个final域在使用前必须使用构造器（常见）或表达式初始化</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/java/final%E5%85%B3%E9%94%AE%E5%AD%97/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/">传值还是传引用</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2020-04-15 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/java/"> java </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 1172 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 3 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>Java语言设计总是<strong>按值调用</strong></p>
-
-<blockquote>
-<p>按值调用：方法接收的是调用者提供的值</p>
-
-<p>按引用调用：方法接收的是调用者提供的变量地址</p>
-</blockquote>
-
-<p>一个方法可以修改传递引用所对应的变量值，但是不能修改传递值所对应的变量值</p>
-
-<h2 id="3-1-span-id-m11-基本数据类型参数-span">3.1 <span id = "m11">基本数据类型参数</span></h2>
-
-<blockquote>
-<p>一个方法不能修改一个基本数据类型的参数（数值类型或布尔值）</p>
-</blockquote>
-
-<p>参考如下代码：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// doesn&#39;t work
-</span><span class="c1"></span><span class="kd">class</span> <span class="nc">ByValue</span> <span class="o">{</span>
-    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">tripleValue</span><span class="o">(</span><span class="kt">int</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">3</span> <span class="o">*</span> <span class="n">x</span><span class="o">;</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;x = &#34;</span> <span class="o">+</span> <span class="n">x</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">10</span><span class="o">;</span>
-        <span class="n">tripleValue</span><span class="o">(</span><span class="n">y</span><span class="o">);</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;y = &#34;</span> <span class="o">+</span> <span class="n">y</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-<span class="cm">/* output:
-</span><span class="cm">x = 30
-</span><span class="cm">y = 10
-</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
-</div>
-</div>
-<p>方法执行时，<code>x</code>被初始化为<code>y</code><strong>值的一个拷贝</strong>，方法执行后 ，<code>x</code>值变为30，<code>y</code>仍为10，之后<code>x</code>不再使用</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/java/%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/static%E5%85%B3%E9%94%AE%E5%AD%97/">static关键字</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2020-04-14 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/java/"> java </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 910 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 2 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>static关键字意为“静态的”，其语义可以理解为“类的对象”(不要理解为Class对象)，即不需要对象实例，可以直接通过<code>类名.staticDomain</code>的形式直接访问</p>
-
-<h2 id="2-1-静态域">2.1 静态域</h2>
-
-<p>如果将一个域定义为<code>static</code>，那么每个类中都只有一个这样的域。参考如下例子：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">Employee</span><span class="o">{</span>
-  <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">nextId</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span>
-  <span class="kd">private</span> <span class="kt">int</span> <span class="n">id</span><span class="o">;</span>
-  <span class="o">...</span>
-<span class="o">}</span></code></pre></td></tr></table>
-</div>
-</div>
-<p>每一个<code>Employee</code>都有自己的一个<code>id</code>域，但是这个类的所有实例都共享一个<code>nextId</code>域。记住，即使没有<code>Employee</code>实例，静态域<code>nextId</code>也存在，它属于类而不属于任何对象。<code>static</code>域只在<strong>类加载的时候初始化一次</strong>，并且是先于非<code>static</code>域初始化的</p>
-
-<p>以下是一个简单的<code>static</code>关键字使用示例：</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/java/static%E5%85%B3%E9%94%AE%E5%AD%97/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
@@ -918,7 +856,7 @@ FinalMethodExt
     <span class="author">wangy325</span>
     &copy;
     2019 -
-    2020
+    2021
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -945,6 +883,15 @@ FinalMethodExt
   </script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
 <script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 
 
 

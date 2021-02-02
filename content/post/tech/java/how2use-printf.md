@@ -1,5 +1,5 @@
 ---
-title: "How to Use printf in Java (reprinted)"
+title: "How to Use printf in Java (转)"
 date: 2020-12-10
 lastmod: 2020-12-10
 draft: false

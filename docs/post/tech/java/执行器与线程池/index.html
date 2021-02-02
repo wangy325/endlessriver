@@ -18,6 +18,9 @@
 
 <meta name="author" content="wangy325" /><meta name="description" content="本系列的文章到目前为止，虽然没有特别说明，但是使用执行器(Executor(s))的次数已经难以计数了，Executors提供了一些非常方便的静态方法，可以根据需要创建不同的ExecutorService，然后调用其execute(Runnable)或submit(Callable&amp;lt;T&amp;gt;)方法。在多线程的条件下，执行器还有一个非常明显的优势，它使用线程池管理线程，避免了系统创建和销毁线程的开销。在一般的Java并发过程中，也建议使用执行器完成任务而非显式地创建线程
 本文将从执行器开始，阐述Java中的线程池
+1 Executors java.util.concurrent.Executors类提供了许多静态方法来获取不同类型的 线程池，下表列出其常用方法1：
+   方法 概要     newFixedThreadPool 创建固定大小的线程池，线程会一直保留   newCachedThreadPool 创建线程池，该线程池在必要时创建新线程，旧线程也会被重用，线程空闲60s被销毁   newSingleThreadExecutor 相当于newFixedThreadPool(1)，其能保证任务顺序执行   newScheduledThreadPool 用于预定执行一次或周期执行的线程池   newSingleThreadScheduledExecutor 用于预定执行一次或周期执行的单线程池    Executors用于构造线程池的部分方法
+上表中的前3个方法返回ThreadPoolExecutor实例，后面2个方法返回ScheduledExecutorService接口的实例，不管是ThreadPoolExecutor或是ScheduledExecutorService，都是ExecutorService的实现，ExecutorService接口是设计用来处理任务的接口，其顶层接口是java.util.concurrent.Executor，该接口简单地定义了一个执行任务的方法：
 " />
 
 
@@ -36,28 +39,116 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<link href="/dist/even.ac664553.min.css" rel="stylesheet">
+<link href="/dist/even.886d4da2.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
 <meta property="og:title" content="执行器与线程池" />
 <meta property="og:description" content="本系列的文章到目前为止，虽然没有特别说明，但是使用执行器(Executor(s))的次数已经难以计数了，Executors提供了一些非常方便的静态方法，可以根据需要创建不同的ExecutorService，然后调用其execute(Runnable)或submit(Callable&lt;T&gt;)方法。在多线程的条件下，执行器还有一个非常明显的优势，它使用线程池管理线程，避免了系统创建和销毁线程的开销。在一般的Java并发过程中，也建议使用执行器完成任务而非显式地创建线程
 
-本文将从执行器开始，阐述Java中的线程池" />
+本文将从执行器开始，阐述Java中的线程池
+
+1 Executors
+
+java.util.concurrent.Executors类提供了许多静态方法来获取不同类型的 线程池，下表列出其常用方法1：
+
+
+
+
+方法
+概要
+
+
+
+
+
+newFixedThreadPool
+创建固定大小的线程池，线程会一直保留
+
+
+
+newCachedThreadPool
+创建线程池，该线程池在必要时创建新线程，旧线程也会被重用，线程空闲60s被销毁
+
+
+
+newSingleThreadExecutor
+相当于newFixedThreadPool(1)，其能保证任务顺序执行
+
+
+
+newScheduledThreadPool
+用于预定执行一次或周期执行的线程池
+
+
+
+newSingleThreadScheduledExecutor
+用于预定执行一次或周期执行的单线程池
+
+
+
+
+Executors用于构造线程池的部分方法
+
+上表中的前3个方法返回ThreadPoolExecutor实例，后面2个方法返回ScheduledExecutorService接口的实例，不管是ThreadPoolExecutor或是ScheduledExecutorService，都是ExecutorService的实现，ExecutorService接口是设计用来处理任务的接口，其顶层接口是java.util.concurrent.Executor，该接口简单地定义了一个执行任务的方法：" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangy325.top/post/tech/java/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/" />
 <meta property="article:published_time" content="2020-11-03T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2020-11-27T14:43:39&#43;08:00"/>
+<meta property="article:modified_time" content="2020-12-07T17:17:21&#43;08:00"/>
 
 <meta itemprop="name" content="执行器与线程池">
 <meta itemprop="description" content="本系列的文章到目前为止，虽然没有特别说明，但是使用执行器(Executor(s))的次数已经难以计数了，Executors提供了一些非常方便的静态方法，可以根据需要创建不同的ExecutorService，然后调用其execute(Runnable)或submit(Callable&lt;T&gt;)方法。在多线程的条件下，执行器还有一个非常明显的优势，它使用线程池管理线程，避免了系统创建和销毁线程的开销。在一般的Java并发过程中，也建议使用执行器完成任务而非显式地创建线程
 
-本文将从执行器开始，阐述Java中的线程池">
+本文将从执行器开始，阐述Java中的线程池
+
+1 Executors
+
+java.util.concurrent.Executors类提供了许多静态方法来获取不同类型的 线程池，下表列出其常用方法1：
+
+
+
+
+方法
+概要
+
+
+
+
+
+newFixedThreadPool
+创建固定大小的线程池，线程会一直保留
+
+
+
+newCachedThreadPool
+创建线程池，该线程池在必要时创建新线程，旧线程也会被重用，线程空闲60s被销毁
+
+
+
+newSingleThreadExecutor
+相当于newFixedThreadPool(1)，其能保证任务顺序执行
+
+
+
+newScheduledThreadPool
+用于预定执行一次或周期执行的线程池
+
+
+
+newSingleThreadScheduledExecutor
+用于预定执行一次或周期执行的单线程池
+
+
+
+
+Executors用于构造线程池的部分方法
+
+上表中的前3个方法返回ThreadPoolExecutor实例，后面2个方法返回ScheduledExecutorService接口的实例，不管是ThreadPoolExecutor或是ScheduledExecutorService，都是ExecutorService的实现，ExecutorService接口是设计用来处理任务的接口，其顶层接口是java.util.concurrent.Executor，该接口简单地定义了一个执行任务的方法：">
 
 
 <meta itemprop="datePublished" content="2020-11-03T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-11-27T14:43:39&#43;08:00" />
-<meta itemprop="wordCount" content="16869">
+<meta itemprop="dateModified" content="2020-12-07T17:17:21&#43;08:00" />
+<meta itemprop="wordCount" content="16866">
 
 
 
@@ -66,7 +157,51 @@
 <meta name="twitter:title" content="执行器与线程池"/>
 <meta name="twitter:description" content="本系列的文章到目前为止，虽然没有特别说明，但是使用执行器(Executor(s))的次数已经难以计数了，Executors提供了一些非常方便的静态方法，可以根据需要创建不同的ExecutorService，然后调用其execute(Runnable)或submit(Callable&lt;T&gt;)方法。在多线程的条件下，执行器还有一个非常明显的优势，它使用线程池管理线程，避免了系统创建和销毁线程的开销。在一般的Java并发过程中，也建议使用执行器完成任务而非显式地创建线程
 
-本文将从执行器开始，阐述Java中的线程池"/>
+本文将从执行器开始，阐述Java中的线程池
+
+1 Executors
+
+java.util.concurrent.Executors类提供了许多静态方法来获取不同类型的 线程池，下表列出其常用方法1：
+
+
+
+
+方法
+概要
+
+
+
+
+
+newFixedThreadPool
+创建固定大小的线程池，线程会一直保留
+
+
+
+newCachedThreadPool
+创建线程池，该线程池在必要时创建新线程，旧线程也会被重用，线程空闲60s被销毁
+
+
+
+newSingleThreadExecutor
+相当于newFixedThreadPool(1)，其能保证任务顺序执行
+
+
+
+newScheduledThreadPool
+用于预定执行一次或周期执行的线程池
+
+
+
+newSingleThreadScheduledExecutor
+用于预定执行一次或周期执行的单线程池
+
+
+
+
+Executors用于构造线程池的部分方法
+
+上表中的前3个方法返回ThreadPoolExecutor实例，后面2个方法返回ScheduledExecutorService接口的实例，不管是ThreadPoolExecutor或是ScheduledExecutorService，都是ExecutorService的实现，ExecutorService接口是设计用来处理任务的接口，其顶层接口是java.util.concurrent.Executor，该接口简单地定义了一个执行任务的方法："/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -150,7 +285,7 @@
             <a href="/categories/java/"> java </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 16869 字 </span>
+          <span class="more-meta analyse"> 约 16866 字 </span>
           <span class="icomoonfree icon-clock"></span>
           <span class="more-meta analyse"> 预计阅读 34 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
@@ -245,6 +380,7 @@
 <p style="text-align:center; font-size:.9rem; font-style:italic">Executors用于构造线程池的部分方法</p>
 
 <p>上表中的前3个方法返回<code>ThreadPoolExecutor</code>实例，后面2个方法返回<code>ScheduledExecutorService</code>接口的实例，不管是ThreadPoolExecutor或是ScheduledExecutorService，都是<code>ExecutorService</code>的实现，<code>ExecutorService</code>接口是设计用来处理任务的接口，其顶层接口是<code>java.util.concurrent.Executor</code>，该接口简单地定义了一个执行任务的方法：</p>
+
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt"> 1
@@ -2147,7 +2283,7 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
 </div>
 <p><center>
 <img src="/img/thread_pool_run_task.jpg" alt="xx" />
-<p style="text-align:center;font-size:.9rem;font-style:italic">线程池执行任务的流程的流程</p>
+<p style="text-align:center;font-size:.9rem;font-style:italic">线程池执行任务的流程</p>
 </center></p>
 
 <p>可以看到，线程池中的线程初始化之后，其执行任务的过程是阻塞的，也就是说，线程池中的线程一直处于“stand by”状态，除此之外，我们还可以得到以下信息：</p>
@@ -2736,8 +2872,8 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
   <p class="copyright-item" style= text-align:right;>
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2020-11-27
-        <a href="https://github.com/wangy325/endlessriver/commit/9d82ba640bdb2078375f5fe68ffc7060851bea88" title="update tag and theme of all pages, and declare the principle of doc tags.">(9d82ba6)</a>
+        2020-12-07
+        <a href="https://github.com/wangy325/endlessriver/commit/926460a80c6344d32270593e4cdc20f0768682e2" title="enable mathjax; add dynamic programming doc">(926460a)</a>
     </span>
   </p>
   
@@ -2753,9 +2889,9 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
           <a href="/tags/executors/">executors</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/post/tech/java/%E5%B9%B6%E5%8F%91%E5%AE%89%E5%85%A8%E7%9A%84%E9%9B%86%E5%90%88/">
+        <a class="prev" href="/post/tech/java/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">并发安全的集合—Java并发系列之九</span>
+            <span class="prev-text nav-default">计划执行任务</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
         <a class="next" href="/post/tech/java/%E6%AD%BB%E9%94%81/">
@@ -2815,7 +2951,7 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
     <span class="author">wangy325</span>
     &copy;
     2019 -
-    2020
+    2021
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -2844,6 +2980,8 @@ VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏</p
 <script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
   <script type="text/javascript">
     window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
       showProcessingMessages: false,
       messageStyle: 'none'
     };

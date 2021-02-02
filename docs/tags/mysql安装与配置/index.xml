@@ -12,12 +12,12 @@
     
     
     <item>
-      <title>自建mysql数据库</title>
+      <title>在centOS上安装并配置mysql数据库</title>
       <link>https://wangy325.top/post/tech/%E8%87%AA%E5%BB%BAmysql/</link>
       <pubDate>Fri, 16 Aug 2019 00:00:00 +0000</pubDate>
       
       <guid>https://wangy325.top/post/tech/%E8%87%AA%E5%BB%BAmysql/</guid>
-      <description>&lt;p&gt;自建mysql数据库的安装配置及简单优化&lt;/p&gt;</description>
+      <description>&lt;p&gt;文章介绍了在centOS7上安装mysql数据库服务的配置及简单优化过程。在服务器上安装mysql服务网络上能够找到的资源很多了，因此本文没有作详细介绍，本文的重点在于后续的优化配置方面。&lt;/p&gt;</description>
     </item>
     
   </channel>

@@ -36,7 +36,7 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<link href="/dist/even.ac664553.min.css" rel="stylesheet">
+<link href="/dist/even.886d4da2.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
@@ -45,7 +45,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://wangy325.top/" />
 
-<meta property="og:updated_time" content="2020-11-27T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2021-02-02T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Endless River">
 <meta itemprop="description" content="">
@@ -123,6 +123,292 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/java-new-time-api/">Java8中的新日期和时间工具库（转）</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2021-02-02 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/java/"> java </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 5942 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 12 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <blockquote>
+<p>mybatis自 3.4.5 开始，已经支持使用LocaldateTime作为时间查询入参，映射类型为TimeStamp，参考地址: <a href="https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers">https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers</a></p>
+</blockquote>
+
+<h1 id="1-前言">1 前言</h1>
+
+<p>在介绍Java SE 8中新的日期时间库前，先了解下Java 8之前的日期时间工具的诟病。</p>
+
+<p>在Java SE 8前，日期时间工具库在<code>java.util</code>包中，包括：</p>
+
+<ul>
+<li><code>java.util.Date</code>：表示日期和时间</li>
+<li><code>java.util.Calendar</code>以及其实现子类：表示各种日历系统，常用的是格林威治日历<code>java.util.GregorianCalendar</code></li>
+<li><code>java.util.TimeZone</code>以及其实现子类：表示时区偏移量和夏令时</li>
+</ul>
+
+<p>以及辅助其进行格式化和解析的工具库在java.text包中，包括：</p>
+
+<ul>
+<li><code>java.text.DateFormat</code>：格式化日期时间和解析日期时间的工具抽象类</li>
+<li><code>java.text.SimpleDateFormat</code>：DateDateFormat的实现</li>
+</ul>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/java-new-time-api/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/xxl-sharding-job/">在xxl-job中使用分片任务</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2021-01-25 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/java/"> java </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 2202 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 5 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p><a href="https://www.xuxueli.com/xxl-job/#%E3%80%8A%E5%88%86%E5%B8%83%E5%BC%8F%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E5%B9%B3%E5%8F%B0XXL-JOB%E3%80%8B">xxl-job</a>是国内开发者提供的一款轻量级分布式任务调度平台，开发者是大众点评的工程师，其目前维护一个<a href="https://www.xuxueli.com/">开源社区</a>，里面还有很多已经发布或尚在孵化的开源项目。</p>
+
+<p>本文介绍在如何在xxl-job中使用创建并使用分片任务。</p>
+
+<p><strong>任务分片</strong>是一个以空间换时间的概念，旨在将耗时任务进行拆分，然后同时执行，拆分之后执行的结果对任务任务原来不分片执行的结果没有影响。</p>
+
+<blockquote>
+<p>比如要核对id从1-1000的用户的邮箱信息，找出无效的邮箱信息。可以将id分成合适的多小段，1-100，101-200，&hellip;，901-1000，然后交给不同的任务去执行。这就是任务分片的简单模型。</p>
+</blockquote>
+
+<p>在阅读此文之前，需要理解xxl-job的基本模型与工作流程，其核心概念有2:</p>
+
+<ul>
+<li><p>调度中心</p>
+
+<p>负责管理调度信息，按照调度配置发出调度请求，自身<strong>不承担</strong>业务代码。调度系统与任务<strong>解耦</strong>，提高了系统可用性和稳定性，同时调度系统性能不再受限于任务模块；</p>
+
+<p>支持可视化、简单且动态的管理调度信息，包括任务新建，更新，删除，GLUE开发和任务报警等，所有上述操作都会<strong>实时生效</strong>，同时支持监控调度结果以及执行日志，支持执行器Failover。</p></li>
+
+<li><p>执行器</p>
+
+<p>负责接收调度请求并执行任务逻辑。任务模块专注于任务的执行等操作，开发和维护更加简单和高效；接收“调度中心”的<strong>执行请求、终止请求和日志请求</strong>等。</p></li>
+</ul>
+
+<p>调度中心<strong>自动发现并注册</strong>执行器，并且通过执行器提供的api对任务进行调度（执行/终止等操作）。</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/xxl-sharding-job/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/how2use-printf/">How to Use printf in Java (转)</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-12-10 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/java/"> java </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 1392 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 3 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <h1 id="1-introduction">1 Introduction</h1>
+
+<p>In this tutorial, we&rsquo;ll demonstrate different examples of formatting with the printf() method.</p>
+
+<p>The method is part of the java.io.PrintStream class and provides String formatting similar to the printf() function in C.</p>
+
+<h1 id="2-syntax">2 Syntax</h1>
+
+<p>We can use one of the following PrintStream methods to format the output:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">format</span><span class="o">,</span> <span class="n">arguments</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">locale</span><span class="o">,</span> <span class="n">format</span><span class="o">,</span> <span class="n">arguments</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>We specify the formatting rules using the format parameter. Rules start with the <code>%</code> character.</p>
+
+<p>Let&rsquo;s look at a quick example before we dive into the details of the various formatting rules:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;Hello %s!%n&#34;</span><span class="o">,</span> <span class="s">&#34;World&#34;</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>This produces the following output:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">Hello World!</pre></td></tr></table>
+</div>
+</div>
+<p>As shown above, the format string contains plain text and two formatting rules. The first rule is used to format the string argument. The second rule adds a newline character to the end of the string.</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/how2use-printf/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/algo/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">背包问题</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-12-04 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/algorithem/"> algorithem </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 4612 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 10 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>背包问题其实属于<strong>动态规划</strong>（ <em>Dynamic Programming</em> ）问题的一种。动态规划的手段是将大问题拆解为多个小问题，小问题解决之后，大问题也就随之而解。</p>
+
+<p>背包问题的典型描述是：</p>
+
+<blockquote>
+<p>给定n种物品和一背包。物品 i 的重量似乎 wi，其价值为 vi，背包的容量为 c。问应该如何选择装入背包中的物品，
+使得装入背包中物品的总价值最大？</p>
+</blockquote>
+
+<h1 id="引例">引例</h1>
+
+<p>为了阐述问题方便，引用算法图解一书中关于此书的图解好了(没有比这更好的解释方法了)。首先引入问题：</p>
+
+<blockquote>
+<p>假设你是一个小偷，有一个可以装下4磅东西的背包，你可以偷窃的商品有:</p>
+
+<ul>
+<li>4磅的音响，价值3000</li>
+<li>3磅的笔记本电脑，价值2000</li>
+<li>1磅的吉他，价值1500</li>
+</ul>
+</blockquote>
+
+<p>当然，这个问题很简单，就算是遍历所有的可能性，也不过8种而已($2^3$)，不过当商品的数量增加时，可能性是指数式增长的，所以这种计算方式的运算时间复杂度是$O(2^n)$。现在尝试使用动态规划的方法来解决问题。</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/algo/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E8%AF%A6%E8%A7%A3/">Java内存区域详解(转)</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-11-30 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/java/"> java </a>
+          <a href="/categories/jvm/"> jvm </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 8867 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 18 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <blockquote>
+<p>如果没有特殊说明，都是针对的是 HotSpot 虚拟机。</p>
+</blockquote>
+
+<hr />
+
+<h1 id="写在前面-常见面试题">写在前面 (常见面试题)</h1>
+
+<ul>
+<li><strong>介绍下 Java 内存区域（运行时数据区）</strong></li>
+<li><strong>Java 对象的创建过程（五步，建议能默写出来并且要知道每一步虚拟机做了什么）</strong></li>
+<li><strong>对象的访问定位的两种方式（句柄和直接指针两种方式）</strong></li>
+<li><strong>String 类和常量池</strong></li>
+<li><strong>8 种基本类型的包装类和常量池</strong></li>
+</ul>
+
+<h1 id="一-概述">一 概述</h1>
+
+<p>对于 Java 程序员来说，在虚拟机自动内存管理机制下，不再需要像 C/C++程序开发程序员这样为每一个 new 操作去写对应的 delete/free 操作，不容易出现内存泄漏和内存溢出问题。正是因为 Java 程序员把内存控制权利交给 Java 虚拟机，一旦出现内存泄漏和溢出方面的问题，如果不了解虚拟机是怎样使用内存的，那么排查错误将会是一个非常艰巨的任务。</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E8%AF%A6%E8%A7%A3/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/tech/java/mysql%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/">mysql事务与隔离级别</a></h1>
     <div class="post-meta">
 
@@ -137,9 +423,9 @@
           <a href="/categories/mysql/"> mysql </a>
           </div>
         <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 5007 字 </span>
+        <span class="more-meta analyse"> 约 5126 字 </span>
         <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 10 分钟 </span>
+        <span class="more-meta"> 预计阅读 11 分钟 </span>
     </div>
   </header>
   
@@ -177,17 +463,18 @@
       <div class="post-category">
              <span class="icomoonfree icon-folder"></span>
           <a href="/categories/java/"> java </a>
+          <a href="/categories/jvm/"> jvm </a>
           </div>
         <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 9344 字 </span>
+        <span class="more-meta analyse"> 约 10560 字 </span>
         <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 19 分钟 </span>
+        <span class="more-meta"> 预计阅读 22 分钟 </span>
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      <h3 id="本节常见面试题">本节常见面试题</h3>
+      <h1 id="本节常见面试题">本节常见面试题</h1>
 
 <p>问题答案在文中都有提到</p>
 
@@ -222,7 +509,6 @@
 
       <div class="post-category">
              <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/java/"> java </a>
           <a href="/categories/redis/"> redis </a>
           </div>
         <span class="icomoonfree icon-sigma"></span>
@@ -334,190 +620,17 @@
 <li>DelayQueue</li>
 <li>PriorityBlockingQueue</li>
 </ul>
+
+<h1 id="countdownlatch">CountDownLatch</h1>
+
+<p>在讨论线程的基本概念时，我们说过<code>join()</code>方法可使当前线程等待调用join方法的线程执行完，可以实现简单的<a href="../线程基础概念/#9-加入一个线程">无锁同步</a>，使用CountDownLatch可以更加简单的实现这一目的。毕竟，<code>join()</code>方法的语义“加入一个线程”不是很容易就能让人理解。相较于<code>join()</code>方法，CountDownLatch的语义就明确多了</p>
+
+<p>在有些文档上，将CountDownLatch译为&rdquo;倒计时门闩【shuān】&rdquo;，其维护一个计数器，这个计数器在CountDownLatch初始化之后便<strong>不能重置</strong>。在CountDownLatch上调用<code>countDown()</code>方法来将计数值减1，调用这个方法并不会引起阻塞。不过，在这个计数器为0之前，任何调用CountDownLatch的<code>await()</code>方法的任务都将阻塞</p>
+
+<p>CountDownLatch的典型用法是将一个任务分割为n个可以独立解决的部分，并创建一个计数器值为n的CountDownLatch，在每个任务完成时，调用<code>countDown()</code>方法将计数器减1，在等待所有任务完成的线程上调用<code>await()</code>方法，将任务阻塞，知道计数器为0之后再继续运行</p>
     </div>
     <div class="read-more">
       <a href="/post/tech/java/%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BB%84%E4%BB%B6/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/">计划执行任务</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2020-11-10 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/java/"> java </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 9300 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 19 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>除了ThreadPoolExecutor之外，Java执行器（Executor）框架还提供了可以在指定延迟之后执行一次或周期执行任务的接口<code>ScheduledExecutorService</code>，较<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Timer.html">java.util.Timer</a>而言，它是更好的选择</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/java/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E5%B9%B6%E5%8F%91%E5%AE%89%E5%85%A8%E7%9A%84%E9%9B%86%E5%90%88/">并发安全的集合—Java并发系列之九</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2020-11-03 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/java/"> java </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 0 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 0 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/java/%E5%B9%B6%E5%8F%91%E5%AE%89%E5%85%A8%E7%9A%84%E9%9B%86%E5%90%88/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/">执行器与线程池</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2020-11-03 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/java/"> java </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 16869 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 34 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>本系列的文章到目前为止，虽然没有特别说明，但是使用执行器(Executor(s))的次数已经难以计数了，<code>Executors</code>提供了一些非常方便的静态方法，可以根据需要创建不同的<code>ExecutorService</code>，然后调用其<code>execute(Runnable)</code>或<code>submit(Callable&lt;T&gt;)</code>方法。在多线程的条件下，执行器还有一个非常明显的优势，它使用线程池管理线程，避免了系统创建和销毁线程的开销。在一般的Java并发过程中，也建议使用执行器完成任务而非显式地创建线程</p>
-
-<p>本文将从执行器开始，阐述Java中的线程池</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/java/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E6%AD%BB%E9%94%81/">死锁</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2020-10-30 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/java/"> java </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 3216 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 7 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>Java有能力使任务为等待某些条件成立而进入阻塞状态，所以就有可能出现这样一种情况：某个任务在等待另一个任务，而后者又在等待其他的任务，这样一直等待下去，直到等待链上的最后一个任务又在等待第一个任务释放锁，这样就出现了任务之间相互等待的连续循环现象，这种情况出现之后，没有哪个任务能够执行，于是 <strong>死锁</strong> 出现</p>
-
-<p>死锁之所以难以规避，其重要的原因就在于其不确定性，可能程序运行良好，但是有潜在的死锁风险，这个风险在某些域的初始条件变化时，变得特别大，导致程序很快死锁。同时，死锁的出现也很难复现，它就像埋在程序里的地雷</p>
-
-<p>我们不妨回顾在<a href="../资源访问受限/#2-1-span-id-condition-条件-span">转账问题</a>中使用的等待条件——如账户余额不足时使任务等待，在余额足够的时候再进行转账。这个程序没有问题，因为有100个账户每个账户初始金额1000元，而转账金额<strong>不大于</strong>初始金额，所以任一时刻都会有账户的金额满足转账条件。但是如果去除转账金额不大于1000的限制，死锁就会发生，这很容易理解</p>
-
-<p>比如有2个账户</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">账户1 余额200元
-账户2 余额300元</pre></td></tr></table>
-</div>
-</div>
-<p>账户1向账户2转账300元，余额不足，等待；账户2向账户1转账400，余额不足等待；程序就进入死锁</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/java/%E6%AD%BB%E9%94%81/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E4%B8%8Evolatile%E5%85%B3%E9%94%AE%E5%AD%97/">Java内存模型与volatile关键字(转)</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2020-10-27 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/java/"> java </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 10444 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 21 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>本文转自<a href="http://www.cnblogs.com/dolphin0520/p/3920373.html">Matrix海子</a>，是描述<code>volatile</code>关键字非常好的一篇文章，从Java的内存模型开始，归本溯源的阐述了<code>volatile</code>关键字在并发中的作用与局限</p>
-
-<p>此文部分内容参照了《深入理解Java虚拟机》</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/java/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E4%B8%8Evolatile%E5%85%B3%E9%94%AE%E5%AD%97/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
@@ -563,7 +676,7 @@
     <span class="author">wangy325</span>
     &copy;
     2019 -
-    2020
+    2021
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -590,6 +703,15 @@
   </script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
 <script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 
 
 

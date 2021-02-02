@@ -1,12 +1,79 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>java on Endless River</title>
+    <title>Java on Endless River</title>
     <link>https://wangy325.top/tags/java/</link>
-    <description>Recent content in java on Endless River</description>
+    <description>Recent content in Java on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 24 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://wangy325.top/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 02 Feb 2021 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://wangy325.top/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Java8中的新日期和时间工具库（转）</title>
+      <link>https://wangy325.top/post/tech/java/java-new-time-api/</link>
+      <pubDate>Tue, 02 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/java/java-new-time-api/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;mybatis自 3.4.5 开始，已经支持使用LocaldateTime作为时间查询入参，映射类型为TimeStamp，参考地址: &lt;a href=&#34;https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers&#34;&gt;https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;1-前言&#34;&gt;1 前言&lt;/h1&gt;
+
+&lt;p&gt;在介绍Java SE 8中新的日期时间库前，先了解下Java 8之前的日期时间工具的诟病。&lt;/p&gt;
+
+&lt;p&gt;在Java SE 8前，日期时间工具库在&lt;code&gt;java.util&lt;/code&gt;包中，包括：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;java.util.Date&lt;/code&gt;：表示日期和时间&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;java.util.Calendar&lt;/code&gt;以及其实现子类：表示各种日历系统，常用的是格林威治日历&lt;code&gt;java.util.GregorianCalendar&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;java.util.TimeZone&lt;/code&gt;以及其实现子类：表示时区偏移量和夏令时&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;以及辅助其进行格式化和解析的工具库在java.text包中，包括：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;java.text.DateFormat&lt;/code&gt;：格式化日期时间和解析日期时间的工具抽象类&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;java.text.SimpleDateFormat&lt;/code&gt;：DateDateFormat的实现&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>在xxl-job中使用分片任务</title>
+      <link>https://wangy325.top/post/tech/java/xxl-sharding-job/</link>
+      <pubDate>Mon, 25 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/java/xxl-sharding-job/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.xuxueli.com/xxl-job/#%E3%80%8A%E5%88%86%E5%B8%83%E5%BC%8F%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E5%B9%B3%E5%8F%B0XXL-JOB%E3%80%8B&#34;&gt;xxl-job&lt;/a&gt;是国内开发者提供的一款轻量级分布式任务调度平台，开发者是大众点评的工程师，其目前维护一个&lt;a href=&#34;https://www.xuxueli.com/&#34;&gt;开源社区&lt;/a&gt;，里面还有很多已经发布或尚在孵化的开源项目。&lt;/p&gt;
+
+&lt;p&gt;本文介绍在如何在xxl-job中使用创建并使用分片任务。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;任务分片&lt;/strong&gt;是一个以空间换时间的概念，旨在将耗时任务进行拆分，然后同时执行，拆分之后执行的结果对任务任务原来不分片执行的结果没有影响。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;比如要核对id从1-1000的用户的邮箱信息，找出无效的邮箱信息。可以将id分成合适的多小段，1-100，101-200，&amp;hellip;，901-1000，然后交给不同的任务去执行。这就是任务分片的简单模型。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;在阅读此文之前，需要理解xxl-job的基本模型与工作流程，其核心概念有2:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;调度中心&lt;/p&gt;
+
+&lt;p&gt;负责管理调度信息，按照调度配置发出调度请求，自身&lt;strong&gt;不承担&lt;/strong&gt;业务代码。调度系统与任务&lt;strong&gt;解耦&lt;/strong&gt;，提高了系统可用性和稳定性，同时调度系统性能不再受限于任务模块；&lt;/p&gt;
+
+&lt;p&gt;支持可视化、简单且动态的管理调度信息，包括任务新建，更新，删除，GLUE开发和任务报警等，所有上述操作都会&lt;strong&gt;实时生效&lt;/strong&gt;，同时支持监控调度结果以及执行日志，支持执行器Failover。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;执行器&lt;/p&gt;
+
+&lt;p&gt;负责接收调度请求并执行任务逻辑。任务模块专注于任务的执行等操作，开发和维护更加简单和高效；接收“调度中心”的&lt;strong&gt;执行请求、终止请求和日志请求&lt;/strong&gt;等。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;调度中心&lt;strong&gt;自动发现并注册&lt;/strong&gt;执行器，并且通过执行器提供的api对任务进行调度（执行/终止等操作）。&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>redis必知必会(转)</title>
       <link>https://wangy325.top/post/tech/redis-all/</link>
@@ -14,9 +81,13 @@
       
       <guid>https://wangy325.top/post/tech/redis-all/</guid>
       <description>&lt;p&gt;此文总结了redis相关的基础性知识体系，但不包括redis主从、哨兵、集群相关内容&lt;/p&gt;
+
 &lt;h3 id=&#34;1-简单介绍一下-redis-呗&#34;&gt;1. 简单介绍一下 Redis 呗!&lt;/h3&gt;
+
 &lt;p&gt;简单来说 &lt;strong&gt;Redis 就是一个使用 C 语言开发的数据库&lt;/strong&gt;，不过与传统数据库不同的是 &lt;strong&gt;Redis 的数据是存在内存中的&lt;/strong&gt; ，也就是它是内存数据库，所以读写速度非常快，因此 Redis 被广泛应用于缓存方向。&lt;/p&gt;
+
 &lt;p&gt;另外，&lt;strong&gt;Redis 除了做缓存之外，Redis 也经常用来做分布式锁，甚至是消息队列。&lt;/strong&gt;&lt;/p&gt;
+
 &lt;p&gt;&lt;strong&gt;Redis 提供了多种数据类型来支持不同的业务场景。Redis 还支持事务 、持久化、Lua 脚本、多种集群方案。&lt;/strong&gt;&lt;/p&gt;</description>
     </item>
     
