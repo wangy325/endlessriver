@@ -35,7 +35,7 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<link href="/dist/even.ac664553.min.css" rel="stylesheet">
+<link href="/dist/even.886d4da2.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
@@ -58,7 +58,7 @@ Minor Gc 和 Full GC 有什么不同呢？
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangy325.top/post/tech/java/java-gc/" />
 <meta property="article:published_time" content="2020-11-25T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2020-11-27T14:43:39&#43;08:00"/>
+<meta property="article:modified_time" content="2020-11-30T19:06:52&#43;08:00"/>
 
 <meta itemprop="name" content="JVM垃圾回收概要(转)">
 <meta itemprop="description" content="本节常见面试题
@@ -79,12 +79,12 @@ Minor Gc 和 Full GC 有什么不同呢？
 
 
 <meta itemprop="datePublished" content="2020-11-25T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-11-27T14:43:39&#43;08:00" />
-<meta itemprop="wordCount" content="9344">
+<meta itemprop="dateModified" content="2020-11-30T19:06:52&#43;08:00" />
+<meta itemprop="wordCount" content="10560">
 
 
 
-<meta itemprop="keywords" content="java进阶,jvm," />
+<meta itemprop="keywords" content="jvm,mermaid,堆,GC roots,垃圾收集器," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="JVM垃圾回收概要(转)"/>
 <meta name="twitter:description" content="本节常见面试题
@@ -183,11 +183,12 @@ Minor Gc 和 Full GC 有什么不同呢？
         <div class="post-category">
               <span class="icomoonfree icon-folder"></span>
             <a href="/categories/java/"> java </a>
+            <a href="/categories/jvm/"> jvm </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 9344 字 </span>
+          <span class="more-meta analyse"> 约 10560 字 </span>
           <span class="icomoonfree icon-clock"></span>
-          <span class="more-meta analyse"> 预计阅读 19 分钟 </span>
+          <span class="more-meta analyse"> 预计阅读 22 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
           <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -195,16 +196,11 @@ Minor Gc 和 Full GC 有什么不同呢？
 
     <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">目录</h2>
-  <div class="post-toc-content always-active">
+  <div class="post-toc-content">
     <nav id="TableOfContents">
 <ul>
-<li>
-<ul>
-<li>
-<ul>
 <li><a href="#本节常见面试题">本节常见面试题</a></li>
-<li><a href="#本文导火索">本文导火索</a></li>
-</ul></li>
+<li><a href="#本文概览">本文概览</a></li>
 <li><a href="#1-揭开-jvm-内存分配与回收的神秘面纱">1  揭开 JVM 内存分配与回收的神秘面纱</a>
 <ul>
 <li><a href="#1-1-对象优先在-eden-区分配">1.1 对象优先在 eden 区分配</a></li>
@@ -239,6 +235,18 @@ Minor Gc 和 Full GC 有什么不同呢？
 <li><a href="#4-6-cms-收集器">4.6 CMS 收集器</a></li>
 <li><a href="#4-7-g1-收集器">4.7 G1 收集器</a></li>
 </ul></li>
+<li><a href="#5-jvm-配置常用参数">5 JVM 配置常用参数</a>
+<ul>
+<li><a href="#5-1-java内存区域常见配置概览">5.1 Java内存区域常见配置概览</a></li>
+<li><a href="#5-2-堆参数">5.2 堆参数</a></li>
+<li><a href="#5-3-回收器参数">5.3 回收器参数</a></li>
+<li><a href="#5-4-推荐配置">5.4 推荐配置</a></li>
+<li><a href="#5-5-常用的垃圾回收器组合">5.5 常用的垃圾回收器组合</a></li>
+</ul></li>
+<li><a href="#6-不要急着gc调优">6 不要急着GC调优</a>
+<ul>
+<li><a href="#6-1-gc调优目的">6.1 GC调优目的</a></li>
+<li><a href="#6-2-gc调优策略">6.2 GC调优策略</a></li>
 <li><a href="#参考">参考</a></li>
 </ul></li>
 </ul>
@@ -246,7 +254,7 @@ Minor Gc 和 Full GC 有什么不同呢？
   </div>
 </div>
     <div class="post-content">
-      <h3 id="本节常见面试题">本节常见面试题</h3>
+      <h1 id="本节常见面试题">本节常见面试题</h1>
 
 <p>问题答案在文中都有提到</p>
 
@@ -262,13 +270,33 @@ Minor Gc 和 Full GC 有什么不同呢？
 <li>Minor Gc 和 Full GC 有什么不同呢？</li>
 </ul>
 
-<h3 id="本文导火索">本文导火索</h3>
+<h1 id="本文概览">本文概览</h1>
 
-<p><img src="/img/jvm-gc-1.png" alt="" /></p>
+<div class="mermaid" align="
+                                center
+                            ">
+    
+graph LR
+    A[Java内存分配规则] --> B[找出垃圾] -->C[触发GC] -->D[如何回收垃圾]
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@8.8.3/dist/mermaid.min.js"></script>
+
+<script>
+  mermaid.initialize({
+    sequence: {
+        showSequenceNumbers: false,
+        actorMargin: 50,
+        diagramMarginX:10,
+        diagramMarginY:10
+    },
+  });
+</script>
 
 <p>当需要排查各种内存溢出问题、当垃圾收集成为系统达到更高并发的瓶颈时，我们就需要对这些“自动化”的技术实施必要的监控和调节。</p>
 
-<h2 id="1-揭开-jvm-内存分配与回收的神秘面纱">1  揭开 JVM 内存分配与回收的神秘面纱</h2>
+<h1 id="1-揭开-jvm-内存分配与回收的神秘面纱">1  揭开 JVM 内存分配与回收的神秘面纱</h1>
 
 <p>Java 的自动内存管理主要是针对对象内存的回收和对象内存的分配。同时，Java 自动内存管理最核心的功能是 <strong>堆</strong> 内存中对象的分配与回收。</p>
 
@@ -351,7 +379,7 @@ graph LR
   });
 </script>
 
-<h3 id="1-1-对象优先在-eden-区分配">1.1 对象优先在 eden 区分配</h3>
+<h2 id="1-1-对象优先在-eden-区分配">1.1 对象优先在 eden 区分配</h2>
 
 <p>目前主流的垃圾收集器都会采用分代回收算法，因此需要将堆内存分为新生代和老年代，这样我们就可以根据各个年代的特点选择合适的垃圾收集算法。</p>
 
@@ -430,7 +458,7 @@ graph LR
 <span class="o">}</span></code></pre></td></tr></table>
 </div>
 </div>
-<h3 id="1-2-大对象直接进入老年代">1.2 大对象直接进入老年代</h3>
+<h2 id="1-2-大对象直接进入老年代">1.2 大对象直接进入老年代</h2>
 
 <p>大对象就是需要大量连续内存空间的对象（比如：字符串、数组）。</p>
 
@@ -438,13 +466,13 @@ graph LR
 
 <p>为了避免为大对象分配内存时由于分配担保机制带来的复制而降低效率。</p>
 
-<h3 id="1-3-长期存活的对象将进入老年代">1.3 长期存活的对象将进入老年代</h3>
+<h2 id="1-3-长期存活的对象将进入老年代">1.3 长期存活的对象将进入老年代</h2>
 
 <p>既然虚拟机采用了分代收集的思想来管理内存，那么内存回收时就必须能识别哪些对象应放在新生代，哪些对象应放在老年代中。为了做到这一点，虚拟机给每个对象一个对象年龄（Age）计数器。</p>
 
 <p>如果对象在 Eden 出生并经过第一次 Minor GC 后仍然能够存活，并且能被 Survivor 容纳的话，将被移动到 Survivor 空间中，并将对象年龄设为 1.对象在 Survivor 中每熬过一次 MinorGC,年龄就增加 1 岁，当它的年龄增加到一定程度（默认为 15 岁），就会被晋升到老年代中。对象晋升到老年代的年龄阈值，可以通过参数 <code>-XX:MaxTenuringThreshold</code> 来设置。</p>
 
-<h3 id="1-4-动态对象年龄判定">1.4 动态对象年龄判定</h3>
+<h2 id="1-4-动态对象年龄判定">1.4 动态对象年龄判定</h2>
 
 <p>大部分情况，对象都会首先在 Eden 区域分配，在一次新生代垃圾回收后，如果对象还存活，则会进入 s0 或者 s1，并且对象的年龄还会加  1(Eden 区-&gt;Survivor 区后对象的初始年龄变为 1)，当它的年龄增加到一定程度（默认为 15 岁），就会被晋升到老年代中。对象晋升到老年代的年龄阈值，可以通过参数 <code>-XX:MaxTenuringThreshold</code> 来设置。</p>
 
@@ -490,7 +518,7 @@ graph LR
 <p><strong>Sets the maximum tenuring threshold for use in adaptive GC sizing. The largest value is 15. The default value is 15 for the parallel (throughput) collector, and 6 for the CMS collector.默认晋升年龄并不都是15，这个是要区分垃圾收集器的，CMS就是6.</strong></p>
 </blockquote>
 
-<h3 id="1-5主要进行-gc-的区域">1.5主要进行 gc 的区域</h3>
+<h2 id="1-5主要进行-gc-的区域">1.5主要进行 gc 的区域</h2>
 
 <p>周志明先生在《深入理解Java虚拟机》第二版中P92如是写道：</p>
 
@@ -516,13 +544,13 @@ graph LR
 
 <p>整堆收集 (Full GC)：收集整个 Java 堆和方法区。</p>
 
-<h2 id="2-对象已经死亡">2 对象已经死亡？</h2>
+<h1 id="2-对象已经死亡">2 对象已经死亡？</h1>
 
 <p>堆中几乎放着所有的对象实例，对堆垃圾回收前的第一步就是要判断那些对象已经死亡（即不能再被任何途径使用的对象）。</p>
 
 <p><img src="/img/jvm-gc-object-death.png" alt="" /></p>
 
-<h3 id="2-1-引用计数法">2.1 引用计数法</h3>
+<h2 id="2-1-引用计数法">2.1 引用计数法</h2>
 
 <p>给对象中添加一个引用计数器，每当有一个地方引用它，计数器就加 1；当引用失效，计数器就减 1；任何时候计数器为 0 的对象就是不可能再被使用的。</p>
 
@@ -557,7 +585,7 @@ graph LR
 <span class="o">}</span></code></pre></td></tr></table>
 </div>
 </div>
-<h3 id="2-2-可达性分析算法">2.2 可达性分析算法</h3>
+<h2 id="2-2-可达性分析算法">2.2 可达性分析算法</h2>
 
 <p>这个算法的基本思想就是通过一系列的称为 <strong>“GC Roots”</strong> 的对象作为起点，从这些节点开始向下搜索，节点所走过的路径称为引用链，当一个对象到 GC Roots 没有任何引用链相连的话，则证明此对象是不可用的。</p>
 
@@ -571,7 +599,7 @@ graph LR
 * 方法区中类静态属性引用的对象
 * 方法区中常量引用的对象</p>
 
-<h3 id="2-3-再谈引用">2.3 再谈引用</h3>
+<h2 id="2-3-再谈引用">2.3 再谈引用</h2>
 
 <p>无论是通过引用计数法判断对象引用数量，还是通过可达性分析法判断对象的引用链是否可达，判定对象的存活都与“引用”有关。</p>
 
@@ -605,13 +633,13 @@ graph LR
 
 <p>特别注意，在程序设计中一般很少使用弱引用与虚引用，使用软引用的情况较多，这是因为<strong>软引用可以加速 JVM 对垃圾内存的回收速度，可以维护系统的运行安全，防止内存溢出（OutOfMemory）等问题的产生</strong>。</p>
 
-<h3 id="2-4-不可达的对象并非-非死不可">2.4 不可达的对象并非“非死不可”</h3>
+<h2 id="2-4-不可达的对象并非-非死不可">2.4 不可达的对象并非“非死不可”</h2>
 
 <p>即使在可达性分析法中不可达的对象，也并非是“非死不可”的，这时候它们暂时处于“缓刑阶段”，要真正宣告一个对象死亡，至少要经历两次标记过程；可达性分析法中不可达的对象被第一次标记并且进行一次筛选，筛选的条件是此对象是否有必要执行 finalize 方法。当对象没有覆盖 finalize 方法，或 finalize 方法已经被虚拟机调用过时，虚拟机将这两种情况视为没有必要执行。</p>
 
 <p>被判定为需要执行的对象将会被放在一个队列中进行第二次标记，除非这个对象与引用链上的任何一个对象建立关联，否则就会被真的回收。</p>
 
-<h3 id="2-5-如何判断一个常量是废弃常量">2.5 如何判断一个常量是废弃常量？</h3>
+<h2 id="2-5-如何判断一个常量是废弃常量">2.5 如何判断一个常量是废弃常量？</h2>
 
 <p>运行时常量池主要回收的是废弃的常量。那么，我们如何判断一个常量是废弃常量呢？</p>
 
@@ -629,7 +657,7 @@ graph LR
 
 <p>假如在字符串常量池中存在字符串 &ldquo;abc&rdquo;，如果当前没有任何 String 对象引用该字符串常量的话，就说明常量 &ldquo;abc&rdquo; 就是废弃常量，如果这时发生内存回收的话而且有必要的话，&rdquo;abc&rdquo; 就会被系统清理出常量池了。</p>
 
-<h3 id="2-6-如何判断一个类是无用的类">2.6 如何判断一个类是无用的类</h3>
+<h2 id="2-6-如何判断一个类是无用的类">2.6 如何判断一个类是无用的类</h2>
 
 <p>方法区主要回收的是无用的类，那么如何判断一个类是无用的类的呢？</p>
 
@@ -643,7 +671,7 @@ graph LR
 
 <p>虚拟机可以对满足上述 3 个条件的无用类进行回收，这里说的仅仅是“可以”，而并不是和对象一样不使用了就会必然被回收。</p>
 
-<h2 id="3-垃圾收集算法">3 垃圾收集算法</h2>
+<h1 id="3-垃圾收集算法">3 垃圾收集算法</h1>
 
 <div class="mermaid" align="
                                 center
@@ -666,7 +694,7 @@ graph TD
   });
 </script>
 
-<h3 id="3-1-标记-清除算法">3.1 标记-清除算法</h3>
+<h2 id="3-1-标记-清除算法">3.1 标记-清除算法</h2>
 
 <p>该算法分为“标记”和“清除”阶段：首先标记出所有不需要回收的对象，在标记完成后统一回收掉所有没有被标记的对象。它是最基础的收集算法，后续的算法都是对其不足进行改进得到。这种垃圾收集算法会带来两个明显的问题：</p>
 
@@ -677,19 +705,19 @@ graph TD
 
 <p><img src="/img/jvm-gc-mark-sweep.jpeg" alt="" /></p>
 
-<h3 id="3-2-复制算法">3.2 复制算法</h3>
+<h2 id="3-2-复制算法">3.2 复制算法</h2>
 
 <p>为了解决效率问题，“复制”收集算法出现了。它可以将内存分为大小相同的两块，每次使用其中的一块。当这一块的内存使用完后，就将还存活的对象复制到另一块去，然后再把使用的空间一次清理掉。这样就使每次的内存回收都是对内存区间的一半进行回收。</p>
 
 <p><img src="/img/jvm-gc-copy-clean.png" alt="复制算法" /></p>
 
-<h3 id="3-3-标记-整理算法">3.3 标记-整理算法</h3>
+<h2 id="3-3-标记-整理算法">3.3 标记-整理算法</h2>
 
 <p>根据老年代的特点提出的一种标记算法，标记过程仍然与“标记-清除”算法一样，但后续步骤不是直接对可回收对象回收，而是让所有存活的对象向一端移动，然后直接清理掉端边界以外的内存。</p>
 
 <p><img src="/img/jvm-gc-mark-compact.png" alt="标记-整理算法 " /></p>
 
-<h3 id="3-4-分代收集算法">3.4 分代收集算法</h3>
+<h2 id="3-4-分代收集算法">3.4 分代收集算法</h2>
 
 <p>当前虚拟机的垃圾收集都采用分代收集算法，这种算法没有什么新的思想，只是根据对象存活周期的不同将内存分为几块。一般将 java 堆分为新生代和老年代，这样我们就可以根据各个年代的特点选择合适的垃圾收集算法。</p>
 
@@ -699,7 +727,7 @@ graph TD
 
 <p>根据上面的对分代收集算法的介绍回答。</p>
 
-<h2 id="4-垃圾收集器">4 垃圾收集器</h2>
+<h1 id="4-垃圾收集器">4 垃圾收集器</h1>
 
 <div class="mermaid" align="
                                 center
@@ -726,7 +754,7 @@ graph TD
 
 <p>虽然我们对各个收集器进行比较，但并非要挑选出一个最好的收集器。因为直到现在为止还没有最好的垃圾收集器出现，更加没有万能的垃圾收集器，<strong>我们能做的就是根据具体应用场景选择适合自己的垃圾收集器</strong>。试想一下：如果有一种四海之内、任何场景下都适用的完美收集器存在，那么我们的 HotSpot 虚拟机就不会实现那么多不同的垃圾收集器了。</p>
 
-<h3 id="4-1-serial-收集器">4.1 Serial 收集器</h3>
+<h2 id="4-1-serial-收集器">4.1 Serial 收集器</h2>
 
 <p>Serial（串行）收集器收集器是最基本、历史最悠久的垃圾收集器了。大家看名字就知道这个收集器是一个单线程收集器了。它的 <strong>“单线程”</strong> 的意义不仅仅意味着它只会使用一条垃圾收集线程去完成垃圾收集工作，更重要的是它在进行垃圾收集工作的时候必须暂停其他所有的工作线程（ <strong>&ldquo;Stop The World&rdquo;</strong> ），直到它收集结束。</p>
 
@@ -739,7 +767,7 @@ graph TD
 
 <p>但是 Serial 收集器有没有优于其他垃圾收集器的地方呢？当然有，它<strong>简单而高效（与其他收集器的单线程相比）</strong>。Serial 收集器由于没有线程交互的开销，自然可以获得很高的单线程收集效率。Serial 收集器对于运行在 Client 模式下的虚拟机来说是个不错的选择。</p>
 
-<h3 id="4-2-parnew-收集器">4.2 ParNew 收集器</h3>
+<h2 id="4-2-parnew-收集器">4.2 ParNew 收集器</h2>
 
 <p><strong>ParNew 收集器其实就是 Serial 收集器的多线程版本，除了使用多线程进行垃圾收集外，其余行为（控制参数、收集算法、回收策略等等）和 Serial 收集器完全一样。</strong></p>
 
@@ -758,7 +786,7 @@ graph TD
 <li><p><strong>并发（Concurrent）</strong>：指用户线程与垃圾收集线程同时执行（但不一定是并行，可能会交替执行），用户程序在继续运行，而垃圾收集器运行在另一个 CPU 上。</p></li>
 </ul>
 
-<h3 id="4-3-parallel-scavenge-收集器">4.3 Parallel Scavenge 收集器</h3>
+<h2 id="4-3-parallel-scavenge-收集器">4.3 Parallel Scavenge 收集器</h2>
 
 <p>Parallel Scavenge 收集器也是使用复制算法的多线程收集器，它看上去几乎和ParNew都一样。 <strong>那么它有什么特别之处呢？</strong></p>
 <div class="highlight"><div class="chroma">
@@ -806,15 +834,15 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.211-b12, mixed mode)</pre></td></tr>
 </div>
 <p>JDK1.8默认使用的是Parallel Scavenge + Parallel Old，如果指定了-XX:+UseParallelGC参数，则默认指定了-XX:+UseParallelOldGC，可以使用-XX:-UseParallelOldGC来禁用该功能</p>
 
-<h3 id="4-4-serial-old-收集器">4.4.Serial Old 收集器</h3>
+<h2 id="4-4-serial-old-收集器">4.4.Serial Old 收集器</h2>
 
 <p><strong>Serial 收集器的老年代版本</strong>，它同样是一个单线程收集器。它主要有两大用途：一种用途是在 JDK1.5 以及以前的版本中与 Parallel Scavenge 收集器搭配使用，另一种用途是作为 CMS 收集器的后备方案。</p>
 
-<h3 id="4-5-parallel-old-收集器">4.5 Parallel Old 收集器</h3>
+<h2 id="4-5-parallel-old-收集器">4.5 Parallel Old 收集器</h2>
 
 <p><strong>Parallel Scavenge 收集器的老年代版本</strong>。使用多线程和“标记-整理”算法。在注重吞吐量以及 CPU 资源的场合，都可以优先考虑 Parallel Scavenge 收集器和 Parallel Old 收集器。</p>
 
-<h3 id="4-6-cms-收集器">4.6 CMS 收集器</h3>
+<h2 id="4-6-cms-收集器">4.6 CMS 收集器</h2>
 
 <p><strong>CMS（Concurrent Mark Sweep）收集器是一种以获取最短回收停顿时间为目标的收集器。它非常符合在注重用户体验的应用上使用。</strong></p>
 
@@ -841,7 +869,7 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.211-b12, mixed mode)</pre></td></tr>
 <li><strong>它使用的回收算法-“标记-清除”算法会导致收集结束时会有大量空间碎片产生。</strong></li>
 </ul>
 
-<h3 id="4-7-g1-收集器">4.7 G1 收集器</h3>
+<h2 id="4-7-g1-收集器">4.7 G1 收集器</h2>
 
 <p><strong>G1 (Garbage-First) 是一款面向服务器的垃圾收集器,主要针对配备多颗处理器及大容量内存的机器. 以极高概率满足 GC 停顿时间要求的同时,还具备高吞吐量性能特征.</strong></p>
 
@@ -865,6 +893,74 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.211-b12, mixed mode)</pre></td></tr>
 
 <p><strong>G1 收集器在后台维护了一个优先列表，每次根据允许的收集时间，优先选择回收价值最大的 Region(这也就是它的名字 Garbage-First 的由来)</strong>。这种使用 Region 划分内存空间以及有优先级的区域回收方式，保证了 G1 收集器在有限时间内可以尽可能高的收集效率（把内存化整为零）。</p>
 
+<h1 id="5-jvm-配置常用参数">5 JVM 配置常用参数</h1>
+
+<h2 id="5-1-java内存区域常见配置概览">5.1 Java内存区域常见配置概览</h2>
+
+<p><img src="/img/jvm-general-param.jpg" alt="" /></p>
+
+<h2 id="5-2-堆参数">5.2 堆参数</h2>
+
+<p><img src="/img/jvm-heap-param.jpg" alt="堆参数" /></p>
+
+<h2 id="5-3-回收器参数">5.3 回收器参数</h2>
+
+<p><img src="/img/jvm-coll-param.jpg" alt="垃圾回收器参数" /></p>
+
+<p>如上表所示，目前<strong>主要有串行、并行和并发三种</strong>，对于大内存的应用而言，串行的性能太低，因此使用到的主要是并行和并发两种。并行和并发 GC 的策略通过 <code>UseParallelGC</code>和<code>UseConcMarkSweepGC</code> 来指定，还有一些细节的配置参数用来配置策略的执行方式。例如：<code>XX:ParallelGCThreads</code>， <code>XX:CMSInitiatingOccupancyFraction</code> 等。 通常：Young 区对象回收只可选择并行（耗时间），Old 区选择并发（耗 CPU）。</p>
+
+<h2 id="5-4-推荐配置">5.4 推荐配置</h2>
+
+<div class="admonition note"><p class="admonition-title">注释</p>
+  
+在Java8中永久代的参数<code>-XX:PermSize</code> 和<code>-XX：MaxPermSize</code>已经失效。
+<p>
+按需求弹性配置各项参数，请勿死记硬背
+
+</div>
+
+<p><img src="/img/jvm-proj-param.jpg" alt="项目中垃圾回收器常用配置" /></p>
+
+<h2 id="5-5-常用的垃圾回收器组合">5.5 常用的垃圾回收器组合</h2>
+
+<p><img src="/img/jvm-general-comb.jpg" alt="垃圾回收器常用组合" /></p>
+
+<h1 id="6-不要急着gc调优">6 不要急着GC调优</h1>
+
+<p>在调优之前，我们需要记住下面的原则：</p>
+
+<ul>
+<li>多数的 Java 应用不需要在服务器上进行 GC 优化；</li>
+<li>多数导致 GC 问题的 Java 应用，都不是因为我们参数设置错误，而是代码问题；</li>
+<li>在应用上线之前，先考虑将机器的 JVM 参数设置到最优（最适合）；</li>
+<li>减少创建对象的数量；</li>
+<li>减少使用全局变量和大对象；</li>
+<li>GC 优化是到最后不得已才采用的手段；</li>
+<li>在实际使用中，分析 GC 情况优化代码比优化 GC 参数要多得多。</li>
+</ul>
+
+<p>总结一句话，养成良好的编码习惯，是避免GC调优的好办法，GC调优应该是最后的选择。</p>
+
+<p>要始终相信Java虚拟机自身的性能，如果项目的负荷重、体量大，并发高，代码层面优化的余地小，再尝试做GC优化方面的工作。</p>
+
+<h2 id="6-1-gc调优目的">6.1 GC调优目的</h2>
+
+<p>将转移到老年代的对象数量降低到最小； 减少GC的执行时间。</p>
+
+<h2 id="6-2-gc调优策略">6.2 GC调优策略</h2>
+
+<ul>
+<li><strong>策略 1：</strong>将新对象预留在新生代，由于 Full GC 的成本远高于 Minor GC，因此尽可能将对象分配在新生代是明智的做法，实际项目中根据 GC 日志分析新生代空间大小分配是否合理，适当通过“-Xmn”命令调节新生代大小，最大限度降低新对象直接进入老年代的情况。</li>
+<li><strong>策略 2：</strong>大对象进入老年代，虽然大部分情况下，将对象分配在新生代是合理的。但是对于大对象这种做法却值得商榷，大对象如果首次在新生代分配可能会出现空间不足导致很多年龄不够的小对象被分配的老年代，破坏新生代的对象结构，可能会出现频繁的 full gc。因此，对于大对象，可以设置直接进入老年代（当然短命的大对象对于垃圾回收来说简直就是噩梦）。<code>-XX:PretenureSizeThreshold</code> 可以设置直接进入老年代的对象大小。</li>
+<li><strong>策略 3：</strong>合理设置进入老年代对象的年龄，<code>-XX:MaxTenuringThreshold</code> 设置对象进入老年代的年龄大小，减少老年代的内存占用，降低 full gc 发生的频率。</li>
+<li><strong>策略 4：</strong>设置稳定的堆大小，堆大小设置有两个参数：<code>-Xms</code> 初始化堆大小，<code>-Xmx</code> 最大堆大小。</li>
+<li><strong>策略5：</strong>注意： 如果满足下面的指标，<strong>则一般不需要进行 GC 优化：</strong></li>
+</ul>
+
+<blockquote>
+<p>MinorGC 执行时间不到50ms； Minor GC 执行不频繁，约10秒一次； Full GC 执行时间不到1s； Full GC 执行频率不算频繁，不低于10分钟1次。</p>
+</blockquote>
+
 <h2 id="参考">参考</h2>
 
 <ul>
@@ -883,8 +979,8 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.211-b12, mixed mode)</pre></td></tr>
   <p class="copyright-item" style= text-align:right;>
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2020-11-27
-        <a href="https://github.com/wangy325/endlessriver/commit/9d82ba640bdb2078375f5fe68ffc7060851bea88" title="update tag and theme of all pages, and declare the principle of doc tags.">(9d82ba6)</a>
+        2020-11-30
+        <a href="https://github.com/wangy325/endlessriver/commit/b53bf33d61b24b10ae628d794352f7b4530ab8d5" title="add GC optimize to java-gc, compress imgs size. fix other liitle issues">(b53bf33)</a>
     </span>
   </p>
   
@@ -892,8 +988,11 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.211-b12, mixed mode)</pre></td></tr>
 </div>
 <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/java%E8%BF%9B%E9%98%B6/">java进阶</a>
           <a href="/tags/jvm/">jvm</a>
+          <a href="/tags/mermaid/">mermaid</a>
+          <a href="/tags/%E5%A0%86/">堆</a>
+          <a href="/tags/gc-roots/">GC roots</a>
+          <a href="/tags/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8/">垃圾收集器</a>
           </div>
       <nav class="post-nav">
         <a class="prev" href="/post/tech/java/mysql%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/">
@@ -958,7 +1057,7 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.211-b12, mixed mode)</pre></td></tr>
     <span class="author">wangy325</span>
     &copy;
     2019 -
-    2020
+    2021
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -987,6 +1086,8 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.211-b12, mixed mode)</pre></td></tr>
 <script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
   <script type="text/javascript">
     window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
       showProcessingMessages: false,
       messageStyle: 'none'
     };

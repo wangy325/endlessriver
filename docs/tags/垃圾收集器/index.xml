@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>垃圾收集器 on Endless River</title>
@@ -6,7 +6,11 @@
     <description>Recent content in 垃圾收集器 on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 25 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://wangy325.top/tags/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 25 Nov 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://wangy325.top/tags/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8/index.xml" rel="self" type="application/rss+xml" />
+    
+    
     <item>
       <title>JVM垃圾回收概要(转)</title>
       <link>https://wangy325.top/post/tech/java/java-gc/</link>
@@ -14,7 +18,9 @@
       
       <guid>https://wangy325.top/post/tech/java/java-gc/</guid>
       <description>&lt;h1 id=&#34;本节常见面试题&#34;&gt;本节常见面试题&lt;/h1&gt;
+
 &lt;p&gt;问题答案在文中都有提到&lt;/p&gt;
+
 &lt;ul&gt;
 &lt;li&gt;如何判断对象是否死亡（两种方法）。&lt;/li&gt;
 &lt;li&gt;简单的介绍一下强引用、软引用、弱引用、虚引用（虚引用与软引用和弱引用的区别、使用软引用能带来的好处）。&lt;/li&gt;

@@ -36,7 +36,7 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<link href="/dist/even.ac664553.min.css" rel="stylesheet">
+<link href="/dist/even.886d4da2.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
@@ -45,7 +45,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://wangy325.top/" />
 
-<meta property="og:updated_time" content="2020-11-27T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2021-02-02T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Endless River">
 <meta itemprop="description" content="">
@@ -121,6 +121,290 @@
       <div class="content-wrapper">
         <div id="content" class="content">
           <section id="posts" class="posts">
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/">动态绑定与静态绑定</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-04-18 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/java/"> java </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 438 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 1 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>这是Java方法调用的2个术语，用来描述Java虚拟机方法调用的2种机制</p>
+
+<h2 id="6-1-span-id-m10-动态绑定-span">6.1 <span id = "m10">动态绑定</span></h2>
+
+<p>方法的<strong>名字</strong>和<strong>参数列表</strong>构成了方法的签名</p>
+
+<blockquote>
+<p>返回类型并不是方法签名的一部分，因此在覆盖方法时，允许将导出类的方法返回类型定义为基类返回类型的子类型</p>
+</blockquote>
+
+<p>方法调用时，虚拟机为每个类创建一个<strong>方法表</strong>，列出所有的方法签名和实际调用的方法，调用方法时按表查找即可，例如方法表可能是这样的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">FinalMethod:
+	f() -&gt; FinalMethod.f();
+	g() -&gt; FinalMethod.g();
+	p() -&gt; FinalMethod.p();
+	// skip Object method...
+FinalMethodExt
+	f() -&gt; FinalMethodExt.f();
+	p() -&gt; FinalMethodExt.p();
+	// skip Object method...</pre></td></tr></table>
+</div>
+</div>
+<p>当对象引用<code>o</code>调用方法时，其过程可归纳为：</p>
+
+<ul>
+<li>虚拟机提取<code>o</code>的<strong>实际类型</strong>的方法表</li>
+<li>在方法表中搜索调用的方法，若有满足，则直接调用</li>
+<li>若无满足，则在<code>o</code>实际类型的父类中搜索调用的方法</li>
+<li>调用方法或抛出异常</li>
+</ul>
+
+<p>从上面的描述可以看出，继承体系中的方法调用可能出现不同的结果（导出类覆盖和未覆盖基类方法时的差异现象）</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/final%E5%85%B3%E9%94%AE%E5%AD%97/">final关键字</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-04-17 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/java/"> java </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 1393 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 3 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <blockquote>
+<p>不同的使用环境下，<code>final</code>关键字的含义有细微差别，但通常它指“这是无法改变的”</p>
+</blockquote>
+
+<h1 id="5-1-span-id-m3-final数据-span">5.1 <span id="m3">final数据</span></h1>
+
+<p>final关键字通常用来表示一块数据是恒定不变的：</p>
+
+<h2 id="5-1-1-常量">5.1.1 常量</h2>
+
+<ul>
+<li>比如一个永不改变的<code>编译时常量</code> &mdash;&gt; 对应前文所谓<code>静态常量</code></li>
+</ul>
+
+<p><code>public final double PI = 3.14</code></p>
+
+<p>如果使用<code>static final</code>来修饰变量，那么它就是一个标准的编译时常量（静态常量）</p>
+
+<p><code>public static final double PI = 3.14</code></p>
+
+<p>在Java中，编译时常量必须是<strong>基本数据类型</strong>或<strong>字符串</strong>，声明时必须赋值</p>
+
+<ul>
+<li>一个在<code>运行时被初始化</code>的值，你不希望它被改变</li>
+</ul>
+
+<p><code>public final int RANDOM = new Random().nextInt(47)</code></p>
+
+<p>一个既是<code>final</code>也是<code>static</code>的域只占用一段不能改变的存储空间</p>
+
+<p>当对非基本数据类型使用<code>final</code>时，其含义稍微有点变化，其使<strong>引用恒定不变</strong>，这就是说被<code>final</code>修饰的对象引用无法使其指向另一个对象，但是对象内容却是可以被修改的</p>
+
+<p>Java允许声明一个<code>空白final域</code>，但是这个final域在使用前必须使用构造器（常见）或表达式初始化</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/final%E5%85%B3%E9%94%AE%E5%AD%97/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/">传值还是传引用</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-04-15 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/java/"> java </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 1172 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 3 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>Java语言设计总是<strong>按值调用</strong></p>
+
+<blockquote>
+<p>按值调用：方法接收的是调用者提供的值</p>
+
+<p>按引用调用：方法接收的是调用者提供的变量地址</p>
+</blockquote>
+
+<p>一个方法可以修改传递引用所对应的变量值，但是不能修改传递值所对应的变量值</p>
+
+<h2 id="3-1-span-id-m11-基本数据类型参数-span">3.1 <span id = "m11">基本数据类型参数</span></h2>
+
+<blockquote>
+<p>一个方法不能修改一个基本数据类型的参数（数值类型或布尔值）</p>
+</blockquote>
+
+<p>参考如下代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// doesn&#39;t work
+</span><span class="c1"></span><span class="kd">class</span> <span class="nc">ByValue</span> <span class="o">{</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">tripleValue</span><span class="o">(</span><span class="kt">int</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">3</span> <span class="o">*</span> <span class="n">x</span><span class="o">;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;x = &#34;</span> <span class="o">+</span> <span class="n">x</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">10</span><span class="o">;</span>
+        <span class="n">tripleValue</span><span class="o">(</span><span class="n">y</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;y = &#34;</span> <span class="o">+</span> <span class="n">y</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/* output:
+</span><span class="cm">x = 30
+</span><span class="cm">y = 10
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>方法执行时，<code>x</code>被初始化为<code>y</code><strong>值的一个拷贝</strong>，方法执行后 ，<code>x</code>值变为30，<code>y</code>仍为10，之后<code>x</code>不再使用</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/static%E5%85%B3%E9%94%AE%E5%AD%97/">static关键字</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-04-14 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/java/"> java </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 910 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 2 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>static关键字意为“静态的”，其语义可以理解为“类的对象”(不要理解为Class对象)，即不需要对象实例，可以直接通过<code>类名.staticDomain</code>的形式直接访问</p>
+
+<h2 id="2-1-静态域">2.1 静态域</h2>
+
+<p>如果将一个域定义为<code>static</code>，那么每个类中都只有一个这样的域。参考如下例子：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">Employee</span><span class="o">{</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">nextId</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kt">int</span> <span class="n">id</span><span class="o">;</span>
+  <span class="o">...</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>每一个<code>Employee</code>都有自己的一个<code>id</code>域，但是这个类的所有实例都共享一个<code>nextId</code>域。记住，即使没有<code>Employee</code>实例，静态域<code>nextId</code>也存在，它属于类而不属于任何对象。<code>static</code>域只在<strong>类加载的时候初始化一次</strong>，并且是先于非<code>static</code>域初始化的</p>
+
+<p>以下是一个简单的<code>static</code>关键字使用示例：</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/static%E5%85%B3%E9%94%AE%E5%AD%97/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
     <article class="post">
   <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/">访问权限修饰符</a></h1>
@@ -275,7 +559,7 @@
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/%E8%87%AA%E5%BB%BAmysql/">自建mysql数据库</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/%E8%87%AA%E5%BB%BAmysql/">在centOS上安装并配置mysql数据库</a></h1>
     <div class="post-meta">
 
         <span>
@@ -290,7 +574,7 @@
           <a href="/categories/server/"> server </a>
           </div>
         <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 5264 字 </span>
+        <span class="more-meta analyse"> 约 5399 字 </span>
         <span class="icomoonfree icon-clock"></span>
         <span class="more-meta"> 预计阅读 11 分钟 </span>
     </div>
@@ -298,7 +582,7 @@
   
   <div class="post-content">
     <div class="post-summary">
-      <p>自建mysql数据库的安装配置及简单优化</p>
+      <p>文章介绍了在centOS7上安装mysql数据库服务的配置及简单优化过程。在服务器上安装mysql服务网络上能够找到的资源很多了，因此本文没有作详细介绍，本文的重点在于后续的优化配置方面。</p>
     </div>
     <div class="read-more">
       <a href="/post/tech/%E8%87%AA%E5%BB%BAmysql/" class="read-more-link">阅读更多</a>
@@ -362,135 +646,6 @@ apt-get install gcc</code></pre></td></tr></table>
   </div>
 </article>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java-script%E4%B8%AD%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/">Java Script中的构造函数</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2019-07-25 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/javascript/"> JavaScript </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 1073 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 3 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>函数作为JavaScript中的一个特殊数据类型（特殊对象的一种，另一种是数组），有一些特性值得思考与讨论。</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/java-script%E4%B8%AD%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A82%E7%9A%84%E8%A1%A5%E7%A0%81/">2的补码问题</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2019-07-17 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/binary/"> binary </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 1444 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 3 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>一直以来，关于2进制的讨论只出现在位运算里，并且也结束在位运算这里。所以，关于<strong>如何在计算机中表示一个负数</strong>这样的问题的讨论很少，也常被忽略遗忘。</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A82%E7%9A%84%E8%A1%A5%E7%A0%81/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/%E5%B8%B8%E8%A7%81cron%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%A4%BA%E4%BE%8B/">常见的cron表达式示例</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2018-12-13 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/cron/"> cron </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 2054 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 5 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>cron表达式用于配置cronTrigger的实例。cron表达式实际上是由七个子表达式组成。这些表达式之间用空格分隔</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/%E5%B8%B8%E8%A7%81cron%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%A4%BA%E4%BE%8B/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">代理模式</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2018-12-05 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/java/"> Java </a>
-          <a href="/categories/patterns/"> patterns </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 3489 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 7 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>代理可以简单理解为，B类托管A类的功能，并根据需求，对A类的访问作<font color=red><strong>控制</strong></font>，这里的<font color=red><strong>控制</strong></font>可以理解为对A类方法执行的流程的影响，包括但不限于：</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/java/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
     </section>
   
   <nav class="pagination">
@@ -535,7 +690,7 @@ apt-get install gcc</code></pre></td></tr></table>
     <span class="author">wangy325</span>
     &copy;
     2019 -
-    2020
+    2021
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -562,6 +717,15 @@ apt-get install gcc</code></pre></td></tr></table>
   </script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
 <script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 
 
 
