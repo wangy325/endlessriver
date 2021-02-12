@@ -26,13 +26,13 @@ mysql事务属于老生常谈的内容了，并不指望这一篇文章将其搞
 
 <!--more-->
 
-# 事务的ACID性质
+# 1 事务的ACID性质
 
 事务可以保证被声明为事务的分步操作要么都成功执行，要么都不执行。执行成功的那些步骤操作会被**回滚**，这样不会对mysql的数据完整性进行破坏。
 
 - <span style="font-style:italic;font-weight:bold;color:#0047AB">Atomicity</span> 原子性
 
-    原子性的概念和所有并发编程的概念一样，如果声明一个操作是原子的，那么这个操作要么执行，要么不执行。如果声明了一个事务，那么就可以把其看作一个「并发编程里面的[临界区](../%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/#6-%E4%B8%B4%E7%95%8C%E5%8C%BA)」，其包含的分步操作要么全部执行，要么全不执行。
+    原子性的概念和所有并发编程的概念一样，如果声明一个操作是原子的，那么这个操作要么执行，要么不执行。如果声明了一个事务，那么就可以把事务开启之后执行的SQL语句看作一个「并发编程里面的[临界区](../%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/#6-%E4%B8%B4%E7%95%8C%E5%8C%BA)」中的代码，它只能允许一个SQL连接访问数据。包含的SQL分步操作要么全部执行，要么全不执行。
 
 - <span style="font-style:italic;font-weight:bold;color:#0047AB">Consistency</span> 一致性
 
@@ -46,29 +46,29 @@ mysql事务属于老生常谈的内容了，并不指望这一篇文章将其搞
 
     一旦事务被提交，其对数据的修改是永久性的。即使系统崩溃，修改的数据也不会丢失。
 
-# 事务的隔离级别
+# 2 事务的隔离级别
 
 如果事务满足ACID性质，那么数据安全性就不会受到威胁。那么，设计一个逻辑来保证事务的ACID性质不就解决问题了么，为什么还要设计事务的隔离级别呢？结合实际情况来看，并非所有的事务都需要满足ACID特性，有些数据对准确性要钱不高的的事务，是允许读取到其他事务修改的数据<sup><a>例证</a></sup>。另外，在实现过程中，一个满足ACID特性的数据库系统要复杂的多，系统需要做很多额外的操作来满足ACID特性，这样会造成额外的开销，系统会占用更多的资源而影响数据库的执行效率。这也是数据库中仍然有不支持事务的存储引擎一席之地的原因[^3]。
 
 事务的隔离级别并不是mysql独有的，它是SQL标准中定义的，没种隔离级别都规定了一个事务中所做的修改在那些事务内和事务間是可见的，哪些是不可见的。较低的隔离级别支持更高的并发、拥有更高的效率。
 
-- <span style="font-style:italic;font-weight:bold;color:#0047AB">READ UNCOMMITTED</span>（读未提交）
+- <span style="font-style:italic;font-weight:bold;color:#0047AB">READ UNCOMMITTED</span>（**读未提交**）
 
     这个隔离级别中，事务中的修改，即使没有提交，对其他事务都是可见的。其他事务可以读取到未提交的数据，这种情况称为**脏读**（***dirty read***）。这个级别会导致很多问题，一般很少使用。
 
-- <span style="font-style:italic;font-weight:bold;color:#0047AB">READ COMMITTED</span>（读已提交）
+- <span style="font-style:italic;font-weight:bold;color:#0047AB">READ COMMITTED</span>（**读已提交**）
 
     这个隔离级别中，满足隔离性的简单定义，一个事务开始前，只能读取到已经提交的事务所做的修改。换言之，一个事务对数据库所做的任何修改在其提交之前都其他事务都是不可见的。这会导致是个现象：一个事务可能2次读取到的数据是不一致的（事务A提交前与提交后），这种情况称为**不可重复读**（***nonrepeatable read***）
 
-- <span style="font-style:italic;font-weight:bold;color:#0047AB">REPEATABLE READ</span>（可重复读）
+- <span style="font-style:italic;font-weight:bold;color:#0047AB">REPEATABLE READ</span>（**可重复读**）
 
     可重复读解决了脏读的问题，同时也保证了在事务了多次对同一个数据取样，读取到的数据是一致的。但是，理论上，该隔离级别的不能解决**幻读**（***phantom read***）的问题：幻读指的是某个事务在读取**某个范围**的记录时，另外一个事务又在该范围内插入了新的记录，那么，当之前的事务再次读取这个范围的记录时，就会出现**幻行**（***phantom row***）。不过InnoDB引擎通过MVCC(*multi version concurrency control*)多版本并发控制解决了幻读的问题。
 
     可重复读是mysql的**默认隔离级别**
 
-- <span style="font-style:italic;font-weight:bold;color:#0047AB">SERIALIZABLE</span>（可串行化）
+- <span style="font-style:italic;font-weight:bold;color:#0047AB">SERIALIZABLE</span>（**可串行化**）
 
-    SERIALIZABLE是最高的隔离级别，它通过强制所有的sql语句**串行**执行来避免幻读的问题。该隔离级别下，每一行使用到的数据都会加锁，所以当数据库请求量大的时候，就有可能造成大量的超时等待[^4]和锁争用的问题。这个隔离级别很少使用，因为其牺牲了很大量的性能来保证数据一致性，如果不是严格地要求数据一致性，可以考虑次=此隔离级别。
+    SERIALIZABLE是最高的隔离级别，它通过强制所有的SQL语句**串行**执行来避免幻读的问题。该隔离级别下，每一行使用到的数据都会加锁，所以当数据库请求量大的时候，就有可能造成大量的超时等待[^4]和锁争用的问题。这个隔离级别很少使用，因为其牺牲了很大量的性能来保证数据一致性。~~如果不是严格地要求数据一致性，可以考虑此隔离级别~~<sup>表述有误？</sup>。
 
 下表展示了事务隔离级别以及其可能引起的后果之间的额关系：
 
@@ -128,11 +128,11 @@ mysql事务属于老生常谈的内容了，并不指望这一篇文章将其搞
 </table></div>
 
 
-# 查看数据库的基本信息
+# 3 查看数据库的基本信息
 
 在实例演示之前，需要查看几个基本信息，来确保测试环境的一致性与可行性。这些基本信息包括，数据库当前所使用的引擎，数据库当前的事务隔离级别。
 
-## 引擎
+## 3.1 引擎
 
 使用下面的命令查看当前数据库的引擎信息
 
@@ -177,7 +177,7 @@ Max_data_length: 0
 ```
 我们看到`vendors`表的引擎也是InnoDB。
 
-## 隔离级别
+## 3.2 隔离级别
 
 使用如下命令查看当前数据库的事务隔离级别
 
@@ -190,6 +190,7 @@ mysql> show variables like 'tx_isolation';
 +---------------+-----------------+
 1 row in set (0.01 sec)
 ```
+
 当前数据库的事务隔离级别为可重复读，加上InnoDB引擎的**MVCC**，基本上是满足事务的ACID特性的数据库系统。
 
 在进行测试时，我们可以通过
@@ -197,6 +198,7 @@ mysql> show variables like 'tx_isolation';
 ```SQL
 mysql> SET TRANSACTION ISOLATION LEVEL [tx_isolation];
 ```
+
 来控制当前客户端连接的下个事务隔离级别——只对当前连接的**下一次事务生效**生效，这样便于测试。
 
 更多关于`set transaction`命令的内容：https://dev.mysql.com/doc/refman/8.0/en/set-transaction.html
@@ -207,7 +209,7 @@ mysql> SET TRANSACTION ISOLATION LEVEL [tx_isolation];
 - `rollback`回滚/结束事务
 - `commit`提交/结束事务
 
-# 读未提交 READ UNCOMMITTED
+# 4 读未提交 READ UNCOMMITTED
 
 ![脏读](/img/mysql-tx-read-uncommitted.jpg)
 
@@ -221,7 +223,7 @@ mysql> SET TRANSACTION ISOLATION LEVEL [tx_isolation];
 
 上面的执行流程完整的演示了在***READ UNCOMMITTED***隔离级别下的**脏读**和**不可重复读**现象。
 
-# 读已提交 READ COMMITTED
+# 5 读已提交 READ COMMITTED
 
 ![不可重复度](/img/mysql-tx-read-committed.jpg)
 
@@ -236,7 +238,7 @@ mysql> SET TRANSACTION ISOLATION LEVEL [tx_isolation];
 上面的执行流程完整演示了在***READ COMMITTED***隔离级别下，两次读取到的结果不一致的现象，即在此隔离级别下**不可重复读**。
 
 
-# 多版本并发控制（MVCC）
+# 6 多版本并发控制（MVCC）
 
 前文提到，mysql的InnoDB引擎使用MVCC解决了在可重复读(*REPEATABLE READ*)隔离级别下幻读(*phantom read*)的问题。因此，在执行可重复读隔离级别的测试之前，先介绍一下多版本并发控制(**M**ulti **V**ersion **C**ocurrency **C**ontrol)[^5]。
 
@@ -299,7 +301,7 @@ mysql> SET TRANSACTION ISOLATION LEVEL [tx_isolation];
 在接下来的演示中，我们将会看到MVCC在事务执行过程中的行为。
 
 
-# 可重复读 REPEATABLE READ
+# 7 可重复读 REPEATABLE READ
 
 ![可重复读](/img/mysql-tx-repeatable-read.jpg)
 
@@ -313,7 +315,7 @@ mysql> SET TRANSACTION ISOLATION LEVEL [tx_isolation];
 
 遗憾的是，笔者试图从MVCC“系统版本号”的概念去推断事务的执行，始终无法得出与预期一致的结果，所以关于MVCC“系统版本号”的工作机制，此文尚不能详述，不过，程序的执行期望却和前文描述的MVCC行为是一致的。其实，使用“快照”的概念去理解MVCC的行为，会显得更容易。
 
-# 串行 SERIALIZABLE
+# 8 串行 SERIALIZABLE
 
 ![串行](/img/mysql-tx-serializable.jpg)
 
@@ -326,7 +328,7 @@ ERROR 1317 (70100): Query execution was interrupted
 > ```
 > 看到interruptted，间接证明了insert操作确实是处于阻塞状态
 
-# 参考
+# 9 参考
 
 - [高性能mysql 第3版](https://book.douban.com/subject/23008813/)
 - [廖雪峰的官方网站-数据库事务](https://www.liaoxuefeng.com/wiki/1177760294764384/1179611198786848)
