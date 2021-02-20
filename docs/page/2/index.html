@@ -45,7 +45,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://wangy325.top/" />
 
-<meta property="og:updated_time" content="2021-02-02T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2021-02-20T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Endless River">
 <meta itemprop="description" content="">
@@ -121,6 +121,105 @@
       <div class="content-wrapper">
         <div id="content" class="content">
           <section id="posts" class="posts">
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/bloom-filter/">布隆过滤器(转)</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-11-23 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/java/"> java </a>
+          <a href="/categories/redis/"> redis </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 3669 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 8 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>海量数据处理以及缓存穿透这两个场景让我认识了 布隆过滤器 ，我查阅了一些资料来了解它，但是很多现成资料并不满足我的需求，所以就决定自己总结一篇关于布隆过滤器的文章。希望通过这篇文章让更多人了解布隆过滤器，并且会实际去使用它！</p>
+
+<p>下面我们将分为几个方面来介绍布隆过滤器：</p>
+
+<ol>
+<li>什么是布隆过滤器？</li>
+<li>布隆过滤器的原理介绍。</li>
+<li>布隆过滤器使用场景。</li>
+<li>通过 Java 编程手动实现布隆过滤器。</li>
+<li>利用Google开源的Guava中自带的布隆过滤器。</li>
+<li>Redis 中的布隆过滤器。</li>
+</ol>
+
+<h3 id="1-什么是布隆过滤器">1.什么是布隆过滤器？</h3>
+
+<p>首先，我们需要了解布隆过滤器的概念。</p>
+
+<p>布隆过滤器（Bloom Filter）是一个叫做 Bloom 的老哥于1970年提出的。我们可以把它看作由二进制向量（或者说位数组）和一系列随机映射函数（哈希函数）两部分组成的数据结构。相比于我们平时常用的的 List、Map 、Set 等数据结构，它占用空间更少并且效率更高，但是缺点是其返回的结果是概率性的，而不是非常准确的。理论情况下添加到集合中的元素越多，误报的可能性就越大。并且，存放在布隆过滤器的数据不容易删除。</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/bloom-filter/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BB%84%E4%BB%B6/">倒计时门闩、信号量、交换器及其他</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-11-16 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/java/"> java </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 10784 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 22 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>Java 1.5以后的并发类库新加入了一些用于解决并发问题的新构件，合理地使用这些构件能够帮助我们写出更加简单且健壮的并发程序。本节内容介绍<code>java.util.concurrent</code>包中一些具有代表性的构件，包括</p>
+
+<ul>
+<li>CountDownLatch</li>
+<li>CyclicBarrier</li>
+<li>Semaphore</li>
+<li>Exchanger</li>
+<li>DelayQueue</li>
+<li>PriorityBlockingQueue</li>
+</ul>
+
+<h1 id="1-countdownlatch">1 CountDownLatch</h1>
+
+<p>在讨论线程的基本概念时，我们说过<code>join()</code>方法可使当前线程等待调用join方法的线程执行完，可以实现简单的<a href="../线程基础概念/#9-加入一个线程">无锁同步</a>，使用CountDownLatch可以更加简单的实现这一目的。毕竟，<code>join()</code>方法的语义“加入一个线程”不是很容易就能让人理解。相较于<code>join()</code>方法，CountDownLatch的语义就明确多了。</p>
+
+<p>在有些文档上，将CountDownLatch译为&rdquo;倒计时门闩【shuān】&rdquo;，其维护一个计数器，这个计数器在CountDownLatch初始化之后便<strong>不能重置</strong>。在CountDownLatch上调用<code>countDown()</code>方法来将计数值减1，调用这个方法并不会引起阻塞。不过，在这个计数器为0之前，任何调用CountDownLatch的<code>await()</code>方法的任务都将阻塞。</p>
+
+<p>CountDownLatch的典型用法是将一个任务分割为n个可以独立解决的部分，并创建一个计数器值为n的CountDownLatch，在每个任务完成时，调用<code>countDown()</code>方法将计数器减1，在等待所有任务完成的线程上调用<code>await()</code>方法，将任务阻塞，知道计数器为0之后再继续运行。</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BB%84%E4%BB%B6/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
     <article class="post">
   <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/">计划执行任务</a></h1>
@@ -459,76 +558,6 @@
     </div>
     <div class="read-more">
       <a href="/post/tech/java/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%80/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/">资源访问受限</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2020-05-20 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/java/"> java </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 12516 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 25 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>在系列一中，虽然创建了多线程，并且线程之间出现了一些<strong>不可预测</strong>的CPU调度，但是由于线程之间是<strong>相互隔离</strong>的——<strong>线程没有访问共同的资源</strong>，尽管在执行任务的过程可能被CPU剥夺运行权，但是当它们再次获得运行权时对运行结果并没有影响，它们是安全的</p>
-
-<p>考虑一种情况，如果<strong>多个线程访问同一个资源</strong>，并对资源内容进行修改，会发生什么情况？</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/">线程与任务</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2020-05-15 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/java/"> java </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 6230 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 13 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>并发是生产过程不可能绕过去的坎，<del>要编写高性能的程序，必须使用并发</del></p>
-
-<p>并发的本质是多个线程同时处理任务<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>，不同于进程，线程之间的资源是共享的，当程序不够严谨时，使用多线程就可能带来问题，这是要反复讨论并发的原因之一</p>
-
-<p>在Java中，必须明白一点：线程由Thread类启动，但Thread类并不执行任何操作，<strong>它只是驱动赋予它的任务</strong>。因此将<strong>线程与任务</strong>的概念区分开，有利于理解并发</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>

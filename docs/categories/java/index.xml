@@ -6,10 +6,42 @@
     <description>Recent content in java on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 02 Feb 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Feb 2021 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangy325.top/categories/java/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>在SpringBoot中使用MessageSource</title>
+      <link>https://wangy325.top/post/tech/use-springboot-messagesource/</link>
+      <pubDate>Sat, 20 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/use-springboot-messagesource/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;注：这篇文章主要介绍了校验信息的国际化，MessageSource的配置逻辑是通用的。&lt;/p&gt;
+
+&lt;p&gt;几个说明：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;del&gt;properties配置文件中，&lt;code&gt;spring.messages.basename&lt;/code&gt;&lt;strong&gt;必须&lt;/strong&gt;要加classpath前缀。如 &lt;code&gt;spring.messages.basename=classpath:i18n/messages&lt;/code&gt;&lt;/del&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;del&gt;必须要手动配置&lt;code&gt;MessageSource&lt;/code&gt;，springboot不会自动配置之&lt;/del&gt;；&lt;/li&gt;
+&lt;li&gt;如果使用&lt;code&gt;MessageSource.getMessage()&lt;/code&gt;方法，第一个参数的引用形式为&lt;code&gt;&amp;quot;code&amp;quot;&lt;/code&gt;，而不是&lt;code&gt;&amp;quot;{code}&amp;quot;&lt;/code&gt;或者&lt;code&gt;&amp;quot;${code}&amp;quot;&lt;/code&gt;。如messageSource.getMessage(&amp;ldquo;test.msg&amp;rdquo;, null, &lt;del&gt;Locale.getDefault()&lt;/del&gt;)；&lt;/li&gt;
+&lt;li&gt;在配置&lt;code&gt;LocalValidatorFactoryBean&lt;/code&gt;之后，才可以在&lt;code&gt;javax.validation.constraints&lt;/code&gt;包下的注解（&lt;code&gt;@Size&lt;/code&gt;，&lt;code&gt;@NotNull&lt;/code&gt;&amp;hellip;）下的&lt;strong&gt;&lt;em&gt;message&lt;/em&gt;&lt;/strong&gt;属性中使用&lt;code&gt;&amp;quot;{code}&amp;quot;&lt;/code&gt;的形式声明校验提示信息。如
+&lt;code&gt;@NotNull(message = &amp;quot;{leftTime.not.null}&amp;quot;)&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;springMVC的locale配置和JVM的locale配置不一样，在application.properties中配置的&lt;code&gt;spring.mvc.locale=zh_CN&lt;/code&gt;实际上配置的是&lt;code&gt;WebMvcProperties&lt;/code&gt;，在获取消息时，locale信息应该从&lt;code&gt;webMvcProperties.getLocale()&lt;/code&gt;中获取&lt;strong&gt;而不是&lt;/strong&gt;使用&lt;code&gt;Locale.getDefault()&lt;/code&gt;获取。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;1-概览&#34;&gt;1 概览&lt;/h1&gt;
+
+&lt;p&gt;MessageSource is a powerful feature available in Spring applications. This helps application developers handle various complex scenarios with writing much extra code, such as environment-specific configuration, internationalization or configurable values.&lt;/p&gt;
+
+&lt;p&gt;One more scenario could be modifying the default validation messages to more user-friendly/custom messages.&lt;/p&gt;
+
+&lt;p&gt;In this tutorial, we&amp;rsquo;ll see how to configure and manage custom validation MessageSource in the application using Spring Boot.&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Java8中的新日期和时间工具库（转）</title>
@@ -199,7 +231,7 @@
     </item>
     
     <item>
-      <title>一些重要的并发组件</title>
+      <title>倒计时门闩、信号量、交换器及其他</title>
       <link>https://wangy325.top/post/tech/java/%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BB%84%E4%BB%B6/</link>
       <pubDate>Mon, 16 Nov 2020 00:00:00 +0000</pubDate>
       
@@ -215,13 +247,13 @@
 &lt;li&gt;PriorityBlockingQueue&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h1 id=&#34;countdownlatch&#34;&gt;CountDownLatch&lt;/h1&gt;
+&lt;h1 id=&#34;1-countdownlatch&#34;&gt;1 CountDownLatch&lt;/h1&gt;
 
-&lt;p&gt;在讨论线程的基本概念时，我们说过&lt;code&gt;join()&lt;/code&gt;方法可使当前线程等待调用join方法的线程执行完，可以实现简单的&lt;a href=&#34;../线程基础概念/#9-加入一个线程&#34;&gt;无锁同步&lt;/a&gt;，使用CountDownLatch可以更加简单的实现这一目的。毕竟，&lt;code&gt;join()&lt;/code&gt;方法的语义“加入一个线程”不是很容易就能让人理解。相较于&lt;code&gt;join()&lt;/code&gt;方法，CountDownLatch的语义就明确多了&lt;/p&gt;
+&lt;p&gt;在讨论线程的基本概念时，我们说过&lt;code&gt;join()&lt;/code&gt;方法可使当前线程等待调用join方法的线程执行完，可以实现简单的&lt;a href=&#34;../线程基础概念/#9-加入一个线程&#34;&gt;无锁同步&lt;/a&gt;，使用CountDownLatch可以更加简单的实现这一目的。毕竟，&lt;code&gt;join()&lt;/code&gt;方法的语义“加入一个线程”不是很容易就能让人理解。相较于&lt;code&gt;join()&lt;/code&gt;方法，CountDownLatch的语义就明确多了。&lt;/p&gt;
 
-&lt;p&gt;在有些文档上，将CountDownLatch译为&amp;rdquo;倒计时门闩【shuān】&amp;rdquo;，其维护一个计数器，这个计数器在CountDownLatch初始化之后便&lt;strong&gt;不能重置&lt;/strong&gt;。在CountDownLatch上调用&lt;code&gt;countDown()&lt;/code&gt;方法来将计数值减1，调用这个方法并不会引起阻塞。不过，在这个计数器为0之前，任何调用CountDownLatch的&lt;code&gt;await()&lt;/code&gt;方法的任务都将阻塞&lt;/p&gt;
+&lt;p&gt;在有些文档上，将CountDownLatch译为&amp;rdquo;倒计时门闩【shuān】&amp;rdquo;，其维护一个计数器，这个计数器在CountDownLatch初始化之后便&lt;strong&gt;不能重置&lt;/strong&gt;。在CountDownLatch上调用&lt;code&gt;countDown()&lt;/code&gt;方法来将计数值减1，调用这个方法并不会引起阻塞。不过，在这个计数器为0之前，任何调用CountDownLatch的&lt;code&gt;await()&lt;/code&gt;方法的任务都将阻塞。&lt;/p&gt;
 
-&lt;p&gt;CountDownLatch的典型用法是将一个任务分割为n个可以独立解决的部分，并创建一个计数器值为n的CountDownLatch，在每个任务完成时，调用&lt;code&gt;countDown()&lt;/code&gt;方法将计数器减1，在等待所有任务完成的线程上调用&lt;code&gt;await()&lt;/code&gt;方法，将任务阻塞，知道计数器为0之后再继续运行&lt;/p&gt;</description>
+&lt;p&gt;CountDownLatch的典型用法是将一个任务分割为n个可以独立解决的部分，并创建一个计数器值为n的CountDownLatch，在每个任务完成时，调用&lt;code&gt;countDown()&lt;/code&gt;方法将计数器减1，在等待所有任务完成的线程上调用&lt;code&gt;await()&lt;/code&gt;方法，将任务阻塞，知道计数器为0之后再继续运行。&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -457,17 +489,6 @@
 &lt;/blockquote&gt;
 
 &lt;p&gt;上述方法使用的不多，主要用来对Map键值进行更新，按需查阅API文档&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Set</title>
-      <link>https://wangy325.top/post/tech/java/set/</link>
-      <pubDate>Wed, 06 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangy325.top/post/tech/java/set/</guid>
-      <description>&lt;p&gt;Set是&lt;strong&gt;不含重复元素的集&lt;/strong&gt;，严格来讲，Set不允许当&lt;code&gt;e1.equals(e2)&lt;/code&gt;为真时， &lt;em&gt;e1&lt;/em&gt; 和 &lt;em&gt;e2&lt;/em&gt; 同时出现在集合中。Set最多允许一个&lt;code&gt;null&lt;/code&gt;元素&lt;/p&gt;
-
-&lt;p&gt;将&lt;strong&gt;可变对象&lt;/strong&gt;置入Set时需要特别小心，当对象的改动影响到了元素之间的&lt;code&gt;equals()&lt;/code&gt;比较的结果，那么Set的行为就变得不确定了。因此，&lt;strong&gt;不能将Set本身作为Set的元素&lt;/strong&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>

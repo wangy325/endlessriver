@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>一次服务器oom故障 - Endless River</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="wangy325" /><meta name="description" content="起因 使用idm下载y2b视频导致服务器内存溢出，内核强制关闭了服务进程。
+日志 系统服务日志地址： /var/log/messages
+1 2 3 4 5 6  Feb 19 16:02:12 vultr kernel: oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=/,mems_allowed=0,global_oom,task_memcg=/,task=firewalld,pid=1626,uid=0 Feb 19 16:02:12 vultr kernel: Out of memory: Killed process 1626 (firewalld) total-vm:358420kB, anon-rss:22096kB, file-rss:4kB, shmem-rss:0kB Feb 19 16:02:12 vultr kernel: oom_reaper: reaped process 1626 (firewalld), now anon-rss:0kB, file-rss:0kB, shmem-rss:0kB Feb 19 16:02:12 vultr systemd: firewalld.service: main process exited, code=killed, status=9/KILL Feb 19 16:02:12 vultr systemd: Unit firewalld.service entered failed state. Feb 19 16:02:12 vultr systemd: firewalld.service failed.   日志说明的很清楚了，内存溢出，系统杀掉了部分进程。
+" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.55.6 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://wangy325.top/post/tech/2021-02-20_%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%85%E9%9A%9C/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.886d4da2.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="一次服务器oom故障" />
+<meta property="og:description" content="起因
+
+使用idm下载y2b视频导致服务器内存溢出，内核强制关闭了服务进程。
+
+日志
+
+系统服务日志地址： /var/log/messages
+
+
+1
+2
+3
+4
+5
+6
+
+
+Feb 19 16:02:12 vultr kernel: oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=/,mems_allowed=0,global_oom,task_memcg=/,task=firewalld,pid=1626,uid=0
+Feb 19 16:02:12 vultr kernel: Out of memory: Killed process 1626 (firewalld) total-vm:358420kB, anon-rss:22096kB, file-rss:4kB, shmem-rss:0kB
+Feb 19 16:02:12 vultr kernel: oom_reaper: reaped process 1626 (firewalld), now anon-rss:0kB, file-rss:0kB, shmem-rss:0kB
+Feb 19 16:02:12 vultr systemd: firewalld.service: main process exited, code=killed, status=9/KILL
+Feb 19 16:02:12 vultr systemd: Unit firewalld.service entered failed state.
+Feb 19 16:02:12 vultr systemd: firewalld.service failed.
+
+
+日志说明的很清楚了，内存溢出，系统杀掉了部分进程。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangy325.top/post/tech/2021-02-20_%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%85%E9%9A%9C/" />
+<meta property="article:published_time" content="2021-02-20T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2021-02-20T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="一次服务器oom故障">
+<meta itemprop="description" content="起因
+
+使用idm下载y2b视频导致服务器内存溢出，内核强制关闭了服务进程。
+
+日志
+
+系统服务日志地址： /var/log/messages
+
+
+1
+2
+3
+4
+5
+6
+
+
+Feb 19 16:02:12 vultr kernel: oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=/,mems_allowed=0,global_oom,task_memcg=/,task=firewalld,pid=1626,uid=0
+Feb 19 16:02:12 vultr kernel: Out of memory: Killed process 1626 (firewalld) total-vm:358420kB, anon-rss:22096kB, file-rss:4kB, shmem-rss:0kB
+Feb 19 16:02:12 vultr kernel: oom_reaper: reaped process 1626 (firewalld), now anon-rss:0kB, file-rss:0kB, shmem-rss:0kB
+Feb 19 16:02:12 vultr systemd: firewalld.service: main process exited, code=killed, status=9/KILL
+Feb 19 16:02:12 vultr systemd: Unit firewalld.service entered failed state.
+Feb 19 16:02:12 vultr systemd: firewalld.service failed.
+
+
+日志说明的很清楚了，内存溢出，系统杀掉了部分进程。">
+
+
+<meta itemprop="datePublished" content="2021-02-20T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-02-20T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1095">
+
+
+
+<meta itemprop="keywords" content="服务器," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="一次服务器oom故障"/>
+<meta name="twitter:description" content="起因
+
+使用idm下载y2b视频导致服务器内存溢出，内核强制关闭了服务进程。
+
+日志
+
+系统服务日志地址： /var/log/messages
+
+
+1
+2
+3
+4
+5
+6
+
+
+Feb 19 16:02:12 vultr kernel: oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=/,mems_allowed=0,global_oom,task_memcg=/,task=firewalld,pid=1626,uid=0
+Feb 19 16:02:12 vultr kernel: Out of memory: Killed process 1626 (firewalld) total-vm:358420kB, anon-rss:22096kB, file-rss:4kB, shmem-rss:0kB
+Feb 19 16:02:12 vultr kernel: oom_reaper: reaped process 1626 (firewalld), now anon-rss:0kB, file-rss:0kB, shmem-rss:0kB
+Feb 19 16:02:12 vultr systemd: firewalld.service: main process exited, code=killed, status=9/KILL
+Feb 19 16:02:12 vultr systemd: Unit firewalld.service entered failed state.
+Feb 19 16:02:12 vultr systemd: firewalld.service failed.
+
+
+日志说明的很清楚了，内存溢出，系统杀掉了部分进程。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Endless River</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">主题</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a><a href="/friendlink/">
+        <li class="mobile-menu-item">友链</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Endless River</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">主题</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/friendlink/">友链</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">一次服务器oom故障</h1>
+
+      <div class="post-meta">
+          <span>
+              <span class="icomoonfree icon-calendar"></span>
+              <span class="post-time"> 2021-02-20</span>
+          </span>
+
+        <div class="post-category">
+              <span class="icomoonfree icon-folder"></span>
+            <a href="/categories/centos/"> centos </a>
+            </div>
+          <span class="icomoonfree icon-sigma"></span>
+          <span class="more-meta analyse"> 约 1095 字 </span>
+          <span class="icomoonfree icon-clock"></span>
+          <span class="more-meta analyse"> 预计阅读 3 分钟 </span>
+        <span class="icomoonfree icon-eye"></span>
+          <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#起因">起因</a></li>
+<li><a href="#日志">日志</a></li>
+<li><a href="#设置服务器时区-tzselect">设置服务器时区 tzselect</a></li>
+<li><a href="#查看并设置系统自启动服务">查看并设置系统自启动服务</a></li>
+<li><a href="#top命令是一个交互命令">top命令是一个交互命令</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h3 id="起因">起因</h3>
+
+<p>使用idm下载y2b视频导致服务器内存溢出，内核强制关闭了服务进程。</p>
+
+<h3 id="日志">日志</h3>
+
+<p>系统服务日志地址： <code>/var/log/messages</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">Feb 19 16:02:12 vultr kernel: oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=/,mems_allowed=0,global_oom,task_memcg=/,task=firewalld,pid=1626,uid=0
+Feb 19 16:02:12 vultr kernel: Out of memory: Killed process 1626 (firewalld) total-vm:358420kB, anon-rss:22096kB, file-rss:4kB, shmem-rss:0kB
+Feb 19 16:02:12 vultr kernel: oom_reaper: reaped process 1626 (firewalld), now anon-rss:0kB, file-rss:0kB, shmem-rss:0kB
+Feb 19 16:02:12 vultr systemd: firewalld.service: main process exited, code=killed, status=9/KILL
+Feb 19 16:02:12 vultr systemd: Unit firewalld.service entered failed state.
+Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
+</div>
+</div>
+<p>日志说明的很清楚了，<strong>内存溢出</strong>，系统杀掉了部分进程。</p>
+
+<blockquote>
+<p>至于是否网络请求占用了太多的系统资源，还需要进一步认证</p>
+</blockquote>
+
+<h3 id="设置服务器时区-tzselect">设置服务器时区 tzselect</h3>
+
+<blockquote>
+<p>设置时区的多种方法其中一种
+参考：<a href="https://www.cnblogs.com/dead-trap-ramble/p/3462448.html">https://www.cnblogs.com/dead-trap-ramble/p/3462448.html</a></p>
+</blockquote>
+
+<p>服务器时区为+0，需要将其改为+8，这样系统日志的时间能够对应上。</p>
+
+<p>使用<code>date -R</code>命令查看当前系统时间/时区信息</p>
+
+<p>使用<code>tzselect</code>命令选择时区，中国大陆根据命令提示选择<code>Asia/China/Beijing</code>即可。</p>
+
+<p>命令执行完毕之后，还会提醒你将<code>TZ='Asia/Shanghai'; export TZ</code>写入到profile中，一般为根目录下的<code>.bash_profile</code>文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">echo &#34;TZ=&#39;Asia/Shanghai&#39;; export TZ&#34; &gt;&gt; .bash_profile</pre></td></tr></table>
+</div>
+</div>
+<p>随即使用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">source  .bash_profile</pre></td></tr></table>
+</div>
+</div>
+<p>命令刷新配置文件，再使用<code>date -R</code>命令查看日期，已经和中国大陆时间同步。</p>
+
+<p>另外，为了防止服务器重启之后，配置失效[^没有实测]，可以覆盖系统的配置文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">cp /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime</pre></td></tr></table>
+</div>
+</div>
+<p>这条命令会有一条警告信息，覆盖即可。</p>
+
+<h3 id="查看并设置系统自启动服务">查看并设置系统自启动服务</h3>
+
+<p>使用命令<code>systemctl list-unit-files | grep enabled</code>可以查看当前系统开机启动的服务信息。</p>
+
+<p>实际上，再centOS中，使用<code>chkconfig --list</code>命令也可以获取使用<code>systemctl...</code>命令的提示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"># chkconfg --list
+Note: This output shows SysV services only and does not include native
+      systemd services. SysV configuration data might be overridden by native
+      systemd configuration.
+
+      If you want to list systemd services use &#39;systemctl list-unit-files&#39;.
+      To see services enabled on particular target use
+      &#39;systemctl list-dependencies [target]&#39;.
+
+denyhosts       0:off   1:off   2:on    3:on    4:on    5:on    6:off
+netconsole      0:off   1:off   2:off   3:off   4:off   5:off   6:off
+network         0:off   1:off   2:on    3:on    4:on    5:on    6:off</pre></td></tr></table>
+</div>
+</div>
+<p>可以简单的通过<code>systemctl enable nginx</code>将nginx服务加入到自启动服务列表里面去。</p>
+
+<p>linux确实是通过配置文件控制服务的启动，此处尚且不展开这部分内容，更详细的内容可以参考：</p>
+
+<ol>
+<li><a href="https://www.cnblogs.com/nerxious/archive/2013/01/18/2866548.HTML">Linux中设置服务自启动的三种方式</a></li>
+<li><a href="https://www.cnblogs.com/top5/archive/2009/09/18/1569093.html">linux开机启动服务的修改与查看</a></li>
+</ol>
+
+<h3 id="top命令是一个交互命令">top命令是一个交互命令</h3>
+
+<p>控制台输入<code>top</code>可以查看当前系统的一些信息，并且这些信息是动态刷新的。</p>
+
+<p><code>top</code>命令是一个可交互的命令，可以通过快捷键指令进行交互，有一些常见的快捷指令：</p>
+
+<ul>
+<li>M：按照内存占用排序进程</li>
+<li>m：切换内存占用的显示方式</li>
+<li>P：按照cpu占用排序进程</li>
+</ul>
+
+<p>更多的快捷指令可以参考：<a href="https://man.linuxde.net/top">https://man.linuxde.net/top</a></p>
+
+<p>除了<code>top</code>之外，还有一个<code>ps</code>命令：<a href="http://c.biancheng.net/view/1062.html，">http://c.biancheng.net/view/1062.html，</a>
+记住<code>ps aux | grep xxx</code>就行了^_^。</p>
+    </div>
+
+    <div class="post-copyright">
+  
+  <p class="copyright-item" style= text-align:right;>
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-02-20
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/tech/use-springboot-messagesource/">
+            <span class="next-text nav-default">在SpringBoot中使用MessageSource</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'endlessriver';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=u8za1dzCiImO_8rKldjU1g" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangy325" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangy325.top/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme -
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    
+    
+  </div>
+
+  <span class="copyright-year">
+    <span class="author">wangy325</span>
+    &copy;
+    2019 -
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="copyright"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
