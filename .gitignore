@@ -4,3 +4,4 @@ nohup.out
 *.tgz
 /docs/post/tech/*_java
 .vscode/
+*.code-workspace
