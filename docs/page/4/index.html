@@ -45,7 +45,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://wangy325.top/" />
 
-<meta property="og:updated_time" content="2021-02-02T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2021-02-20T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Endless River">
 <meta itemprop="description" content="">
@@ -121,6 +121,92 @@
       <div class="content-wrapper">
         <div id="content" class="content">
           <section id="posts" class="posts">
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/object%E8%B6%85%E7%B1%BB/">Object超类（一）</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-04-19 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/java/"> java </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 1648 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 4 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>在Java中，如果一个类没有明确地指出超类，那么Object就是这个类的超类。实际上，Object类是所有类超类，这个类定义了一些重要的方法</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/object%E8%B6%85%E7%B1%BB/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/springboot_aop_demo/">基于Spring Boot的AOP demo</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2020-03-14 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/springboot/"> springboot </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 2095 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 5 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>有一个cd接口，其实体类用于播放歌曲，同时我们想在播放歌曲的时候记录每个曲目的播放次数。看起来，记录次数这个事和播放曲目是不相干的事情，当然，我们可以在每首歌曲播放完成之后记录，但是更好的办法是使用一个切面，切入到播放方法中，来完成这件事，这样可以减少无关逻辑对代码的侵入。</p>
+
+<p>此程序分别使用了基于@Aspect注解和基于XML配置文件2种方式进行了切面注入，2种方式效果是等同的。</p>
+
+<p>此程序使用的是Spring AOP，并没有使用功能更加丰富的AspectJ，Spring AOP很大部分借鉴了AspectJ，如果只是简单的方法层面的织入，那么Spring AOP就能够满足需求。如果需要构造器或者属性拦截，或者需要为spring bean引入新方法，那么就需要使用AspectJ了。</p>
+
+<h1 id="开始">开始</h1>
+
+<p>从<a href="https://start.spring.io">start.spring.io</a>下载空项目，引入Spring AOP依赖：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-aop<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/springboot_aop_demo/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
     <article class="post">
   <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/tech/java/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/">动态绑定与静态绑定</a></h1>
@@ -553,95 +639,6 @@ FinalMethodExt
     </div>
     <div class="read-more">
       <a href="/post/tech/java/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/%E8%87%AA%E5%BB%BAmysql/">在centOS上安装并配置mysql数据库</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2019-08-16 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/mysql/"> mysql </a>
-          <a href="/categories/server/"> server </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 5399 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 11 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>文章介绍了在centOS7上安装mysql数据库服务的配置及简单优化过程。在服务器上安装mysql服务网络上能够找到的资源很多了，因此本文没有作详细介绍，本文的重点在于后续的优化配置方面。</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/%E8%87%AA%E5%BB%BAmysql/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/build-redis-sentinel/">Redis Sentinel高可用实现</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2019-08-14 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/redis/"> redis </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 7642 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 16 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>Redis <a href="https://raw.githubusercontent.com/antirez/redis/2.8/00-RELEASENOTES">v2.8</a> 之后提供了高可用实现<code>Redis Sentinel</code>，实现了<strong>主从复制</strong>以及<del>被动</del><strong>主备切换</strong>。<a href="https://raw.githubusercontent.com/antirez/redis/3.0/00-RELEASENOTES">v3.0</a> 之后提供了分布式实现<code>Redis Cluster</code>。</p>
-
-<p>本文讨论的是使用Sentinel搭建Redis高可用服务。</p>
-
-<blockquote>
-<p>If all redis and sentinel instances were deployed in same host, you just build a fake redis-sentinel <em>High-Availability</em> environment<sup class="footnote-ref" id="fnref:v1"><a href="#fn:v1">1</a></sup>.</p>
-</blockquote>
-
-<h1 id="1-准备">1 准备</h1>
-
-<h2 id="1-1-linux主机">1.1 linux主机</h2>
-
-<p>本文使用centOS7，需安装gcc：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">yum install gcc
-<span class="c1"># or on ubuntu</span>
-apt-get install gcc</code></pre></td></tr></table>
-</div>
-</div>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/java/build-redis-sentinel/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>

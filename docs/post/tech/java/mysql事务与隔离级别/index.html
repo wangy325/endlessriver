@@ -57,7 +57,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangy325.top/post/tech/java/mysql%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/" />
 <meta property="article:published_time" content="2020-11-27T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2020-12-07T17:17:21&#43;08:00"/>
+<meta property="article:modified_time" content="2021-02-12T12:14:33&#43;08:00"/>
 
 <meta itemprop="name" content="mysql事务与隔离级别">
 <meta itemprop="description" content="mysql事务属于老生常谈的内容了，并不指望这一篇文章将其搞透，本篇文章只是将mysql事务的外衣扒了，让其看起来不再那么神秘与华丽。有时候，新手总是对“事务”这两个字怀有莫名的恐惧感，因为其藏在mysql内部，偷偷地工作着，就好像你没有凝视深渊，而深渊却在凝视你。
@@ -74,8 +74,8 @@
 
 
 <meta itemprop="datePublished" content="2020-11-27T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-12-07T17:17:21&#43;08:00" />
-<meta itemprop="wordCount" content="5126">
+<meta itemprop="dateModified" content="2021-02-12T12:14:33&#43;08:00" />
+<meta itemprop="wordCount" content="5176">
 
 
 
@@ -176,7 +176,7 @@
             <a href="/categories/mysql/"> mysql </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 5126 字 </span>
+          <span class="more-meta analyse"> 约 5176 字 </span>
           <span class="icomoonfree icon-clock"></span>
           <span class="more-meta analyse"> 预计阅读 11 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
@@ -189,19 +189,19 @@
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
 <ul>
-<li><a href="#事务的acid性质">事务的ACID性质</a></li>
-<li><a href="#事务的隔离级别">事务的隔离级别</a></li>
-<li><a href="#查看数据库的基本信息">查看数据库的基本信息</a>
+<li><a href="#1-事务的acid性质">1 事务的ACID性质</a></li>
+<li><a href="#2-事务的隔离级别">2 事务的隔离级别</a></li>
+<li><a href="#3-查看数据库的基本信息">3 查看数据库的基本信息</a>
 <ul>
-<li><a href="#引擎">引擎</a></li>
-<li><a href="#隔离级别">隔离级别</a></li>
+<li><a href="#3-1-引擎">3.1 引擎</a></li>
+<li><a href="#3-2-隔离级别">3.2 隔离级别</a></li>
 </ul></li>
-<li><a href="#读未提交-read-uncommitted">读未提交 READ UNCOMMITTED</a></li>
-<li><a href="#读已提交-read-committed">读已提交 READ COMMITTED</a></li>
-<li><a href="#多版本并发控制-mvcc">多版本并发控制（MVCC）</a></li>
-<li><a href="#可重复读-repeatable-read">可重复读 REPEATABLE READ</a></li>
-<li><a href="#串行-serializable">串行 SERIALIZABLE</a></li>
-<li><a href="#参考">参考</a></li>
+<li><a href="#4-读未提交-read-uncommitted">4 读未提交 READ UNCOMMITTED</a></li>
+<li><a href="#5-读已提交-read-committed">5 读已提交 READ COMMITTED</a></li>
+<li><a href="#6-多版本并发控制-mvcc">6 多版本并发控制（MVCC）</a></li>
+<li><a href="#7-可重复读-repeatable-read">7 可重复读 REPEATABLE READ</a></li>
+<li><a href="#8-串行-serializable">8 串行 SERIALIZABLE</a></li>
+<li><a href="#9-参考">9 参考</a></li>
 </ul>
 </nav>
   </div>
@@ -219,14 +219,14 @@
 
 <p>看起来，事务的概念还是有些空泛。事实上，有了一定的并发基础后（这也是这篇文章写在java并发之后的原因），更加容易理解事务这个概念，这并不是说事务一个并发概念，不过，事务是有了并发之后才衍生的概念，这很容易理解。试想一个只容许一个客户端连接的mysql服务，是否需要“事务”呢？答案应该是否定的。单个客户端执行sql语句总是有序的，数据一致性就能得到保证了<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>。试想，如果是多客户端的系统（事实上正是如此）同时执行sql语句，就好似多线程同时访问资源一样，对于数据库系统而言，所有的数据表都是共享资源<sup class="footnote-ref" id="fnref:2"><a href="#fn:2">2</a></sup>，那么事务就像是那把保证并发安全的锁。</p>
 
-<h1 id="事务的acid性质">事务的ACID性质</h1>
+<h1 id="1-事务的acid性质">1 事务的ACID性质</h1>
 
 <p>事务可以保证被声明为事务的分步操作要么都成功执行，要么都不执行。执行成功的那些步骤操作会被<strong>回滚</strong>，这样不会对mysql的数据完整性进行破坏。</p>
 
 <ul>
 <li><p><span style="font-style:italic;font-weight:bold;color:#0047AB">Atomicity</span> 原子性</p>
 
-<p>原子性的概念和所有并发编程的概念一样，如果声明一个操作是原子的，那么这个操作要么执行，要么不执行。如果声明了一个事务，那么就可以把其看作一个「并发编程里面的<a href="../%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/#6-%E4%B8%B4%E7%95%8C%E5%8C%BA">临界区</a>」，其包含的分步操作要么全部执行，要么全不执行。</p></li>
+<p>原子性的概念和所有并发编程的概念一样，如果声明一个操作是原子的，那么这个操作要么执行，要么不执行。如果声明了一个事务，那么就可以把事务开启之后执行的SQL语句看作一个「并发编程里面的<a href="../%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/#6-%E4%B8%B4%E7%95%8C%E5%8C%BA">临界区</a>」中的代码，它只能允许一个SQL连接访问数据。包含的SQL分步操作要么全部执行，要么全不执行。</p></li>
 
 <li><p><span style="font-style:italic;font-weight:bold;color:#0047AB">Consistency</span> 一致性</p>
 
@@ -241,30 +241,30 @@
 <p>一旦事务被提交，其对数据的修改是永久性的。即使系统崩溃，修改的数据也不会丢失。</p></li>
 </ul>
 
-<h1 id="事务的隔离级别">事务的隔离级别</h1>
+<h1 id="2-事务的隔离级别">2 事务的隔离级别</h1>
 
 <p>如果事务满足ACID性质，那么数据安全性就不会受到威胁。那么，设计一个逻辑来保证事务的ACID性质不就解决问题了么，为什么还要设计事务的隔离级别呢？结合实际情况来看，并非所有的事务都需要满足ACID特性，有些数据对准确性要钱不高的的事务，是允许读取到其他事务修改的数据<sup><a>例证</a></sup>。另外，在实现过程中，一个满足ACID特性的数据库系统要复杂的多，系统需要做很多额外的操作来满足ACID特性，这样会造成额外的开销，系统会占用更多的资源而影响数据库的执行效率。这也是数据库中仍然有不支持事务的存储引擎一席之地的原因<sup class="footnote-ref" id="fnref:3"><a href="#fn:3">3</a></sup>。</p>
 
 <p>事务的隔离级别并不是mysql独有的，它是SQL标准中定义的，没种隔离级别都规定了一个事务中所做的修改在那些事务内和事务間是可见的，哪些是不可见的。较低的隔离级别支持更高的并发、拥有更高的效率。</p>
 
 <ul>
-<li><p><span style="font-style:italic;font-weight:bold;color:#0047AB">READ UNCOMMITTED</span>（读未提交）</p>
+<li><p><span style="font-style:italic;font-weight:bold;color:#0047AB">READ UNCOMMITTED</span>（<strong>读未提交</strong>）</p>
 
 <p>这个隔离级别中，事务中的修改，即使没有提交，对其他事务都是可见的。其他事务可以读取到未提交的数据，这种情况称为<strong>脏读</strong>（<strong><em>dirty read</em></strong>）。这个级别会导致很多问题，一般很少使用。</p></li>
 
-<li><p><span style="font-style:italic;font-weight:bold;color:#0047AB">READ COMMITTED</span>（读已提交）</p>
+<li><p><span style="font-style:italic;font-weight:bold;color:#0047AB">READ COMMITTED</span>（<strong>读已提交</strong>）</p>
 
 <p>这个隔离级别中，满足隔离性的简单定义，一个事务开始前，只能读取到已经提交的事务所做的修改。换言之，一个事务对数据库所做的任何修改在其提交之前都其他事务都是不可见的。这会导致是个现象：一个事务可能2次读取到的数据是不一致的（事务A提交前与提交后），这种情况称为<strong>不可重复读</strong>（<strong><em>nonrepeatable read</em></strong>）</p></li>
 
-<li><p><span style="font-style:italic;font-weight:bold;color:#0047AB">REPEATABLE READ</span>（可重复读）</p>
+<li><p><span style="font-style:italic;font-weight:bold;color:#0047AB">REPEATABLE READ</span>（<strong>可重复读</strong>）</p>
 
 <p>可重复读解决了脏读的问题，同时也保证了在事务了多次对同一个数据取样，读取到的数据是一致的。但是，理论上，该隔离级别的不能解决<strong>幻读</strong>（<strong><em>phantom read</em></strong>）的问题：幻读指的是某个事务在读取<strong>某个范围</strong>的记录时，另外一个事务又在该范围内插入了新的记录，那么，当之前的事务再次读取这个范围的记录时，就会出现<strong>幻行</strong>（<strong><em>phantom row</em></strong>）。不过InnoDB引擎通过MVCC(<em>multi version concurrency control</em>)多版本并发控制解决了幻读的问题。</p>
 
 <p>可重复读是mysql的<strong>默认隔离级别</strong></p></li>
 
-<li><p><span style="font-style:italic;font-weight:bold;color:#0047AB">SERIALIZABLE</span>（可串行化）</p>
+<li><p><span style="font-style:italic;font-weight:bold;color:#0047AB">SERIALIZABLE</span>（<strong>可串行化</strong>）</p>
 
-<p>SERIALIZABLE是最高的隔离级别，它通过强制所有的sql语句<strong>串行</strong>执行来避免幻读的问题。该隔离级别下，每一行使用到的数据都会加锁，所以当数据库请求量大的时候，就有可能造成大量的超时等待<sup class="footnote-ref" id="fnref:4"><a href="#fn:4">4</a></sup>和锁争用的问题。这个隔离级别很少使用，因为其牺牲了很大量的性能来保证数据一致性，如果不是严格地要求数据一致性，可以考虑次=此隔离级别。</p></li>
+<p>SERIALIZABLE是最高的隔离级别，它通过强制所有的SQL语句<strong>串行</strong>执行来避免幻读的问题。该隔离级别下，每一行使用到的数据都会加锁，所以当数据库请求量大的时候，就有可能造成大量的超时等待<sup class="footnote-ref" id="fnref:4"><a href="#fn:4">4</a></sup>和锁争用的问题。这个隔离级别很少使用，因为其牺牲了很大量的性能来保证数据一致性。<del>如果不是严格地要求数据一致性，可以考虑此隔离级别</del><sup>表述有误？</sup>。</p></li>
 </ul>
 
 <p>下表展示了事务隔离级别以及其可能引起的后果之间的额关系：</p>
@@ -324,11 +324,11 @@
 </tbody>
 </table></div>
 
-<h1 id="查看数据库的基本信息">查看数据库的基本信息</h1>
+<h1 id="3-查看数据库的基本信息">3 查看数据库的基本信息</h1>
 
 <p>在实例演示之前，需要查看几个基本信息，来确保测试环境的一致性与可行性。这些基本信息包括，数据库当前所使用的引擎，数据库当前的事务隔离级别。</p>
 
-<h2 id="引擎">引擎</h2>
+<h2 id="3-1-引擎">3.1 引擎</h2>
 
 <p>使用下面的命令查看当前数据库的引擎信息</p>
 <div class="highlight"><div class="chroma">
@@ -410,7 +410,7 @@
 </div>
 <p>我们看到<code>vendors</code>表的引擎也是InnoDB。</p>
 
-<h2 id="隔离级别">隔离级别</h2>
+<h2 id="3-2-隔离级别">3.2 隔离级别</h2>
 
 <p>使用如下命令查看当前数据库的事务隔离级别</p>
 <div class="highlight"><div class="chroma">
@@ -456,7 +456,7 @@
 <li><code>commit</code>提交/结束事务</li>
 </ul>
 
-<h1 id="读未提交-read-uncommitted">读未提交 READ UNCOMMITTED</h1>
+<h1 id="4-读未提交-read-uncommitted">4 读未提交 READ UNCOMMITTED</h1>
 
 <p><img src="/img/mysql-tx-read-uncommitted.jpg" alt="脏读" /></p>
 
@@ -472,7 +472,7 @@
 
 <p>上面的执行流程完整的演示了在<strong><em>READ UNCOMMITTED</em></strong>隔离级别下的<strong>脏读</strong>和<strong>不可重复读</strong>现象。</p>
 
-<h1 id="读已提交-read-committed">读已提交 READ COMMITTED</h1>
+<h1 id="5-读已提交-read-committed">5 读已提交 READ COMMITTED</h1>
 
 <p><img src="/img/mysql-tx-read-committed.jpg" alt="不可重复度" /></p>
 
@@ -488,7 +488,7 @@
 
 <p>上面的执行流程完整演示了在<strong><em>READ COMMITTED</em></strong>隔离级别下，两次读取到的结果不一致的现象，即在此隔离级别下<strong>不可重复读</strong>。</p>
 
-<h1 id="多版本并发控制-mvcc">多版本并发控制（MVCC）</h1>
+<h1 id="6-多版本并发控制-mvcc">6 多版本并发控制（MVCC）</h1>
 
 <p>前文提到，mysql的InnoDB引擎使用MVCC解决了在可重复读(<em>REPEATABLE READ</em>)隔离级别下幻读(<em>phantom read</em>)的问题。因此，在执行可重复读隔离级别的测试之前，先介绍一下多版本并发控制(<strong>M</strong>ulti <strong>V</strong>ersion <strong>C</strong>ocurrency <strong>C</strong>ontrol)<sup class="footnote-ref" id="fnref:5"><a href="#fn:5">5</a></sup>。</p>
 
@@ -559,7 +559,7 @@ InnoDB为插入<strong>一行新纪录</strong>保存当前系统版本号作为
 
 <p>在接下来的演示中，我们将会看到MVCC在事务执行过程中的行为。</p>
 
-<h1 id="可重复读-repeatable-read">可重复读 REPEATABLE READ</h1>
+<h1 id="7-可重复读-repeatable-read">7 可重复读 REPEATABLE READ</h1>
 
 <p><img src="/img/mysql-tx-repeatable-read.jpg" alt="可重复读" /></p>
 
@@ -575,7 +575,7 @@ InnoDB为插入<strong>一行新纪录</strong>保存当前系统版本号作为
 
 <p>遗憾的是，笔者试图从MVCC“系统版本号”的概念去推断事务的执行，始终无法得出与预期一致的结果，所以关于MVCC“系统版本号”的工作机制，此文尚不能详述，不过，程序的执行期望却和前文描述的MVCC行为是一致的。其实，使用“快照”的概念去理解MVCC的行为，会显得更容易。</p>
 
-<h1 id="串行-serializable">串行 SERIALIZABLE</h1>
+<h1 id="8-串行-serializable">8 串行 SERIALIZABLE</h1>
 
 <p><img src="/img/mysql-tx-serializable.jpg" alt="串行" /></p>
 
@@ -594,7 +594,7 @@ InnoDB为插入<strong>一行新纪录</strong>保存当前系统版本号作为
 <p>看到interruptted，间接证明了insert操作确实是处于阻塞状态</p>
 </blockquote>
 
-<h1 id="参考">参考</h1>
+<h1 id="9-参考">9 参考</h1>
 
 <ul>
 <li><a href="https://book.douban.com/subject/23008813/">高性能mysql 第3版</a></li>
@@ -630,8 +630,8 @@ InnoDB为插入<strong>一行新纪录</strong>保存当前系统版本号作为
   <p class="copyright-item" style= text-align:right;>
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2020-12-07
-        <a href="https://github.com/wangy325/endlessriver/commit/926460a80c6344d32270593e4cdc20f0768682e2" title="enable mathjax; add dynamic programming doc">(926460a)</a>
+        2021-02-12
+        <a href="https://github.com/wangy325/endlessriver/commit/6a547d62e98089e711f8d313ae57778b5b15450b" title="新年好">(6a547d6)</a>
     </span>
   </p>
   

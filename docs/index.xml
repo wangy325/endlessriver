@@ -6,10 +6,76 @@
     <description>Recent content on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 02 Feb 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Feb 2021 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangy325.top/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>一次服务器oom故障</title>
+      <link>https://wangy325.top/post/tech/2021-02-20_%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%85%E9%9A%9C/</link>
+      <pubDate>Sat, 20 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/2021-02-20_%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%85%E9%9A%9C/</guid>
+      <description>&lt;h3 id=&#34;起因&#34;&gt;起因&lt;/h3&gt;
+
+&lt;p&gt;使用idm下载y2b视频导致服务器内存溢出，内核强制关闭了服务进程。&lt;/p&gt;
+
+&lt;h3 id=&#34;日志&#34;&gt;日志&lt;/h3&gt;
+
+&lt;p&gt;系统服务日志地址： &lt;code&gt;/var/log/messages&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;Feb 19 16:02:12 vultr kernel: oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=/,mems_allowed=0,global_oom,task_memcg=/,task=firewalld,pid=1626,uid=0
+Feb 19 16:02:12 vultr kernel: Out of memory: Killed process 1626 (firewalld) total-vm:358420kB, anon-rss:22096kB, file-rss:4kB, shmem-rss:0kB
+Feb 19 16:02:12 vultr kernel: oom_reaper: reaped process 1626 (firewalld), now anon-rss:0kB, file-rss:0kB, shmem-rss:0kB
+Feb 19 16:02:12 vultr systemd: firewalld.service: main process exited, code=killed, status=9/KILL
+Feb 19 16:02:12 vultr systemd: Unit firewalld.service entered failed state.
+Feb 19 16:02:12 vultr systemd: firewalld.service failed.&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;日志说明的很清楚了，&lt;strong&gt;内存溢出&lt;/strong&gt;，系统杀掉了部分进程。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>在SpringBoot中使用MessageSource</title>
+      <link>https://wangy325.top/post/tech/use-springboot-messagesource/</link>
+      <pubDate>Sat, 20 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/use-springboot-messagesource/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;注：这篇文章主要介绍了校验信息的国际化，MessageSource的配置逻辑是通用的。&lt;/p&gt;
+
+&lt;p&gt;几个说明：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;del&gt;properties配置文件中，&lt;code&gt;spring.messages.basename&lt;/code&gt;&lt;strong&gt;必须&lt;/strong&gt;要加classpath前缀。如 &lt;code&gt;spring.messages.basename=classpath:i18n/messages&lt;/code&gt;&lt;/del&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;del&gt;必须要手动配置&lt;code&gt;MessageSource&lt;/code&gt;，springboot不会自动配置之&lt;/del&gt;；&lt;/li&gt;
+&lt;li&gt;如果使用&lt;code&gt;MessageSource.getMessage()&lt;/code&gt;方法，第一个参数的引用形式为&lt;code&gt;&amp;quot;code&amp;quot;&lt;/code&gt;，而不是&lt;code&gt;&amp;quot;{code}&amp;quot;&lt;/code&gt;或者&lt;code&gt;&amp;quot;${code}&amp;quot;&lt;/code&gt;。如messageSource.getMessage(&amp;ldquo;test.msg&amp;rdquo;, null, &lt;del&gt;Locale.getDefault()&lt;/del&gt;)；&lt;/li&gt;
+&lt;li&gt;在配置&lt;code&gt;LocalValidatorFactoryBean&lt;/code&gt;之后，才可以在&lt;code&gt;javax.validation.constraints&lt;/code&gt;包下的注解（&lt;code&gt;@Size&lt;/code&gt;，&lt;code&gt;@NotNull&lt;/code&gt;&amp;hellip;）下的&lt;strong&gt;&lt;em&gt;message&lt;/em&gt;&lt;/strong&gt;属性中使用&lt;code&gt;&amp;quot;{code}&amp;quot;&lt;/code&gt;的形式声明校验提示信息。如
+&lt;code&gt;@NotNull(message = &amp;quot;{leftTime.not.null}&amp;quot;)&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;springMVC的locale配置和JVM的locale配置不一样，在application.properties中配置的&lt;code&gt;spring.mvc.locale=zh_CN&lt;/code&gt;实际上配置的是&lt;code&gt;WebMvcProperties&lt;/code&gt;，在获取消息时，locale信息应该从&lt;code&gt;webMvcProperties.getLocale()&lt;/code&gt;中获取&lt;strong&gt;而不是&lt;/strong&gt;使用&lt;code&gt;Locale.getDefault()&lt;/code&gt;获取。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;1-概览&#34;&gt;1 概览&lt;/h1&gt;
+
+&lt;p&gt;MessageSource is a powerful feature available in Spring applications. This helps application developers handle various complex scenarios with writing much extra code, such as environment-specific configuration, internationalization or configurable values.&lt;/p&gt;
+
+&lt;p&gt;One more scenario could be modifying the default validation messages to more user-friendly/custom messages.&lt;/p&gt;
+
+&lt;p&gt;In this tutorial, we&amp;rsquo;ll see how to configure and manage custom validation MessageSource in the application using Spring Boot.&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Java8中的新日期和时间工具库（转）</title>
@@ -276,7 +342,7 @@
     </item>
     
     <item>
-      <title>一些重要的并发组件</title>
+      <title>倒计时门闩、信号量、交换器及其他</title>
       <link>https://wangy325.top/post/tech/java/%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BB%84%E4%BB%B6/</link>
       <pubDate>Mon, 16 Nov 2020 00:00:00 +0000</pubDate>
       
@@ -292,13 +358,13 @@
 &lt;li&gt;PriorityBlockingQueue&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h1 id=&#34;countdownlatch&#34;&gt;CountDownLatch&lt;/h1&gt;
+&lt;h1 id=&#34;1-countdownlatch&#34;&gt;1 CountDownLatch&lt;/h1&gt;
 
-&lt;p&gt;在讨论线程的基本概念时，我们说过&lt;code&gt;join()&lt;/code&gt;方法可使当前线程等待调用join方法的线程执行完，可以实现简单的&lt;a href=&#34;../线程基础概念/#9-加入一个线程&#34;&gt;无锁同步&lt;/a&gt;，使用CountDownLatch可以更加简单的实现这一目的。毕竟，&lt;code&gt;join()&lt;/code&gt;方法的语义“加入一个线程”不是很容易就能让人理解。相较于&lt;code&gt;join()&lt;/code&gt;方法，CountDownLatch的语义就明确多了&lt;/p&gt;
+&lt;p&gt;在讨论线程的基本概念时，我们说过&lt;code&gt;join()&lt;/code&gt;方法可使当前线程等待调用join方法的线程执行完，可以实现简单的&lt;a href=&#34;../线程基础概念/#9-加入一个线程&#34;&gt;无锁同步&lt;/a&gt;，使用CountDownLatch可以更加简单的实现这一目的。毕竟，&lt;code&gt;join()&lt;/code&gt;方法的语义“加入一个线程”不是很容易就能让人理解。相较于&lt;code&gt;join()&lt;/code&gt;方法，CountDownLatch的语义就明确多了。&lt;/p&gt;
 
-&lt;p&gt;在有些文档上，将CountDownLatch译为&amp;rdquo;倒计时门闩【shuān】&amp;rdquo;，其维护一个计数器，这个计数器在CountDownLatch初始化之后便&lt;strong&gt;不能重置&lt;/strong&gt;。在CountDownLatch上调用&lt;code&gt;countDown()&lt;/code&gt;方法来将计数值减1，调用这个方法并不会引起阻塞。不过，在这个计数器为0之前，任何调用CountDownLatch的&lt;code&gt;await()&lt;/code&gt;方法的任务都将阻塞&lt;/p&gt;
+&lt;p&gt;在有些文档上，将CountDownLatch译为&amp;rdquo;倒计时门闩【shuān】&amp;rdquo;，其维护一个计数器，这个计数器在CountDownLatch初始化之后便&lt;strong&gt;不能重置&lt;/strong&gt;。在CountDownLatch上调用&lt;code&gt;countDown()&lt;/code&gt;方法来将计数值减1，调用这个方法并不会引起阻塞。不过，在这个计数器为0之前，任何调用CountDownLatch的&lt;code&gt;await()&lt;/code&gt;方法的任务都将阻塞。&lt;/p&gt;
 
-&lt;p&gt;CountDownLatch的典型用法是将一个任务分割为n个可以独立解决的部分，并创建一个计数器值为n的CountDownLatch，在每个任务完成时，调用&lt;code&gt;countDown()&lt;/code&gt;方法将计数器减1，在等待所有任务完成的线程上调用&lt;code&gt;await()&lt;/code&gt;方法，将任务阻塞，知道计数器为0之后再继续运行&lt;/p&gt;</description>
+&lt;p&gt;CountDownLatch的典型用法是将一个任务分割为n个可以独立解决的部分，并创建一个计数器值为n的CountDownLatch，在每个任务完成时，调用&lt;code&gt;countDown()&lt;/code&gt;方法将计数器减1，在等待所有任务完成的线程上调用&lt;code&gt;await()&lt;/code&gt;方法，将任务阻塞，知道计数器为0之后再继续运行。&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -444,30 +510,6 @@
       <description>&lt;p&gt;要创建一个任务，通常实现Runnable接口。考虑一个经典的问题：用多线程分段计算0-100的加和，我们需要把每个线程计算的值汇总，然后再求和，那么应该怎样获取每个任务返回值呢？&lt;/p&gt;
 
 &lt;p&gt;Java提供了Callable和Future接口，使任务有提供返回值的能力&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>HashMap的源码分析（一）</title>
-      <link>https://wangy325.top/post/tech/java/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%80/</link>
-      <pubDate>Thu, 24 Sep 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangy325.top/post/tech/java/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%80/</guid>
-      <description>&lt;p&gt;本文内容简单分析了JDK8中HashMap源码的几个重要方法，便于理解散列表在Java集合框架中的具体应用。&lt;/p&gt;
-
-&lt;p&gt;HashMap基于散列表，散列表中每一个Node节点（桶）是链表，当两个条目（entry）的key的hash值对桶数（capacity）取模的值相等时，这两个entry会存储在同一个链表中。但当链表中元素达到一定数目时，链表结构会转变为&lt;strong&gt;树结构&lt;/strong&gt;。&lt;/p&gt;
-
-&lt;p&gt;此文中没有讨论HashMap中涉及到树结构的源码。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>资源访问受限</title>
-      <link>https://wangy325.top/post/tech/java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/</link>
-      <pubDate>Wed, 20 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangy325.top/post/tech/java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/</guid>
-      <description>&lt;p&gt;在系列一中，虽然创建了多线程，并且线程之间出现了一些&lt;strong&gt;不可预测&lt;/strong&gt;的CPU调度，但是由于线程之间是&lt;strong&gt;相互隔离&lt;/strong&gt;的——&lt;strong&gt;线程没有访问共同的资源&lt;/strong&gt;，尽管在执行任务的过程可能被CPU剥夺运行权，但是当它们再次获得运行权时对运行结果并没有影响，它们是安全的&lt;/p&gt;
-
-&lt;p&gt;考虑一种情况，如果&lt;strong&gt;多个线程访问同一个资源&lt;/strong&gt;，并对资源内容进行修改，会发生什么情况？&lt;/p&gt;</description>
     </item>
     
   </channel>
