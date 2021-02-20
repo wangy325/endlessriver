@@ -136,39 +136,39 @@ public class MessageSourceAutoConfiguration {
 
 ```java
 @Override
-		public ConditionOutcome getMatchOutcome(ConditionContext context, AnnotatedTypeMetadata metadata) {
-			String basename = context.getEnvironment().getProperty("spring.messages.basename", "messages");
-			ConditionOutcome outcome = cache.get(basename);
-			if (outcome == null) {
-				outcome = getMatchOutcomeForBasename(context, basename);
-				cache.put(basename, outcome);
-			}
-			return outcome;
-		}
+public ConditionOutcome getMatchOutcome(ConditionContext context, AnnotatedTypeMetadata metadata) {
+	String basename = context.getEnvironment().getProperty("spring.messages.basename", "messages");
+	ConditionOutcome outcome = cache.get(basename);
+	if (outcome == null) {
+		outcome = getMatchOutcomeForBasename(context, basename);
+		cache.put(basename, outcome);
+	}
+	return outcome;
+}
 
-		private ConditionOutcome getMatchOutcomeForBasename(ConditionContext context, String basename) {
-			ConditionMessage.Builder message = ConditionMessage.forCondition("ResourceBundle");
-			for (String name : StringUtils.commaDelimitedListToStringArray(StringUtils.trimAllWhitespace(basename))) {
-				for (Resource resource : getResources(context.getClassLoader(), name)) {
-					if (resource.exists()) {
-						return ConditionOutcome.match(message.found("bundle").items(resource));
-					}
-				}
+private ConditionOutcome getMatchOutcomeForBasename(ConditionContext context, String basename) {
+	ConditionMessage.Builder message = ConditionMessage.forCondition("ResourceBundle");
+	for (String name : StringUtils.commaDelimitedListToStringArray(StringUtils.trimAllWhitespace(basename))) {
+		for (Resource resource : getResources(context.getClassLoader(), name)) {
+			if (resource.exists()) {
+				return ConditionOutcome.match(message.found("bundle").items(resource));
 			}
-			return ConditionOutcome.noMatch(message.didNotFind("bundle with basename " + basename).atAll());
 		}
+	}
+	return ConditionOutcome.noMatch(message.didNotFind("bundle with basename " + basename).atAll());
+}
 
-        // basename不需要classpath前缀，它总是从classpath中获取资源
-		private Resource[] getResources(ClassLoader classLoader, String name) {
-			String target = name.replace('.', '/');
-			try {
-				return new PathMatchingResourcePatternResolver(classLoader)
-						.getResources("classpath*:" + target + ".properties");
-			}
-			catch (Exception ex) {
-				return NO_RESOURCES;
-			}
-		}
+// basename不需要classpath前缀，它总是从classpath中获取资源
+private Resource[] getResources(ClassLoader classLoader, String name) {
+	String target = name.replace('.', '/');
+	try {
+		return new PathMatchingResourcePatternResolver(classLoader)
+				.getResources("classpath*:" + target + ".properties");
+	}
+	catch (Exception ex) {
+		return NO_RESOURCES;
+	}
+}
 ```
 
 我们只需要关注`getResources`方法，可以看到，其自动补全了classpath前缀，因此，`ResourceBundleMessageSourece`总是从classpath中获取资源的。
