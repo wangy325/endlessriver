@@ -13,14 +13,12 @@
     
     <item>
       <title>在SpringBoot中使用MessageSource</title>
-      <link>https://wangy325.top/post/tech/use-springboot-messagesource/</link>
+      <link>https://wangy325.top/post/tech/java/use-springboot-messagesource/</link>
       <pubDate>Sat, 20 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/use-springboot-messagesource/</guid>
+      <guid>https://wangy325.top/post/tech/java/use-springboot-messagesource/</guid>
       <description>&lt;blockquote&gt;
-&lt;p&gt;注：这篇文章主要介绍了校验信息的国际化，MessageSource的配置逻辑是通用的。&lt;/p&gt;
-
-&lt;p&gt;几个说明：&lt;/p&gt;
+&lt;p&gt;&lt;span id=&#34;hook&#34;&gt;几个说明&lt;/span&gt;：&lt;/p&gt;
 
 &lt;ol&gt;
 &lt;li&gt;&lt;del&gt;properties配置文件中，&lt;code&gt;spring.messages.basename&lt;/code&gt;&lt;strong&gt;必须&lt;/strong&gt;要加classpath前缀。如 &lt;code&gt;spring.messages.basename=classpath:i18n/messages&lt;/code&gt;&lt;/del&gt;；&lt;/li&gt;
@@ -28,7 +26,7 @@
 &lt;li&gt;如果使用&lt;code&gt;MessageSource.getMessage()&lt;/code&gt;方法，第一个参数的引用形式为&lt;code&gt;&amp;quot;code&amp;quot;&lt;/code&gt;，而不是&lt;code&gt;&amp;quot;{code}&amp;quot;&lt;/code&gt;或者&lt;code&gt;&amp;quot;${code}&amp;quot;&lt;/code&gt;。如messageSource.getMessage(&amp;ldquo;test.msg&amp;rdquo;, null, &lt;del&gt;Locale.getDefault()&lt;/del&gt;)；&lt;/li&gt;
 &lt;li&gt;在配置&lt;code&gt;LocalValidatorFactoryBean&lt;/code&gt;之后，才可以在&lt;code&gt;javax.validation.constraints&lt;/code&gt;包下的注解（&lt;code&gt;@Size&lt;/code&gt;，&lt;code&gt;@NotNull&lt;/code&gt;&amp;hellip;）下的&lt;strong&gt;&lt;em&gt;message&lt;/em&gt;&lt;/strong&gt;属性中使用&lt;code&gt;&amp;quot;{code}&amp;quot;&lt;/code&gt;的形式声明校验提示信息。如
 &lt;code&gt;@NotNull(message = &amp;quot;{leftTime.not.null}&amp;quot;)&lt;/code&gt;；&lt;/li&gt;
-&lt;li&gt;springMVC的locale配置和JVM的locale配置不一样，在application.properties中配置的&lt;code&gt;spring.mvc.locale=zh_CN&lt;/code&gt;实际上配置的是&lt;code&gt;WebMvcProperties&lt;/code&gt;，在获取消息时，locale信息应该从&lt;code&gt;webMvcProperties.getLocale()&lt;/code&gt;中获取&lt;strong&gt;而不是&lt;/strong&gt;使用&lt;code&gt;Locale.getDefault()&lt;/code&gt;获取。&lt;/li&gt;
+&lt;li&gt;springMVC的locale配置和JVM的locale配置不一样，在application.properties中配置的&lt;code&gt;spring.mvc.locale=zh_CN&lt;/code&gt;实际上配置的是&lt;code&gt;WebMvcProperties&lt;/code&gt;，在获取消息时，locale信息应该使用&lt;code&gt;webMvcProperties.getLocale()&lt;/code&gt;&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;获取&lt;strong&gt;而不是&lt;/strong&gt;使用&lt;code&gt;Locale.getDefault()&lt;/code&gt;获取。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/blockquote&gt;
 
@@ -415,27 +413,37 @@
     </item>
     
     <item>
-      <title>资源访问受限</title>
-      <link>https://wangy325.top/post/tech/java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/</link>
+      <title>资源访问受限-并发之二</title>
+      <link>https://wangy325.top/post/tech/java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90-%E5%B9%B6%E5%8F%91%E4%B9%8B%E4%BA%8C/</link>
       <pubDate>Wed, 20 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90/</guid>
-      <description>&lt;p&gt;在系列一中，虽然创建了多线程，并且线程之间出现了一些&lt;strong&gt;不可预测&lt;/strong&gt;的CPU调度，但是由于线程之间是&lt;strong&gt;相互隔离&lt;/strong&gt;的——&lt;strong&gt;线程没有访问共同的资源&lt;/strong&gt;，尽管在执行任务的过程可能被CPU剥夺运行权，但是当它们再次获得运行权时对运行结果并没有影响，它们是安全的&lt;/p&gt;
+      <guid>https://wangy325.top/post/tech/java/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90-%E5%B9%B6%E5%8F%91%E4%B9%8B%E4%BA%8C/</guid>
+      <description>&lt;p&gt;在&lt;a href=&#34;../线程基础概念-并发之一&#34;&gt;上一篇文章&lt;/a&gt;中，虽然创建了多线程，并且线程之间出现了一些&lt;strong&gt;不可预测&lt;/strong&gt;的CPU调度，但是由于线程之间是&lt;strong&gt;相互隔离&lt;/strong&gt;的——&lt;strong&gt;线程没有访问共同的资源&lt;/strong&gt;，尽管在执行任务的过程可能被CPU剥夺运行权，但是当它们再次获得运行权时对运行结果并没有影响，它们是安全的。&lt;/p&gt;
 
-&lt;p&gt;考虑一种情况，如果&lt;strong&gt;多个线程访问同一个资源&lt;/strong&gt;，并对资源内容进行修改，会发生什么情况？&lt;/p&gt;</description>
+&lt;p&gt;考虑一种情况，如果&lt;strong&gt;多个线程访问同一个资源&lt;/strong&gt;，并对资源内容进行修改，会发生什么情况？&lt;/p&gt;
+
+&lt;p&gt;对于&lt;strong&gt;非原子性&lt;/strong&gt;操作，多线程下会出现&lt;strong&gt;竞争条件&lt;/strong&gt;，&lt;code&gt;accounts[to] += amount&lt;/code&gt;操作，可以被拆分为多个CPU指令：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;加载accounts[to]到寄存器&lt;/li&gt;
+&lt;li&gt;增加amount&lt;/li&gt;
+&lt;li&gt;将结果写回acounts[to]&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;线程运行到&lt;strong&gt;任何一个步骤时都可能被剥夺运行权&lt;/strong&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
-      <title>线程与任务</title>
-      <link>https://wangy325.top/post/tech/java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</link>
+      <title>线程与任务-并发之一</title>
+      <link>https://wangy325.top/post/tech/java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5-%E5%B9%B6%E5%8F%91%E4%B9%8B%E4%B8%80/</link>
       <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</guid>
-      <description>&lt;p&gt;并发是生产过程不可能绕过去的坎，&lt;del&gt;要编写高性能的程序，必须使用并发&lt;/del&gt;&lt;/p&gt;
+      <guid>https://wangy325.top/post/tech/java/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5-%E5%B9%B6%E5%8F%91%E4%B9%8B%E4%B8%80/</guid>
+      <description>&lt;p&gt;并发是生产过程不可能绕过去的坎，&lt;del&gt;要编写高性能的程序，必须使用并发&lt;/del&gt;。&lt;/p&gt;
 
-&lt;p&gt;并发的本质是多个线程同时处理任务&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;，不同于进程，线程之间的资源是共享的，当程序不够严谨时，使用多线程就可能带来问题，这是要反复讨论并发的原因之一&lt;/p&gt;
+&lt;p&gt;并发的本质是多个线程同时处理任务&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;，不同于进程，线程之间的资源是共享的，当程序不够严谨时，使用多线程就可能带来问题，这是要反复讨论并发的原因之一。&lt;/p&gt;
 
-&lt;p&gt;在Java中，必须明白一点：线程由Thread类启动，但Thread类并不执行任何操作，&lt;strong&gt;它只是驱动赋予它的任务&lt;/strong&gt;。因此将&lt;strong&gt;线程与任务&lt;/strong&gt;的概念区分开，有利于理解并发&lt;/p&gt;</description>
+&lt;p&gt;在Java中，必须明白一点：线程由Thread类启动，但Thread类并不执行任何操作，&lt;strong&gt;它只是驱动赋予它的任务&lt;/strong&gt;。因此将&lt;strong&gt;线程与任务&lt;/strong&gt;的概念区分开，有利于理解并发。&lt;/p&gt;</description>
     </item>
     
     <item>

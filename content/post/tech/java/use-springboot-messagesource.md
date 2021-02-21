@@ -13,16 +13,14 @@ autoCollapseToc: false
 ---
 
 
-> 注：这篇文章主要介绍了校验信息的国际化，MessageSource的配置逻辑是通用的。
->
-> 几个说明：
+> <span id="hook">几个说明</span>：
 >
 > 1. ~~properties配置文件中，`spring.messages.basename`**必须**要加classpath前缀。如 `spring.messages.basename=classpath:i18n/messages`~~；
 > 2. ~~必须要手动配置`MessageSource`，springboot不会自动配置之~~；
 > 3. 如果使用`MessageSource.getMessage()`方法，第一个参数的引用形式为`"code"`，而不是`"{code}"`或者`"${code}"`。如messageSource.getMessage("test.msg", null, ~~Locale.getDefault()~~)；
 > 4. 在配置`LocalValidatorFactoryBean`之后，才可以在`javax.validation.constraints`包下的注解（`@Size`，`@NotNull`...）下的***message***属性中使用`"{code}"`的形式声明校验提示信息。如
 > `@NotNull(message = "{leftTime.not.null}")`；
-> 5. springMVC的locale配置和JVM的locale配置不一样，在application.properties中配置的`spring.mvc.locale=zh_CN`实际上配置的是`WebMvcProperties`，在获取消息时，locale信息应该使用`webMvcProperties.getLocale()`[^还有更好的方式]获取**而不是**使用`Locale.getDefault()`获取。
+> 5. springMVC的locale配置和JVM的locale配置不一样，在application.properties中配置的`spring.mvc.locale=zh_CN`实际上配置的是`WebMvcProperties`，在获取消息时，locale信息应该使用`webMvcProperties.getLocale()`[^1]获取**而不是**使用`Locale.getDefault()`获取。
 
 ---
 
@@ -109,7 +107,7 @@ Here, it's **important to provide the basename** as locale-specific file names w
 1. Spring Boot自动配置实际上使用的是**ResourceBundleMessageSourece**，不同于**ReloadableResourceBundleMessageSource**
 2. 你无需再配置别名为"messageSource"的Bean，也就是说上述的配置必须忽略掉
 
-不妨看看MessageSource自动配置相关的类，具体内容在`org.springframework.boot.autoconfig.context.MessageSourceAutoConfiguration.java`包中：
+不妨看看MessageSource自动配置相关的类，具体内容在`org.springframework.boot.autoconfig.context.MessageSourceAutoConfiguration.java`类中：
 
 ```java
 @Configuration(proxyBeanMethods = false)
@@ -171,13 +169,16 @@ private Resource[] getResources(ClassLoader classLoader, String name) {
 }
 ```
 
-我们只需要关注`getResources`方法，可以看到，其自动补全了classpath前缀，因此，`ResourceBundleMessageSourece`总是从classpath中获取资源的。
+我们只需要关注`getResources`方法，可以看到，其自动补全了`classpath`前缀，因此，`ResourceBundleMessageSourece`总是从classpath中获取资源的。
 
 如果这两个条件都满足，那么SpringBoot会自动使用**ResourceBundleMessageSourece**配置MessageSource。
 
-## 4.2 ResourceBundleMessageSourece和ReloadableResourceBundleMessageSourece的区别
+## 4.2 RBMS和RRBMS
 
-可以看到，在本文的文首，标注了几个实践时需要注意的点，现在看来，前2点都是**错误的表述**，因为当时实践时使用的是`ReloadableResourceBundleMessageSourece`，并且没有搞清楚Spring Boot自动配置MessageSource的条件。
+- RBMS: **R**esource**B**undle**M**essage**S**ource
+- RRBMS: **R**eloadable**R**esource**B**undle**M**essage**S**ource
+
+在本文的[文首](#hook)，标注了几个实践时需要注意的点，现在看来，前2点都是**错误的表述**，因为当时实践时使用的是`ReloadableResourceBundleMessageSourece`，并且没有搞清楚Spring Boot自动配置MessageSource的条件。
 
 关于这2个“MessageSource”的区别，github上有一个经典的issue，大意是如果不使用classpath前缀，前者可以读取消息，后者不能读取消息。spring开发人员的回复一针见血：
 
@@ -200,13 +201,11 @@ private Resource[] getResources(ClassLoader classLoader, String name) {
 除此之外，二者还有一些其他的区别：
 
 - ResourceBundleMessageSourece只能读取properties配置文件，而ReloadableResourceBundleMessageSourece还可以读取xml配置文件
-- ReloadableResourceBundleMessageSourece可以从任意位置[^尚未实践]读取配置文件
+- ReloadableResourceBundleMessageSourece可以从任意位置[^2]读取配置文件
 - 从名字来看，Reloadable是可以动态加载配置文件的，事实上也确实如此，它有一个属性`cacheSeconds`，用来设置缓存配置文件的时间间隔：
   - 默认值是 -1，意味着不动态加载配置文件
   - 如果配置值为0，那么每次获取消息时就会检查配置文件的改动，**这个配置值要慎用**
   - 如果配置为其他正整数，则会在固定间隔后检查配置文件改动
-
-参考： https://stackoverflow.com/questions/39685399/reloadableresourcebundlemessagesource-vs-resourcebundlemessagesource-cache-con
 
 # 5 配置LocalValidatorFactoryBean
 
@@ -265,7 +264,7 @@ We can also leverage the support of internationalization along with this to make
 
 前文介绍了如何使用MessageResource进行参数校验时的国际化信息展现，最后补充如何在其他部分展现国际化的信息，最显著的一个使用场景就是错误消息的展现。
 
-配置好ResourceBundle之后，我们可以定义一个错误信息的枚举类：
+配置好`messages.properties`文件之后，我们可以定义一个错误信息的枚举类：
 
 ```properties
 # messages.properties
@@ -316,8 +315,6 @@ private Locale locale;
 
 注意到，可以通过设置HTTP请求头的方式来设置Locale信息。
 
-[如何设置请求头Headers](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Accept-Language)
-
 实际上，测试发现，通过设置`Accept-Language`请求头，配合使用`LocaleContextHolder.getLocale()`获取Locale信息，可以实现国际化效果，而使用`webMvcProperties.getLocale()`无法总是正确获取请求头设置的Locale信息。
 
 还有一点就是，LocaleContextHolder是通过静态方法获取的Locale信息，相较于webMvcProperties的实例方法，免去了注入`WebMvcProperties`的麻烦。
@@ -359,13 +356,13 @@ public class WifeController {
 
 ```java
 @RequestMapping(value = "/wife/mood")
-    public String readWife(Model model, @RequestParam("whatImDoing") String iAm, Locale loc) {
-        if(iAm.equals("playingXbox")) {
-            model.addAttribute( "statusTitle", msgSrc.getMessage("mood.angry", null, loc) );
-            model.addAttribute( "statusDetail", msgSrc.getMessage("mood.angry.xboxdiatribe", null, loc) );
-        }
-        return "moodResult";
+public String readWife(Model model, @RequestParam("whatImDoing") String iAm, Locale loc) {
+    if(iAm.equals("playingXbox")) {
+        model.addAttribute( "statusTitle", msgSrc.getMessage("mood.angry", null, loc) );
+        model.addAttribute( "statusDetail", msgSrc.getMessage("mood.angry.xboxdiatribe", null, loc) );
     }
+    return "moodResult";
+}
 ```
 
 这样简洁多了，SpringMvc简直太聪明了！等等，通过`spring.mvc.locale=zh_CN`或通过`Accept-Language: en;q=0.7,zh-TW;q=0.8,zh-CN;q=0.7`这样的形式配置MVC context的Locale信息还是有点麻烦，并且这样的话，前端每次请求都需要手动设置（校验）请求头，麻烦！
@@ -426,16 +423,19 @@ public ReqResult<?> locale(HttpServletRequest request) {
 
 以下两篇文章分别使用xml和java Bean的方式配置了`LocaleChangeInterceptor`，通过地址栏参数展现国际化信息：
 
-- [[xml]Spring MVC Internationalization (i18n) and Localization (i10n) Example](https://howtodoinjava.com/spring-mvc/spring-mvc-internationalization-i18n-and-localization-i10n-example/#add_localeresolver_support)
-- [[bean]LOCALE AND INTERNATIONALIZATION IN SPRING MVC](https://learningprogramming.net/java/spring-mvc/locale-and-internationalization-in-spring-mvc/)
+- [[基于xml的配置]Spring MVC Internationalization (i18n) and Localization (i10n) Example](https://howtodoinjava.com/spring-mvc/spring-mvc-internationalization-i18n-and-localization-i10n-example/#add_localeresolver_support)
+- [[基于java bean的配置]LOCALE AND INTERNATIONALIZATION IN SPRING MVC](https://learningprogramming.net/java/spring-mvc/locale-and-internationalization-in-spring-mvc/)
 
-# 9 References
+# 9 参考
 
-- https://zetcode.com/spring/messagesource/
-- https://www.baeldung.com/spring-custom-validation-message-source
-- https://stackoverflow.com/questions/15065734/spring-framework-no-message-found-under-code-for-locale/39371075
-- https://stackoverflow.com/questions/39685399/reloadableresourcebundlemessagesource-vs-resourcebundlemessagesource-cache-con
-- https://github.com/spring-projects/spring-framework/issues/12050
-- https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#context-functionality-messagesource
-- https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Accept-Language
-- https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-localeresolver
+- 原文地址： https://www.baeldung.com/spring-custom-validation-message-source
+- [简单使用MessageSource](https://zetcode.com/spring/messagesource/)
+- [MessageSource配置异常](https://stackoverflow.com/questions/15065734/spring-framework-no-message-found-under-code-for-locale/39371075)
+- [2个MessageSource的区别1](https://stackoverflow.com/questions/39685399/reloadableresourcebundlemessagesource-vs-resourcebundlemessagesource-cache-con)
+- [2个MessageSource的区别2](https://github.com/spring-projects/spring-framework/issues/12050)
+- [官方文档：使用messageSource进行国际化](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#context-functionality-messagesource)
+- [如何设置请求头Headers](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Accept-Language)
+- [官方文档：Spring MVC locale resovler](https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-localeresolver)
+
+[^1]: `LocaleContextHolder`是它的完美替代。
+[^2]: 从文档和一些其他的资料来看，RRBMS是可以从任意位置读取配置文件的，不过笔者并没有实践这一说法。
