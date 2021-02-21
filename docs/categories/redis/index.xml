@@ -19,7 +19,7 @@
       <guid>https://wangy325.top/post/tech/redis-all/</guid>
       <description>&lt;p&gt;此文总结了redis相关的基础性知识体系，但不包括redis主从、哨兵、集群相关内容&lt;/p&gt;
 
-&lt;h3 id=&#34;1-简单介绍一下-redis-呗&#34;&gt;1. 简单介绍一下 Redis 呗!&lt;/h3&gt;
+&lt;h2 id=&#34;1-简单介绍一下-redis-呗&#34;&gt;1. 简单介绍一下 Redis 呗&lt;/h2&gt;
 
 &lt;p&gt;简单来说 &lt;strong&gt;Redis 就是一个使用 C 语言开发的数据库&lt;/strong&gt;，不过与传统数据库不同的是 &lt;strong&gt;Redis 的数据是存在内存中的&lt;/strong&gt; ，也就是它是内存数据库，所以读写速度非常快，因此 Redis 被广泛应用于缓存方向。&lt;/p&gt;
 

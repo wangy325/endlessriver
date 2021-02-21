@@ -180,7 +180,7 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/use-springboot-messagesource/">在SpringBoot中使用MessageSource</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/use-springboot-messagesource/">在SpringBoot中使用MessageSource</a></h1>
     <div class="post-meta">
 
         <span>
@@ -195,18 +195,16 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
           <a href="/categories/spring/"> spring </a>
           </div>
         <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 4157 字 </span>
+        <span class="more-meta analyse"> 约 6127 字 </span>
         <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 9 分钟 </span>
+        <span class="more-meta"> 预计阅读 13 分钟 </span>
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
       <blockquote>
-<p>注：这篇文章主要介绍了校验信息的国际化，MessageSource的配置逻辑是通用的。</p>
-
-<p>几个说明：</p>
+<p><span id="hook">几个说明</span>：</p>
 
 <ol>
 <li><del>properties配置文件中，<code>spring.messages.basename</code><strong>必须</strong>要加classpath前缀。如 <code>spring.messages.basename=classpath:i18n/messages</code></del>；</li>
@@ -214,7 +212,7 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
 <li>如果使用<code>MessageSource.getMessage()</code>方法，第一个参数的引用形式为<code>&quot;code&quot;</code>，而不是<code>&quot;{code}&quot;</code>或者<code>&quot;${code}&quot;</code>。如messageSource.getMessage(&ldquo;test.msg&rdquo;, null, <del>Locale.getDefault()</del>)；</li>
 <li>在配置<code>LocalValidatorFactoryBean</code>之后，才可以在<code>javax.validation.constraints</code>包下的注解（<code>@Size</code>，<code>@NotNull</code>&hellip;）下的<strong><em>message</em></strong>属性中使用<code>&quot;{code}&quot;</code>的形式声明校验提示信息。如
 <code>@NotNull(message = &quot;{leftTime.not.null}&quot;)</code>；</li>
-<li>springMVC的locale配置和JVM的locale配置不一样，在application.properties中配置的<code>spring.mvc.locale=zh_CN</code>实际上配置的是<code>WebMvcProperties</code>，在获取消息时，locale信息应该从<code>webMvcProperties.getLocale()</code>中获取<strong>而不是</strong>使用<code>Locale.getDefault()</code>获取。</li>
+<li>springMVC的locale配置和JVM的locale配置不一样，在application.properties中配置的<code>spring.mvc.locale=zh_CN</code>实际上配置的是<code>WebMvcProperties</code>，在获取消息时，locale信息应该使用<code>webMvcProperties.getLocale()</code><sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>获取<strong>而不是</strong>使用<code>Locale.getDefault()</code>获取。</li>
 </ol>
 </blockquote>
 
@@ -229,7 +227,7 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
 <p>In this tutorial, we&rsquo;ll see how to configure and manage custom validation MessageSource in the application using Spring Boot.</p>
     </div>
     <div class="read-more">
-      <a href="/post/tech/use-springboot-messagesource/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/use-springboot-messagesource/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
@@ -625,7 +623,7 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
           <a href="/categories/redis/"> redis </a>
           </div>
         <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 11790 字 </span>
+        <span class="more-meta analyse"> 约 11789 字 </span>
         <span class="icomoonfree icon-clock"></span>
         <span class="more-meta"> 预计阅读 24 分钟 </span>
     </div>
@@ -635,7 +633,7 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
     <div class="post-summary">
       <p>此文总结了redis相关的基础性知识体系，但不包括redis主从、哨兵、集群相关内容</p>
 
-<h3 id="1-简单介绍一下-redis-呗">1. 简单介绍一下 Redis 呗!</h3>
+<h2 id="1-简单介绍一下-redis-呗">1. 简单介绍一下 Redis 呗</h2>
 
 <p>简单来说 <strong>Redis 就是一个使用 C 语言开发的数据库</strong>，不过与传统数据库不同的是 <strong>Redis 的数据是存在内存中的</strong> ，也就是它是内存数据库，所以读写速度非常快，因此 Redis 被广泛应用于缓存方向。</p>
 
