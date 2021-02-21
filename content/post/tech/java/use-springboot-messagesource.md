@@ -302,7 +302,7 @@ MessageResource messageSource;
 messageSource.getMessage("unknown.error", null, LocaleContextHolder.getLocale()))
 ```
 
-> 如果此处像文章开头说的那样，使用`webMvcProperties.getLocale()`的话，但是在获取HTTP Header设置的Loacle时有些问题。此处使用了`LocaleContextHolder.getLocale()`，LocaleContextHolder可以灵活地获取每一次Servlet请求的Locale信息
+> 如果此处像文章开头说的那样，使用`webMvcProperties.getLocale()`的话，在获取HTTP Header设置的Loacle时有些问题。此处使用了`LocaleContextHolder.getLocale()`，LocaleContextHolder可以灵活地获取每一次Servlet请求的Locale信息。
 
 我们不妨看看WebMvcProperties类的Locale域：
 
