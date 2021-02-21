@@ -22,7 +22,7 @@ autoCollapseToc: false
 > 3. 如果使用`MessageSource.getMessage()`方法，第一个参数的引用形式为`"code"`，而不是`"{code}"`或者`"${code}"`。如messageSource.getMessage("test.msg", null, ~~Locale.getDefault()~~)；
 > 4. 在配置`LocalValidatorFactoryBean`之后，才可以在`javax.validation.constraints`包下的注解（`@Size`，`@NotNull`...）下的***message***属性中使用`"{code}"`的形式声明校验提示信息。如
 > `@NotNull(message = "{leftTime.not.null}")`；
-> 5. springMVC的locale配置和JVM的locale配置不一样，在application.properties中配置的`spring.mvc.locale=zh_CN`实际上配置的是`WebMvcProperties`，在获取消息时，locale信息应该从`webMvcProperties.getLocale()`中获取**而不是**使用`Locale.getDefault()`获取。
+> 5. springMVC的locale配置和JVM的locale配置不一样，在application.properties中配置的`spring.mvc.locale=zh_CN`实际上配置的是`WebMvcProperties`，在获取消息时，locale信息应该使用`webMvcProperties.getLocale()`[^还有更好的方式]获取**而不是**使用`Locale.getDefault()`获取。
 
 ---
 
@@ -294,18 +294,140 @@ public enum ReqState {
 }
 ```
 
-和在`@NotEmpty`注解中使用方式不一样，这里只需要以字符串的形式直接引用即可。当然，这个消息还需要解析，解析的方式也很简单：
+和在`@NotEmpty`注解中使用方式不一样，这里只需要以字符串的形式直接引用即可。当然，这个消息还需要解析（实际上消息是以key-value的形式配置的，以key的形式引用，而要以value的形式呈现，在多语言的环境，可以实现"一次引用，多种呈现”的目的），解析的方式也很简单：
 
 ```java
 @Autowired
 MessageResource messageSource;
-@Autowired
-WebMvcProperties webMvcProperties;
 
-messageSource.getMessage("unknown.error", null, webMvcProperties.getLocale()))
+messageSource.getMessage("unknown.error", null, LocaleContextHolder.getLocale()))
 ```
 
-需要注意的是locale的获取，以及如何灵活的配置Locale（根据需求热配置）。
+> 如果此处像文章开头说的那样，使用`webMvcProperties.getLocale()`的话，但是在获取HTTP Header设置的Loacle时有些问题。此处使用了`LocaleContextHolder.getLocale()`，LocaleContextHolder可以灵活地获取每一次Servlet请求的Locale信息
+
+我们不妨看看WebMvcProperties类的Locale域：
+
+```java
+/**
+* Locale to use. By default, this locale is overridden by the "Accept-Language" header.
+*/
+private Locale locale;
+```
+
+注意到，可以通过设置HTTP请求头的方式来设置Locale信息。
+
+[如何设置请求头Headers](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Accept-Language)
+
+实际上，测试发现，通过设置`Accept-Language`请求头，配合使用`LocaleContextHolder.getLocale()`获取Locale信息，可以实现国际化效果，而使用`webMvcProperties.getLocale()`无法总是正确获取请求头设置的Locale信息。
+
+还有一点就是，LocaleContextHolder是通过静态方法获取的Locale信息，相较于webMvcProperties的实例方法，免去了注入`WebMvcProperties`的麻烦。
+
+## 8.1 在SpringMVC中使用Locale
+
+现在我们知道，可以通过`LocaleContextHolder`获取Locale信息，那么我们可以在控制器中[这样使用Locale信息](https://stackoverflow.com/questions/33049674/elegant-way-to-get-locale-in-spring-controller)：
+
+```java
+@Controller
+public class WifeController {
+    @Autowired
+    private MessageSource msgSrc;
+
+    @RequestMapping(value = "/wife/mood")
+    public String readWife(Model model, @RequestParam("whatImDoing") String iAm) {
+        // 获取Locale信息
+        Locale loc = LocaleContextHolder.getLocale();
+        if(iAm.equals("playingXbox")) {
+            model.addAttribute( "statusTitle", msgSrc.getMessage("mood.angry", null, loc) );
+            model.addAttribute( "statusDetail", msgSrc.getMessage("mood.angry.xboxdiatribe", null, loc) );
+        }
+        return "moodResult";
+    }
+}
+```
+
+不过，在每个控制器里都需要获取一次Loacle信息，这样的方式似乎有点繁琐。那么是否可以简单一点呢？显然是可以的。
+
+[springMvc v3.2.x doc 17.3.3](https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/mvc.html#mvc-ann-methods)中定义了控制器方法支持的参数：
+
+>...
+>
+> `java.util.Locale` for the current request locale, determined by the most specific locale resolver available, in effect, the configured `LocaleResolver` in a Servlet environment.
+>
+>...
+
+因此，可以这样改造上述控制器：
+
+```java
+@RequestMapping(value = "/wife/mood")
+    public String readWife(Model model, @RequestParam("whatImDoing") String iAm, Locale loc) {
+        if(iAm.equals("playingXbox")) {
+            model.addAttribute( "statusTitle", msgSrc.getMessage("mood.angry", null, loc) );
+            model.addAttribute( "statusDetail", msgSrc.getMessage("mood.angry.xboxdiatribe", null, loc) );
+        }
+        return "moodResult";
+    }
+```
+
+这样简洁多了，SpringMvc简直太聪明了！等等，通过`spring.mvc.locale=zh_CN`或通过`Accept-Language: en;q=0.7,zh-TW;q=0.8,zh-CN;q=0.7`这样的形式配置MVC context的Locale信息还是有点麻烦，并且这样的话，前端每次请求都需要手动设置（校验）请求头，麻烦！
+
+> 浏览器发起请求的`Accept-Language`是根据用户语言默认设置的。
+
+还能更加简单么，比如通过地址栏参数的形式指定Locale（好像都是这么实现的）？当然可以！
+
+springMvc官方文档有详细的介绍，我甚至找到了2个版本的doc，不过内容大同小异：
+
+- [(旧)springMvc-3.2.x-17.8](https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/mvc.html#mvc-localeresolver)
+- [spring webMvc doc](https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-localeresolver)
+
+当请求进入到控制器时，`DispatcherServlet`会寻找locale resolver，并使用其设置Locale。使用`RequestContext.getLocale()`方法总是可以获取到Locale信息：
+
+```java
+@GetMapping("/resolver/locale")
+public ReqResult<?> locale(HttpServletRequest request) {
+    RequestContext rc = new RequestContext(request);
+    log.info("locale: {}", rc.getLocale());
+    return ReqResult.ok(rc.getMessage("http.ok"), rc.getLocale());
+}
+```
+
+这个控制器可能的返回结果为：
+
+```json
+{
+    "code": 20000,
+    "msg": "success",
+    "data": "en"
+}
+{
+    "code": 20000,
+    "msg": "成功",
+    "data": "zh_CN"
+}
+```
+
+> `RequestContext`可以很方便的获取请求中包含的信息，可能的参数绑定（校验）错误等，还能直接获取Spring Message，很强大。
+
+除此之外，还可以通过配置拦截器，通过特定的条件（比如请求参数）来更改Locale。
+
+文档提到了几种不同的`LocaleResolver`：
+
+- AcceptHeaderLocaleResolver
+
+    这个locale resolver已经在前文讨论过了，通过设置HTTP Header的`Accept-Language`请求头可以设置SpringMvc Context的Locale信息。
+- CookieLocaleResolver
+
+    这个locale resolver检查cookie中是否声明了Locale信息，如果有，则使用之。
+- SessionLocaleResolver
+
+    这个locale resolver可以从当前请求的HttpSession中获取Locale和TimeZone信息。由于和Session相关，故在切换Locale时没有cookie灵活，只有session关闭之后Locale配置才能重新设置。
+- LocaleChangeInterceptor
+
+    这是推荐使用的方式，通过拦截器+请求参数实现国际化。
+
+以下两篇文章分别使用xml和java Bean的方式配置了`LocaleChangeInterceptor`，通过地址栏参数展现国际化信息：
+
+- [[xml]Spring MVC Internationalization (i18n) and Localization (i10n) Example](https://howtodoinjava.com/spring-mvc/spring-mvc-internationalization-i18n-and-localization-i10n-example/#add_localeresolver_support)
+- [[bean]LOCALE AND INTERNATIONALIZATION IN SPRING MVC](https://learningprogramming.net/java/spring-mvc/locale-and-internationalization-in-spring-mvc/)
 
 # 9 References
 
@@ -314,3 +436,6 @@ messageSource.getMessage("unknown.error", null, webMvcProperties.getLocale()))
 - https://stackoverflow.com/questions/15065734/spring-framework-no-message-found-under-code-for-locale/39371075
 - https://stackoverflow.com/questions/39685399/reloadableresourcebundlemessagesource-vs-resourcebundlemessagesource-cache-con
 - https://github.com/spring-projects/spring-framework/issues/12050
+- https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#context-functionality-messagesource
+- https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Accept-Language
+- https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-localeresolver
