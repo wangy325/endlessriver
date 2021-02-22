@@ -180,7 +180,7 @@ private Resource[] getResources(ClassLoader classLoader, String name) {
 
 在本文的[文首](#hook)，标注了几个实践时需要注意的点，现在看来，前2点都是**错误的表述**，因为当时实践时使用的是`ReloadableResourceBundleMessageSourece`，并且没有搞清楚Spring Boot自动配置MessageSource的条件。
 
-关于这2个“MessageSource”的区别，github上有一个经典的issue，大意是如果不使用classpath前缀，前者可以读取消息，后者不能读取消息。spring开发人员的回复一针见血：
+关于这2个“MessageSource”的区别，github上有一个经典的[issue](https://github.com/spring-projects/spring-framework/issues/12050)，描述的问题是如果不使用classpath前缀，前者可以读取消息，后者不能读取消息。spring开发人员的回复一针见血：
 
 > I assume your resource bundle files live in the classpath? There is an **important difference** between ResourceBundleMessageSource and ReloadableResourceBundleMessageSource: The former **always loads resource bundles from the classpath** (since that is all that standard java.util.ResourceBundle is capable of),  whereas the latter **loads resource bundle files through the ApplicationContext's ResourceLoader**. If your context is a ClassPathXmlApplicationContext, you won't notice a difference - but if it is a WebApplicationContext, it will try to find the files in the WAR directory structure when not using a prefix. So it would simply not find your files because it is looking in the wrong location.
 >
@@ -430,11 +430,11 @@ public ReqResult<?> locale(HttpServletRequest request) {
 
 - 原文地址： https://www.baeldung.com/spring-custom-validation-message-source
 - [简单使用MessageSource](https://zetcode.com/spring/messagesource/)
-- [MessageSource配置异常](https://stackoverflow.com/questions/15065734/spring-framework-no-message-found-under-code-for-locale/39371075)
-- [2个MessageSource的区别1](https://stackoverflow.com/questions/39685399/reloadableresourcebundlemessagesource-vs-resourcebundlemessagesource-cache-con)
-- [2个MessageSource的区别2](https://github.com/spring-projects/spring-framework/issues/12050)
+- [[stackoverflow] MessageSource配置异常](https://stackoverflow.com/questions/15065734/spring-framework-no-message-found-under-code-for-locale/39371075)
+- [[stackoverflow] 2个MessageSource的区别1](https://stackoverflow.com/questions/39685399/reloadableresourcebundlemessagesource-vs-resourcebundlemessagesource-cache-con)
+- [[github issue] 2个MessageSource的区别2](https://github.com/spring-projects/spring-framework/issues/12050)
+- [如何设置HTTP请求头Accept-Language](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Accept-Language)
 - [官方文档：使用messageSource进行国际化](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#context-functionality-messagesource)
-- [如何设置请求头Headers](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Accept-Language)
 - [官方文档：Spring MVC locale resovler](https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-localeresolver)
 
 [^1]: `LocaleContextHolder`是它的完美替代。
