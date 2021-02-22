@@ -1,5 +1,5 @@
 ---
-title: "Java8中的新日期和时间工具库（转）"
+title: "Java8中的新日期和时间工具库"
 date: 2021-02-02
 lastmod: 2021-02-02
 draft: false
@@ -189,9 +189,176 @@ java 8中的日期时间库类名、方法名命名上都是极其形象生动�
 - 对于遗留的日期时间库`Calendar/Date/Timezone`和新的日期时间库的互通性；
 - 将全球的非标准日历系统单独抽象并支持扩展，从标准日历系统中隔离（符合设计原则：对修改关闭，对扩展开放）
 
-# 4 补充内容
+# 4 java.time使用示例
 
-## 4.1 时区
+得益于新日期时间框架的设计，无论是类名还是方法名以及可读性，都相当容易理解，其上手成本比Date/Calendar要低得多。
+
+并且，LocalDateTime/LocalDate之间，以及它们和jdk 1.8之前的Date也可以互相转换。
+
+以下是一个使用示例：
+
+```java
+public class Intro {
+    static String yyyy = "yyyy";
+    static String yyyy_MM = "yyy-MM";
+    static String yyyy_MM_dd = "yyyy-MM-dd";
+    static String yyyy_MM_dd_HH_mm_ss = "yyyy-MM-dd HH:mm:ss";
+    static String yyyy_MM_dd_HH_mm_ss_SSS = "yyyy-MM-dd HH:mm:ss.SSS";
+
+    /**
+     * If the pattern like 'yyyy', result {@link LocalDateTime} could be like 'yyyy-01-01 00:00:00'.<br>
+     * If the pattern like 'yyyy-MM', result {@link LocalDateTime} could be like 'yyyy-MM-01 00:00:00'.<br>
+     * If the pattern like 'yyyy-MM-dd', result {@link LocalDateTime} could be like 'yyyy-MM-dd 00:00:00'.<br>
+     * Other patterns acts the same.
+     * <p>
+     *
+     * <b>Important:</b> the pattern and the the {@link LocalDateTime#parse(CharSequence, DateTimeFormatter)} method's input {@link CharSequence} must match.
+     * e.g. The following method call will throw {@link java.time.format.DateTimeParseException}:
+     * <pre>
+     *      LocalDateTime localDateTime = LocalDateTime.parse("2021",dtfBuilder("yyyy-MM"));
+     * </pre>
+     *
+     * @param pattern the string pattern
+     * @see DateTimeFormatter javadoc
+     * @see LocalDateTime#parse(CharSequence, DateTimeFormatter)
+     */
+    static DateTimeFormatter dtfBuilder(String pattern) {
+        return new DateTimeFormatterBuilder()
+                .appendPattern(pattern)
+                .parseDefaulting(ChronoField.YEAR_OF_ERA, LocalDateTime.now().getYear())
+                .parseDefaulting(ChronoField.MONTH_OF_YEAR, 1)
+                .parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
+                .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+                .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+                .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
+                .parseDefaulting(ChronoField.NANO_OF_SECOND, 0)
+                .toFormatter();
+    }
+
+    static SimpleDateFormat sdfBuilder(String pattern) {
+        return new SimpleDateFormat(pattern);
+    }
+
+    /**
+     * solution1:
+     * Get yyyy-MM-dd 00:00:00, start of the day.<br>
+     * If you use yyyy-MM-dd as parameter
+     */
+    static Date getStartOfDay() {
+        LocalDateTime localDateTime = LocalDateTime.parse("2021-02-02",
+                dtfBuilder(yyyy_MM_dd));
+        Instant instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
+        return Date.from(instant);
+    }
+
+    /**
+     * solution2:
+     * get yyyy-MM-dd 00:00:00, start of the day.<br>
+     * If you use yyyy-MM-dd as parameter<br>
+     * <p>
+     * Using {@link LocalDate#atStartOfDay()}
+     *
+     * @param dateString datePattern like 2012-09-08
+     */
+    static Date getStartOfDay(String dateString) throws ParseException {
+        //由于dtfBuilder的设置 这里的时间已经是 00:00:00
+        LocalDate localDate = LocalDate.parse(dateString, dtfBuilder(yyyy_MM_dd));
+        ZonedDateTime zonedDateTime = localDate.atStartOfDay(ZoneId.systemDefault());
+        return Date.from(zonedDateTime.toInstant());
+//        return sdfBuilder().parse(zonedDateTime.format(dtfBuilder(yyyy_MM_dd_HH_mm_ss)));
+    }
+
+    /**
+     *
+     */
+    static Date getStartOfDay(LocalDate localDate){
+        ZonedDateTime zonedDateTime = localDate.atStartOfDay(ZoneId.systemDefault());
+
+        LocalDateTime localDateTime = localDate.atStartOfDay();
+        Instant instant = localDateTime.toInstant(ZoneOffset.of("+8"));
+//        return Date.from(zonedDateTime.toInstant());
+        return Date.from(instant);
+    }
+
+    /**
+     * Get yyyy-MM-dd 23:59:59.999, end of the day.<br>
+     * By using {@link LocalDateTime#plus(long, TemporalUnit)}
+     */
+    static Date getEndOfDay() {
+        //由于dtfBuilder的设置 这里的时间已经是 00:00:00
+        LocalDateTime localDateTime = LocalDateTime.parse("2020-12-21", dtfBuilder(yyyy_MM_dd));
+
+        //plusXxx()方法没有提供毫秒/微秒的相应方法，直接到纳秒； 相应的，可以使用plus方法指定单位
+        localDateTime = localDateTime.plusHours(23).plusMinutes(59).plusSeconds(59).plusNanos(999_999_999);
+
+        /*
+         *  好方法，将其下级单位的值清零
+         *  ChronoUnit.DAYS: 清零hh:mm:ss.SSS
+         *  最大单位 DAYS，也就是说此方法只能用来清零时间
+         */
+        localDateTime = localDateTime.truncatedTo(ChronoUnit.DAYS);
+        localDateTime = localDateTime
+                .plus(23, ChronoUnit.HOURS)
+                .plus(59, ChronoUnit.MINUTES)
+                .plus(59, ChronoUnit.SECONDS)
+                .plus(999, ChronoUnit.MILLIS);
+        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    /**
+     * Get yyyy-MM-dd 23:59:59.999, end of the day.<br>
+     * By using {@link LocalDate#atTime(LocalTime)}
+     *
+     * @param dateString date pattern like '2012-09-18'
+     */
+    static Date getEndOfDay(String dateString) {
+        LocalDate localDate = LocalDate.parse(dateString, dtfBuilder(yyyy_MM_dd));
+//        localDate.
+        LocalDateTime localDateTime = localDate.atTime(23, 59, 59, 999_999_999);
+        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+
+    }
+
+    /**
+     * Get first day of month
+     *
+     * @param dateString pattern like '2020-10-25'
+     * @return
+     */
+    static Date getFirstDayOfMonth(String dateString) {
+        LocalDateTime localDateTime = LocalDateTime.parse(dateString, dtfBuilder(yyyy_MM_dd));
+        localDateTime = localDateTime.withDayOfMonth(1);
+        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    /**
+     * Get the first day of year.
+     *
+     * @param yearString pattern like '2012'
+     */
+    static Date getFirstDayOfYear(String yearString) {
+        LocalDateTime localDateTime = LocalDateTime.parse(yearString, dtfBuilder(yyyy));
+        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+
+    public static void main(String[] args) throws ParseException {
+        System.out.println(sdfBuilder(yyyy_MM_dd_HH_mm_ss).format(getStartOfDay()));
+        System.out.println(sdfBuilder(yyyy_MM_dd_HH_mm_ss).format(getStartOfDay("2021-02-02")));
+        System.out.println(sdfBuilder(yyyy_MM_dd_HH_mm_ss_SSS).format(getStartOfDay(LocalDate.parse("2021-02-22", dtfBuilder(yyyy_MM_dd)))));
+        System.out.println(sdfBuilder(yyyy_MM_dd_HH_mm_ss_SSS).format(getEndOfDay()));
+        System.out.println(sdfBuilder(yyyy_MM_dd_HH_mm_ss_SSS).format(getEndOfDay("2020-12-21")));
+        System.out.println(sdfBuilder(yyyy_MM_dd).format(getFirstDayOfMonth("2020-12-18")));
+        System.out.println(sdfBuilder(yyyy_MM_dd_HH_mm_ss).format(getFirstDayOfYear("2012")));
+    }
+}
+```
+
+源码地址：https://github.com/wangy325/java-review/blob/master/src/main/java/com/wangy/common/time/Intro.java
+
+# 5 补充内容
+
+## 5.1 时区
 
 时区是地球上的区域使用同一个时间定义。以前，人们通过观察太阳的位置（时角）决定时间，这就使得不同经度的地方的时间有所不同（地方时）。1863年，首次使用时区的概念。时区通过设立一个区域的标准时间部分地解决了这个问题。
 
@@ -201,21 +368,21 @@ java 8中的日期时间库类名、方法名命名上都是极其形象生动�
 
 但是，为了避开国界线，有的时区的形状并不规则，而且比较大的国家以国家内部行政分界线为时区界线，这是**实际时区**，即法定时区。请参见[时区列表](https://zh.wikipedia.org/wiki/%E6%97%B6%E5%8C%BA%E5%88%97%E8%A1%A8#UTC%EF%BC%88WET_-%E6%AD%90%E6%B4%B2%E8%A5%BF%E9%83%A8%E6%99%82%E5%8D%80%EF%BC%8CGMT-_%E6%A0%BC%E6%9E%97%E5%A8%81%E6%B2%BB%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4%EF%BC%89)。
 
-## 4.2 子午线
+## 5.2 子午线
 
 即**经线**，和纬线一样是人类为度量而假设出来的辅助线，定义为地球表面连接南北两极的大圆线上的半圆弧。任两根经线的长度相等，相交于南北两极点。每一根经线都有其相对应的数值，称为经度。经线指示南北方向。
 
-## 4.3 本初子午线
+## 5.3 本初子午线
 
 即**0度经线**，亦称格林尼治子午线或本初经线，是经过英国格林尼治天文台的一条经线（亦称子午线）。本初子午线的东西两边分别定为东经和西经，于180度相遇。
 
-## 4.4 国际标准ISO 8601
+## 5.4 国际标准ISO 8601
 
 [国际标准ISO 8601](https://zh.wikipedia.org/wiki/ISO_8601)：是国际标准化组织的日期和时间的表示方法，全称为《数据存储和交换形式·信息交换·日期和时间的表示方法》。目前是2004年12月1日发行的第三版“ISO8601:2004”以替代1998年的第一版“ISO8601:1988”与2000年的第二版“ISO8601:2000”。
 
 年由4位数字组成YYYY，或者带正负号的四或五位数字表示±YYYYY。以公历公元1年为0001年，以公元前1年为0000年，公元前2年为-0001年，其他以此类推。应用其他纪年法要换算成公历，但如果发送和接受信息的双方有共同一致同意的其他纪年法，可以自行应用。
 
-## 4.5 协调世界时
+## 5.5 协调世界时
 
 > 英语：Coordinated Universal Time，
 >
@@ -227,14 +394,12 @@ java 8中的日期时间库类名、方法名命名上都是极其形象生动�
 
 如果时间是以协调世界时（UTC）表示，则在时间后面直接加上一个“Z”（不加空格）。“Z”是协调世界时中0时区的标志。因此，“09:30 UTC”就写作“09:30Z”或是“0930Z”。“14:45:15 UTC”则为“14:45:15Z”或“144515Z”。
 
-
-## 4.6 UTC偏移量
+## 5.6 UTC偏移量
 
 UTC偏移量用以下形式表示：±[hh]:[mm]、±[hh][mm]、或者±[hh]。如果所在区时比协调世界时早1个小时（例如柏林冬季时间），那么时区标识应为“+01:00”、“+0100”或者直接写作“+01”。这也同上面的“Z”一样直接加在时间后面。
 "UTC+8"表示当协调世界时（UTC）时间为凌晨2点的时候，当地的时间为2+8点，即早上10点。
 
-
-## 4.7 格林尼治平时
+## 5.7 格林尼治平时
 
 >英语：Greenwich Mean Time，GMT）
 
@@ -244,7 +409,7 @@ UTC偏移量用以下形式表示：±[hh]:[mm]、±[hh][mm]、或者±[hh]。�
 
 格林尼治平时的正午是指当平太阳横穿格林尼治子午线时（也就是在格林尼治上空最高点时）的时间。由于地球每天的自转是有些不规则的，而且正在缓慢减速，因此格林尼治平时基于天文观测本身的缺陷，已经被原子钟报时的协调世界时（UTC）所取代。
 
-# 参考
+# 6 参考
 
 - 原文地址：https://www.cnblogs.com/lxyit/p/9442135.html
 - is-java-util-calendar-thread-safe-or-not：https://stackoverflow.com/questions/12131324/is-java-util-calendar-thread-safe-or-not
