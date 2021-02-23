@@ -192,7 +192,6 @@ private Resource[] getResources(ClassLoader classLoader, String name) {
 >
 >`<property name="basename" value="WEB-INF/messages"/>`
 
-
 回复指出了ResourceBundleMessageSourece和ReloadableResourceBundleMessageSourece最重要的区别：
 
 - ResourceBundleMessageSourece**总是**从classpath中加载资源
@@ -319,9 +318,9 @@ private Locale locale;
 
 还有一点就是，LocaleContextHolder是通过静态方法获取的Locale信息，相较于webMvcProperties的实例方法，免去了注入`WebMvcProperties`的麻烦。
 
-## 8.1 在SpringMVC中使用Locale
+## 8.1 LocaleContextHolder和Accept-Language
 
-现在我们知道，可以通过`LocaleContextHolder`获取Locale信息，那么我们可以在控制器中[这样使用Locale信息](https://stackoverflow.com/questions/33049674/elegant-way-to-get-locale-in-spring-controller)：
+现在我们知道，可以通过`LocaleContextHolder`和设置`Accept-Language`头动态获取请求的Locale信息，那么我们可以在控制器中[这样使用Locale信息](https://stackoverflow.com/questions/33049674/elegant-way-to-get-locale-in-spring-controller)：
 
 ```java
 @Controller
@@ -352,7 +351,7 @@ public class WifeController {
 >
 >...
 
-因此，可以这样改造上述控制器：
+也就是说，Locale可以直接作为参数被HTTP请求传递进来。因此，可以这样改造上述控制器：
 
 ```java
 @RequestMapping(value = "/wife/mood")
@@ -367,13 +366,17 @@ public String readWife(Model model, @RequestParam("whatImDoing") String iAm, Loc
 
 这样简洁多了，SpringMvc简直太聪明了！等等，通过`spring.mvc.locale=zh_CN`或通过`Accept-Language: en;q=0.7,zh-TW;q=0.8,zh-CN;q=0.7`这样的形式配置MVC context的Locale信息还是有点麻烦，并且这样的话，前端每次请求都需要手动设置（校验）请求头，麻烦！
 
-> 浏览器发起请求的`Accept-Language`是根据用户语言默认设置的。
+> 默认情况下，浏览器发起请求的`Accept-Language`是根据用户语言设置的。
 
-还能更加简单么，比如通过地址栏参数的形式指定Locale（好像都是这么实现的）？当然可以！
+文章到此，我们已经可以通过配置**WebMvcProperties**和设置**Accept-Language**请求头来**设置**Spring MVC Context的Locale信息；并且通过`LocaleContextHolder.getLocale()`方法或者直接在控制器中传递`Locale`参数的形式**获取**Locale信息。
 
-springMvc官方文档有详细的介绍，我甚至找到了2个版本的doc，不过内容大同小异：
+## 8.2 Locale Resolver
 
-- [(旧)springMvc-3.2.x-17.8](https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/mvc.html#mvc-localeresolver)
+这样看来，国际化的配置还是不够灵活，配置文件的加载以及请求头的设置这两种方法都略显笨重。
+
+去找找文档看看其他的思路吧：
+
+- [(旧版本)springMvc-3.2.x-17.8](https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/mvc.html#mvc-localeresolver)
 - [spring webMvc doc](https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-localeresolver)
 
 当请求进入到控制器时，`DispatcherServlet`会寻找locale resolver，并使用其设置Locale。使用`RequestContext.getLocale()`方法总是可以获取到Locale信息：
@@ -381,6 +384,7 @@ springMvc官方文档有详细的介绍，我甚至找到了2个版本的doc，�
 ```java
 @GetMapping("/resolver/locale")
 public ReqResult<?> locale(HttpServletRequest request) {
+    // 构建RequestContext
     RequestContext rc = new RequestContext(request);
     log.info("locale: {}", rc.getLocale());
     return ReqResult.ok(rc.getMessage("http.ok"), rc.getLocale());
@@ -403,14 +407,28 @@ public ReqResult<?> locale(HttpServletRequest request) {
 ```
 
 > `RequestContext`可以很方便的获取请求中包含的信息，可能的参数绑定（校验）错误等，还能直接获取Spring Message，很强大。
+>
+> 注意到，ServletRequest也有一个`getLocale()`方法，那么，我们直接从Request中获取Locale不是很方便么？就像这样：
+>
+```java
+ @GetMapping("/request/locale")
+public ReqResult<?> locale(HttpServletRequest request, HttpServletResponse response){
+    // TODO why this method always return client default locale?
+    return ReqResult.ok(request.getLocale());
+}
+```
+> 哈哈。似乎一切都完美。不过，注意看`ServletRequest.getLocale()`的[文档](https://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#getLocale())你就会发现问题:
+>> Returns the **preferred** Locale that the client will accept content in, *based on the Accept-Language header*. If the client request doesn't provide an Accept-Language header, this method returns the default locale for the server.
+>
+> 也就是说，从request中获取的并不是获取的Spring MVC Context当前使用的Locale信息。这一点在使用了`LocaleChangeInterceptor`之后，更能够得到[证明](#proof)。
 
-除此之外，还可以通过配置拦截器，通过特定的条件（比如请求参数）来更改Locale。
+除了`RequestContext`的方式之外，还可以通过配置拦截器、通过特定的条件（比如请求参数）来更改Locale。
 
 文档提到了几种不同的`LocaleResolver`：
 
 - AcceptHeaderLocaleResolver
 
-    这个locale resolver已经在前文讨论过了，通过设置HTTP Header的`Accept-Language`请求头可以设置SpringMvc Context的Locale信息。
+    这个locale resolver已经在前文讨论过了，通过设置HTTP Header的`Accept-Language`请求头可以设置SpringMvc Context的Locale信息。这个resolver在前文就已经试验过了。
 - CookieLocaleResolver
 
     这个locale resolver检查cookie中是否声明了Locale信息，如果有，则使用之。
@@ -421,10 +439,94 @@ public ReqResult<?> locale(HttpServletRequest request) {
 
     这是推荐使用的方式，通过拦截器+请求参数实现国际化。
 
+## 8.3 通过LocaleChangeInterceptor实现国际化
+
 以下两篇文章分别使用xml和java Bean的方式配置了`LocaleChangeInterceptor`，通过地址栏参数展现国际化信息：
 
 - [[基于xml的配置]Spring MVC Internationalization (i18n) and Localization (i10n) Example](https://howtodoinjava.com/spring-mvc/spring-mvc-internationalization-i18n-and-localization-i10n-example/#add_localeresolver_support)
 - [[基于java bean的配置]LOCALE AND INTERNATIONALIZATION IN SPRING MVC](https://learningprogramming.net/java/spring-mvc/locale-and-internationalization-in-spring-mvc/)
+
+参考配置地址：
+
+- https://github.com/wangy325/mybatis-plus-starter/blob/master/web-security-demo/src/main/java/com/wangy/config/MessageSourceConfig.java
+- https://github.com/wangy325/mybatis-plus-starter/blob/master/web-security-demo/src/main/java/com/wangy/config/WebConfig.java
+
+不妨看看`LocaleChangeInterceptor`是如何工作的：
+
+```java
+@Override
+public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+        throws ServletException {
+    // 从请求路径中获取Locale参数
+    String newLocale = request.getParameter(getParamName());
+    if (newLocale != null) {
+        if (checkHttpMethod(request.getMethod())) {
+            // locale resovler
+            LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+            if (localeResolver == null) {
+                throw new IllegalStateException(
+                        "No LocaleResolver found: not in a DispatcherServlet request?");
+            }
+            try {
+                // 设置Locale信息
+                localeResolver.setLocale(request, response, parseLocaleValue(newLocale));
+            }
+            catch (IllegalArgumentException ex) {
+                if (isIgnoreInvalidLocale()) {
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("Ignoring invalid locale value [" + newLocale + "]: " + ex.getMessage());
+                    }
+                }
+                else {
+                    throw ex;
+                }
+            }
+        }
+    }
+    // Proceed in any case.
+    return true;
+}
+```
+
+可以看到，`LocaleChangeInterceptor`的工作方式比较简单：
+
+1. 从**路径参数**中获取Locale参数配置
+2. 获取LocaleResolver
+3. 利用LocaleResolver重新设置步骤1中获取的Locale配置
+
+这里有一个重点：LocaleResolver。如果不在项目中显示的配置`LocaleResolver`，那么此拦截器获取到的实例是`AcceptHeaderLocaleResolver`，这很致命：
+
+```java
+// AcceptHeaderLocaleResolver.java
+@Override
+	public void setLocale(HttpServletRequest request, @Nullable HttpServletResponse response, @Nullable Locale locale) {
+		throw new UnsupportedOperationException(
+				"Cannot change HTTP accept header - use a different locale resolution strategy");
+	}
+```
+
+因为`AcceptHeaderLocaleResolver`的`setLocale()`方法直接抛出异常，导致Locale信息无法被设置。
+
+所以，如果使用`LocaleChangeInterceptor`，那么必须要显式配置一个`LocalResolver`，可以是`SessionLocaleResolver`或者`CookieLocaleResolver`：
+
+```java
+@Bean
+public SessionLocaleResolver localeResolver() {
+    SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
+    // 配置默认Locale
+    sessionLocaleResolver.setDefaultLocale(locale);
+    return sessionLocaleResolver;
+}
+```
+
+这样，保证即使不传递路径国际化参数，也能使用默认的Locale配置。
+
+<span id="proof">现在</span>，我们再回头看看从HttpServletRequest中获取当前MVC Context 的Locale信息失败的原因：
+
+1. `LocaleChangeInterceptor`不与`AcceptHeaderLocaleResolver`兼容
+2. HttpServletRequest从`Accept-Language`中获取Locale配置，否则返回服务器默认Locale信息
+
+这应该比较好理解了，即使设置了`Accept-language`，这个设置也不能被配置了`LocaleChangeInterceptor`的mvc容器采纳。
 
 # 9 参考
 
@@ -436,6 +538,7 @@ public ReqResult<?> locale(HttpServletRequest request) {
 - [如何设置HTTP请求头Accept-Language](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Accept-Language)
 - [官方文档：使用messageSource进行国际化](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#context-functionality-messagesource)
 - [官方文档：Spring MVC locale resovler](https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-localeresolver)
+- [HttpServletRequest并不能直接获取spring MVC Context当前的Locale信息](https://stackoverflow.com/questions/46412984/controller-httpservletrequest-locale-does-not-change)
 
 [^1]: `LocaleContextHolder`是它的完美替代。
 [^2]: 从文档和一些其他的资料来看，RRBMS是可以从任意位置读取配置文件的，不过笔者并没有实践这一说法。
