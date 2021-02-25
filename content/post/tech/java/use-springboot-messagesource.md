@@ -257,7 +257,7 @@ In this article, we covered how the default validation messages can be changed w
 
 We can also leverage the support of internationalization along with this to make the application more user-friendly.
 
-本文介绍了如何使用配置文件修改检验信息，去除硬编码。同时，使用spring国际化支持构建更加友好的应用程序。
+---
 
 # 8 使用并解析message
 
