@@ -2,7 +2,7 @@
 title: "在SpringBoot项目中使用MockMvc进行接口测试"
 date: 2021-02-07
 lastmod: 2020-02-22
-draft: true
+draft: false
 tags: [测试, mockito]
 categories: [java,springboot,mockito]
 author: "wangy325"
@@ -17,8 +17,6 @@ autoCollapseToc: false
 > 但是MockMvc作为spring-test包中指定的测试框架，在没有使用swagger的项目中，使用其进行测试是很好的选择。
 
 本文简单介绍在springboot项目中使用[Mockito](https://site.mockito.org/)和[MockMvc](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/test/web/servlet/MockMvc.html)对控制器进行测试。
-
-<!--more-->
 
 # 1 了解Mockito
 
@@ -46,6 +44,8 @@ autoCollapseToc: false
 ```
 
 一旦mock对象被创建，mock会记住对其的所有操作，之后，你便可以选择性的<span id="v1">校验</span>这些操作。
+
+<!--more-->
 
 ## 1.2 绑定方法参数和返回值
 
@@ -194,23 +194,219 @@ verify(mockedList, atMost(5)).add("three times");
 
 - https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#in_order_verification
 
-# 使用MockMvc测试控制器
+# 2 使用MockMvc测试控制器
 
 介绍了mockito的基本用法，可以开始用它测试控制器了。
 
+spring web项目的测试使用的是Spring MVC测试框架（*Spring MVC Test framework(MockMvc)*），其使用方式和Mockito很像，实际上MockMvc借用了Mockito的API，因此，熟悉Mockito的使用对使用MockMVC测试web服务大有裨益。
+
+## 2.1 熟悉这几个静态导入
+
+- MockMvcBuilders.*
+- MockMvcRequestBuilders.*
+- MockMvcResultMatchers.*
+- MockMvcResultHandlers.*
+
+和Mockito一样，熟悉并使用静态导入会让代码看起来更简洁。不过，对刚使用MockMVC进行测试的新手来说，使用静态导入可能会陷入一个麻烦：方法这么多，我怎么记得这个方法该使用哪个静态导入，容易陷入混乱。
+
+不过，记住他们的惯用法就行了：
+
+```java
+// MockMvcBuilders.* 用于构建MockMvc应用
+MockMvc mockMvc = MockMvcBuilders.stansaloneSetup(controller).build();
+
+// MockMvcRequestBuilders.*用于构建请求
+ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get(url));
+ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post(url));
+
+// MockMvcResultMatchers.*用于请求结果匹配
+resultActions.andExpect(MockMvcResultMatchers.status().isOK())
+
+// MockMvcResultHandlers.* 嘛，用得少，其提供一个print()方法，可以打印请求信息
+resultActions.andDo(MockMvcResultHandlers.print());
+```
+
+## 2.2 测试示例
+
+在进行单元测试时，通常习惯将通用模版进行抽象，本示例中也是如此，我们建立一个抽象测试类，用于准备数据、提供<span id="jsonpath">通用方法</span>等：
+
+```java
+@SpringBootTest
+@TestPropertySource("classpath:application-test.properties")
+public class BaseMockInit {
+
+//    @Autowired
+//    protected ObjectMapper objectMapper;
+    protected ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json().build();
+
+
+    protected @Mock
+    ISpitterService spitterService;
+    protected @Mock
+    ISpittleService spittleService;
+    protected SpitterController spitterController;
+    protected SpittleController spittleController;
+
+    @BeforeEach
+    void initMock() {
+        MockitoAnnotations.initMocks(this);
+        spitterController = new SpitterController();
+        spitterController.setSpitterService(spitterService);
+        spittleController = new SpittleController();
+        spittleController.setSpittleService(spittleService);
+    }
+
+
+    /**
+     * Use json-path, tweaking configuration<br>
+     * The config below change default action of json-path<br>
+     * Use application-context ObjectMapper config as json and mapper provider<br>
+     * <p>
+     * Reference: <a href="https://github.com/json-path/JsonPath">
+     * https://github.com/json-path/JsonPath</a>
+     *
+     * @param json standard json string
+     * @return {@link DocumentContext}
+     */
+    protected DocumentContext jsonPathParser(String json) {
+
+        final JsonProvider jsonProvider = new JacksonJsonProvider(objectMapper);
+        final MappingProvider mappingProvider = new JacksonMappingProvider(objectMapper);
+        Configuration.setDefaults(new Configuration.Defaults() {
+            @Override
+            public JsonProvider jsonProvider() {
+                return jsonProvider;
+            }
+
+            @Override
+            public Set<Option> options() {
+                return EnumSet.noneOf(Option.class);
+            }
+
+            @Override
+            public MappingProvider mappingProvider() {
+                return mappingProvider;
+            }
+        });
+        return JsonPath.parse(json);
+    }
+}
+```
+
+你可能注意到上面的示例中使用的`@Mock`注解和`MockitoAnnotations.initMocks(this);`方法，实际作用就是mock web测试中所需要使用到的服务层service，因为测试web模块不涉及到数据服务层的业务，因此借助Mockito即可轻松创建测试所需要的实例。
+
+### 2.2.1 简单路径参数GET请求测试
+
+```java
+ @Test
+public void getSpitterById() throws Exception {
+    SpitterVO source = new SpitterVO(1, "alan", "walker", "aw", "xxx");
+    Spitter spitter = new Spitter();
+    BeanUtils.copyBeanProp(spitter, source);
+
+    when(spitterService.getById(1)).thenReturn(spitter);
+    spitterController.setSpitterService(spitterService);
+    MockMvc mockMvc = standaloneSetup(spitterController).build();
+    // perform get request with path variables
+    ResultActions resultActions = mockMvc.perform(get("/spitter/1"));
+    log.info(resultActions.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8));
+    resultActions.andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.data")
+                    .value(objectMapper.convertValue(spitter, HashMap.class)));
+
+    verify(spitterService).getById(1);
+}
+```
+
+观察上面的测试用例，我们首先使用Mockito对数据层的mock对象进行了参数和返回值绑定，这在前文已经提及：
+
+```java
+when(spitterService.getById(1)).thenReturn(spitter);
+```
+
+随即使用MockMvc发起`get`请求，发起请求的方式有多种：
+
+```java
+ResultActions resultActions = mockMvc.perform(get("/spitter/1"));
+// 等价于
+ResultActions resultActions = mockMvc.perform(get("/spitter/{id}", 1));
+```
+
+当请求进入控制器时，根据控制器的业务逻辑，调用`spitterService.getById(1)`方法，该方法返回之前绑定的返回值，进行封装之后，返回web请求的结果。
+
+上述请求返回一个`ResultActions`结果，web请求的结果被封装在内，我们可以对这个结果进行校验：
+
+```java
+resultActions.andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.data")
+                    .value(objectMapper.convertValue(spitter, HashMap.class)));
+```
+
+注意到，`jsonPath("$.data")`，这意味着请求返回的json字串中包含一个`data`键，`.value()`操作暗示其对应的内容就是`spitterService.getById(1)`的返回对象。所以这个请求返回的json应该像这样：
+
+```json
+{
+    "code": 200,
+    "message": "ok",
+    "data": {
+        "id": 1,
+        "usename": "aw",
+        "firstname": "alan",
+        "lastname": "walker",
+        "password": "xxx"
+    }
+}
+```
+
+```java
+  .andExpect(jsonPath("$.data").value(objectMapper.convertValue(spitter, HashMap.class)));
+```
+
+的意义是比较通过`jsonPath("$.data")`解析到的对象和`objectMapper.convertValue(spitter, HashMap.class))`获取到的对象的相等性。
+
+实际上，通过`jsonPath("$.data")`获取到的内容是一个LinkedHashMap，而`.value()`的相等性比较的是map中对应键的值的相等性，**单单从这个示例**来讲，这个比较是可行的[^1]。
+
+[^1]: 这种形式的比较往往会出现问题，例如，如果pojo类型中的`id`字段定义为`Long`型，使用objectMapper进行转换的时候*可能*会转换为`Integer`型。
+
+最后，我们使用`verify`方法对mock对象的方法调用进行了测试：
+
+```java
+ verify(spitterService).getById(1);
+```
+
+不过，由于我们已经校验了web接口的返回值，那么mock对象的方法一定被调用了，所以一般我们无需这么做。
+
+### 2.2.2 拼接参数的GET方法测试
+
+### 2.2.3 POST请求方法测试
 
 
 
-# JsonPath
 
-# 补充内容：服务层的测试
+
+
+
+
+
+
+
+
+# 3 JsonPath
+
+# 4 补充内容：服务层的测试
+
+# 5 补充内容：使用idea直接进行RESTful接口测试
 
 # 参考
 
-- mockito：https://site.mockito.org/
-- mockito API：https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html
-- MockMvc doc：https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/test/web/servlet/MockMvc.html
-- json-path：https://github.com/json-path/JsonPath
-- https://stackoverflow.com/questions/47276920/mockito-error-however-there-was-exactly-1-interaction-with-this-mock
-- springframwork-test-MockMvc：https://docs.spring.io/spring-framework/docs/current/reference/html/testing.html#spring-mvc-test-framework
-- mock test samples：https://github.com/spring-projects/spring-framework/tree/master/spring-test/src/test/java/org/springframework/test/web/servlet/samples
+
+- 本文用例所在项目地址：https://github.com/wangy325/mybatis-plus-starter
+- mockito官网：https://site.mockito.org/
+- mockito API官网：https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html
+- MockMvc java doc：https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/test/web/servlet/MockMvc.html
+- json-path仓库介绍了其基本使用方法：https://github.com/json-path/JsonPath
+- 可能出现的bug：https://stackoverflow.com/questions/47276920/mockito-error-however-there-was-exactly-1-interaction-with-this-mock
+- MockMvc官方文档：https://docs.spring.io/spring-framework/docs/current/reference/html/testing.html#spring-mvc-test-framework
+- MockMVC官方测试示例代码库：https://github.com/spring-projects/spring-framework/tree/master/spring-test/src/test/java/org/springframework/test/web/servlet/samples
