@@ -417,6 +417,7 @@ public ReqResult<?> locale(HttpServletRequest request, HttpServletResponse respo
     return ReqResult.ok(request.getLocale());
 }
 ```
+
 > 哈哈。似乎一切都完美。不过，注意看`ServletRequest.getLocale()`的[文档](https://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#getLocale())你就会发现问题:
 >> Returns the **preferred** Locale that the client will accept content in, *based on the Accept-Language header*. If the client request doesn't provide an Accept-Language header, this method returns the default locale for the server.
 >
