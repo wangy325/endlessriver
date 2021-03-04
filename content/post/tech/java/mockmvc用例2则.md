@@ -22,7 +22,7 @@ autoCollapseToc: false
 
 简单来说，[Mockito](https://site.mockito.org/)是一个模拟创建对象的框架，利用它提供的API，可以简化单元测试工作。Mockito的API易读性是很好的，并且错误信息也很简明。`spring-boot-starter-test`模块中引入了`mockito`依赖，如果你使用springboot，那么就可以直接使用Mockito进行单元测试。
 
-我们从[官方API文档](https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html)的的引例开始，看看Mockito是如何工作的。
+我们从Mockito[官方API文档](https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html)的的引例开始，看看Mockito是如何工作的。
 
 ## 1.1 mock一个对象
 
@@ -228,7 +228,7 @@ resultActions.andDo(MockMvcResultHandlers.print());
 
 ## 2.2 测试示例
 
-在进行单元测试时，通常习惯将通用模版进行抽象，本示例中也是如此，我们建立一个抽象测试类，用于准备数据、提供<span id="jsonpath">通用方法</span>等：
+在进行<span id="start">单元测试</span>时，通常习惯将通用模版进行抽象，本示例中也是如此，我们建立一个抽象测试类，用于准备数据、提供<span id="jsonpath">通用方法</span>等：
 
 ```java
 @SpringBootTest
@@ -364,11 +364,11 @@ resultActions.andExpect(status().isOk())
   .andExpect(jsonPath("$.data").value(objectMapper.convertValue(spitter, HashMap.class)));
 ```
 
-的意义是比较通过`jsonPath("$.data")`解析到的对象和`objectMapper.convertValue(spitter, HashMap.class))`获取到的对象的相等性。
+的<span id="path">意义</span>是比较通过`jsonPath("$.data")`解析到的对象和`objectMapper.convertValue(spitter, HashMap.class))`获取到的对象的相等性。
 
 实际上，通过`jsonPath("$.data")`获取到的内容是一个LinkedHashMap，而`.value()`的相等性比较的是map中对应键的值的相等性，**单单从这个示例**来讲，这个比较是可行的[^1]。
 
-[^1]: 这种形式的比较往往会出现问题，例如，如果pojo类型中的`id`字段定义为`Long`型，使用objectMapper进行转换的时候*可能*会转换为`Integer`型。
+[^1]: 这种形式的比较往往会出现问题，例如，如果pojo类中的`id`字段定义为`Long`型，使用objectMapper进行转换的时候*可能*会转换为`Integer`型。
 
 最后，我们使用`verify`方法对mock对象的方法调用进行了测试：
 
@@ -380,20 +380,167 @@ resultActions.andExpect(status().isOk())
 
 ### 2.2.2 拼接参数的GET方法测试
 
+除了路径参数，使用最多的就是形如`?para1=xxx&para2=xxx`这样的请求参数，MockMvc同样对这样的web服务提供测试支持
+
+```java
+@Test
+public void getUserSpittlesPageTest() throws Exception {
+    // ... 省略准备数据
+
+    // 此处必须使用类类型作为参数
+    when(spittleService.pageQuerySpittleBySpitterId(any(SpittleDTO.class))).thenReturn(page);
+
+    // perform get with request params transferred by pojo
+    ResultActions resultActions = mockMvc
+        .perform(get("/spittle/user/spittles?spitterId={spitterId}", 4))
+        // get element from json
+        // see https://github.com/json-path/JsonPath
+        .andExpect(jsonPath("$.data.currentPage")
+            .value(pageDomain.getCurrentPage()))
+        .andExpect(jsonPath("$.data.pageSize")
+            .value(pageDomain.getPageSize()))
+        .andExpect(jsonPath("$.data.pages")
+            .value(pageDomain.getPages()))
+        .andExpect(jsonPath("$.data.total")
+            .value(pageDomain.getTotal()))
+        .andDo(print());
+        /* 报错原因 ：long和integer的问题*/
+//            .andExpect(jsonPath("$.data.records[0]")
+//                .value(objectMapper.convertValue(sample, HashMap.class)));
+
+    String jsonResult = resultActions.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+    log.info(jsonResult);
+    // verify is not necessary here
+    verify(spittleService).pageQuerySpittleBySpitterId(any(SpittleDTO.class));
+
+    assertEquals((int) jsonPathParser(jsonResult).read("$.data.records.length()"), 1);
+    SpittleVO rvo = jsonPathParser(jsonResult).read("$.data.records[0]", SpittleVO.class);
+    assertEquals(sample, rvo);
+}
+```
+
+这个测试和上一个测试有一些区别，首先第一个区别就是mock对象的参数与返回值绑定方式变了：
+
+```java
+ when(spittleService.pageQuerySpittleBySpitterId(any(SpittleDTO.class))).thenReturn(page);
+```
+
+多数情况下，我们不会直接在控制器中使用具体的参数，而是使用Java Bean作为控制器的参数。这个时候，Spring MVC的`MappingJasksonHttpMessageConverter`将会发挥作用[^2]，将请求中的中的参数转换为对应的Java Bean实例。
+
+[^2]: 关于Spring MVC的消息转换器，参考《Spring实战，第4版》第16章相关内容。
+
+这样一来，我们便不能指定某一个实例作为mock对象的参数了，只能使用`any(class)`这样的形式进行模糊匹配。
+
+其次，关于使用地址栏参数的参数传递，除了使用上述的方式（最简单）之外，还有其他的方式：
+
+```java
+  ResultActions resultActions = mockMvc.perform(get("/spittle/user/spittles?spitterId={spitterId}", 4))
+  // 等价于
+  ResultActions resultActions = mockMvc.perform(get("/spittle/user")).param("spitterId", 4)
+```
+
+第三，如果再次使用类似于[上一个示例](#path)那样校验返回数据的方法校验`$.data.records[0]`，将会得到一个错误。原因也和前文描述的一样。我们必须使用更为稳妥的方法。
+
+第四，对于同一个控制器的测试，我们可以预先做一些设置，比如依赖`@BeforeEach`注解，约定好一些通用的内容：
+
+```java
+class MyWebTests {
+
+    MockMvc mockMvc;
+
+    @BeforeEach
+    void init(){
+        mockMvc = standaloneSetup(spittleController)
+                .alwaysExpect(status().isOk())
+                .alwaysExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .build();
+    }
+}
+```
+
+上述方法在每一个测试之前准备mockMvc对象，并且约定了servlet的返回状态和返回类型。
+
+
 ### 2.2.3 POST请求方法测试
 
+如前所述，在发起POST请求时，一般使用JSON，此时`MappingJasksonHttpMessageConverter`便会介入。它负责将JSON对象反序列化为控制器指定的Java Baean。在使用MockMvc进行测试时，我们直接使用JSON字符串，将其设置在请求体中即可。
 
+```java
+@Test
+public void postSpittlesTimeLinePageTest() throws Exception {
+    // ... 省略其他设置
+    dto.setLeftTime(LocalDateTime.parse("2012-06-09T00:00:00.000"));
+    dto.setRightTime(LocalDateTime.parse("2012-06-09T23:59:59.999"));
 
+    when(spittleService.pageQuerySpittlesByTimeLine(any(SpittleDTO.class))).thenReturn(page);
 
+    // perform post request
+    String s = objectMapper.writeValueAsString(dto);
+    log.info("request body: {}", s);
+    ResultActions resultActions = mockMvc
+        .perform(post("/spittle/range/spittles")
+            .contentType(MediaType.APPLICATION_JSON)
+            .characterEncoding("utf8")
+            .content(s))
+        .andDo(print());
 
+    // 以下用来获取MockMvc返回(Json)
+    String jsonResult = resultActions.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+    log.info(jsonResult);
 
+    PageDomain<SpittleVO> rpg = jsonPathParser(jsonResult).read("$.data", PageDomain.class);
+    assertEquals((int) jsonPathParser(jsonResult).read("$.data.records.length()"), 1);
+    SpittleVO rvo = jsonPathParser(jsonResult).read("$.data.records[0]", SpittleVO.class);
+    rpg.setRecords(new ArrayList<SpittleVO>() {{
+        add(rvo);
+    }});
+    assertEquals(rpg, pageDomain);
+}
+```
 
+可以看到，发起POST请求的方式比较简单：
 
+```java
+ ResultActions resultActions = mockMvc
+        .perform(post("/spittle/range/spittles")
+            .contentType(MediaType.APPLICATION_JSON)
+            .characterEncoding("utf8")
+            .content(s));
+```
 
+设置好请求头接受的文件类型和编码，使用`content(json)`方法传入json字符串即可。
 
+在本节的[开头](#start)，我们进行了一些通用的配置，你可能暂时还没有注意到这个细节：
 
+```java
+//    @Autowired
+//    protected ObjectMapper objectMapper;
+    protected ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json().build();
+```
+
+我们注释掉了spring自动装配的`ObjectMapper`，转而使用了`Jackson2ObjectMapperBuilder`构建了一个默认的`ObjectMapper`，这样做是有原因的：
+
+对于spring自动装配的`ObjectMapper`，我们在项目改变了其对`LocalDateTime`的序列化与反序列化规则：
+
+> 对于`LocalDateTime`，默认情况下其字符串输出格式类似于`2012-06-09T23:59:59.999`，这样的字符串形式非常不利于页面传递参数，因此我们在项目配置中改变了其规则，使得在实际使用时，能够将`2012-06-09 23:59:59.999`形式的日期字符串直接转化为`LocalDateTime`对象；反之，`LocalDateTime`也将会直接转化为`2012-06-09 23:59:59.999`的形式返回。
+
+但是在使用MockMvc进行测试时，其进行反序列化时（将请求JSON转化为Java Bean），使用的可能是默认的消息转换规则。而当我们使用自动装配的`ObjectMapper`将配置好的Bean转化为JSON时，时间的字符串形式是`2012-06-09 23:59:59.999`，默认的消息转换无法将其转化为`LocaldateTime`，因此会出现**转换异常**。
+
+关于`ObjactMapper`的详细内容，会在后续博客中详细介绍。
 
 # 3 JsonPath
+
+看到这里，你可能对使用Mockito和MockMvc进行测试有了初步的了解。不过如果你细心的话，就会发现，前面的测试用例对最后的接口的返回校验都没有提及。并且示例代码中关于提取返回内容出现最多的字就是`jsonPath`。
+
+并且在前面的测试用例中，我们也通过简单的表达式`jsonPath("$.data")`提取了返回JSON中的结果。
+
+实际上，Spring MockMvc默认是支持使用JsonPath获取返回内容的，就像`jsonPath("$.data")`那样，不过其灵活性没有直接使用JspnPath大，特别是在反序列化的操作上。
+
+很多时候，RESTful接口返回的内容实际上是Java Bean序列化之后的JSON串，所以我们希望将获取到的JSON反序列化之后再进行校验，而MockMvc在这方面表现的就比较蹩脚了，其只能转化为Map进行比较，就像[###2.2.1节](#path)中表现的那样[^3]。
+
+[^3]: 或许笔者还没有找到更加优雅的方法。
+
+不过，说实话，测试在获取到返回的JSON串，通过控制台打印输出确认符合预期基本上就可以结束，再去检验JSON的内容有点**强迫症**的意味了。
 
 # 4 补充内容：服务层的测试
 
