@@ -137,7 +137,7 @@
           <a href="/categories/centos/"> centos </a>
           </div>
         <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 1095 字 </span>
+        <span class="more-meta analyse"> 约 1100 字 </span>
         <span class="icomoonfree icon-clock"></span>
         <span class="more-meta"> 预计阅读 3 分钟 </span>
     </div>
@@ -145,11 +145,11 @@
   
   <div class="post-content">
     <div class="post-summary">
-      <h3 id="起因">起因</h3>
+      <h2 id="1-起因">1 起因</h2>
 
 <p>使用idm下载y2b视频导致服务器内存溢出，内核强制关闭了服务进程。</p>
 
-<h3 id="日志">日志</h3>
+<h2 id="2-日志">2 日志</h2>
 
 <p>系统服务日志地址： <code>/var/log/messages</code></p>
 <div class="highlight"><div class="chroma">
@@ -195,9 +195,9 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
           <a href="/categories/spring/"> spring </a>
           </div>
         <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 6127 字 </span>
+        <span class="more-meta analyse"> 约 7616 字 </span>
         <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 13 分钟 </span>
+        <span class="more-meta"> 预计阅读 16 分钟 </span>
     </div>
   </header>
   
@@ -234,7 +234,88 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/java-new-time-api/">Java8中的新日期和时间工具库（转）</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/mockmvc%E7%94%A8%E4%BE%8B2%E5%88%99/">在SpringBoot项目中使用MockMvc进行接口测试</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2021-02-07 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/java/"> java </a>
+          <a href="/categories/springboot/"> springboot </a>
+          <a href="/categories/mockito/"> mockito </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 7758 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 16 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <blockquote>
+<p>现在流行在项目中使用<a href="swagger.io">swagger</a>对接口进行测试，这确实很方便、直观。</p>
+
+<p>但是MockMvc作为spring-test包中指定的测试框架，在没有使用swagger的项目中，使用其进行测试是很好的选择。</p>
+</blockquote>
+
+<p>本文简单介绍在springboot项目中使用<a href="https://site.mockito.org/">Mockito</a>和<a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/test/web/servlet/MockMvc.html">MockMvc</a>对控制器进行测试。</p>
+
+<h1 id="1-了解mockito">1 了解Mockito</h1>
+
+<p>简单来说，<a href="https://site.mockito.org/">Mockito</a>是一个模拟创建对象的框架，利用它提供的API，可以简化单元测试工作。Mockito的API易读性是很好的，并且错误信息也很简明。<code>spring-boot-starter-test</code>模块中引入了<code>mockito</code>依赖，如果你使用springboot，那么就可以直接使用Mockito进行单元测试。</p>
+
+<p>我们从Mockito<a href="https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html">官方API文档</a>的的引例开始，看看Mockito是如何工作的。</p>
+
+<h2 id="1-1-mock一个对象">1.1 mock一个对象</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"> <span class="c1">// 学会使用静态导入，代码会更简洁
+</span><span class="c1"></span> <span class="kn">import static</span> <span class="nn">org.mockito.Mockito.*</span><span class="o">;</span>
+
+ <span class="c1">// mock List接口对象
+</span><span class="c1"></span> <span class="n">List</span> <span class="n">mockedList</span> <span class="o">=</span> <span class="n">mock</span><span class="o">(</span><span class="n">List</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+ <span class="c1">// 使用Mock的List对象
+</span><span class="c1"></span> <span class="n">mockedList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&#34;one&#34;</span><span class="o">);</span>
+ <span class="n">mockedList</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
+
+ <span class="c1">// 校验某个行为是否发生过1次
+</span><span class="c1"></span> <span class="n">verify</span><span class="o">(</span><span class="n">mockedList</span><span class="o">).</span><span class="na">add</span><span class="o">(</span><span class="s">&#34;one&#34;</span><span class="o">);</span>
+ <span class="n">verify</span><span class="o">(</span><span class="n">mockedList</span><span class="o">).</span><span class="na">clear</span><span class="o">();</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>一旦mock对象被创建，mock会记住对其的所有操作，之后，你便可以选择性的<span id="v1">校验</span>这些操作。</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/mockmvc%E7%94%A8%E4%BE%8B2%E5%88%99/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/java-new-time-api/">Java8中的新日期和时间工具库</a></h1>
     <div class="post-meta">
 
         <span>
@@ -248,9 +329,9 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
           <a href="/categories/java/"> java </a>
           </div>
         <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 5942 字 </span>
+        <span class="more-meta analyse"> 约 6955 字 </span>
         <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 12 分钟 </span>
+        <span class="more-meta"> 预计阅读 14 分钟 </span>
     </div>
   </header>
   
@@ -603,46 +684,6 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
     </div>
     <div class="read-more">
       <a href="/post/tech/java/java-gc/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/redis-all/">redis必知必会(转)</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2020-11-24 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/redis/"> redis </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 11789 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 24 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>此文总结了redis相关的基础性知识体系，但不包括redis主从、哨兵、集群相关内容</p>
-
-<h2 id="1-简单介绍一下-redis-呗">1. 简单介绍一下 Redis 呗</h2>
-
-<p>简单来说 <strong>Redis 就是一个使用 C 语言开发的数据库</strong>，不过与传统数据库不同的是 <strong>Redis 的数据是存在内存中的</strong> ，也就是它是内存数据库，所以读写速度非常快，因此 Redis 被广泛应用于缓存方向。</p>
-
-<p>另外，<strong>Redis 除了做缓存之外，Redis 也经常用来做分布式锁，甚至是消息队列。</strong></p>
-
-<p><strong>Redis 提供了多种数据类型来支持不同的业务场景。Redis 还支持事务 、持久化、Lua 脚本、多种集群方案。</strong></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/redis-all/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
