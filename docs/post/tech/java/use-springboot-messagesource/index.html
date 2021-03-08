@@ -68,7 +68,7 @@ In this tutorial, we&rsquo;ll see how to configure and manage custom validation 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangy325.top/post/tech/java/use-springboot-messagesource/" />
 <meta property="article:published_time" content="2021-02-20T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2021-02-20T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2021-03-03T23:58:24&#43;08:00"/>
 
 <meta itemprop="name" content="在SpringBoot中使用MessageSource">
 <meta itemprop="description" content="
@@ -96,8 +96,8 @@ In this tutorial, we&rsquo;ll see how to configure and manage custom validation 
 
 
 <meta itemprop="datePublished" content="2021-02-20T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2021-02-20T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="6127">
+<meta itemprop="dateModified" content="2021-03-03T23:58:24&#43;08:00" />
+<meta itemprop="wordCount" content="7616">
 
 
 
@@ -210,9 +210,9 @@ In this tutorial, we&rsquo;ll see how to configure and manage custom validation 
             <a href="/categories/spring/"> spring </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 6127 字 </span>
+          <span class="more-meta analyse"> 约 7616 字 </span>
           <span class="icomoonfree icon-clock"></span>
-          <span class="more-meta analyse"> 预计阅读 13 分钟 </span>
+          <span class="more-meta analyse"> 预计阅读 16 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
           <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -240,7 +240,9 @@ In this tutorial, we&rsquo;ll see how to configure and manage custom validation 
 <li><a href="#7-结论">7 结论</a></li>
 <li><a href="#8-使用并解析message">8 使用并解析message</a>
 <ul>
-<li><a href="#8-1-在springmvc中使用locale">8.1 在SpringMVC中使用Locale</a></li>
+<li><a href="#8-1-localecontextholder和accept-language">8.1 LocaleContextHolder和Accept-Language</a></li>
+<li><a href="#8-2-locale-resolver">8.2 Locale Resolver</a></li>
+<li><a href="#8-3-通过localechangeinterceptor实现国际化">8.3 通过LocaleChangeInterceptor实现国际化</a></li>
 </ul></li>
 <li><a href="#9-参考">9 参考</a></li>
 </ul>
@@ -508,7 +510,7 @@ In this tutorial, we&rsquo;ll see how to configure and manage custom validation 
 
 <p>在本文的<a href="#hook">文首</a>，标注了几个实践时需要注意的点，现在看来，前2点都是<strong>错误的表述</strong>，因为当时实践时使用的是<code>ReloadableResourceBundleMessageSourece</code>，并且没有搞清楚Spring Boot自动配置MessageSource的条件。</p>
 
-<p>关于这2个“MessageSource”的区别，github上有一个经典的issue，大意是如果不使用classpath前缀，前者可以读取消息，后者不能读取消息。spring开发人员的回复一针见血：</p>
+<p>关于这2个“MessageSource”的区别，github上有一个经典的<a href="https://github.com/spring-projects/spring-framework/issues/12050">issue</a>，描述的问题是如果不使用classpath前缀，前者可以读取消息，后者不能读取消息。spring开发人员的回复一针见血：</p>
 
 <blockquote>
 <p>I assume your resource bundle files live in the classpath? There is an <strong>important difference</strong> between ResourceBundleMessageSource and ReloadableResourceBundleMessageSource: The former <strong>always loads resource bundles from the classpath</strong> (since that is all that standard java.util.ResourceBundle is capable of),  whereas the latter <strong>loads resource bundle files through the ApplicationContext&rsquo;s ResourceLoader</strong>. If your context is a ClassPathXmlApplicationContext, you won&rsquo;t notice a difference - but if it is a WebApplicationContext, it will try to find the files in the WAR directory structure when not using a prefix. So it would simply not find your files because it is looking in the wrong location.</p>
@@ -620,7 +622,7 @@ In this tutorial, we&rsquo;ll see how to configure and manage custom validation 
 
 <p>We can also leverage the support of internationalization along with this to make the application more user-friendly.</p>
 
-<p>本文介绍了如何使用配置文件修改检验信息，去除硬编码。同时，使用spring国际化支持构建更加友好的应用程序。</p>
+<hr />
 
 <h1 id="8-使用并解析message">8 使用并解析message</h1>
 
@@ -696,7 +698,7 @@ no.specific.id.resource=对应id的资源不存在</code></pre></td></tr></table
 </div>
 </div>
 <blockquote>
-<p>如果此处像文章开头说的那样，使用<code>webMvcProperties.getLocale()</code>的话，但是在获取HTTP Header设置的Loacle时有些问题。此处使用了<code>LocaleContextHolder.getLocale()</code>，LocaleContextHolder可以灵活地获取每一次Servlet请求的Locale信息</p>
+<p>如果此处像文章开头说的那样，使用<code>webMvcProperties.getLocale()</code>的话，在获取HTTP Header设置的Loacle时有些问题。此处使用了<code>LocaleContextHolder.getLocale()</code>，LocaleContextHolder可以灵活地获取每一次Servlet请求的Locale信息。</p>
 </blockquote>
 
 <p>我们不妨看看WebMvcProperties类的Locale域：</p>
@@ -720,9 +722,9 @@ no.specific.id.resource=对应id的资源不存在</code></pre></td></tr></table
 
 <p>还有一点就是，LocaleContextHolder是通过静态方法获取的Locale信息，相较于webMvcProperties的实例方法，免去了注入<code>WebMvcProperties</code>的麻烦。</p>
 
-<h2 id="8-1-在springmvc中使用locale">8.1 在SpringMVC中使用Locale</h2>
+<h2 id="8-1-localecontextholder和accept-language">8.1 LocaleContextHolder和Accept-Language</h2>
 
-<p>现在我们知道，可以通过<code>LocaleContextHolder</code>获取Locale信息，那么我们可以在控制器中<a href="https://stackoverflow.com/questions/33049674/elegant-way-to-get-locale-in-spring-controller">这样使用Locale信息</a>：</p>
+<p>现在我们知道，可以通过<code>LocaleContextHolder</code>和设置<code>Accept-Language</code>头动态获取请求的Locale信息，那么我们可以在控制器中<a href="https://stackoverflow.com/questions/33049674/elegant-way-to-get-locale-in-spring-controller">这样使用Locale信息</a>：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
@@ -773,7 +775,7 @@ no.specific.id.resource=对应id的资源不存在</code></pre></td></tr></table
 <p>&hellip;</p>
 </blockquote>
 
-<p>因此，可以这样改造上述控制器：</p>
+<p>也就是说，Locale可以直接作为参数被HTTP请求传递进来。因此，可以这样改造上述控制器：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
@@ -799,15 +801,19 @@ no.specific.id.resource=对应id的资源不存在</code></pre></td></tr></table
 <p>这样简洁多了，SpringMvc简直太聪明了！等等，通过<code>spring.mvc.locale=zh_CN</code>或通过<code>Accept-Language: en;q=0.7,zh-TW;q=0.8,zh-CN;q=0.7</code>这样的形式配置MVC context的Locale信息还是有点麻烦，并且这样的话，前端每次请求都需要手动设置（校验）请求头，麻烦！</p>
 
 <blockquote>
-<p>浏览器发起请求的<code>Accept-Language</code>是根据用户语言默认设置的。</p>
+<p>默认情况下，浏览器发起请求的<code>Accept-Language</code>是根据用户语言设置的。</p>
 </blockquote>
 
-<p>还能更加简单么，比如通过地址栏参数的形式指定Locale（好像都是这么实现的）？当然可以！</p>
+<p>文章到此，我们已经可以通过配置<strong>WebMvcProperties</strong>和设置<strong>Accept-Language</strong>请求头来<strong>设置</strong>Spring MVC Context的Locale信息；并且通过<code>LocaleContextHolder.getLocale()</code>方法或者直接在控制器中传递<code>Locale</code>参数的形式<strong>获取</strong>Locale信息。</p>
 
-<p>springMvc官方文档有详细的介绍，我甚至找到了2个版本的doc，不过内容大同小异：</p>
+<h2 id="8-2-locale-resolver">8.2 Locale Resolver</h2>
+
+<p>这样看来，国际化的配置还是不够灵活，配置文件的加载以及请求头的设置这两种方法都略显笨重。</p>
+
+<p>去找找文档看看其他的思路吧：</p>
 
 <ul>
-<li><a href="https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/mvc.html#mvc-localeresolver">(旧)springMvc-3.2.x-17.8</a></li>
+<li><a href="https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/mvc.html#mvc-localeresolver">(旧版本)springMvc-3.2.x-17.8</a></li>
 <li><a href="https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-localeresolver">spring webMvc doc</a></li>
 </ul>
 
@@ -820,11 +826,13 @@ no.specific.id.resource=对应id的资源不存在</code></pre></td></tr></table
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span><span class="lnt">6
+</span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/resolver/locale&#34;</span><span class="o">)</span>
 <span class="kd">public</span> <span class="n">ReqResult</span><span class="o">&lt;?&gt;</span> <span class="n">locale</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">RequestContext</span> <span class="n">rc</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RequestContext</span><span class="o">(</span><span class="n">request</span><span class="o">);</span>
+    <span class="c1">// 构建RequestContext
+</span><span class="c1"></span>    <span class="n">RequestContext</span> <span class="n">rc</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RequestContext</span><span class="o">(</span><span class="n">request</span><span class="o">);</span>
     <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">&#34;locale: {}&#34;</span><span class="o">,</span> <span class="n">rc</span><span class="o">.</span><span class="na">getLocale</span><span class="o">());</span>
     <span class="k">return</span> <span class="n">ReqResult</span><span class="o">.</span><span class="na">ok</span><span class="o">(</span><span class="n">rc</span><span class="o">.</span><span class="na">getMessage</span><span class="o">(</span><span class="s">&#34;http.ok&#34;</span><span class="o">),</span> <span class="n">rc</span><span class="o">.</span><span class="na">getLocale</span><span class="o">());</span>
 <span class="o">}</span></code></pre></td></tr></table>
@@ -859,16 +867,38 @@ no.specific.id.resource=对应id的资源不存在</code></pre></td></tr></table
 </div>
 <blockquote>
 <p><code>RequestContext</code>可以很方便的获取请求中包含的信息，可能的参数绑定（校验）错误等，还能直接获取Spring Message，很强大。</p>
+
+<p>注意到，ServletRequest也有一个<code>getLocale()</code>方法，那么，我们直接从Request中获取Locale不是很方便么？就像这样：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"> <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&#34;/request/locale&#34;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="n">ReqResult</span><span class="o">&lt;?&gt;</span> <span class="n">locale</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="o">){</span>
+    <span class="c1">// TODO why this method always return client default locale?
+</span><span class="c1"></span>    <span class="k">return</span> <span class="n">ReqResult</span><span class="o">.</span><span class="na">ok</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getLocale</span><span class="o">());</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>哈哈。似乎一切都完美。不过，注意看<code>ServletRequest.getLocale()</code>的<a href="https://docs.oracle.com/javaee/6/api/javax/servlet/ServletRequest.html#getLocale()">文档</a>你就会发现问题:
+&gt; Returns the <strong>preferred</strong> Locale that the client will accept content in, <em>based on the Accept-Language header</em>. If the client request doesn&rsquo;t provide an Accept-Language header, this method returns the default locale for the server.</p>
+
+<p>也就是说，从request中获取的并不是获取的Spring MVC Context当前使用的Locale信息。这一点在使用了<code>LocaleChangeInterceptor</code>之后，更能够得到<a href="#proof">证明</a>。</p>
 </blockquote>
 
-<p>除此之外，还可以通过配置拦截器，通过特定的条件（比如请求参数）来更改Locale。</p>
+<p>除了<code>RequestContext</code>的方式之外，还可以通过配置拦截器、通过特定的条件（比如请求参数）来更改Locale。</p>
 
 <p>文档提到了几种不同的<code>LocaleResolver</code>：</p>
 
 <ul>
 <li><p>AcceptHeaderLocaleResolver</p>
 
-<p>这个locale resolver已经在前文讨论过了，通过设置HTTP Header的<code>Accept-Language</code>请求头可以设置SpringMvc Context的Locale信息。</p></li>
+<p>这个locale resolver已经在前文讨论过了，通过设置HTTP Header的<code>Accept-Language</code>请求头可以设置SpringMvc Context的Locale信息。这个resolver在前文就已经试验过了。</p></li>
 
 <li><p>CookieLocaleResolver</p>
 
@@ -883,6 +913,8 @@ no.specific.id.resource=对应id的资源不存在</code></pre></td></tr></table
 <p>这是推荐使用的方式，通过拦截器+请求参数实现国际化。</p></li>
 </ul>
 
+<h2 id="8-3-通过localechangeinterceptor实现国际化">8.3 通过LocaleChangeInterceptor实现国际化</h2>
+
 <p>以下两篇文章分别使用xml和java Bean的方式配置了<code>LocaleChangeInterceptor</code>，通过地址栏参数展现国际化信息：</p>
 
 <ul>
@@ -890,17 +922,157 @@ no.specific.id.resource=对应id的资源不存在</code></pre></td></tr></table
 <li><a href="https://learningprogramming.net/java/spring-mvc/locale-and-internationalization-in-spring-mvc/">[基于java bean的配置]LOCALE AND INTERNATIONALIZATION IN SPRING MVC</a></li>
 </ul>
 
+<p>参考配置地址：</p>
+
+<ul>
+<li><a href="https://github.com/wangy325/mybatis-plus-starter/blob/master/web-security-demo/src/main/java/com/wangy/config/MessageSourceConfig.java">https://github.com/wangy325/mybatis-plus-starter/blob/master/web-security-demo/src/main/java/com/wangy/config/MessageSourceConfig.java</a></li>
+<li><a href="https://github.com/wangy325/mybatis-plus-starter/blob/master/web-security-demo/src/main/java/com/wangy/config/WebConfig.java">https://github.com/wangy325/mybatis-plus-starter/blob/master/web-security-demo/src/main/java/com/wangy/config/WebConfig.java</a></li>
+</ul>
+
+<p>不妨看看<code>LocaleChangeInterceptor</code>是如何工作的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">preHandle</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="n">Object</span> <span class="n">handler</span><span class="o">)</span>
+        <span class="kd">throws</span> <span class="n">ServletException</span> <span class="o">{</span>
+    <span class="c1">// 从请求路径中获取Locale参数
+</span><span class="c1"></span>    <span class="n">String</span> <span class="n">newLocale</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="n">getParamName</span><span class="o">());</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">newLocale</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">checkHttpMethod</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getMethod</span><span class="o">()))</span> <span class="o">{</span>
+            <span class="c1">// locale resovler
+</span><span class="c1"></span>            <span class="n">LocaleResolver</span> <span class="n">localeResolver</span> <span class="o">=</span> <span class="n">RequestContextUtils</span><span class="o">.</span><span class="na">getLocaleResolver</span><span class="o">(</span><span class="n">request</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">localeResolver</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalStateException</span><span class="o">(</span>
+                        <span class="s">&#34;No LocaleResolver found: not in a DispatcherServlet request?&#34;</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="c1">// 设置Locale信息
+</span><span class="c1"></span>                <span class="n">localeResolver</span><span class="o">.</span><span class="na">setLocale</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="n">response</span><span class="o">,</span> <span class="n">parseLocaleValue</span><span class="o">(</span><span class="n">newLocale</span><span class="o">));</span>
+            <span class="o">}</span>
+            <span class="k">catch</span> <span class="o">(</span><span class="n">IllegalArgumentException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">isIgnoreInvalidLocale</span><span class="o">())</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">logger</span><span class="o">.</span><span class="na">isDebugEnabled</span><span class="o">())</span> <span class="o">{</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">&#34;Ignoring invalid locale value [&#34;</span> <span class="o">+</span> <span class="n">newLocale</span> <span class="o">+</span> <span class="s">&#34;]: &#34;</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+                <span class="k">else</span> <span class="o">{</span>
+                    <span class="k">throw</span> <span class="n">ex</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="c1">// Proceed in any case.
+</span><span class="c1"></span>    <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>可以看到，<code>LocaleChangeInterceptor</code>的工作方式比较简单：</p>
+
+<ol>
+<li>从<strong>路径参数</strong>中获取Locale参数配置</li>
+<li>获取LocaleResolver</li>
+<li>利用LocaleResolver重新设置步骤1中获取的Locale配置</li>
+</ol>
+
+<p>这里有一个重点：LocaleResolver。如果不在项目中显示的配置<code>LocaleResolver</code>，那么此拦截器获取到的实例是<code>AcceptHeaderLocaleResolver</code>，这很致命：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// AcceptHeaderLocaleResolver.java
+</span><span class="c1"></span><span class="nd">@Override</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setLocale</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nd">@Nullable</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="nd">@Nullable</span> <span class="n">Locale</span> <span class="n">locale</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">throw</span> <span class="k">new</span> <span class="n">UnsupportedOperationException</span><span class="o">(</span>
+				<span class="s">&#34;Cannot change HTTP accept header - use a different locale resolution strategy&#34;</span><span class="o">);</span>
+	<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>因为<code>AcceptHeaderLocaleResolver</code>的<code>setLocale()</code>方法直接抛出异常，导致Locale信息无法被设置。</p>
+
+<p>所以，如果使用<code>LocaleChangeInterceptor</code>，那么必须要显式配置一个<code>LocalResolver</code>，可以是<code>SessionLocaleResolver</code>或者<code>CookieLocaleResolver</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Bean</span>
+<span class="kd">public</span> <span class="n">SessionLocaleResolver</span> <span class="nf">localeResolver</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">SessionLocaleResolver</span> <span class="n">sessionLocaleResolver</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SessionLocaleResolver</span><span class="o">();</span>
+    <span class="c1">// 配置默认Locale
+</span><span class="c1"></span>    <span class="n">sessionLocaleResolver</span><span class="o">.</span><span class="na">setDefaultLocale</span><span class="o">(</span><span class="n">locale</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">sessionLocaleResolver</span><span class="o">;</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>这样，保证即使不传递路径国际化参数，也能使用默认的Locale配置。</p>
+
+<p><span id="proof">现在</span>，我们再回头看看从HttpServletRequest中获取当前MVC Context 的Locale信息失败的原因：</p>
+
+<ol>
+<li><code>LocaleChangeInterceptor</code>不与<code>AcceptHeaderLocaleResolver</code>兼容</li>
+<li>HttpServletRequest从<code>Accept-Language</code>中获取Locale配置，否则返回服务器默认Locale信息</li>
+</ol>
+
+<p>这应该比较好理解了，即使设置了<code>Accept-language</code>，这个设置也不能被配置了<code>LocaleChangeInterceptor</code>的mvc容器采纳。</p>
+
 <h1 id="9-参考">9 参考</h1>
 
 <ul>
 <li>原文地址： <a href="https://www.baeldung.com/spring-custom-validation-message-source">https://www.baeldung.com/spring-custom-validation-message-source</a></li>
 <li><a href="https://zetcode.com/spring/messagesource/">简单使用MessageSource</a></li>
-<li><a href="https://stackoverflow.com/questions/15065734/spring-framework-no-message-found-under-code-for-locale/39371075">MessageSource配置异常</a></li>
-<li><a href="https://stackoverflow.com/questions/39685399/reloadableresourcebundlemessagesource-vs-resourcebundlemessagesource-cache-con">2个MessageSource的区别1</a></li>
-<li><a href="https://github.com/spring-projects/spring-framework/issues/12050">2个MessageSource的区别2</a></li>
+<li><a href="https://stackoverflow.com/questions/15065734/spring-framework-no-message-found-under-code-for-locale/39371075">[stackoverflow] MessageSource配置异常</a></li>
+<li><a href="https://stackoverflow.com/questions/39685399/reloadableresourcebundlemessagesource-vs-resourcebundlemessagesource-cache-con">[stackoverflow] 2个MessageSource的区别1</a></li>
+<li><a href="https://github.com/spring-projects/spring-framework/issues/12050">[github issue] 2个MessageSource的区别2</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Accept-Language">如何设置HTTP请求头Accept-Language</a></li>
 <li><a href="https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#context-functionality-messagesource">官方文档：使用messageSource进行国际化</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Accept-Language">如何设置请求头Headers</a></li>
 <li><a href="https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-localeresolver">官方文档：Spring MVC locale resovler</a></li>
+<li><a href="https://stackoverflow.com/questions/46412984/controller-httpservletrequest-locale-does-not-change">HttpServletRequest并不能直接获取spring MVC Context当前的Locale信息</a></li>
 </ul>
 <div class="footnotes">
 
@@ -920,8 +1092,8 @@ no.specific.id.resource=对应id的资源不存在</code></pre></td></tr></table
   <p class="copyright-item" style= text-align:right;>
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2021-02-20
-        
+        2021-03-03
+        <a href="https://github.com/wangy325/endlessriver/commit/295df1266e6fa3f70793cd28ad39214d102f88db" title="补充mockMvc内容">(295df12)</a>
     </span>
   </p>
   
@@ -938,8 +1110,8 @@ no.specific.id.resource=对应id的资源不存在</code></pre></td></tr></table
             <span class="prev-text nav-default">一次服务器oom故障</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
-        <a class="next" href="/post/tech/java/java-new-time-api/">
-            <span class="next-text nav-default">Java8中的新日期和时间工具库（转）</span>
+        <a class="next" href="/post/tech/java/mockmvc%E7%94%A8%E4%BE%8B2%E5%88%99/">
+            <span class="next-text nav-default">在SpringBoot项目中使用MockMvc进行接口测试</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>

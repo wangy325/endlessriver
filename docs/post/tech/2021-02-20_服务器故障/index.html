@@ -16,8 +16,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="wangy325" /><meta name="description" content="起因 使用idm下载y2b视频导致服务器内存溢出，内核强制关闭了服务进程。
-日志 系统服务日志地址： /var/log/messages
+<meta name="author" content="wangy325" /><meta name="description" content="1 起因 使用idm下载y2b视频导致服务器内存溢出，内核强制关闭了服务进程。
+2 日志 系统服务日志地址： /var/log/messages
 1 2 3 4 5 6  Feb 19 16:02:12 vultr kernel: oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=/,mems_allowed=0,global_oom,task_memcg=/,task=firewalld,pid=1626,uid=0 Feb 19 16:02:12 vultr kernel: Out of memory: Killed process 1626 (firewalld) total-vm:358420kB, anon-rss:22096kB, file-rss:4kB, shmem-rss:0kB Feb 19 16:02:12 vultr kernel: oom_reaper: reaped process 1626 (firewalld), now anon-rss:0kB, file-rss:0kB, shmem-rss:0kB Feb 19 16:02:12 vultr systemd: firewalld.service: main process exited, code=killed, status=9/KILL Feb 19 16:02:12 vultr systemd: Unit firewalld.service entered failed state. Feb 19 16:02:12 vultr systemd: firewalld.service failed.   日志说明的很清楚了，内存溢出，系统杀掉了部分进程。
 " />
 
@@ -42,11 +42,11 @@
 
 
 <meta property="og:title" content="一次服务器oom故障" />
-<meta property="og:description" content="起因
+<meta property="og:description" content="1 起因
 
 使用idm下载y2b视频导致服务器内存溢出，内核强制关闭了服务进程。
 
-日志
+2 日志
 
 系统服务日志地址： /var/log/messages
 
@@ -71,14 +71,14 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangy325.top/post/tech/2021-02-20_%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%85%E9%9A%9C/" />
 <meta property="article:published_time" content="2021-02-20T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2021-02-20T22:37:08&#43;08:00"/>
+<meta property="article:modified_time" content="2021-03-04T23:16:36&#43;08:00"/>
 
 <meta itemprop="name" content="一次服务器oom故障">
-<meta itemprop="description" content="起因
+<meta itemprop="description" content="1 起因
 
 使用idm下载y2b视频导致服务器内存溢出，内核强制关闭了服务进程。
 
-日志
+2 日志
 
 系统服务日志地址： /var/log/messages
 
@@ -103,19 +103,19 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.
 
 
 <meta itemprop="datePublished" content="2021-02-20T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2021-02-20T22:37:08&#43;08:00" />
-<meta itemprop="wordCount" content="1095">
+<meta itemprop="dateModified" content="2021-03-04T23:16:36&#43;08:00" />
+<meta itemprop="wordCount" content="1100">
 
 
 
 <meta itemprop="keywords" content="服务器," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="一次服务器oom故障"/>
-<meta name="twitter:description" content="起因
+<meta name="twitter:description" content="1 起因
 
 使用idm下载y2b视频导致服务器内存溢出，内核强制关闭了服务进程。
 
-日志
+2 日志
 
 系统服务日志地址： /var/log/messages
 
@@ -220,7 +220,7 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.
             <a href="/categories/centos/"> centos </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 1095 字 </span>
+          <span class="more-meta analyse"> 约 1100 字 </span>
           <span class="icomoonfree icon-clock"></span>
           <span class="more-meta analyse"> 预计阅读 3 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
@@ -235,25 +235,22 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.
 <ul>
 <li>
 <ul>
-<li>
-<ul>
-<li><a href="#起因">起因</a></li>
-<li><a href="#日志">日志</a></li>
-<li><a href="#设置服务器时区-tzselect">设置服务器时区 tzselect</a></li>
-<li><a href="#查看并设置系统自启动服务">查看并设置系统自启动服务</a></li>
-<li><a href="#top命令是一个交互命令">top命令是一个交互命令</a></li>
-</ul></li>
+<li><a href="#1-起因">1 起因</a></li>
+<li><a href="#2-日志">2 日志</a></li>
+<li><a href="#3-设置服务器时区-tzselect">3 设置服务器时区 tzselect</a></li>
+<li><a href="#4-查看并设置系统自启动服务">4 查看并设置系统自启动服务</a></li>
+<li><a href="#5-top命令是一个交互命令">5 top命令是一个交互命令</a></li>
 </ul></li>
 </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      <h3 id="起因">起因</h3>
+      <h2 id="1-起因">1 起因</h2>
 
 <p>使用idm下载y2b视频导致服务器内存溢出，内核强制关闭了服务进程。</p>
 
-<h3 id="日志">日志</h3>
+<h2 id="2-日志">2 日志</h2>
 
 <p>系统服务日志地址： <code>/var/log/messages</code></p>
 <div class="highlight"><div class="chroma">
@@ -280,7 +277,7 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
 <p>至于是否网络请求占用了太多的系统资源，还需要进一步认证</p>
 </blockquote>
 
-<h3 id="设置服务器时区-tzselect">设置服务器时区 tzselect</h3>
+<h2 id="3-设置服务器时区-tzselect">3 设置服务器时区 tzselect</h2>
 
 <blockquote>
 <p>设置时区的多种方法其中一种
@@ -324,7 +321,7 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
 </div>
 <p>这条命令会有一条警告信息，覆盖即可。</p>
 
-<h3 id="查看并设置系统自启动服务">查看并设置系统自启动服务</h3>
+<h2 id="4-查看并设置系统自启动服务">4 查看并设置系统自启动服务</h2>
 
 <p>使用命令<code>systemctl list-unit-files | grep enabled</code>可以查看当前系统开机启动的服务信息。</p>
 
@@ -368,7 +365,7 @@ network         0:off   1:off   2:on    3:on    4:on    5:on    6:off</pre></td>
 <li><a href="https://www.cnblogs.com/top5/archive/2009/09/18/1569093.html">linux开机启动服务的修改与查看</a></li>
 </ol>
 
-<h3 id="top命令是一个交互命令">top命令是一个交互命令</h3>
+<h2 id="5-top命令是一个交互命令">5 top命令是一个交互命令</h2>
 
 <p>控制台输入<code>top</code>可以查看当前系统的一些信息，并且这些信息是动态刷新的。</p>
 
@@ -391,8 +388,8 @@ network         0:off   1:off   2:on    3:on    4:on    5:on    6:off</pre></td>
   <p class="copyright-item" style= text-align:right;>
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2021-02-20
-        <a href="https://github.com/wangy325/endlessriver/commit/1b8850c21b52b68cbd7f834e1f9d53e0c9e64db0" title="add doc &#39;use-spring-mwssage-resource&#39;">(1b8850c)</a>
+        2021-03-04
+        <a href="https://github.com/wangy325/endlessriver/commit/31c89c573945d36f773ea45986a9f94a03e27e4e" title="能写，只能写一点点">(31c89c5)</a>
     </span>
   </p>
   

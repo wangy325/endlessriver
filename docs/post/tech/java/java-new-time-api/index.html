@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Java8中的新日期和时间工具库（转） - Endless River</title>
+  <title>Java8中的新日期和时间工具库 - Endless River</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -42,7 +42,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="Java8中的新日期和时间工具库（转）" />
+<meta property="og:title" content="Java8中的新日期和时间工具库" />
 <meta property="og:description" content="
 mybatis自 3.4.5 开始，已经支持使用LocaldateTime作为时间查询入参，映射类型为TimeStamp，参考地址: https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers
 
@@ -68,9 +68,9 @@ java.text.SimpleDateFormat：DateDateFormat的实现
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wangy325.top/post/tech/java/java-new-time-api/" />
 <meta property="article:published_time" content="2021-02-02T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2021-02-03T00:23:16&#43;08:00"/>
+<meta property="article:modified_time" content="2021-02-22T11:27:54&#43;08:00"/>
 
-<meta itemprop="name" content="Java8中的新日期和时间工具库（转）">
+<meta itemprop="name" content="Java8中的新日期和时间工具库">
 <meta itemprop="description" content="
 mybatis自 3.4.5 开始，已经支持使用LocaldateTime作为时间查询入参，映射类型为TimeStamp，参考地址: https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers
 
@@ -96,14 +96,14 @@ java.text.SimpleDateFormat：DateDateFormat的实现
 
 
 <meta itemprop="datePublished" content="2021-02-02T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2021-02-03T00:23:16&#43;08:00" />
-<meta itemprop="wordCount" content="5942">
+<meta itemprop="dateModified" content="2021-02-22T11:27:54&#43;08:00" />
+<meta itemprop="wordCount" content="6955">
 
 
 
 <meta itemprop="keywords" content="Java," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Java8中的新日期和时间工具库（转）"/>
+<meta name="twitter:title" content="Java8中的新日期和时间工具库"/>
 <meta name="twitter:description" content="
 mybatis自 3.4.5 开始，已经支持使用LocaldateTime作为时间查询入参，映射类型为TimeStamp，参考地址: https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers
 
@@ -196,7 +196,7 @@ java.text.SimpleDateFormat：DateDateFormat的实现
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">Java8中的新日期和时间工具库（转）</h1>
+      <h1 class="post-title">Java8中的新日期和时间工具库</h1>
 
       <div class="post-meta">
           <span>
@@ -209,9 +209,9 @@ java.text.SimpleDateFormat：DateDateFormat的实现
             <a href="/categories/java/"> java </a>
             </div>
           <span class="icomoonfree icon-sigma"></span>
-          <span class="more-meta analyse"> 约 5942 字 </span>
+          <span class="more-meta analyse"> 约 6955 字 </span>
           <span class="icomoonfree icon-clock"></span>
-          <span class="more-meta analyse"> 预计阅读 12 分钟 </span>
+          <span class="more-meta analyse"> 预计阅读 14 分钟 </span>
         <span class="icomoonfree icon-eye"></span>
           <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -230,17 +230,18 @@ java.text.SimpleDateFormat：DateDateFormat的实现
 <li><a href="#3-2-命名">3.2 命名</a></li>
 <li><a href="#3-3-合理的接口设计">3.3 合理的接口设计</a></li>
 </ul></li>
-<li><a href="#4-补充内容">4 补充内容</a>
+<li><a href="#4-java-time使用示例">4 java.time使用示例</a></li>
+<li><a href="#5-补充内容">5 补充内容</a>
 <ul>
-<li><a href="#4-1-时区">4.1 时区</a></li>
-<li><a href="#4-2-子午线">4.2 子午线</a></li>
-<li><a href="#4-3-本初子午线">4.3 本初子午线</a></li>
-<li><a href="#4-4-国际标准iso-8601">4.4 国际标准ISO 8601</a></li>
-<li><a href="#4-5-协调世界时">4.5 协调世界时</a></li>
-<li><a href="#4-6-utc偏移量">4.6 UTC偏移量</a></li>
-<li><a href="#4-7-格林尼治平时">4.7 格林尼治平时</a></li>
+<li><a href="#5-1-时区">5.1 时区</a></li>
+<li><a href="#5-2-子午线">5.2 子午线</a></li>
+<li><a href="#5-3-本初子午线">5.3 本初子午线</a></li>
+<li><a href="#5-4-国际标准iso-8601">5.4 国际标准ISO 8601</a></li>
+<li><a href="#5-5-协调世界时">5.5 协调世界时</a></li>
+<li><a href="#5-6-utc偏移量">5.6 UTC偏移量</a></li>
+<li><a href="#5-7-格林尼治平时">5.7 格林尼治平时</a></li>
 </ul></li>
-<li><a href="#参考">参考</a></li>
+<li><a href="#6-参考">6 参考</a></li>
 </ul>
 </nav>
   </div>
@@ -510,9 +511,332 @@ java.text.SimpleDateFormat：DateDateFormat的实现
 <li>将全球的非标准日历系统单独抽象并支持扩展，从标准日历系统中隔离（符合设计原则：对修改关闭，对扩展开放）</li>
 </ul>
 
-<h1 id="4-补充内容">4 补充内容</h1>
+<h1 id="4-java-time使用示例">4 java.time使用示例</h1>
 
-<h2 id="4-1-时区">4.1 时区</h2>
+<p>得益于新日期时间框架的设计，无论是类名还是方法名以及可读性，都相当容易理解，其上手成本比Date/Calendar要低得多。</p>
+
+<p>并且，LocalDateTime/LocalDate之间，以及它们和jdk 1.8之前的Date也可以互相转换。</p>
+
+<p>以下是一个使用示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Intro</span> <span class="o">{</span>
+    <span class="kd">static</span> <span class="n">String</span> <span class="n">yyyy</span> <span class="o">=</span> <span class="s">&#34;yyyy&#34;</span><span class="o">;</span>
+    <span class="kd">static</span> <span class="n">String</span> <span class="n">yyyy_MM</span> <span class="o">=</span> <span class="s">&#34;yyy-MM&#34;</span><span class="o">;</span>
+    <span class="kd">static</span> <span class="n">String</span> <span class="n">yyyy_MM_dd</span> <span class="o">=</span> <span class="s">&#34;yyyy-MM-dd&#34;</span><span class="o">;</span>
+    <span class="kd">static</span> <span class="n">String</span> <span class="n">yyyy_MM_dd_HH_mm_ss</span> <span class="o">=</span> <span class="s">&#34;yyyy-MM-dd HH:mm:ss&#34;</span><span class="o">;</span>
+    <span class="kd">static</span> <span class="n">String</span> <span class="n">yyyy_MM_dd_HH_mm_ss_SSS</span> <span class="o">=</span> <span class="s">&#34;yyyy-MM-dd HH:mm:ss.SSS&#34;</span><span class="o">;</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * If the pattern like &#39;yyyy&#39;, result {@link LocalDateTime} could be like &#39;yyyy-01-01 00:00:00&#39;.&lt;br&gt;
+</span><span class="cm">     * If the pattern like &#39;yyyy-MM&#39;, result {@link LocalDateTime} could be like &#39;yyyy-MM-01 00:00:00&#39;.&lt;br&gt;
+</span><span class="cm">     * If the pattern like &#39;yyyy-MM-dd&#39;, result {@link LocalDateTime} could be like &#39;yyyy-MM-dd 00:00:00&#39;.&lt;br&gt;
+</span><span class="cm">     * Other patterns acts the same.
+</span><span class="cm">     * &lt;p&gt;
+</span><span class="cm">     *
+</span><span class="cm">     * &lt;b&gt;Important:&lt;/b&gt; the pattern and the the {@link LocalDateTime#parse(CharSequence, DateTimeFormatter)} method&#39;s input {@link CharSequence} must match.
+</span><span class="cm">     * e.g. The following method call will throw {@link java.time.format.DateTimeParseException}:
+</span><span class="cm">     * &lt;pre&gt;
+</span><span class="cm">     *      LocalDateTime localDateTime = LocalDateTime.parse(&#34;2021&#34;,dtfBuilder(&#34;yyyy-MM&#34;));
+</span><span class="cm">     * &lt;/pre&gt;
+</span><span class="cm">     *
+</span><span class="cm">     * @param pattern the string pattern
+</span><span class="cm">     * @see DateTimeFormatter javadoc
+</span><span class="cm">     * @see LocalDateTime#parse(CharSequence, DateTimeFormatter)
+</span><span class="cm">     */</span>
+    <span class="kd">static</span> <span class="n">DateTimeFormatter</span> <span class="nf">dtfBuilder</span><span class="o">(</span><span class="n">String</span> <span class="n">pattern</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">DateTimeFormatterBuilder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">appendPattern</span><span class="o">(</span><span class="n">pattern</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">parseDefaulting</span><span class="o">(</span><span class="n">ChronoField</span><span class="o">.</span><span class="na">YEAR_OF_ERA</span><span class="o">,</span> <span class="n">LocalDateTime</span><span class="o">.</span><span class="na">now</span><span class="o">().</span><span class="na">getYear</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">parseDefaulting</span><span class="o">(</span><span class="n">ChronoField</span><span class="o">.</span><span class="na">MONTH_OF_YEAR</span><span class="o">,</span> <span class="n">1</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">parseDefaulting</span><span class="o">(</span><span class="n">ChronoField</span><span class="o">.</span><span class="na">DAY_OF_MONTH</span><span class="o">,</span> <span class="n">1</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">parseDefaulting</span><span class="o">(</span><span class="n">ChronoField</span><span class="o">.</span><span class="na">HOUR_OF_DAY</span><span class="o">,</span> <span class="n">0</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">parseDefaulting</span><span class="o">(</span><span class="n">ChronoField</span><span class="o">.</span><span class="na">MINUTE_OF_HOUR</span><span class="o">,</span> <span class="n">0</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">parseDefaulting</span><span class="o">(</span><span class="n">ChronoField</span><span class="o">.</span><span class="na">SECOND_OF_MINUTE</span><span class="o">,</span> <span class="n">0</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">parseDefaulting</span><span class="o">(</span><span class="n">ChronoField</span><span class="o">.</span><span class="na">NANO_OF_SECOND</span><span class="o">,</span> <span class="n">0</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">toFormatter</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="n">SimpleDateFormat</span> <span class="nf">sdfBuilder</span><span class="o">(</span><span class="n">String</span> <span class="n">pattern</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">SimpleDateFormat</span><span class="o">(</span><span class="n">pattern</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * solution1:
+</span><span class="cm">     * Get yyyy-MM-dd 00:00:00, start of the day.&lt;br&gt;
+</span><span class="cm">     * If you use yyyy-MM-dd as parameter
+</span><span class="cm">     */</span>
+    <span class="kd">static</span> <span class="n">Date</span> <span class="nf">getStartOfDay</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">LocalDateTime</span> <span class="n">localDateTime</span> <span class="o">=</span> <span class="n">LocalDateTime</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&#34;2021-02-02&#34;</span><span class="o">,</span>
+                <span class="n">dtfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd</span><span class="o">));</span>
+        <span class="n">Instant</span> <span class="n">instant</span> <span class="o">=</span> <span class="n">localDateTime</span><span class="o">.</span><span class="na">atZone</span><span class="o">(</span><span class="n">ZoneId</span><span class="o">.</span><span class="na">systemDefault</span><span class="o">()).</span><span class="na">toInstant</span><span class="o">();</span>
+        <span class="k">return</span> <span class="n">Date</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">instant</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * solution2:
+</span><span class="cm">     * get yyyy-MM-dd 00:00:00, start of the day.&lt;br&gt;
+</span><span class="cm">     * If you use yyyy-MM-dd as parameter&lt;br&gt;
+</span><span class="cm">     * &lt;p&gt;
+</span><span class="cm">     * Using {@link LocalDate#atStartOfDay()}
+</span><span class="cm">     *
+</span><span class="cm">     * @param dateString datePattern like 2012-09-08
+</span><span class="cm">     */</span>
+    <span class="kd">static</span> <span class="n">Date</span> <span class="nf">getStartOfDay</span><span class="o">(</span><span class="n">String</span> <span class="n">dateString</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ParseException</span> <span class="o">{</span>
+        <span class="c1">//由于dtfBuilder的设置 这里的时间已经是 00:00:00
+</span><span class="c1"></span>        <span class="n">LocalDate</span> <span class="n">localDate</span> <span class="o">=</span> <span class="n">LocalDate</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">dateString</span><span class="o">,</span> <span class="n">dtfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd</span><span class="o">));</span>
+        <span class="n">ZonedDateTime</span> <span class="n">zonedDateTime</span> <span class="o">=</span> <span class="n">localDate</span><span class="o">.</span><span class="na">atStartOfDay</span><span class="o">(</span><span class="n">ZoneId</span><span class="o">.</span><span class="na">systemDefault</span><span class="o">());</span>
+        <span class="k">return</span> <span class="n">Date</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">zonedDateTime</span><span class="o">.</span><span class="na">toInstant</span><span class="o">());</span>
+<span class="c1">//        return sdfBuilder().parse(zonedDateTime.format(dtfBuilder(yyyy_MM_dd_HH_mm_ss)));
+</span><span class="c1"></span>    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     *
+</span><span class="cm">     */</span>
+    <span class="kd">static</span> <span class="n">Date</span> <span class="nf">getStartOfDay</span><span class="o">(</span><span class="n">LocalDate</span> <span class="n">localDate</span><span class="o">){</span>
+        <span class="n">ZonedDateTime</span> <span class="n">zonedDateTime</span> <span class="o">=</span> <span class="n">localDate</span><span class="o">.</span><span class="na">atStartOfDay</span><span class="o">(</span><span class="n">ZoneId</span><span class="o">.</span><span class="na">systemDefault</span><span class="o">());</span>
+
+        <span class="n">LocalDateTime</span> <span class="n">localDateTime</span> <span class="o">=</span> <span class="n">localDate</span><span class="o">.</span><span class="na">atStartOfDay</span><span class="o">();</span>
+        <span class="n">Instant</span> <span class="n">instant</span> <span class="o">=</span> <span class="n">localDateTime</span><span class="o">.</span><span class="na">toInstant</span><span class="o">(</span><span class="n">ZoneOffset</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">&#34;+8&#34;</span><span class="o">));</span>
+<span class="c1">//        return Date.from(zonedDateTime.toInstant());
+</span><span class="c1"></span>        <span class="k">return</span> <span class="n">Date</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">instant</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * Get yyyy-MM-dd 23:59:59.999, end of the day.&lt;br&gt;
+</span><span class="cm">     * By using {@link LocalDateTime#plus(long, TemporalUnit)}
+</span><span class="cm">     */</span>
+    <span class="kd">static</span> <span class="n">Date</span> <span class="nf">getEndOfDay</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">//由于dtfBuilder的设置 这里的时间已经是 00:00:00
+</span><span class="c1"></span>        <span class="n">LocalDateTime</span> <span class="n">localDateTime</span> <span class="o">=</span> <span class="n">LocalDateTime</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&#34;2020-12-21&#34;</span><span class="o">,</span> <span class="n">dtfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd</span><span class="o">));</span>
+
+        <span class="c1">//plusXxx()方法没有提供毫秒/微秒的相应方法，直接到纳秒； 相应的，可以使用plus方法指定单位
+</span><span class="c1"></span>        <span class="n">localDateTime</span> <span class="o">=</span> <span class="n">localDateTime</span><span class="o">.</span><span class="na">plusHours</span><span class="o">(</span><span class="n">23</span><span class="o">).</span><span class="na">plusMinutes</span><span class="o">(</span><span class="n">59</span><span class="o">).</span><span class="na">plusSeconds</span><span class="o">(</span><span class="n">59</span><span class="o">).</span><span class="na">plusNanos</span><span class="o">(</span><span class="n">999_999_999</span><span class="o">);</span>
+
+        <span class="cm">/*
+</span><span class="cm">         *  好方法，将其下级单位的值清零
+</span><span class="cm">         *  ChronoUnit.DAYS: 清零hh:mm:ss.SSS
+</span><span class="cm">         *  最大单位 DAYS，也就是说此方法只能用来清零时间
+</span><span class="cm">         */</span>
+        <span class="n">localDateTime</span> <span class="o">=</span> <span class="n">localDateTime</span><span class="o">.</span><span class="na">truncatedTo</span><span class="o">(</span><span class="n">ChronoUnit</span><span class="o">.</span><span class="na">DAYS</span><span class="o">);</span>
+        <span class="n">localDateTime</span> <span class="o">=</span> <span class="n">localDateTime</span>
+                <span class="o">.</span><span class="na">plus</span><span class="o">(</span><span class="n">23</span><span class="o">,</span> <span class="n">ChronoUnit</span><span class="o">.</span><span class="na">HOURS</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">plus</span><span class="o">(</span><span class="n">59</span><span class="o">,</span> <span class="n">ChronoUnit</span><span class="o">.</span><span class="na">MINUTES</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">plus</span><span class="o">(</span><span class="n">59</span><span class="o">,</span> <span class="n">ChronoUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">plus</span><span class="o">(</span><span class="n">999</span><span class="o">,</span> <span class="n">ChronoUnit</span><span class="o">.</span><span class="na">MILLIS</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">Date</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">localDateTime</span><span class="o">.</span><span class="na">atZone</span><span class="o">(</span><span class="n">ZoneId</span><span class="o">.</span><span class="na">systemDefault</span><span class="o">()).</span><span class="na">toInstant</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * Get yyyy-MM-dd 23:59:59.999, end of the day.&lt;br&gt;
+</span><span class="cm">     * By using {@link LocalDate#atTime(LocalTime)}
+</span><span class="cm">     *
+</span><span class="cm">     * @param dateString date pattern like &#39;2012-09-18&#39;
+</span><span class="cm">     */</span>
+    <span class="kd">static</span> <span class="n">Date</span> <span class="nf">getEndOfDay</span><span class="o">(</span><span class="n">String</span> <span class="n">dateString</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">LocalDate</span> <span class="n">localDate</span> <span class="o">=</span> <span class="n">LocalDate</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">dateString</span><span class="o">,</span> <span class="n">dtfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd</span><span class="o">));</span>
+<span class="c1">//        localDate.
+</span><span class="c1"></span>        <span class="n">LocalDateTime</span> <span class="n">localDateTime</span> <span class="o">=</span> <span class="n">localDate</span><span class="o">.</span><span class="na">atTime</span><span class="o">(</span><span class="n">23</span><span class="o">,</span> <span class="n">59</span><span class="o">,</span> <span class="n">59</span><span class="o">,</span> <span class="n">999_999_999</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">Date</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">localDateTime</span><span class="o">.</span><span class="na">atZone</span><span class="o">(</span><span class="n">ZoneId</span><span class="o">.</span><span class="na">systemDefault</span><span class="o">()).</span><span class="na">toInstant</span><span class="o">());</span>
+
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * Get first day of month
+</span><span class="cm">     *
+</span><span class="cm">     * @param dateString pattern like &#39;2020-10-25&#39;
+</span><span class="cm">     * @return
+</span><span class="cm">     */</span>
+    <span class="kd">static</span> <span class="n">Date</span> <span class="nf">getFirstDayOfMonth</span><span class="o">(</span><span class="n">String</span> <span class="n">dateString</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">LocalDateTime</span> <span class="n">localDateTime</span> <span class="o">=</span> <span class="n">LocalDateTime</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">dateString</span><span class="o">,</span> <span class="n">dtfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd</span><span class="o">));</span>
+        <span class="n">localDateTime</span> <span class="o">=</span> <span class="n">localDateTime</span><span class="o">.</span><span class="na">withDayOfMonth</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">Date</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">localDateTime</span><span class="o">.</span><span class="na">atZone</span><span class="o">(</span><span class="n">ZoneId</span><span class="o">.</span><span class="na">systemDefault</span><span class="o">()).</span><span class="na">toInstant</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * Get the first day of year.
+</span><span class="cm">     *
+</span><span class="cm">     * @param yearString pattern like &#39;2012&#39;
+</span><span class="cm">     */</span>
+    <span class="kd">static</span> <span class="n">Date</span> <span class="nf">getFirstDayOfYear</span><span class="o">(</span><span class="n">String</span> <span class="n">yearString</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">LocalDateTime</span> <span class="n">localDateTime</span> <span class="o">=</span> <span class="n">LocalDateTime</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">yearString</span><span class="o">,</span> <span class="n">dtfBuilder</span><span class="o">(</span><span class="n">yyyy</span><span class="o">));</span>
+        <span class="k">return</span> <span class="n">Date</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">localDateTime</span><span class="o">.</span><span class="na">atZone</span><span class="o">(</span><span class="n">ZoneId</span><span class="o">.</span><span class="na">systemDefault</span><span class="o">()).</span><span class="na">toInstant</span><span class="o">());</span>
+    <span class="o">}</span>
+
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ParseException</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sdfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd_HH_mm_ss</span><span class="o">).</span><span class="na">format</span><span class="o">(</span><span class="n">getStartOfDay</span><span class="o">()));</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sdfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd_HH_mm_ss</span><span class="o">).</span><span class="na">format</span><span class="o">(</span><span class="n">getStartOfDay</span><span class="o">(</span><span class="s">&#34;2021-02-02&#34;</span><span class="o">)));</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sdfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd_HH_mm_ss_SSS</span><span class="o">).</span><span class="na">format</span><span class="o">(</span><span class="n">getStartOfDay</span><span class="o">(</span><span class="n">LocalDate</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&#34;2021-02-22&#34;</span><span class="o">,</span> <span class="n">dtfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd</span><span class="o">)))));</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sdfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd_HH_mm_ss_SSS</span><span class="o">).</span><span class="na">format</span><span class="o">(</span><span class="n">getEndOfDay</span><span class="o">()));</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sdfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd_HH_mm_ss_SSS</span><span class="o">).</span><span class="na">format</span><span class="o">(</span><span class="n">getEndOfDay</span><span class="o">(</span><span class="s">&#34;2020-12-21&#34;</span><span class="o">)));</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sdfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd</span><span class="o">).</span><span class="na">format</span><span class="o">(</span><span class="n">getFirstDayOfMonth</span><span class="o">(</span><span class="s">&#34;2020-12-18&#34;</span><span class="o">)));</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sdfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd_HH_mm_ss</span><span class="o">).</span><span class="na">format</span><span class="o">(</span><span class="n">getFirstDayOfYear</span><span class="o">(</span><span class="s">&#34;2012&#34;</span><span class="o">)));</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>源码地址：<a href="https://github.com/wangy325/java-review/blob/master/src/main/java/com/wangy/common/time/Intro.java">https://github.com/wangy325/java-review/blob/master/src/main/java/com/wangy/common/time/Intro.java</a></p>
+
+<h1 id="5-补充内容">5 补充内容</h1>
+
+<h2 id="5-1-时区">5.1 时区</h2>
 
 <p>时区是地球上的区域使用同一个时间定义。以前，人们通过观察太阳的位置（时角）决定时间，这就使得不同经度的地方的时间有所不同（地方时）。1863年，首次使用时区的概念。时区通过设立一个区域的标准时间部分地解决了这个问题。</p>
 
@@ -522,21 +846,21 @@ java.text.SimpleDateFormat：DateDateFormat的实现
 
 <p>但是，为了避开国界线，有的时区的形状并不规则，而且比较大的国家以国家内部行政分界线为时区界线，这是<strong>实际时区</strong>，即法定时区。请参见<a href="https://zh.wikipedia.org/wiki/%E6%97%B6%E5%8C%BA%E5%88%97%E8%A1%A8#UTC%EF%BC%88WET_-%E6%AD%90%E6%B4%B2%E8%A5%BF%E9%83%A8%E6%99%82%E5%8D%80%EF%BC%8CGMT-_%E6%A0%BC%E6%9E%97%E5%A8%81%E6%B2%BB%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4%EF%BC%89">时区列表</a>。</p>
 
-<h2 id="4-2-子午线">4.2 子午线</h2>
+<h2 id="5-2-子午线">5.2 子午线</h2>
 
 <p>即<strong>经线</strong>，和纬线一样是人类为度量而假设出来的辅助线，定义为地球表面连接南北两极的大圆线上的半圆弧。任两根经线的长度相等，相交于南北两极点。每一根经线都有其相对应的数值，称为经度。经线指示南北方向。</p>
 
-<h2 id="4-3-本初子午线">4.3 本初子午线</h2>
+<h2 id="5-3-本初子午线">5.3 本初子午线</h2>
 
 <p>即<strong>0度经线</strong>，亦称格林尼治子午线或本初经线，是经过英国格林尼治天文台的一条经线（亦称子午线）。本初子午线的东西两边分别定为东经和西经，于180度相遇。</p>
 
-<h2 id="4-4-国际标准iso-8601">4.4 国际标准ISO 8601</h2>
+<h2 id="5-4-国际标准iso-8601">5.4 国际标准ISO 8601</h2>
 
 <p><a href="https://zh.wikipedia.org/wiki/ISO_8601">国际标准ISO 8601</a>：是国际标准化组织的日期和时间的表示方法，全称为《数据存储和交换形式·信息交换·日期和时间的表示方法》。目前是2004年12月1日发行的第三版“ISO8601:2004”以替代1998年的第一版“ISO8601:1988”与2000年的第二版“ISO8601:2000”。</p>
 
 <p>年由4位数字组成YYYY，或者带正负号的四或五位数字表示±YYYYY。以公历公元1年为0001年，以公元前1年为0000年，公元前2年为-0001年，其他以此类推。应用其他纪年法要换算成公历，但如果发送和接受信息的双方有共同一致同意的其他纪年法，可以自行应用。</p>
 
-<h2 id="4-5-协调世界时">4.5 协调世界时</h2>
+<h2 id="5-5-协调世界时">5.5 协调世界时</h2>
 
 <blockquote>
 <p>英语：Coordinated Universal Time，</p>
@@ -550,12 +874,12 @@ java.text.SimpleDateFormat：DateDateFormat的实现
 
 <p>如果时间是以协调世界时（UTC）表示，则在时间后面直接加上一个“Z”（不加空格）。“Z”是协调世界时中0时区的标志。因此，“09:30 UTC”就写作“09:30Z”或是“0930Z”。“14:45:15 UTC”则为“14:45:15Z”或“144515Z”。</p>
 
-<h2 id="4-6-utc偏移量">4.6 UTC偏移量</h2>
+<h2 id="5-6-utc偏移量">5.6 UTC偏移量</h2>
 
 <p>UTC偏移量用以下形式表示：±[hh]:[mm]、±[hh][mm]、或者±[hh]。如果所在区时比协调世界时早1个小时（例如柏林冬季时间），那么时区标识应为“+01:00”、“+0100”或者直接写作“+01”。这也同上面的“Z”一样直接加在时间后面。
 &ldquo;UTC+8&rdquo;表示当协调世界时（UTC）时间为凌晨2点的时候，当地的时间为2+8点，即早上10点。</p>
 
-<h2 id="4-7-格林尼治平时">4.7 格林尼治平时</h2>
+<h2 id="5-7-格林尼治平时">5.7 格林尼治平时</h2>
 
 <blockquote>
 <p>英语：Greenwich Mean Time，GMT）</p>
@@ -567,7 +891,7 @@ java.text.SimpleDateFormat：DateDateFormat的实现
 
 <p>格林尼治平时的正午是指当平太阳横穿格林尼治子午线时（也就是在格林尼治上空最高点时）的时间。由于地球每天的自转是有些不规则的，而且正在缓慢减速，因此格林尼治平时基于天文观测本身的缺陷，已经被原子钟报时的协调世界时（UTC）所取代。</p>
 
-<h1 id="参考">参考</h1>
+<h1 id="6-参考">6 参考</h1>
 
 <ul>
 <li>原文地址：<a href="https://www.cnblogs.com/lxyit/p/9442135.html">https://www.cnblogs.com/lxyit/p/9442135.html</a></li>
@@ -590,8 +914,8 @@ java.text.SimpleDateFormat：DateDateFormat的实现
   <p class="copyright-item" style= text-align:right;>
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2021-02-03
-        <a href="https://github.com/wangy325/endlessriver/commit/ee7dfee65c43d80a9108d03d995bb64108225fe9" title="add java 8 LocalDateTime">(ee7dfee)</a>
+        2021-02-22
+        <a href="https://github.com/wangy325/endlessriver/commit/6d0ad533a46171f4191357548f95afc9b4f98fa1" title="更新内容 java8新时间工具库库">(6d0ad53)</a>
     </span>
   </p>
   
@@ -602,9 +926,9 @@ java.text.SimpleDateFormat：DateDateFormat的实现
           <a href="/tags/java/">Java</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/post/tech/java/use-springboot-messagesource/">
+        <a class="prev" href="/post/tech/java/mockmvc%E7%94%A8%E4%BE%8B2%E5%88%99/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">在SpringBoot中使用MessageSource</span>
+            <span class="prev-text nav-default">在SpringBoot项目中使用MockMvc进行接口测试</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
         <a class="next" href="/post/tech/java/xxl-sharding-job/">

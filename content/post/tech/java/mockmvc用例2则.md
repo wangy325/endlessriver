@@ -255,41 +255,6 @@ public class BaseMockInit {
         spittleController = new SpittleController();
         spittleController.setSpittleService(spittleService);
     }
-
-
-    /**
-     * Use json-path, tweaking configuration<br>
-     * The config below change default action of json-path<br>
-     * Use application-context ObjectMapper config as json and mapper provider<br>
-     * <p>
-     * Reference: <a href="https://github.com/json-path/JsonPath">
-     * https://github.com/json-path/JsonPath</a>
-     *
-     * @param json standard json string
-     * @return {@link DocumentContext}
-     */
-    protected DocumentContext jsonPathParser(String json) {
-
-        final JsonProvider jsonProvider = new JacksonJsonProvider(objectMapper);
-        final MappingProvider mappingProvider = new JacksonMappingProvider(objectMapper);
-        Configuration.setDefaults(new Configuration.Defaults() {
-            @Override
-            public JsonProvider jsonProvider() {
-                return jsonProvider;
-            }
-
-            @Override
-            public Set<Option> options() {
-                return EnumSet.noneOf(Option.class);
-            }
-
-            @Override
-            public MappingProvider mappingProvider() {
-                return mappingProvider;
-            }
-        });
-        return JsonPath.parse(json);
-    }
 }
 ```
 
@@ -463,7 +428,7 @@ class MyWebTests {
 
 ### 2.2.3 POST请求方法测试
 
-如前所述，在发起POST请求时，一般使用JSON，此时`MappingJasksonHttpMessageConverter`便会介入。它负责将JSON对象反序列化为控制器指定的Java Baean。在使用MockMvc进行测试时，我们直接使用JSON字符串，将其设置在请求体中即可。
+如前所述，在发起<span id = "post">POST请求</span>时，一般使用JSON，此时`MappingJasksonHttpMessageConverter`便会介入。它负责将JSON对象反序列化为控制器指定的Java Baean。在使用MockMvc进行测试时，我们直接使用JSON字符串，将其设置在请求体中即可。
 
 ```java
 @Test
@@ -540,14 +505,163 @@ public void postSpittlesTimeLinePageTest() throws Exception {
 
 [^3]: 或许笔者还没有找到更加优雅的方法。
 
-不过，说实话，测试在获取到返回的JSON串，通过控制台打印输出确认符合预期基本上就可以结束，再去检验JSON的内容有点**强迫症**的意味了。
+说实话，测试在获取到返回的JSON串，通过控制台打印输出确认符合预期基本上就可以结束，再去检验JSON的内容有点**强迫症**的意味了。
 
-# 4 补充内容：服务层的测试
+其实在[JsonPath](https://github.com/json-path/JsonPath)的仓库里详细地介绍了JsonPath的基本用法，针对本实例的具体情况，通过阅读文档，我们可以很容易取得想要的值并进行校验。
 
-# 5 补充内容：使用idea直接进行RESTful接口测试
+```json
+{
+    "code":20000,
+    "msg":"http.ok",
+    "data":
+        {
+            "currentPage":1,
+            "pageSize":10,
+            "total":4,
+            "pages":1,
+            "records":
+                [
+                    {
+                    "id":1,
+                    "spitterId":4,
+                    "message":"sixth man",
+                    "time":"2012-06-09 22:20:00",
+                    "latitude":0.0,
+                    "longitude":0.0
+                    }
+                ]
+        }
+}
+```
+
+我们要校验的就是`data`中的内容，现在我们再回过头来看看上面的[测试代码](#post)，实际上很容易理解:
+
+```java
+PageDomain<SpittleVO> rpg = jsonPathParser(jsonResult).read("$.data", PageDomain.class);
+    assertEquals((int) jsonPathParser(jsonResult).read("$.data.records.length()"), 1);
+    SpittleVO rvo = jsonPathParser(jsonResult).read("$.data.records[0]", SpittleVO.class);
+    rpg.setRecords(new ArrayList<SpittleVO>() {{
+        add(rvo);
+    }});
+    assertEquals(rpg, pageDomain);
+```
+
+首先我们获取了`$.data`节点的内容，里面也是一个Json对象，按照*传统的*反序列化理解，这是一个Java Bean，我们该如何将其读取为我们程序中的Bean呢，JsonPath也[作了说明](https://github.com/json-path/JsonPath#what-is-returned-when)
+
+> 默认情况下，通过`JsonPath.parse(json).read("$.data")`获取的到的是Map实例，并不会映射为Java Bean。不过JsonPath也为此提供了可能：
+>> If you configure JsonPath to use JacksonMappingProvider or GsonMappingProvider you can even map your JsonPath output directly into POJO's.
+
+要想映射为JavaBean，我们需要：
+
+- 自定义配置JsonProvider
+- 传入类型参数
+
+配置JsonProvider的方式也很简单：
+
+```java
+/**
+    * Use json-path, tweaking configuration<br>
+    * The config below change default action of json-path<br>
+    * Use application-context ObjectMapper config as json and mapper provider<br>
+    * <p>
+    * Reference: <a href="https://github.com/json-path/JsonPath">
+    * https://github.com/json-path/JsonPath</a>
+    *
+    * @param json standard json string
+    * @return {@link DocumentContext}
+    */
+protected DocumentContext jsonPathParser(String json) {
+
+    final JsonProvider jsonProvider = new JacksonJsonProvider(objectMapper);
+    final MappingProvider mappingProvider = new JacksonMappingProvider(objectMapper);
+    Configuration.setDefaults(new Configuration.Defaults() {
+        @Override
+        public JsonProvider jsonProvider() {
+            return jsonProvider;
+        }
+
+        @Override
+        public Set<Option> options() {
+            return EnumSet.noneOf(Option.class);
+        }
+
+        @Override
+        public MappingProvider mappingProvider() {
+            return mappingProvider;
+        }
+    });
+    return JsonPath.parse(json);
+}
+```
+
+此时，我们就已经获取到了接口返回的对象。不过等等，我们再仔细看看上面的Json，会发现`$.data.records`节点是一个数组，数组里面又是可以映射为Java Bean的Json。而经过上一步，获取的`PageDomain`对象中的`records`域实际上还是一个`List<Map>`的默认映射结果，所以我们还需要梅开二度。
+
+
+# 4 补充内容：使用idea直接进行RESTful接口测试
+
+到这里，本文的主要内容就结束了。
+
+如果你使用的IDEA，你不妨找找`tools->httpClients`，你会发现，idea的绝妙功能：其可以通过脚本文件测试rest接口。
+
+idea提供了不同HTTP请求的脚本示例，很容易就能上手，脚本文件以`.http`结尾，你可轻松创建自己的测试脚本。
+
+例如，我为上面的测试创建一个名为`rest-api.http`的脚本：
+
+```http
+### get spitter info by spitterId
+GET {{host}}/spitter/{{spitterId}}?lang={{lang}}
+Accept: application/json
+
+
+### 分页获取spittle， 根据用户spitterId，请求参数放在GET请求体中的情形:
+GET {{host}}/spittle/user/spittles?lang={{lang}}
+Accept: */*
+Content-Type: application/json
+
+{
+  "spitterId": 4,
+  "currentPage": 1,
+  "pageSize": 1
+}
+
+
+### 分页获取某个时间段的spittle 1
+POST {{host}}/spittle/range/spittles?lang={{lang}}
+Content-Type: application/json
+
+{
+  "leftTime": "2012-06-09 00:00:00",
+  "rightTime": "2012-06-09 23:59:59",
+  "currentPage":2,
+  "pageSize": 1
+}
+```
+
+可以看到，`.http`脚本文件的可读性非常强。其中，为了方便，还使用了用双花括号语法的**环境变量**，这些变量被命名在一个名为`http-client-env.json`的json文件中：
+
+```json
+{
+  "mem": {
+    "host":"http://localhost:9000/mem",
+    "spitterId": 4,
+    "lang": "en",
+    "currentPage": 1,
+    "pageSize": 2
+  },
+  "mysql":{
+    "host": "http://localhost:9100/dev",
+    "spitterId": 2,
+    "lang": "en"
+  }
+}
+```
+
+运行脚本时，可以通过执行环境配置传入不同的测试参数，就这么简单。
+
+---
+
 
 # 参考
-
 
 - 本文用例所在项目地址：https://github.com/wangy325/mybatis-plus-starter
 - mockito官网：https://site.mockito.org/
