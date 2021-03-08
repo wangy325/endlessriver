@@ -1,7 +1,7 @@
 ---
 title: "在SpringBoot项目中使用MockMvc进行接口测试"
 date: 2021-02-07
-lastmod: 2020-02-22
+lastmod: 2021-03-08
 draft: false
 tags: [测试, mockito]
 categories: [java,springboot,mockito]
