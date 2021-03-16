@@ -13,4 +13,4 @@ draft: true
 
 
 
-{{% figure class="center" src="/img/reward/wechat.png" title="" alt="img" }}
+{{% figure class="center" src="/img/reward/wechat.png" title="" alt="img" %}}
