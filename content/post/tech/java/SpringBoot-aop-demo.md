@@ -1,6 +1,5 @@
-
 ---
-title: "基于Spring Boot的AOP demo"
+title: "SpringBoot使用AOP的简单示例"
 date: 2020-03-14
 draft: false
 tags: [aop]
@@ -18,10 +17,9 @@ autoCollapseToc: false
 
 此程序分别使用了基于@Aspect注解和基于XML配置文件2种方式进行了切面注入，2种方式效果是等同的。
 
-
 此程序使用的是Spring AOP，并没有使用功能更加丰富的AspectJ，Spring AOP很大部分借鉴了AspectJ，如果只是简单的方法层面的织入，那么Spring AOP就能够满足需求。如果需要构造器或者属性拦截，或者需要为spring bean引入新方法，那么就需要使用AspectJ了。
 
-# 开始
+# 1 开始
 
 从[start.spring.io](https://start.spring.io)下载空项目，引入Spring AOP依赖：
 
@@ -34,11 +32,11 @@ autoCollapseToc: false
 
 <!--more-->
 
-# 配置
+# 2 配置
 
-## 基于JavaBean+注解的配置
+## 2.1 基于JavaBean+注解的配置
 
-### 注入Bean
+### 2.1.1 注入Bean
 
 ```java
 @Configuration
@@ -70,7 +68,7 @@ public class DiskConfig {
 }
 ```
 
-### 创建切面
+### 2.1.2 创建切面
 
 使用注解`@Aspect`可以将一个Bean声明为切面：
 
@@ -129,6 +127,7 @@ public class TrackCounter {
     }
 }
 ```
+
 使用`@Aspect`注解将`TrackCounter` bean声明为一个切面，同时使用`@Pointcut`注解声明切点，再使用对应的通知注解声明通知
 
 - @Before
@@ -139,9 +138,11 @@ public class TrackCounter {
 
 若使用xml配置切面，那么`TrackCounter`类看起来和普通的java bean没有差别，稍后会在xml配置文件中将其配置为一个切面
 
-注意上面的切面表达式
+注意上面的切面表达式：
 
+```java
     execution( * com.wangy.aop.disk.BlankDisk.playTrack(int)) && args(trackNumber)
+```
 
 前半部分是常见的切面表达式，用于指定切入点；
 
@@ -174,9 +175,10 @@ public class TrackCounter {
 
 > 关于`args()`条件的作用，sping官方文档有说明：
 https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#aop-ataspectj-advice-params
-
+>
 > 需要注意到启动类中使用了`@EnableAspectJAutoProxy`注解，
-这意味着开启AspectJ自动代理，使得Spring框架拥有AOP能力。
+这意味着开启AspectJ自动代理，使得Spring框架拥有AOP能力：
+>
 ```Java
 @SpringBootApplication
 @EnableAspectJAutoProxy
@@ -187,8 +189,7 @@ public class AopApplication {
 }
 ```
 
-
-## 基于xml文件的配置
+## 2.2 基于xml文件的配置
 
 xml配置如下[^1]：
 
@@ -228,7 +229,7 @@ xml配置如下[^1]：
 
 对应前文中的JavaBean配置中使用的profile，在xml中将所有的配置声明为一个叫'xc'的`profile`。
 
-# 测试
+# 3 测试
 
 测试包中提供了2个测试类，分别用于测试基于`JavaBean+注解`、基于xml文件的aop配置；
 
@@ -278,6 +279,9 @@ public class TrackCountTestWithXml {
 }
 ```
 
+# 4 参考
+
 demo地址：https://github.com/wangy325/simple_springboot_aop_demo
+切入点表达式使用总结：https://www.cnblogs.com/zhangxufeng/p/9160869.html
 
 [^1]: xml配置并未使用TrackCounter中的全部通知
