@@ -281,7 +281,8 @@ public class TrackCountTestWithXml {
 
 # 4 参考
 
-demo地址：https://github.com/wangy325/simple_springboot_aop_demo
-切入点表达式使用总结：https://www.cnblogs.com/zhangxufeng/p/9160869.html
+- demo地址：https://github.com/wangy325/simple_springboot_aop_demo
+
+- 切入点表达式使用总结：https://www.cnblogs.com/zhangxufeng/p/9160869.html
 
 [^1]: xml配置并未使用TrackCounter中的全部通知
