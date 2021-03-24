@@ -13,10 +13,10 @@
     
     <item>
       <title>redis必知必会(转)</title>
-      <link>https://wangy325.top/post/tech/redis-all/</link>
+      <link>https://wangy325.top/post/tech/java/redis/redis-all/</link>
       <pubDate>Tue, 24 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/redis-all/</guid>
+      <guid>https://wangy325.top/post/tech/java/redis/redis-all/</guid>
       <description>&lt;p&gt;此文总结了redis相关的基础性知识体系，但不包括redis主从、哨兵、集群相关内容&lt;/p&gt;
 
 &lt;h2 id=&#34;1-简单介绍一下-redis-呗&#34;&gt;1. 简单介绍一下 Redis 呗&lt;/h2&gt;

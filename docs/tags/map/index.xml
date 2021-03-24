@@ -13,10 +13,10 @@
     
     <item>
       <title>Map</title>
-      <link>https://wangy325.top/post/tech/java/map/</link>
+      <link>https://wangy325.top/post/tech/java/collections/map/</link>
       <pubDate>Sun, 10 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/map/</guid>
+      <guid>https://wangy325.top/post/tech/java/collections/map/</guid>
       <description>&lt;p&gt;Map即映射，即键-值对，键不允许重复，并且一个键最多映射一个值&lt;/p&gt;
 
 &lt;p&gt;映射提供3种&lt;strong&gt;集合视图&lt;/strong&gt;&lt;/p&gt;

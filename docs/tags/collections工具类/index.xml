@@ -13,10 +13,10 @@
     
     <item>
       <title>Collections工具</title>
-      <link>https://wangy325.top/post/tech/java/collections/</link>
+      <link>https://wangy325.top/post/tech/java/collections/collections/</link>
       <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/collections/</guid>
+      <guid>https://wangy325.top/post/tech/java/collections/collections/</guid>
       <description>&lt;p&gt;集合框架中一个重要的类，其实是Collection接口的&lt;strong&gt;伴随类&lt;/strong&gt;，其中定义了许多实用方法，用来获取&lt;strong&gt;集合视图&lt;/strong&gt;，或提供一些方便的操作集合元素的&lt;strong&gt;算法&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;由于视图是直接封装的Collection接口，&lt;strong&gt;因此其方法有些局限&lt;/strong&gt;，并且由于特殊的设计，部分操作是不允许的（会抛出 &lt;em&gt;UnsupportedOperationExceptin&lt;/em&gt; ）&lt;/p&gt;</description>

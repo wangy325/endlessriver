@@ -13,10 +13,10 @@
     
     <item>
       <title>static关键字</title>
-      <link>https://wangy325.top/post/tech/java/static%E5%85%B3%E9%94%AE%E5%AD%97/</link>
+      <link>https://wangy325.top/post/tech/java/basic/static%E5%85%B3%E9%94%AE%E5%AD%97/</link>
       <pubDate>Tue, 14 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/static%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
+      <guid>https://wangy325.top/post/tech/java/basic/static%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
       <description>&lt;p&gt;static关键字意为“静态的”，其语义可以理解为“类的对象”(不要理解为Class对象)，即不需要对象实例，可以直接通过&lt;code&gt;类名.staticDomain&lt;/code&gt;的形式直接访问&lt;/p&gt;
 
 &lt;h2 id=&#34;2-1-静态域&#34;&gt;2.1 静态域&lt;/h2&gt;

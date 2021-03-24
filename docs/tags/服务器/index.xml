@@ -13,10 +13,10 @@
     
     <item>
       <title>一次服务器oom故障</title>
-      <link>https://wangy325.top/post/tech/2021-02-20_%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%85%E9%9A%9C/</link>
+      <link>https://wangy325.top/post/tech/server/2021-02-20_%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%85%E9%9A%9C/</link>
       <pubDate>Sat, 20 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/2021-02-20_%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%85%E9%9A%9C/</guid>
+      <guid>https://wangy325.top/post/tech/server/2021-02-20_%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%85%E9%9A%9C/</guid>
       <description>&lt;h2 id=&#34;1-起因&#34;&gt;1 起因&lt;/h2&gt;
 
 &lt;p&gt;使用idm下载y2b视频导致服务器内存溢出，内核强制关闭了服务进程。&lt;/p&gt;

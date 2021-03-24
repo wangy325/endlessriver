@@ -13,10 +13,10 @@
     
     <item>
       <title>内部类</title>
-      <link>https://wangy325.top/post/tech/java/%E5%86%85%E9%83%A8%E7%B1%BB/</link>
+      <link>https://wangy325.top/post/tech/java/basic/%E5%86%85%E9%83%A8%E7%B1%BB/</link>
       <pubDate>Thu, 23 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/%E5%86%85%E9%83%A8%E7%B1%BB/</guid>
+      <guid>https://wangy325.top/post/tech/java/basic/%E5%86%85%E9%83%A8%E7%B1%BB/</guid>
       <description>&lt;p&gt;将一个类定义在另一个类的内部，这就是内部类&lt;/p&gt;
 
 &lt;blockquote&gt;
@@ -125,10 +125,10 @@
     
     <item>
       <title>抽象类与接口</title>
-      <link>https://wangy325.top/post/tech/java/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/</link>
+      <link>https://wangy325.top/post/tech/java/basic/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/</link>
       <pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/</guid>
+      <guid>https://wangy325.top/post/tech/java/basic/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/</guid>
       <description>&lt;p&gt;抽象类是由&lt;code&gt;abstract&lt;/code&gt;关键字修饰的类。将一个普通类用&lt;code&gt;abstract&lt;/code&gt;修饰，它就是抽象类&lt;/p&gt;
 
 &lt;p&gt;若使用&lt;code&gt;abstract&lt;/code&gt;修饰方法，那么称该方法为&lt;strong&gt;抽象方法&lt;/strong&gt;，抽象方法没有方法体&lt;/p&gt;

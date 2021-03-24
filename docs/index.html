@@ -45,7 +45,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://wangy325.top/" />
 
-<meta property="og:updated_time" content="2021-02-20T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2021-03-24T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Endless River">
 <meta itemprop="description" content="">
@@ -123,7 +123,45 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/2021-02-20_%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%85%E9%9A%9C/">一次服务器oom故障</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/sql/%E4%BD%BF%E7%94%A8mysql%E7%9A%84%E8%A1%8C%E9%94%81/">mysql锁的简单使用</a></h1>
+    <div class="post-meta">
+
+        <span>
+            <span class="icomoonfree icon-calendar"></span>
+            <span class="post-time"> 2021-03-24 </span>
+        </span>
+
+
+      <div class="post-category">
+             <span class="icomoonfree icon-folder"></span>
+          <a href="/categories/mysql/"> mysql </a>
+          </div>
+        <span class="icomoonfree icon-sigma"></span>
+        <span class="more-meta analyse"> 约 260 字 </span>
+        <span class="icomoonfree icon-clock"></span>
+        <span class="more-meta"> 预计阅读 1 分钟 </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>对于MySQL数据库而言，事务的隔离级别在不同程度上保证了数据一致性。这能够满足大部分的业务需求，但是，仍然有那么一小戳事情，仅仅依靠事务不能完美解决。</p>
+
+<p>我们知道，事务能读取到事务开始前就存在的数据，如果事务A需要对某条数据data1进行修改，在事务A还没有提交之前，事务B虽然不能读取到事务A对data1的修改（read committed隔离级别以上），但是能够读取data1原始的数据快照，并且能够再读取到的数据基础上对其进行修改（在事务A提交之后）。</p>
+
+<blockquote>
+<p>试想，如果是商品库存数据或者其他业务敏感数据，这可能导致什么后果？</p>
+</blockquote>
+    </div>
+    <div class="read-more">
+      <a href="/post/tech/java/sql/%E4%BD%BF%E7%94%A8mysql%E7%9A%84%E8%A1%8C%E9%94%81/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/tech/server/2021-02-20_%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%85%E9%9A%9C/">一次服务器oom故障</a></h1>
     <div class="post-meta">
 
         <span>
@@ -173,14 +211,14 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
 <p>日志说明的很清楚了，<strong>内存溢出</strong>，系统杀掉了部分进程。</p>
     </div>
     <div class="read-more">
-      <a href="/post/tech/2021-02-20_%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%85%E9%9A%9C/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/server/2021-02-20_%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%85%E9%9A%9C/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/use-springboot-messagesource/">在SpringBoot中使用MessageSource</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/spring/use-springboot-messagesource/">在SpringBoot中使用MessageSource</a></h1>
     <div class="post-meta">
 
         <span>
@@ -227,14 +265,14 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
 <p>In this tutorial, we&rsquo;ll see how to configure and manage custom validation MessageSource in the application using Spring Boot.</p>
     </div>
     <div class="read-more">
-      <a href="/post/tech/java/use-springboot-messagesource/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/spring/use-springboot-messagesource/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/mockmvc%E7%94%A8%E4%BE%8B2%E5%88%99/">在SpringBoot项目中使用MockMvc进行接口测试</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/test/mockmvc%E7%94%A8%E4%BE%8B2%E5%88%99/">在SpringBoot项目中使用MockMvc进行接口测试</a></h1>
     <div class="post-meta">
 
         <span>
@@ -308,14 +346,14 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
 <p>一旦mock对象被创建，mock会记住对其的所有操作，之后，你便可以选择性的<span id="v1">校验</span>这些操作。</p>
     </div>
     <div class="read-more">
-      <a href="/post/tech/java/mockmvc%E7%94%A8%E4%BE%8B2%E5%88%99/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/test/mockmvc%E7%94%A8%E4%BE%8B2%E5%88%99/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/java-new-time-api/">Java8中的新日期和时间工具库</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/basic/java-new-time-api/">Java8中的新日期和时间工具库</a></h1>
     <div class="post-meta">
 
         <span>
@@ -361,14 +399,14 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
 </ul>
     </div>
     <div class="read-more">
-      <a href="/post/tech/java/java-new-time-api/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/basic/java-new-time-api/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/xxl-sharding-job/">在xxl-job中使用分片任务</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/job/xxl-sharding-job/">在xxl-job中使用分片任务</a></h1>
     <div class="post-meta">
 
         <span>
@@ -417,14 +455,14 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
 <p>调度中心<strong>自动发现并注册</strong>执行器，并且通过执行器提供的api对任务进行调度（执行/终止等操作）。</p>
     </div>
     <div class="read-more">
-      <a href="/post/tech/java/xxl-sharding-job/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/job/xxl-sharding-job/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/how2use-printf/">How to Use printf in Java (转)</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/trans/how2use-printf/">How to Use printf in Java (转)</a></h1>
     <div class="post-meta">
 
         <span>
@@ -488,7 +526,7 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
 <p>As shown above, the format string contains plain text and two formatting rules. The first rule is used to format the string argument. The second rule adds a newline character to the end of the string.</p>
     </div>
     <div class="read-more">
-      <a href="/post/tech/java/how2use-printf/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/trans/how2use-printf/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
@@ -550,7 +588,7 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E8%AF%A6%E8%A7%A3/">Java内存区域详解(转)</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/jvm/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E8%AF%A6%E8%A7%A3/">Java内存区域详解(转)</a></h1>
     <div class="post-meta">
 
         <span>
@@ -594,14 +632,14 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
 <p>对于 Java 程序员来说，在虚拟机自动内存管理机制下，不再需要像 C/C++程序开发程序员这样为每一个 new 操作去写对应的 delete/free 操作，不容易出现内存泄漏和内存溢出问题。正是因为 Java 程序员把内存控制权利交给 Java 虚拟机，一旦出现内存泄漏和溢出方面的问题，如果不了解虚拟机是怎样使用内存的，那么排查错误将会是一个非常艰巨的任务。</p>
     </div>
     <div class="read-more">
-      <a href="/post/tech/java/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E8%AF%A6%E8%A7%A3/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/jvm/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E8%AF%A6%E8%A7%A3/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/mysql%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/">mysql事务与隔离级别</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/tech/java/sql/mysql%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/">mysql事务与隔离级别</a></h1>
     <div class="post-meta">
 
         <span>
@@ -636,54 +674,7 @@ Feb 19 16:02:12 vultr systemd: firewalld.service failed.</pre></td></tr></table>
 <p>看起来，事务的概念还是有些空泛。事实上，有了一定的并发基础后（这也是这篇文章写在java并发之后的原因），更加容易理解事务这个概念，这并不是说事务一个并发概念，不过，事务是有了并发之后才衍生的概念，这很容易理解。试想一个只容许一个客户端连接的mysql服务，是否需要“事务”呢？答案应该是否定的。单个客户端执行sql语句总是有序的，数据一致性就能得到保证了<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>。试想，如果是多客户端的系统（事实上正是如此）同时执行sql语句，就好似多线程同时访问资源一样，对于数据库系统而言，所有的数据表都是共享资源<sup class="footnote-ref" id="fnref:2"><a href="#fn:2">2</a></sup>，那么事务就像是那把保证并发安全的锁。</p>
     </div>
     <div class="read-more">
-      <a href="/post/tech/java/mysql%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/tech/java/java-gc/">JVM垃圾回收概要(转)</a></h1>
-    <div class="post-meta">
-
-        <span>
-            <span class="icomoonfree icon-calendar"></span>
-            <span class="post-time"> 2020-11-25 </span>
-        </span>
-
-
-      <div class="post-category">
-             <span class="icomoonfree icon-folder"></span>
-          <a href="/categories/java/"> java </a>
-          <a href="/categories/jvm/"> jvm </a>
-          </div>
-        <span class="icomoonfree icon-sigma"></span>
-        <span class="more-meta analyse"> 约 10560 字 </span>
-        <span class="icomoonfree icon-clock"></span>
-        <span class="more-meta"> 预计阅读 22 分钟 </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <h1 id="本节常见面试题">本节常见面试题</h1>
-
-<p>问题答案在文中都有提到</p>
-
-<ul>
-<li>如何判断对象是否死亡（两种方法）。</li>
-<li>简单的介绍一下强引用、软引用、弱引用、虚引用（虚引用与软引用和弱引用的区别、使用软引用能带来的好处）。</li>
-<li>如何判断一个常量是废弃常量</li>
-<li>如何判断一个类是无用的类</li>
-<li>垃圾收集有哪些算法，各自的特点？</li>
-<li>HotSpot 为什么要分为新生代和老年代？</li>
-<li>常见的垃圾回收器有哪些？</li>
-<li>介绍一下 CMS,G1 收集器。</li>
-<li>Minor Gc 和 Full GC 有什么不同呢？</li>
-</ul>
-    </div>
-    <div class="read-more">
-      <a href="/post/tech/java/java-gc/" class="read-more-link">阅读更多</a>
+      <a href="/post/tech/java/sql/mysql%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/" class="read-more-link">阅读更多</a>
     </div>
   </div>
 </article>

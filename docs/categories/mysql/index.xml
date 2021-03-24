@@ -6,17 +6,32 @@
     <description>Recent content in mysql on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 27 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Mar 2021 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangy325.top/categories/mysql/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>mysql锁的简单使用</title>
+      <link>https://wangy325.top/post/tech/java/sql/%E4%BD%BF%E7%94%A8mysql%E7%9A%84%E8%A1%8C%E9%94%81/</link>
+      <pubDate>Wed, 24 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangy325.top/post/tech/java/sql/%E4%BD%BF%E7%94%A8mysql%E7%9A%84%E8%A1%8C%E9%94%81/</guid>
+      <description>&lt;p&gt;对于MySQL数据库而言，事务的隔离级别在不同程度上保证了数据一致性。这能够满足大部分的业务需求，但是，仍然有那么一小戳事情，仅仅依靠事务不能完美解决。&lt;/p&gt;
+
+&lt;p&gt;我们知道，事务能读取到事务开始前就存在的数据，如果事务A需要对某条数据data1进行修改，在事务A还没有提交之前，事务B虽然不能读取到事务A对data1的修改（read committed隔离级别以上），但是能够读取data1原始的数据快照，并且能够再读取到的数据基础上对其进行修改（在事务A提交之后）。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;试想，如果是商品库存数据或者其他业务敏感数据，这可能导致什么后果？&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
       <title>mysql事务与隔离级别</title>
-      <link>https://wangy325.top/post/tech/java/mysql%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/</link>
+      <link>https://wangy325.top/post/tech/java/sql/mysql%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/</link>
       <pubDate>Fri, 27 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/mysql%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/</guid>
+      <guid>https://wangy325.top/post/tech/java/sql/mysql%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/</guid>
       <description>&lt;p&gt;mysql事务属于老生常谈的内容了，并不指望这一篇文章将其搞透，本篇文章只是将mysql事务的外衣扒了，让其看起来不再那么神秘与华丽。有时候，新手总是对“事务”这两个字怀有莫名的恐惧感，因为其藏在mysql内部，偷偷地工作着，就好像你没有凝视深渊，而深渊却在凝视你。&lt;/p&gt;
 
 &lt;p&gt;事务的概念可以这样理解：&lt;/p&gt;
@@ -32,38 +47,38 @@
     
     <item>
       <title>在centOS上安装并配置mysql数据库</title>
-      <link>https://wangy325.top/post/tech/%E8%87%AA%E5%BB%BAmysql/</link>
+      <link>https://wangy325.top/post/tech/java/sql/%E5%9C%A8centos%E4%B8%8A%E5%AE%89%E8%A3%85%E5%B9%B6%E9%85%8D%E7%BD%AEmysql%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
       <pubDate>Fri, 16 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/%E8%87%AA%E5%BB%BAmysql/</guid>
+      <guid>https://wangy325.top/post/tech/java/sql/%E5%9C%A8centos%E4%B8%8A%E5%AE%89%E8%A3%85%E5%B9%B6%E9%85%8D%E7%BD%AEmysql%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
       <description>&lt;p&gt;文章介绍了在centOS7上安装mysql数据库服务的配置及简单优化过程。在服务器上安装mysql服务网络上能够找到的资源很多了，因此本文没有作详细介绍，本文的重点在于后续的优化配置方面。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>一个简单的sql优化示例</title>
-      <link>https://wangy325.top/post/tech/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84sql%E4%BC%98%E5%8C%96%E7%9A%84%E4%BE%8B%E5%AD%90/</link>
+      <link>https://wangy325.top/post/tech/java/sql/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84sql%E4%BC%98%E5%8C%96%E7%9A%84%E4%BE%8B%E5%AD%90/</link>
       <pubDate>Wed, 14 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84sql%E4%BC%98%E5%8C%96%E7%9A%84%E4%BE%8B%E5%AD%90/</guid>
+      <guid>https://wangy325.top/post/tech/java/sql/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84sql%E4%BC%98%E5%8C%96%E7%9A%84%E4%BE%8B%E5%AD%90/</guid>
       <description>&lt;p&gt;sql查询过程中，如果数据量过大，而查询条件又很简略的时候，往往会导致查询过程非常痛苦&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>MyBatis的trim标签</title>
-      <link>https://wangy325.top/post/tech/mybatis%E4%B8%ADtrim%E6%A0%87%E7%AD%BE%E5%8A%A8%E6%80%81%E6%8B%BC%E6%8E%A5sql/</link>
+      <link>https://wangy325.top/post/tech/java/sql/mybatis%E4%B8%ADtrim%E6%A0%87%E7%AD%BE%E5%8A%A8%E6%80%81%E6%8B%BC%E6%8E%A5sql/</link>
       <pubDate>Fri, 21 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/mybatis%E4%B8%ADtrim%E6%A0%87%E7%AD%BE%E5%8A%A8%E6%80%81%E6%8B%BC%E6%8E%A5sql/</guid>
+      <guid>https://wangy325.top/post/tech/java/sql/mybatis%E4%B8%ADtrim%E6%A0%87%E7%AD%BE%E5%8A%A8%E6%80%81%E6%8B%BC%E6%8E%A5sql/</guid>
       <description>&lt;p&gt;trim标记是一个格式化的标记，可以完成set或者是where标记的功能&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>MySQL中的几个字符串处理函数</title>
-      <link>https://wangy325.top/post/tech/mysql%E7%9A%84%E5%87%A0%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/</link>
+      <link>https://wangy325.top/post/tech/java/sql/mysql%E7%9A%84%E5%87%A0%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/</link>
       <pubDate>Fri, 21 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/mysql%E7%9A%84%E5%87%A0%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/</guid>
-      <description>&lt;p&gt;如题&lt;/p&gt;</description>
+      <guid>https://wangy325.top/post/tech/java/sql/mysql%E7%9A%84%E5%87%A0%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/</guid>
+      <description>&lt;p&gt;本文介绍了mysql自带的几个方便的字符串处理函数，通常用于简单的查询结果处理。适用在mapper.xml的语句标签中对数据库字段数据进行简单的处理。&lt;/p&gt;</description>
     </item>
     
   </channel>

@@ -13,10 +13,10 @@
     
     <item>
       <title>Redis Sentinel高可用实现</title>
-      <link>https://wangy325.top/post/tech/java/build-redis-sentinel/</link>
+      <link>https://wangy325.top/post/tech/java/redis/build-redis-sentinel/</link>
       <pubDate>Wed, 14 Aug 2019 16:01:23 +0800</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/build-redis-sentinel/</guid>
+      <guid>https://wangy325.top/post/tech/java/redis/build-redis-sentinel/</guid>
       <description>&lt;p&gt;Redis &lt;a href=&#34;https://raw.githubusercontent.com/antirez/redis/2.8/00-RELEASENOTES&#34;&gt;v2.8&lt;/a&gt; 之后提供了高可用实现&lt;code&gt;Redis Sentinel&lt;/code&gt;，实现了&lt;strong&gt;主从复制&lt;/strong&gt;以及&lt;del&gt;被动&lt;/del&gt;&lt;strong&gt;主备切换&lt;/strong&gt;。&lt;a href=&#34;https://raw.githubusercontent.com/antirez/redis/3.0/00-RELEASENOTES&#34;&gt;v3.0&lt;/a&gt; 之后提供了分布式实现&lt;code&gt;Redis Cluster&lt;/code&gt;。&lt;/p&gt;
 
 &lt;p&gt;本文讨论的是使用Sentinel搭建Redis高可用服务。&lt;/p&gt;

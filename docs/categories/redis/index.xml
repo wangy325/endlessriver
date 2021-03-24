@@ -13,10 +13,10 @@
     
     <item>
       <title>redis必知必会(转)</title>
-      <link>https://wangy325.top/post/tech/redis-all/</link>
+      <link>https://wangy325.top/post/tech/java/redis/redis-all/</link>
       <pubDate>Tue, 24 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/redis-all/</guid>
+      <guid>https://wangy325.top/post/tech/java/redis/redis-all/</guid>
       <description>&lt;p&gt;此文总结了redis相关的基础性知识体系，但不包括redis主从、哨兵、集群相关内容&lt;/p&gt;
 
 &lt;h2 id=&#34;1-简单介绍一下-redis-呗&#34;&gt;1. 简单介绍一下 Redis 呗&lt;/h2&gt;
@@ -30,10 +30,10 @@
     
     <item>
       <title>布隆过滤器(转)</title>
-      <link>https://wangy325.top/post/tech/bloom-filter/</link>
+      <link>https://wangy325.top/post/tech/java/redis/bloom-filter/</link>
       <pubDate>Mon, 23 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/bloom-filter/</guid>
+      <guid>https://wangy325.top/post/tech/java/redis/bloom-filter/</guid>
       <description>&lt;p&gt;海量数据处理以及缓存穿透这两个场景让我认识了 布隆过滤器 ，我查阅了一些资料来了解它，但是很多现成资料并不满足我的需求，所以就决定自己总结一篇关于布隆过滤器的文章。希望通过这篇文章让更多人了解布隆过滤器，并且会实际去使用它！&lt;/p&gt;
 
 &lt;p&gt;下面我们将分为几个方面来介绍布隆过滤器：&lt;/p&gt;
@@ -56,10 +56,10 @@
     
     <item>
       <title>Redis Sentinel高可用实现</title>
-      <link>https://wangy325.top/post/tech/java/build-redis-sentinel/</link>
+      <link>https://wangy325.top/post/tech/java/redis/build-redis-sentinel/</link>
       <pubDate>Wed, 14 Aug 2019 16:01:23 +0800</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/build-redis-sentinel/</guid>
+      <guid>https://wangy325.top/post/tech/java/redis/build-redis-sentinel/</guid>
       <description>&lt;p&gt;Redis &lt;a href=&#34;https://raw.githubusercontent.com/antirez/redis/2.8/00-RELEASENOTES&#34;&gt;v2.8&lt;/a&gt; 之后提供了高可用实现&lt;code&gt;Redis Sentinel&lt;/code&gt;，实现了&lt;strong&gt;主从复制&lt;/strong&gt;以及&lt;del&gt;被动&lt;/del&gt;&lt;strong&gt;主备切换&lt;/strong&gt;。&lt;a href=&#34;https://raw.githubusercontent.com/antirez/redis/3.0/00-RELEASENOTES&#34;&gt;v3.0&lt;/a&gt; 之后提供了分布式实现&lt;code&gt;Redis Cluster&lt;/code&gt;。&lt;/p&gt;
 
 &lt;p&gt;本文讨论的是使用Sentinel搭建Redis高可用服务。&lt;/p&gt;

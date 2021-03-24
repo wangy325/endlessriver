@@ -13,10 +13,10 @@
     
     <item>
       <title>Java8中的新日期和时间工具库</title>
-      <link>https://wangy325.top/post/tech/java/java-new-time-api/</link>
+      <link>https://wangy325.top/post/tech/java/basic/java-new-time-api/</link>
       <pubDate>Tue, 02 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/java-new-time-api/</guid>
+      <guid>https://wangy325.top/post/tech/java/basic/java-new-time-api/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;mybatis自 3.4.5 开始，已经支持使用LocaldateTime作为时间查询入参，映射类型为TimeStamp，参考地址: &lt;a href=&#34;https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers&#34;&gt;https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -43,10 +43,10 @@
     
     <item>
       <title>在xxl-job中使用分片任务</title>
-      <link>https://wangy325.top/post/tech/java/xxl-sharding-job/</link>
+      <link>https://wangy325.top/post/tech/java/job/xxl-sharding-job/</link>
       <pubDate>Mon, 25 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/xxl-sharding-job/</guid>
+      <guid>https://wangy325.top/post/tech/java/job/xxl-sharding-job/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://www.xuxueli.com/xxl-job/#%E3%80%8A%E5%88%86%E5%B8%83%E5%BC%8F%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E5%B9%B3%E5%8F%B0XXL-JOB%E3%80%8B&#34;&gt;xxl-job&lt;/a&gt;是国内开发者提供的一款轻量级分布式任务调度平台，开发者是大众点评的工程师，其目前维护一个&lt;a href=&#34;https://www.xuxueli.com/&#34;&gt;开源社区&lt;/a&gt;，里面还有很多已经发布或尚在孵化的开源项目。&lt;/p&gt;
 
 &lt;p&gt;本文介绍在如何在xxl-job中使用创建并使用分片任务。&lt;/p&gt;
@@ -76,10 +76,10 @@
     
     <item>
       <title>redis必知必会(转)</title>
-      <link>https://wangy325.top/post/tech/redis-all/</link>
+      <link>https://wangy325.top/post/tech/java/redis/redis-all/</link>
       <pubDate>Tue, 24 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/redis-all/</guid>
+      <guid>https://wangy325.top/post/tech/java/redis/redis-all/</guid>
       <description>&lt;p&gt;此文总结了redis相关的基础性知识体系，但不包括redis主从、哨兵、集群相关内容&lt;/p&gt;
 
 &lt;h2 id=&#34;1-简单介绍一下-redis-呗&#34;&gt;1. 简单介绍一下 Redis 呗&lt;/h2&gt;

@@ -13,10 +13,10 @@
     
     <item>
       <title>final关键字</title>
-      <link>https://wangy325.top/post/tech/java/final%E5%85%B3%E9%94%AE%E5%AD%97/</link>
+      <link>https://wangy325.top/post/tech/java/basic/final%E5%85%B3%E9%94%AE%E5%AD%97/</link>
       <pubDate>Fri, 17 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/final%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
+      <guid>https://wangy325.top/post/tech/java/basic/final%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;不同的使用环境下，&lt;code&gt;final&lt;/code&gt;关键字的含义有细微差别，但通常它指“这是无法改变的”&lt;/p&gt;
 &lt;/blockquote&gt;

@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>cron表达式速查 - Endless River</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="wangy325" /><meta name="description" content="cron表达式常用于配置定时任务。cron表达式实际上是由七个子表达式组成。这些表达式之间用空格分隔：
+ Seconds （秒） Minutes（分） Hours（小时） Day-of-Month （天） Month（月） Day-of-Week （周） Year（年）   例：表达式0 0 12 ? \* WED 意思是：每个星期三的中午12点执行。
+" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.55.6 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://wangy325.top/post/tech/java/job/%E5%B8%B8%E8%A7%81cron%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%A4%BA%E4%BE%8B/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.886d4da2.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="cron表达式速查" />
+<meta property="og:description" content="cron表达式常用于配置定时任务。cron表达式实际上是由七个子表达式组成。这些表达式之间用空格分隔：
+
+
+Seconds （秒）
+Minutes（分）
+Hours（小时）
+Day-of-Month （天）
+Month（月）
+Day-of-Week （周）
+Year（年）
+
+
+
+例：表达式0 0 12 ? \* WED 意思是：每个星期三的中午12点执行。
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangy325.top/post/tech/java/job/%E5%B8%B8%E8%A7%81cron%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%A4%BA%E4%BE%8B/" />
+<meta property="article:published_time" content="2018-12-13T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2021-03-22T13:40:51&#43;08:00"/>
+
+<meta itemprop="name" content="cron表达式速查">
+<meta itemprop="description" content="cron表达式常用于配置定时任务。cron表达式实际上是由七个子表达式组成。这些表达式之间用空格分隔：
+
+
+Seconds （秒）
+Minutes（分）
+Hours（小时）
+Day-of-Month （天）
+Month（月）
+Day-of-Week （周）
+Year（年）
+
+
+
+例：表达式0 0 12 ? \* WED 意思是：每个星期三的中午12点执行。
+">
+
+
+<meta itemprop="datePublished" content="2018-12-13T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-03-22T13:40:51&#43;08:00" />
+<meta itemprop="wordCount" content="1912">
+
+
+
+<meta itemprop="keywords" content="cron表达式," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="cron表达式速查"/>
+<meta name="twitter:description" content="cron表达式常用于配置定时任务。cron表达式实际上是由七个子表达式组成。这些表达式之间用空格分隔：
+
+
+Seconds （秒）
+Minutes（分）
+Hours（小时）
+Day-of-Month （天）
+Month（月）
+Day-of-Week （周）
+Year（年）
+
+
+
+例：表达式0 0 12 ? \* WED 意思是：每个星期三的中午12点执行。
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Endless River</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">主题</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a><a href="/friendlink/">
+        <li class="mobile-menu-item">友链</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Endless River</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">主题</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/friendlink/">友链</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">cron表达式速查</h1>
+
+      <div class="post-meta">
+          <span>
+              <span class="icomoonfree icon-calendar"></span>
+              <span class="post-time"> 2018-12-13</span>
+          </span>
+
+        <div class="post-category">
+              <span class="icomoonfree icon-folder"></span>
+            <a href="/categories/cron/"> cron </a>
+            </div>
+          <span class="icomoonfree icon-sigma"></span>
+          <span class="more-meta analyse"> 约 1912 字 </span>
+          <span class="icomoonfree icon-clock"></span>
+          <span class="more-meta analyse"> 预计阅读 4 分钟 </span>
+        <span class="icomoonfree icon-eye"></span>
+          <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#格式">格式</a></li>
+<li><a href="#通配-特殊字符的含义">通配/特殊字符的含义</a></li>
+<li><a href="#常见表达式示例">常见表达式示例</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>cron表达式常用于配置定时任务。cron表达式实际上是由七个子表达式组成。这些表达式之间用空格分隔：</p>
+
+<ol>
+<li>Seconds （秒）</li>
+<li>Minutes（分）</li>
+<li>Hours（小时）</li>
+<li>Day-of-Month （天）</li>
+<li>Month（月）</li>
+<li>Day-of-Week （周）</li>
+<li>Year（年）</li>
+</ol>
+
+<blockquote>
+<p>例：表达式<code>0 0 12 ? \* WED</code> 意思是：每个星期三的中午12点执行。</p>
+</blockquote>
+
+<p>个别子表达式可以包含<strong>范围</strong>或者<strong>列表</strong>。例如：上面例子中的WED可以换成<code>MON-FRI</code>，<code>MON,WED,FRI</code>&ldquo;，甚至<code>MON-WED,SAT</code></p>
+
+<p>下表列出了Cron子表达式的取值范围：</p>
+
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">Seconds</td>
+<td align="left">0~59</td>
+</tr>
+
+<tr>
+<td align="left">Minutes</td>
+<td align="left">0~59</td>
+</tr>
+
+<tr>
+<td align="left">Hours</td>
+<td align="left">0~23</td>
+</tr>
+
+<tr>
+<td align="left">Day-of-Month</td>
+<td align="left">1~31,但是要注意有些月份没有31天</td>
+</tr>
+
+<tr>
+<td align="left">Month</td>
+<td align="left">(0~11，或者JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV,DEC</td>
+</tr>
+
+<tr>
+<td align="left">Day-of-Week</td>
+<td align="left">1~7,或者SUN(=1), MON, TUE, WED, THU, FRI, SAT</td>
+</tr>
+
+<tr>
+<td align="left">Year</td>
+<td align="left">1970~2099</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="格式">格式</h2>
+
+<p>Cron表达式的格式：秒 分 时 日 月 周 年(可选)</p>
+
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>允许的值</th>
+<th>允许的特殊字符</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>秒</td>
+<td>0-59</td>
+<td>, - * /</td>
+</tr>
+
+<tr>
+<td>分</td>
+<td>0-59</td>
+<td>, - * /</td>
+</tr>
+
+<tr>
+<td>时</td>
+<td>0-23</td>
+<td>, - * /</td>
+</tr>
+
+<tr>
+<td>日</td>
+<td>1-31</td>
+<td>, - * ? / L W C</td>
+</tr>
+
+<tr>
+<td>月</td>
+<td>1-12 or JAN-DEC</td>
+<td>, - * /</td>
+</tr>
+
+<tr>
+<td>周几</td>
+<td>1-7 or SUN-SAT</td>
+<td>, - * ? / L C #</td>
+</tr>
+
+<tr>
+<td>年（可选）</td>
+<td>empty</td>
+<td>1970-2099 , - * /</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="通配-特殊字符的含义">通配/特殊字符的含义</h2>
+
+<p><strong>*</strong> ：代表所有可能的值。因此，<code>*</code>在<code>Month</code>中表示<strong>每个月</strong>，在<code>Day-of-Month</code>中表示<strong>每天</strong>，在Hours表示<strong>每小时</strong>。</p>
+
+<p><strong>-</strong> ：表示指定范围。</p>
+
+<p><strong>,</strong> ：表示列出枚举值。例如：在<code>Minutes</code>子表达式中，<code>5,20</code>表示在5分钟<strong>和</strong>20分钟触发。</p>
+
+<p><strong>/</strong> ：被用于指定<strong>增量</strong>。例如：在<code>Minutes</code>子表达式中，<code>0/15</code>表示从0分钟开始，每15分钟执行一次；<code>3/20</code>表示从第三分钟开始，
+每20分钟执行一次，和<code>3,23,43</code>（表示第3，23，43分钟触发）的含义一样。</p>
+
+<p><strong>?</strong> ：用在<code>Day-of-Month</code>和<code>Day-of-Week</code>中，指*没有具体的值*。当两个子表达式其中一个被指定了值以后，为了*避免冲突*，
+需要将另外一个的值设为<code>?</code>。例如：想在每月20日触发调度，不管20号是星期几，只能用如下写法：<code>0 0 0 20 * ?</code>，
+其中最后一位<strong>只能用</strong><code>?</code>，而不能用<code>*</code>。</p>
+
+<p><strong>L</strong> ：用在<code>Day-of-Month</code>和<code>Day-of-Week</code>字串中。它是单词“last”的缩写。它在两个子表达式中的含义是不同的。
+在Day-of-Month中，<code>L</code>表示<strong>一个月的最后一天</strong>，如1月31号，3月30号。 在Day-of-Week中，<code>L</code>表示一个星期的最后一天，也就是“7”或者“SAT”。
+但是如果<code>L</code>前有具体内容，它就有其他的含义了。例如：<code>6L</code>表示这个月的<strong>倒数第六天</strong>。<code>FRIL</code>表示这个月的<strong>最后一个星期五</strong>。
+注意：在使用<code>L</code>参数时，不能指定列表或者范围，这样会出现问题。</p>
+
+<p><strong>W</strong> ：<code>Weekday</code>的缩写。只能用在Day-of-Month字段。用来描叙最接近指定天的<strong>工作日</strong>（周一到周五）。
+例如：在Day-of-Month字段用<code>15W</code>指<strong>最接近这个月第15天的工作日</strong>，即如果这个月第15天是周六，那么触发器将会在这个月第14天即周五触发；
+如果这个月第15天是周日，那么触发器将会在这个月第 16天即周一触发；如果这个月第15天是周二，那么就在触发器这天触发。
+注意一点：这个用法只会在当前月计算值，不会越过当前月。<code>W</code>字符仅能在 Day-of-Month指明一天，不能是一个范围或列表。
+也可以用<code>LW</code>来指定<strong>这个月的最后一个工作日</strong>，即最后一个星期五。</p>
+
+<p><strong>#</strong> ：只能用在Day-of-Week字段。用来指定这个月的第几个周几。例：在Day-of-Week字段用<code>6#3</code> or <code>FRI#3</code>指<strong>这个月第3个周五</strong>（6指周五，3指第3个）。如果指定的日期不存在，触发器就不会触发。</p>
+
+<h2 id="常见表达式示例">常见表达式示例</h2>
+
+<p>0 * * * * ? 每1分钟触发一次</p>
+
+<p>0 0 * * * ? 每天每1小时触发一次</p>
+
+<p>0 0 10 * * ? 每天10点触发一次</p>
+
+<p>0 * 14 * * ? 在每天下午2点到下午2:59期间的每1分钟触发</p>
+
+<p>0 30 9 1 * ? 每月1号上午9点半</p>
+
+<p>0 15 10 15 * ? 每月15日上午10:15触发</p>
+
+<p>*/5 * * * * ? 每隔5秒执行一次</p>
+
+<p><strong>0 */1 * * * ? 每隔1分钟执行一次</strong></p>
+
+<p>0 0 5-15 * * ? 每天5-15点整点触发</p>
+
+<p>0 0/3 * * * ? 每三分钟触发一次</p>
+
+<p>0 0-5 14 * * ? 在每天下午2点到下午2:05期间的每1分钟触发</p>
+
+<p>0 0/5 14 * * ? 在每天下午2点到下午2:55期间的每5分钟触发</p>
+
+<p>0 0/5 14,18 * * ? 在每天下午2点到2:55期间和下午6点到6:55期间的每5分钟触发</p>
+
+<p>0 0/30 9-17 * * ? 朝九晚五工作时间内每半小时</p>
+
+<p>0 0 10,14,16 * * ? 每天上午10点，下午2点，4点</p>
+
+<p>0 0 12 ? * WED 表示每个星期三中午12点</p>
+
+<p>0 0 17 ? * TUES,THUR,SAT 每周二、四、六下午五点</p>
+
+<p>0 10,44 14 ? 3 WED 每年三月的星期三的下午2:10和2:44触发</p>
+
+<p>0 15 10 ? * MON-FRI 周一至周五的上午10:15触发</p>
+
+<p>0 0 23 L * ? 每月最后一天23点执行一次</p>
+
+<p>0 15 10 L * ? 每月最后一日的上午10:15触发</p>
+
+<p>0 15 10 ? * 6L 每月的最后一个星期五上午10:15触发</p>
+
+<p>0 15 10 * * ? 2005 2005年的每天上午10:15触发</p>
+
+<p>0 15 10 ? * 6L 2002-2005 2002年至2005年的每月的最后一个星期五上午10:15触发</p>
+
+<p>0 15 10 ? * 6#3 每月的第三个星期五上午10:15触发</p>
+    </div>
+
+    <div class="post-copyright">
+  
+  <p class="copyright-item" style= text-align:right;>
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-03-22
+        <a href="https://github.com/wangy325/endlessriver/commit/74a1d9353a951d3aec2298289031246f15cb1b98" title="refactor">(74a1d93)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/cron%E8%A1%A8%E8%BE%BE%E5%BC%8F/">cron表达式</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/tech/js/java-script%E4%B8%AD%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Java Script中的构造函数</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/tech/java/dp/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">
+            <span class="next-text nav-default">代理模式</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'endlessriver';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=u8za1dzCiImO_8rKldjU1g" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangy325" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangy325.top/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme -
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    
+    
+  </div>
+
+  <span class="copyright-year">
+    <span class="author">wangy325</span>
+    &copy;
+    2019 -
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="copyright"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
