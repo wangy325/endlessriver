@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Object超类（一） - Endless River</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="wangy325" /><meta name="description" content="在Java中，如果一个类没有明确地指出超类，那么Object就是这个类的超类。实际上，Object类是所有类超类，这个类定义了一些重要的方法
+" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.55.6 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://wangy325.top/post/tech/java/basic/object%E8%B6%85%E7%B1%BB/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.886d4da2.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Object超类（一）" />
+<meta property="og:description" content="在Java中，如果一个类没有明确地指出超类，那么Object就是这个类的超类。实际上，Object类是所有类超类，这个类定义了一些重要的方法" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangy325.top/post/tech/java/basic/object%E8%B6%85%E7%B1%BB/" />
+<meta property="article:published_time" content="2020-04-19T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2021-03-22T13:40:51&#43;08:00"/>
+
+<meta itemprop="name" content="Object超类（一）">
+<meta itemprop="description" content="在Java中，如果一个类没有明确地指出超类，那么Object就是这个类的超类。实际上，Object类是所有类超类，这个类定义了一些重要的方法">
+
+
+<meta itemprop="datePublished" content="2020-04-19T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-03-22T13:40:51&#43;08:00" />
+<meta itemprop="wordCount" content="1648">
+
+
+
+<meta itemprop="keywords" content="Java基础,object," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Object超类（一）"/>
+<meta name="twitter:description" content="在Java中，如果一个类没有明确地指出超类，那么Object就是这个类的超类。实际上，Object类是所有类超类，这个类定义了一些重要的方法"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Endless River</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">主题</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a><a href="/friendlink/">
+        <li class="mobile-menu-item">友链</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Endless River</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">主题</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/friendlink/">友链</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Object超类（一）</h1>
+
+      <div class="post-meta">
+          <span>
+              <span class="icomoonfree icon-calendar"></span>
+              <span class="post-time"> 2020-04-19</span>
+          </span>
+
+        <div class="post-category">
+              <span class="icomoonfree icon-folder"></span>
+            <a href="/categories/java/"> java </a>
+            </div>
+          <span class="icomoonfree icon-sigma"></span>
+          <span class="more-meta analyse"> 约 1648 字 </span>
+          <span class="icomoonfree icon-clock"></span>
+          <span class="more-meta analyse"> 预计阅读 4 分钟 </span>
+        <span class="icomoonfree icon-eye"></span>
+          <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#7-1-equals">7.1 equals</a></li>
+<li><a href="#7-2-hashcode">7.2 hashCode</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>在Java中，如果一个类没有明确地指出超类，那么Object就是这个类的超类。实际上，Object类是所有类超类，这个类定义了一些重要的方法</p>
+
+<h2 id="7-1-equals">7.1 equals</h2>
+
+<p><code>equals</code>方法用来比较两个对象是否相等。不过，在Object类中，这是判断两个对象是否具有<strong>相同的引用</strong></p>
+
+<p>当对象引用<code>a</code>和<code>b</code>指向同一个对象即认为<code>a</code>等于<code>b</code>，看起来，这似乎合乎情理，但是在很多情况下，需要比较<strong>对象的状态</strong>的相等性，所以，Object类的<code>equals</code>方法往往是没有什么用处的</p>
+
+<p>Java语言规范要求equals方法具有以下特性：</p>
+
+<ul>
+<li>自反性：对于任何<strong>非空</strong>引用<code>x</code>，<code>x.equals(x)</code>为<code>true</code></li>
+<li>对称性：对于任何引用<code>x</code>、<code>y</code>，当且仅当<code>y.equals(x)</code>为<code>true</code>时，<code>x.equals(y)</code>才为<code>true</code></li>
+<li>传递性：对于任何引用<code>x</code>、<code>y</code>、<code>z</code>，若<code>x.equals(y)</code>为<code>true</code>，<code>y.equals(z)</code>为<code>true</code>，那么<code>x.equals(z)</code>也应该为<code>true</code></li>
+<li>一致性：对于任何引用<code>x</code>、<code>y</code>，若对象引用和<code>equals</code>方法未发生变化，那么多次调用应返回一致的结果</li>
+<li>对于任何非空引用<code>x</code>，<code>x.equals(null)</code>为<code>false</code></li>
+</ul>
+
+<p>参考之前<a href="#m2">Employee2</a>类的<code>equals</code>方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">Employee2</span> <span class="o">{</span>
+    <span class="c1">// skip...
+</span><span class="c1"></span>    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="n">Object</span> <span class="n">o</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span> <span class="o">==</span> <span class="n">o</span><span class="o">)</span> <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">o</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+      	<span class="k">if</span> <span class="o">(</span><span class="n">o</span><span class="o">.</span><span class="na">getClass</span><span class="o">()</span> <span class="o">!=</span> <span class="n">getClass</span><span class="o">())</span> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+
+        <span class="n">Employee2</span> <span class="n">employee2</span> <span class="o">=</span> <span class="o">(</span><span class="n">Employee2</span><span class="o">)</span> <span class="n">o</span><span class="o">;</span>
+
+        <span class="cm">/*if (salary != employee2.salary) return false;
+</span><span class="cm">        return name != null ? name.equals(employee2.name) : employee2.name == null;*/</span>
+
+      	<span class="c1">// or using Objects.equals(Object a, Object b) to compare
+</span><span class="c1"></span>      	<span class="k">return</span> <span class="n">Objects</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">name</span><span class="o">,</span><span class="n">employee2</span><span class="o">.</span><span class="na">name</span><span class="o">)</span>
+           <span class="o">&amp;&amp;</span> <span class="n">salary</span> <span class="o">==</span> <span class="n">employee2</span><span class="o">.</span><span class="na">salary</span><span class="o">;</span>
+    <span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>这是一个典型的覆盖<code>equals</code>方法的策略：</p>
+
+<ol>
+<li>检测<code>o</code>和<code>this</code>是否同一引用，若是，则返回<code>true</code></li>
+<li>检测<code>o</code>是否为空，若为空，则返回<code>false</code></li>
+<li>检测<code>o</code>和<code>this</code>是否是同一类型，若否，则返回<code>false</code></li>
+<li>将<code>o</code>转换为<code>this</code>类</li>
+<li>比较<code>o</code>和<code>this</code>域的相等性</li>
+</ol>
+
+<blockquote>
+<p>在导出类中调用equals方法时，要先调用基类的equals方法，基类的方法通过之后，再比较导出类的相关域的相等性</p>
+</blockquote>
+
+<p>参考如下例子：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">Manager</span> <span class="kd">extends</span> <span class="n">Employee2</span><span class="o">{</span>
+  <span class="c1">// skip...
+</span><span class="c1"></span>  <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="n">Object</span> <span class="n">o</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">if</span><span class="o">(!</span><span class="kd">super</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">o</span><span class="o">))</span> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+
+      <span class="c1">// super.equals checked that o and this belong to same class
+</span><span class="c1"></span>      <span class="n">Manager</span> <span class="n">m</span> <span class="o">=</span> <span class="o">(</span><span class="n">Manager</span><span class="o">)</span><span class="n">o</span><span class="o">;</span>
+      <span class="k">return</span> <span class="n">bonus</span> <span class="o">==</span> <span class="n">m</span><span class="o">.</span><span class="na">bonus</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>以上的2个<code>equals</code>方法说明的是若导出类<strong>拥有自己的相等概念</strong>，那么在第3步类型判断中必须使用<code>getClass</code>，这样，基类和导出类（或者不同导出类）之前必然是不等的</p>
+
+<p>考虑一种情况：若想在基类和导出类之间（或不同导出类之间）进行相等比较，那么只需要比较基类共有的域即可，即是否相等由基类判断，该如何处理呢？</p>
+
+<p>参考如下例子：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">Stu</span><span class="o">{</span>
+  <span class="c1">// skip...
+</span><span class="c1"></span>  <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kd">final</span> <span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="n">Object</span> <span class="n">o</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span> <span class="o">==</span> <span class="n">o</span><span class="o">)</span> <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">o</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(!(</span><span class="n">o</span> <span class="k">instanceof</span> <span class="n">Stu</span><span class="o">))</span> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+
+        <span class="n">Stu</span> <span class="n">stu</span> <span class="o">=</span> <span class="o">(</span><span class="n">Stu</span><span class="o">)</span> <span class="n">o</span><span class="o">;</span>
+
+        <span class="k">return</span> <span class="n">stu</span><span class="o">.</span><span class="na">age</span> <span class="o">==</span> <span class="n">age</span>
+          <span class="o">&amp;&amp;</span> <span class="n">Objects</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">stu</span><span class="o">.</span><span class="na">name</span><span class="o">,</span> <span class="n">name</span><span class="o">)</span>
+          <span class="o">&amp;&amp;</span> <span class="n">Objects</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">stu</span><span class="o">.</span><span class="na">code</span><span class="o">,</span> <span class="n">code</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>这个equals方法有几处变化：</p>
+
+<ol>
+<li>这个方法是<code>final</code>的</li>
+<li>判断类型使用的是<code>instanceof</code>而非<code>getClass</code></li>
+</ol>
+
+<p>将方法声明为<code>final</code>即保证了<strong>基类对相等概念的控制权</strong>（导出类无法覆盖equals方法），这还不够，使用<code>instanceof</code>保证了基类和导出类（或不同导出类）之间域的相等性比较的可能</p>
+
+<p><strong>应该谨慎使用<code>instanceof</code></strong></p>
+
+<h2 id="7-2-hashcode">7.2 hashCode</h2>
+
+<p><em>hash code</em> （散列码）是由对象导出的一个整型值</p>
+
+<p>Java语言对<span id="hashCode">hashCode方法有如下规范</span>：</p>
+
+<ul>
+<li>在同一次Java程序运行过程中，无论调用多少次对象的hashCode方法，返回的应该是同一个整型值；而在不同程序运行过程中则无此要求</li>
+<li>对于任何对象<code>a</code>、<code>b</code>，若<code>a.equals(b)</code>为<code>true</code>，那么<code>a</code>和<code>b</code>的hashCode返回值应该相等</li>
+<li>对于任何对象<code>a</code>、<code>b</code>，若<code>a.equals(b)</code>为<code>false</code>，<code>a</code>和<code>b</code>的hashCode返回值<strong>没有必要一定不等</strong>；需要指出的是，给不同对象分配不同的hashcode值有利于提升哈希表的性能</li>
+</ul>
+
+<p>基于第2点规范，<strong>若重新定义了<code>equals</code>方法，那么必须重新定义<code>hashCode</code>方法</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HashT</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&#34;s&#34;</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="s">&#34;s&#34;</span><span class="o">);</span>
+        <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+        <span class="n">StringBuilder</span> <span class="n">tb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">hashCode</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34; : &#34;</span> <span class="o">+</span><span class="n">sb</span><span class="o">.</span><span class="na">hashCode</span><span class="o">());</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">t</span><span class="o">.</span><span class="na">hashCode</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34; : &#34;</span> <span class="o">+</span><span class="n">tb</span><span class="o">.</span><span class="na">hashCode</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/* output
+</span><span class="cm">115 : 1956725890
+</span><span class="cm">115 : 356573597
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>注意，<code>s</code>和<code>t</code>哈希值相同时因为String类覆盖了hashCode方法，其值是由字符串字面量值计算来的，而StringBuilder没有覆盖hashCode方法，其值是Object默认的hashCode方法导出的<strong>对象存储地址</strong></p>
+    </div>
+
+    <div class="post-copyright">
+  
+  <p class="copyright-item" style= text-align:right;>
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-03-22
+        <a href="https://github.com/wangy325/endlessriver/commit/74a1d9353a951d3aec2298289031246f15cb1b98" title="refactor">(74a1d93)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/java%E5%9F%BA%E7%A1%80/">Java基础</a>
+          <a href="/tags/object/">object</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/tech/java/basic/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">抽象类与接口</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/tech/java/spring/springboot-aop-demo/">
+            <span class="next-text nav-default">SpringBoot使用AOP的简单示例</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'endlessriver';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=u8za1dzCiImO_8rKldjU1g" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangy325" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangy325.top/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme -
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    
+    
+  </div>
+
+  <span class="copyright-year">
+    <span class="author">wangy325</span>
+    &copy;
+    2019 -
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="copyright"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

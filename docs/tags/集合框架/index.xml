@@ -13,10 +13,10 @@
     
     <item>
       <title>Collections工具</title>
-      <link>https://wangy325.top/post/tech/java/collections/</link>
+      <link>https://wangy325.top/post/tech/java/collections/collections/</link>
       <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/collections/</guid>
+      <guid>https://wangy325.top/post/tech/java/collections/collections/</guid>
       <description>&lt;p&gt;集合框架中一个重要的类，其实是Collection接口的&lt;strong&gt;伴随类&lt;/strong&gt;，其中定义了许多实用方法，用来获取&lt;strong&gt;集合视图&lt;/strong&gt;，或提供一些方便的操作集合元素的&lt;strong&gt;算法&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;由于视图是直接封装的Collection接口，&lt;strong&gt;因此其方法有些局限&lt;/strong&gt;，并且由于特殊的设计，部分操作是不允许的（会抛出 &lt;em&gt;UnsupportedOperationExceptin&lt;/em&gt; ）&lt;/p&gt;</description>
@@ -24,10 +24,10 @@
     
     <item>
       <title>Map</title>
-      <link>https://wangy325.top/post/tech/java/map/</link>
+      <link>https://wangy325.top/post/tech/java/collections/map/</link>
       <pubDate>Sun, 10 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/map/</guid>
+      <guid>https://wangy325.top/post/tech/java/collections/map/</guid>
       <description>&lt;p&gt;Map即映射，即键-值对，键不允许重复，并且一个键最多映射一个值&lt;/p&gt;
 
 &lt;p&gt;映射提供3种&lt;strong&gt;集合视图&lt;/strong&gt;&lt;/p&gt;
@@ -66,10 +66,10 @@
     
     <item>
       <title>Set</title>
-      <link>https://wangy325.top/post/tech/java/set/</link>
+      <link>https://wangy325.top/post/tech/java/collections/set/</link>
       <pubDate>Wed, 06 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/set/</guid>
+      <guid>https://wangy325.top/post/tech/java/collections/set/</guid>
       <description>&lt;p&gt;Set是&lt;strong&gt;不含重复元素的集&lt;/strong&gt;，严格来讲，Set不允许当&lt;code&gt;e1.equals(e2)&lt;/code&gt;为真时， &lt;em&gt;e1&lt;/em&gt; 和 &lt;em&gt;e2&lt;/em&gt; 同时出现在集合中。Set最多允许一个&lt;code&gt;null&lt;/code&gt;元素&lt;/p&gt;
 
 &lt;p&gt;将&lt;strong&gt;可变对象&lt;/strong&gt;置入Set时需要特别小心，当对象的改动影响到了元素之间的&lt;code&gt;equals()&lt;/code&gt;比较的结果，那么Set的行为就变得不确定了。因此，&lt;strong&gt;不能将Set本身作为Set的元素&lt;/strong&gt;&lt;/p&gt;</description>
@@ -77,10 +77,10 @@
     
     <item>
       <title>Queue</title>
-      <link>https://wangy325.top/post/tech/java/queue/</link>
+      <link>https://wangy325.top/post/tech/java/collections/queue/</link>
       <pubDate>Sat, 02 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/queue/</guid>
+      <guid>https://wangy325.top/post/tech/java/collections/queue/</guid>
       <description>&lt;p&gt;Queue（队列），实际开发过程中，在单线程环境下使用的情况下不多，Queue作为集合框架中重要组成似乎习惯性被忽略，队列总是先持有元素，再处理元素&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;https://wangy325.top/img/Queue.png&#34; alt=&#34;J7NBrQ.png&#34; /&gt;&lt;/p&gt;
@@ -124,10 +124,10 @@
     
     <item>
       <title>List</title>
-      <link>https://wangy325.top/post/tech/java/list/</link>
+      <link>https://wangy325.top/post/tech/java/collections/list/</link>
       <pubDate>Wed, 29 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/list/</guid>
+      <guid>https://wangy325.top/post/tech/java/collections/list/</guid>
       <description>&lt;p&gt;接下来的集合框架系列文章讲解了常见的集合框架实现，此系列涉及到的实现都是&lt;strong&gt;线程不安全&lt;/strong&gt;的&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;https://wangy325.top/img/Collection.png&#34; alt=&#34;JXUL1s.png&#34; /&gt;&lt;/p&gt;

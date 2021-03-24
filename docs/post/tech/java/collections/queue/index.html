@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Queue - Endless River</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="wangy325" /><meta name="description" content="Queue（队列），实际开发过程中，在单线程环境下使用的情况下不多，Queue作为集合框架中重要组成似乎习惯性被忽略，队列总是先持有元素，再处理元素1
+Queue继承关系简图
+除了Collection定义的操作之外，Queue定义了额外的插入/删除/检查元素的操作，这些操作有2种形式：
+    Throws Exception Returns special value     Insert add(e) offer(e)   Remove remove() poll()   Examine element() peek()    如表所示，add/remove/element方法失败后抛出异常。offer/poll/peek方法失败后返回一个特殊值（null或false，视具体操作不同），需要说明的是，offer()方法主要是为有容量限制的队列设计的
+" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.55.6 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://wangy325.top/post/tech/java/collections/queue/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.886d4da2.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Queue" />
+<meta property="og:description" content="Queue（队列），实际开发过程中，在单线程环境下使用的情况下不多，Queue作为集合框架中重要组成似乎习惯性被忽略，队列总是先持有元素，再处理元素1
+
+
+
+Queue继承关系简图
+
+除了Collection定义的操作之外，Queue定义了额外的插入/删除/检查元素的操作，这些操作有2种形式：
+
+
+
+
+
+Throws Exception
+Returns special value
+
+
+
+
+
+Insert
+add(e)
+offer(e)
+
+
+
+Remove
+remove()
+poll()
+
+
+
+Examine
+element()
+peek()
+
+
+
+
+如表所示，add/remove/element方法失败后抛出异常。offer/poll/peek方法失败后返回一个特殊值（null或false，视具体操作不同），需要说明的是，offer()方法主要是为有容量限制的队列设计的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangy325.top/post/tech/java/collections/queue/" />
+<meta property="article:published_time" content="2020-05-02T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2021-03-22T13:40:51&#43;08:00"/>
+
+<meta itemprop="name" content="Queue">
+<meta itemprop="description" content="Queue（队列），实际开发过程中，在单线程环境下使用的情况下不多，Queue作为集合框架中重要组成似乎习惯性被忽略，队列总是先持有元素，再处理元素1
+
+
+
+Queue继承关系简图
+
+除了Collection定义的操作之外，Queue定义了额外的插入/删除/检查元素的操作，这些操作有2种形式：
+
+
+
+
+
+Throws Exception
+Returns special value
+
+
+
+
+
+Insert
+add(e)
+offer(e)
+
+
+
+Remove
+remove()
+poll()
+
+
+
+Examine
+element()
+peek()
+
+
+
+
+如表所示，add/remove/element方法失败后抛出异常。offer/poll/peek方法失败后返回一个特殊值（null或false，视具体操作不同），需要说明的是，offer()方法主要是为有容量限制的队列设计的">
+
+
+<meta itemprop="datePublished" content="2020-05-02T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-03-22T13:40:51&#43;08:00" />
+<meta itemprop="wordCount" content="3845">
+
+
+
+<meta itemprop="keywords" content="Java基础,集合框架,queue," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Queue"/>
+<meta name="twitter:description" content="Queue（队列），实际开发过程中，在单线程环境下使用的情况下不多，Queue作为集合框架中重要组成似乎习惯性被忽略，队列总是先持有元素，再处理元素1
+
+
+
+Queue继承关系简图
+
+除了Collection定义的操作之外，Queue定义了额外的插入/删除/检查元素的操作，这些操作有2种形式：
+
+
+
+
+
+Throws Exception
+Returns special value
+
+
+
+
+
+Insert
+add(e)
+offer(e)
+
+
+
+Remove
+remove()
+poll()
+
+
+
+Examine
+element()
+peek()
+
+
+
+
+如表所示，add/remove/element方法失败后抛出异常。offer/poll/peek方法失败后返回一个特殊值（null或false，视具体操作不同），需要说明的是，offer()方法主要是为有容量限制的队列设计的"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Endless River</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">主题</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a><a href="/friendlink/">
+        <li class="mobile-menu-item">友链</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Endless River</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">主题</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/friendlink/">友链</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Queue</h1>
+
+      <div class="post-meta">
+          <span>
+              <span class="icomoonfree icon-calendar"></span>
+              <span class="post-time"> 2020-05-02</span>
+          </span>
+
+        <div class="post-category">
+              <span class="icomoonfree icon-folder"></span>
+            <a href="/categories/java/"> java </a>
+            </div>
+          <span class="icomoonfree icon-sigma"></span>
+          <span class="more-meta analyse"> 约 3845 字 </span>
+          <span class="icomoonfree icon-clock"></span>
+          <span class="more-meta analyse"> 预计阅读 8 分钟 </span>
+        <span class="icomoonfree icon-eye"></span>
+          <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-priorityqueue">1 PriorityQueue</a></li>
+<li><a href="#2-linkedlist">2 LinkedList</a></li>
+<li><a href="#3-arraydeque">3 ArrayDeque</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>Queue（队列），实际开发过程中，在单线程环境下使用的情况下不多，Queue作为集合框架中重要组成似乎习惯性被忽略，队列总是先持有元素，再处理元素<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup></p>
+
+<p><img src="/img/Queue.png" alt="J7NBrQ.png" /></p>
+
+<p style="text-align:center;font-size:.9rem;font-style:italic">Queue继承关系简图</p>
+
+<p>除了Collection定义的操作之外，Queue定义了额外的插入/删除/检查元素的操作，这些操作有2种形式：</p>
+
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"><em>Throws Exception</em></th>
+<th align="center"><em>Returns special value</em></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center"><strong>Insert</strong></td>
+<td align="center">add(e)</td>
+<td align="center">offer(e)</td>
+</tr>
+
+<tr>
+<td align="center"><strong>Remove</strong></td>
+<td align="center">remove()</td>
+<td align="center">poll()</td>
+</tr>
+
+<tr>
+<td align="center"><strong>Examine</strong></td>
+<td align="center">element()</td>
+<td align="center">peek()</td>
+</tr>
+</tbody>
+</table>
+
+<p>如表所示，add/remove/element方法失败后抛出异常。offer/poll/peek方法失败后返回一个特殊值（null或false，视具体操作不同），需要说明的是，<code>offer()</code>方法主要是为<strong>有容量限制的队列</strong>设计的</p>
+
+<p>典型的队列遵从FIFO( <em>first-in-first-out</em> )原则，FIFO队列的新元素总是插入到队尾</p>
+
+<p>当然有例外，<strong>PriorityQueue</strong> 就是之一，它根据给定（或默认）的比较器决定元素顺序；此外还有LIFO( <em>last-in-first-out</em> )队列（如栈）</p>
+
+<p>不管是何种队列，都可以使用<code>remove()</code>或<code>poll()</code><strong>移除并返回</strong> 队列头元素，至于头元素是“谁”就由队列的排序规则决定。此二者的区别体现在当队列为空时，<code>remove()</code>抛出异常，而<code>poll()</code>返回<code>null</code></p>
+
+<p><code>element()</code>和<code>peek()</code><strong>获取但不移除</strong> 队列头元素，区别在于当队列为空时，<code>element()</code>抛出异常，而<code>peek()</code>返回<code>null</code></p>
+
+<p><code>offer()</code>方法尝试向队列中插入一个元素，否则返回<code>false</code>，而<code>Collection.add</code>方法失败之后会抛出（运行时）异常。因此<code>offer()</code>方法适用于定容或有界队列中插入元素</p>
+
+<p>队列中不允许插入<code>null</code>，或者说<strong>不应</strong>将<code>null</code>插入队列中（LinkedList允许空值），因为<code>null</code>会作为队列方法的特殊返回值（空队列指示器）出现，若将<code>null</code>插入队列，会引发歧义</p>
+
+<p><strong>Queue有两个子接口：</strong></p>
+
+<ol>
+<li>BlockingQueue</li>
+</ol>
+
+<p>Queue中并没有定义 <strong>阻塞队列</strong> 的相关方法，阻塞队列通常在 <strong>并发编程</strong> 中使用。阻塞队列的方法会等待元素出现或（有限）集合空间可用这2个条件之一满足才执行</p>
+
+<ol>
+<li>Deque</li>
+</ol>
+
+<p><strong>双端队列</strong> 是支持从 <strong>队首和队尾添加/删除元素</strong> 的线性集合，一般来说，Deque <strong>没有容量限制</strong>，但是其也支持有限长度的实现</p>
+
+<p>Deque定义了支持从双端访问元素的方法，和Queue一样，方法作用有3，形式有2:</p>
+
+<p><table BORDER CELLPADDING=3 CELLSPACING=1>
+     <tr>
+       <td></td>
+       <td ALIGN=CENTER COLSPAN = 2> <b>First Element (Head)</b></td>
+       <td ALIGN=CENTER COLSPAN = 2> <b>Last Element (Tail)</b></td>
+     </tr>
+     <tr>
+       <td></td>
+       <td ALIGN=CENTER><em>Throws exception</em></td>
+       <td ALIGN=CENTER><em>Special value</em></td>
+       <td ALIGN=CENTER><em>Throws exception</em></td>
+       <td ALIGN=CENTER><em>Special value</em></td>
+     </tr>
+     <tr>
+       <td><b>Insert</b></td>
+       <td ALIGN=CENTER>addFirst(e)</td>
+       <td ALIGN=CENTER>offerFirst(e)</td>
+       <td ALIGN=CENTER>addLast(e)</td>
+       <td ALIGN=CENTER>offerLast(e)</td>
+     </tr>
+     <tr>
+       <td><b>Remove</b></td>
+       <td ALIGN=CENTER>removeFirst()</td>
+       <td ALIGN=CENTER>pollFirst()</td>
+       <td ALIGN=CENTER>removeLast()</td>
+       <td ALIGN=CENTER>pollLast()</td>
+     </tr>
+     <tr>
+       <td><b>Examine</b></td>
+       <td ALIGN=CENTER><a>getFirst()</a></td>
+       <td ALIGN=CENTER>peekFirst()</td>
+       <td ALIGN=CENTER><a>getLast()</a></td>
+       <td ALIGN=CENTER>peekLast()</td>
+     </tr>
+    </table></p>
+
+<p>与Queue不同的是，获取而不删除的方法由<code>element()</code>变成了<code>getXXX()</code>，这些方法用来在队列头/尾中插入/删除/检查元素，当操作失败时有不同的处理：一组直接抛出异常，一组返回一个特殊值（null或false），同样地，返回特殊值的方法适用于有限容量的队列</p>
+
+<p>由于Deque继承自Queue，当<strong>其作为Queue使用时，是一个FIFO队列</strong>，新元素会添加至队尾，删除操作删除队首元素，因此下表的方法在Deque作为Queue使用时是等价的：</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">Queue Methods</th>
+<th align="center">Equivalent Deque Methods</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">add(e)</td>
+<td align="center">addLast(e)</td>
+</tr>
+
+<tr>
+<td align="center">offer(e)</td>
+<td align="center">offerLast(e)</td>
+</tr>
+
+<tr>
+<td align="center">remove()</td>
+<td align="center">removeFirst()</td>
+</tr>
+
+<tr>
+<td align="center">poll()</td>
+<td align="center">pollFirst()</td>
+</tr>
+
+<tr>
+<td align="center">element()</td>
+<td align="center">getFirst()</td>
+</tr>
+
+<tr>
+<td align="center">peek()</td>
+<td align="center">peekFirst()</td>
+</tr>
+</tbody>
+</table>
+
+<p>此外，<strong>Deque还可以作为LIFO队列</strong>（栈）使用，当作为栈使用时，新元素会从队首添加或删除，这种情况下，<code>java.util.Stack</code>的方法和Deque的方法是等价的：</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">Stack Methods</th>
+<th align="center">Equivalent Deque Methods</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">push(e)</td>
+<td align="center">addFirst(e)</td>
+</tr>
+
+<tr>
+<td align="center">pop()</td>
+<td align="center">removeFirst()</td>
+</tr>
+
+<tr>
+<td align="center">peek()</td>
+<td align="center">peekFirst()</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p>ArrayDeque 就是一个LIFO队列实现</p>
+</blockquote>
+
+<p>和List不同的是，Deque<strong>不提供</strong>使用索引操作集合的方法</p>
+
+<p>和Queue一样，虽然没有严格约束不能插入<code>null</code>到队列中，也强烈不推荐将<code>null</code>值插入，原因和Queue是一样的</p>
+
+<p>除此之外，Deque还提供2个删除元素的方法：</p>
+
+<blockquote>
+<p>boolean removeFirstOccurrence(Object o);</p>
+
+<p>boolean removeLastOccurrence(Object o);</p>
+</blockquote>
+
+<h1 id="1-priorityqueue">1 PriorityQueue</h1>
+
+<p><strong>优先级队列</strong>是一个有序队列，其<strong>底层是由堆( <em>heap</em> )实现的</strong>，堆是一个可以自我调整的<strong>二叉树</strong>。优先级队列的排序依据可以来自元素的自然排序（实现Comparable接口）或自定义比较器，当使用自然排序规则时，优先级队列不允许插入non-comparable对象</p>
+
+<p>优先级队列不允许<code>null</code>值</p>
+
+<p>优先级队列的第一个元素(head)总是按照排序规则计算出最小元素，如果有几个相等的最小元素，那么head为其中任意一个，当使用<code>poll(</code>)或<code>remove()</code>后，其他最小元素自动移动至head</p>
+
+<blockquote>
+<p>从输出来看，优先级队列并没有对所有元素进行完全排序，而是队列发生结构性变化时，保证队头元素一定是满足排序规则的</p>
+</blockquote>
+
+<p>优先级队列是自动扩容的，其扩容机制为：</p>
+
+<ul>
+<li>当队列较小时（&lt;64），容量翻倍</li>
+<li>当队列长度&gt;64时，容量增加一半（和ArrayList 一样）</li>
+</ul>
+
+<p>优先级队列也有迭代器，此迭代器不能按照指定排序规则顺序迭代元素——优先级队列并没有对所有元素进行排序，若想获得所有元素的排序，可以使用<code>Arrays.sort(pq.toArray())</code></p>
+
+<p>参考下例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">static</span> <span class="kt">void</span> <span class="nf">unsorted</span><span class="o">(){</span>
+  <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">pq</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PriorityQueue</span><span class="o">&lt;&gt;();</span>
+  <span class="n">pq</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">7</span><span class="o">);</span>
+  <span class="n">pq</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+  <span class="n">pq</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">12</span><span class="o">);</span>
+  <span class="n">pq</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">6</span><span class="o">);</span>
+  <span class="n">pq</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">9</span><span class="o">);</span>
+  <span class="n">pq</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;pq: &#34;</span> <span class="o">+</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">pq</span><span class="o">.</span><span class="na">toArray</span><span class="o">()));</span>
+  <span class="n">Object</span><span class="o">[]</span> <span class="n">array</span> <span class="o">=</span> <span class="n">pq</span><span class="o">.</span><span class="na">toArray</span><span class="o">();</span>
+  <span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">array</span><span class="o">);</span>
+  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;sorted array:&#34;</span> <span class="o">+</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">array</span><span class="o">));</span>
+  <span class="c1">// the least element always in the head of queue
+</span><span class="c1"></span>  <span class="n">pq</span><span class="o">.</span><span class="na">poll</span><span class="o">();</span>
+  <span class="n">pq</span><span class="o">.</span><span class="na">forEach</span><span class="o">((</span><span class="n">e</span><span class="o">)</span> <span class="o">-&gt;{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">e</span> <span class="o">+</span> <span class="s">&#34;\t&#34;</span><span class="o">);</span>
+  <span class="o">});</span>
+<span class="o">}</span>
+<span class="cm">/* output:
+</span><span class="cm">pq: [1, 6, 1, 7, 9, 12]
+</span><span class="cm">sorted array:[1, 1, 6, 7, 9, 12]
+</span><span class="cm">1	6	12	7	9
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>和上面的叙述一样，PriorityQueue并没有对所有元素进行排序，不过其保证了最小元素始终在队首，并且队列发生结构性变化时，队列中的元素“位置”也会发生变化</p>
+
+<p>下例展示了如何在PriorityQueue中使用自定义比较器：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">static</span> <span class="kt">void</span> <span class="nf">userComparator</span><span class="o">()</span> <span class="o">{</span>
+  <span class="kd">class</span> <span class="nc">PC</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">model</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Double</span> <span class="n">price</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="nf">PC</span><span class="o">(</span><span class="n">String</span> <span class="n">model</span><span class="o">,</span> <span class="n">Double</span> <span class="n">price</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">;</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">price</span> <span class="o">=</span> <span class="n">price</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="c1">// compare by price descend
+</span><span class="c1"></span>  <span class="n">Queue</span><span class="o">&lt;</span><span class="n">PC</span><span class="o">&gt;</span> <span class="n">pq</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PriorityQueue</span><span class="o">&lt;&gt;((</span><span class="n">o1</span><span class="o">,</span> <span class="n">o2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">o2</span><span class="o">.</span><span class="na">price</span> <span class="o">-</span> <span class="n">o1</span><span class="o">.</span><span class="na">price</span><span class="o">));</span>
+  <span class="n">pq</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">PC</span><span class="o">(</span><span class="s">&#34;dell&#34;</span><span class="o">,</span> <span class="n">15499d</span><span class="o">));</span>
+  <span class="n">pq</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">PC</span><span class="o">(</span><span class="s">&#34;apple&#34;</span><span class="o">,</span> <span class="n">18899d</span><span class="o">));</span>
+  <span class="n">pq</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">PC</span><span class="o">(</span><span class="s">&#34;samsung&#34;</span><span class="o">,</span> <span class="n">8999d</span><span class="o">));</span>
+  <span class="n">pq</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">PC</span><span class="o">(</span><span class="s">&#34;asus&#34;</span><span class="o">,</span> <span class="n">12999d</span><span class="o">));</span>
+  <span class="n">pq</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">PC</span><span class="o">(</span><span class="s">&#34;hp&#34;</span><span class="o">,</span> <span class="n">6399d</span><span class="o">));</span>
+  <span class="n">pq</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">PC</span><span class="o">(</span><span class="s">&#34;lenovo&#34;</span><span class="o">,</span> <span class="n">16999d</span><span class="o">));</span>
+
+  <span class="n">pq</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">e</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">price</span> <span class="o">+</span> <span class="s">&#34;\t&#34;</span><span class="o">));</span>
+  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+  <span class="n">pq</span><span class="o">.</span><span class="na">remove</span><span class="o">();</span>
+  <span class="n">pq</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">e</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">price</span> <span class="o">+</span> <span class="s">&#34;\t&#34;</span><span class="o">));</span>
+  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+  <span class="n">pq</span><span class="o">.</span><span class="na">remove</span><span class="o">();</span>
+  <span class="n">pq</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">e</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">price</span> <span class="o">+</span> <span class="s">&#34;\t&#34;</span><span class="o">));</span>
+  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+
+  <span class="c1">// compare by model ascend
+</span><span class="c1"></span>  <span class="n">Queue</span><span class="o">&lt;</span><span class="n">PC</span><span class="o">&gt;</span> <span class="n">pq1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PriorityQueue</span><span class="o">&lt;&gt;((</span><span class="n">o1</span><span class="o">,</span><span class="n">o2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="n">o1</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">o2</span><span class="o">.</span><span class="na">model</span><span class="o">)));</span>
+  <span class="n">pq1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">PC</span><span class="o">(</span><span class="s">&#34;samsung&#34;</span><span class="o">,</span> <span class="n">8999d</span><span class="o">));</span>
+  <span class="n">pq1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">PC</span><span class="o">(</span><span class="s">&#34;apple&#34;</span><span class="o">,</span> <span class="n">18899d</span><span class="o">));</span>
+  <span class="n">pq1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">PC</span><span class="o">(</span><span class="s">&#34;lenovo&#34;</span><span class="o">,</span> <span class="n">16999d</span><span class="o">));</span>
+  <span class="n">pq1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">PC</span><span class="o">(</span><span class="s">&#34;asus&#34;</span><span class="o">,</span> <span class="n">12999d</span><span class="o">));</span>
+  <span class="n">pq1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">PC</span><span class="o">(</span><span class="s">&#34;dell&#34;</span><span class="o">,</span> <span class="n">15499d</span><span class="o">));</span>
+  <span class="n">pq1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">PC</span><span class="o">(</span><span class="s">&#34;hp&#34;</span><span class="o">,</span> <span class="n">6399d</span><span class="o">));</span>
+  <span class="n">pq1</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">e</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">model</span> <span class="o">+</span> <span class="s">&#34;\t&#34;</span><span class="o">));</span>
+  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+  <span class="n">pq1</span><span class="o">.</span><span class="na">remove</span><span class="o">();</span>
+  <span class="n">pq1</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">e</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">model</span> <span class="o">+</span> <span class="s">&#34;\t&#34;</span><span class="o">));</span>
+  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+  <span class="n">pq1</span><span class="o">.</span><span class="na">remove</span><span class="o">();</span>
+  <span class="n">pq1</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">e</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">model</span> <span class="o">+</span> <span class="s">&#34;\t&#34;</span><span class="o">));</span>
+<span class="o">}</span>
+<span class="cm">/* output:
+</span><span class="cm">18899.0	15499.0	16999.0	12999.0	6399.0	8999.0
+</span><span class="cm">16999.0	15499.0	8999.0	12999.0	6399.0
+</span><span class="cm">15499.0	12999.0	8999.0	6399.0
+</span><span class="cm">apple	asus	hp	samsung	dell	lenovo
+</span><span class="cm">asus	dell	hp	samsung	lenovo
+</span><span class="cm">dell	lenovo	hp	samsung
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>从结果来看，元素在PriorityQueue里<strong>并不是全排序的</strong>，不过其会自动将“最小”的元素移动至队首</p>
+
+<p>此例中，如果不在构造器中指定比较器，PriorityQueue会在运行时抛出 <code>ClassCastException</code>——试图将<code>PC</code>向上转型为Comparable时异常</p>
+
+<h1 id="2-linkedlist">2 LinkedList</h1>
+
+<p>LinkedList是Deque的实现，可以作为双端队列使用，其实现了Deque声明的所有方法</p>
+
+<p>想将LinkedList作为Deque使用，须将其声明为 Deque</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">Deque</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">deque</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedList</span><span class="o">&lt;&gt;();</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>LinkedList基于链表节点的灵活性，很容易就能够实现在首尾两端对元素进行操作</p>
+
+<h1 id="3-arraydeque">3 ArrayDeque</h1>
+
+<p>ArrayDeque是由<strong>循环数组</strong>实现的双端队列，没有容量限制，并且能够自动扩容，<strong>不允许</strong> 插入<code>null</code>值</p>
+
+<p>ArrayDeque作为栈（ <em>LIFO</em> 队列）使用时，效率比<code>java.util.Stack</code>高</p>
+
+<p>ArrayDeque作为Queue使用时，效率比LinkedList高</p>
+
+<p>ArrayDeque的迭代器也是 <em>fail-fast</em> 的，意味着和ArrayList一样，在获取迭代器之后使用集合方法对队列进行结构性修改会引发 <em>ConcurrentModificationException</em></p>
+
+<p>ArrayDeque主要的字段域有：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">transient</span> <span class="n">Object</span><span class="o">[]</span> <span class="n">elements</span><span class="o">;</span>
+<span class="kd">transient</span> <span class="kt">int</span> <span class="n">head</span><span class="o">;</span>
+<span class="kd">transient</span> <span class="kt">int</span> <span class="n">tail</span><span class="o">;</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">MIN_INITIAL_CAPACITY</span> <span class="o">=</span> <span class="n">8</span><span class="o">;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>elements用于存储数据，head和tail分别用来标记队列的头尾。 <em>MIN_INITIAL_CAPACITY</em> 是创列的最小容量（2<sup>3</sup>）。当构造器没有指定容量时，初始化容量为16；只有当指定容量且<strong>数值小于8时</strong>才会使用8作为初始容量</p>
+
+<p><span id="resize">参考如下源码</span>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// ArrayDeque初始化时容量的计算
+</span><span class="c1"></span><span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">calculateSize</span><span class="o">(</span><span class="kt">int</span> <span class="n">numElements</span><span class="o">)</span> <span class="o">{</span>
+  <span class="kt">int</span> <span class="n">initialCapacity</span> <span class="o">=</span> <span class="n">MIN_INITIAL_CAPACITY</span><span class="o">;</span>
+  <span class="c1">// Find the best power of two to hold elements.
+</span><span class="c1"></span>  <span class="c1">// Tests &#34;&lt;=&#34; because arrays aren&#39;t kept full.
+</span><span class="c1"></span>  <span class="k">if</span> <span class="o">(</span><span class="n">numElements</span> <span class="o">&gt;=</span> <span class="n">initialCapacity</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">initialCapacity</span> <span class="o">=</span> <span class="n">numElements</span><span class="o">;</span>
+    <span class="n">initialCapacity</span> <span class="o">|=</span> <span class="o">(</span><span class="n">initialCapacity</span> <span class="o">&gt;&gt;&gt;</span>  <span class="n">1</span><span class="o">);</span>
+    <span class="n">initialCapacity</span> <span class="o">|=</span> <span class="o">(</span><span class="n">initialCapacity</span> <span class="o">&gt;&gt;&gt;</span>  <span class="n">2</span><span class="o">);</span>
+    <span class="n">initialCapacity</span> <span class="o">|=</span> <span class="o">(</span><span class="n">initialCapacity</span> <span class="o">&gt;&gt;&gt;</span>  <span class="n">4</span><span class="o">);</span>
+    <span class="n">initialCapacity</span> <span class="o">|=</span> <span class="o">(</span><span class="n">initialCapacity</span> <span class="o">&gt;&gt;&gt;</span>  <span class="n">8</span><span class="o">);</span>
+    <span class="n">initialCapacity</span> <span class="o">|=</span> <span class="o">(</span><span class="n">initialCapacity</span> <span class="o">&gt;&gt;&gt;</span> <span class="n">16</span><span class="o">);</span>
+    <span class="n">initialCapacity</span><span class="o">++;</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">initialCapacity</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">)</span>   <span class="c1">// Too many elements, must back off
+</span><span class="c1"></span>      <span class="n">initialCapacity</span> <span class="o">&gt;&gt;&gt;=</span> <span class="n">1</span><span class="o">;</span><span class="c1">// Good luck allocating 2 ^ 30 elements
+</span><span class="c1"></span>  <span class="o">}</span>
+  <span class="k">return</span> <span class="n">initialCapacity</span><span class="o">;</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>若指定容量&gt;8时，那么需要对其进行 <strong>5次右移及位或运算保证最终的容量大小是2<sup>n</sup></strong>，比如传进来的参数是13，那么最后得到的容量就是2<sup>4</sup></p>
+
+<p>ArrayDeque中，当<code>head==tail</code><sup class="footnote-ref" id="fnref:n2"><a href="#fn:n2">2</a></sup>时触发扩容，容量增加一倍</p>
+
+<blockquote>
+<p>TODO</p>
+</blockquote>
+
+<p>参考如下源码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">addFirst</span><span class="o">(</span><span class="n">E</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">//...
+</span><span class="c1"></span>    <span class="k">if</span> <span class="o">(</span><span class="n">head</span> <span class="o">=</span> <span class="o">(</span><span class="n">head</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">&amp;</span> <span class="o">(</span><span class="n">elements</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">==</span> <span class="n">tail</span><span class="o">)</span>
+      <span class="n">doubleCapacity</span><span class="o">();</span>
+    <span class="c1">//...
+</span><span class="c1"></span><span class="o">}</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addLast</span><span class="o">(</span><span class="n">E</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">//...
+</span><span class="c1"></span>    <span class="k">if</span> <span class="o">(</span><span class="n">tail</span> <span class="o">=</span> <span class="o">(</span><span class="n">tail</span> <span class="o">+</span> <span class="n">1</span><span class="o">)</span> <span class="o">&amp;</span> <span class="o">(</span><span class="n">elements</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">==</span> <span class="n">head</span><span class="o">)</span>
+      <span class="n">doubleCapacity</span><span class="o">();</span>
+    <span class="c1">//...
+</span><span class="c1"></span><span class="o">}</span>
+<span class="kd">public</span> <span class="n">E</span> <span class="nf">pollFirst</span><span class="o">()</span> <span class="o">{</span>
+    <span class="c1">//...
+</span><span class="c1"></span>    <span class="k">if</span> <span class="o">(</span><span class="n">head</span> <span class="o">=</span> <span class="o">(</span><span class="n">h</span> <span class="o">+</span> <span class="n">1</span><span class="o">)</span> <span class="o">&amp;</span> <span class="o">(</span><span class="n">elements</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">==</span> <span class="n">tail</span><span class="o">)</span>
+      <span class="n">doubleCapacity</span><span class="o">();</span>
+  	<span class="c1">//...
+</span><span class="c1"></span><span class="o">}</span>
+<span class="kd">public</span> <span class="n">E</span> <span class="nf">pollLast</span><span class="o">()</span> <span class="o">{</span>
+  	<span class="c1">//...
+</span><span class="c1"></span>    <span class="k">if</span> <span class="o">(</span><span class="n">tail</span> <span class="o">=</span> <span class="o">(</span><span class="n">tail</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">&amp;</span> <span class="o">(</span><span class="n">elements</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">==</span> <span class="n">head</span><span class="o">)</span>
+      <span class="n">doubleCapacity</span><span class="o">();</span>
+    <span class="c1">//...
+</span><span class="c1"></span><span class="o">}</span>
+<span class="c1">// 扩容
+</span><span class="c1"></span><span class="kd">private</span> <span class="kt">void</span> <span class="nf">doubleCapacity</span><span class="o">()</span> <span class="o">{</span>
+  <span class="k">assert</span> <span class="n">head</span> <span class="o">==</span> <span class="n">tail</span><span class="o">;</span>
+  <span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="n">head</span><span class="o">;</span>
+  <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">elements</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+  <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="n">p</span><span class="o">;</span> <span class="c1">// number of elements to the right of p
+</span><span class="c1"></span>  <span class="kt">int</span> <span class="n">newCapacity</span> <span class="o">=</span> <span class="n">n</span> <span class="o">&lt;&lt;</span> <span class="n">1</span><span class="o">;</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">newCapacity</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">)</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalStateException</span><span class="o">(</span><span class="s">&#34;Sorry, deque too big&#34;</span><span class="o">);</span>
+  <span class="n">Object</span><span class="o">[]</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Object</span><span class="o">[</span><span class="n">newCapacity</span><span class="o">];</span>
+  <span class="n">System</span><span class="o">.</span><span class="na">arraycopy</span><span class="o">(</span><span class="n">elements</span><span class="o">,</span> <span class="n">p</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">r</span><span class="o">);</span>
+  <span class="n">System</span><span class="o">.</span><span class="na">arraycopy</span><span class="o">(</span><span class="n">elements</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">r</span><span class="o">,</span> <span class="n">p</span><span class="o">);</span>
+  <span class="n">elements</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
+  <span class="n">head</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+  <span class="n">tail</span> <span class="o">=</span> <span class="n">n</span><span class="o">;</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>一般地，循环队列都是使用<strong>模运算</strong>实现的，而ArrayDeque通过<strong>位运算</strong>来实现循环队列，Java集合框架中很多地方都使用了位运算（如HashMap的扩容），位运算和模运算有<a href="https://blog.csdn.net/lonyw/article/details/80519652">如下关系</a>：</p>
+
+<blockquote>
+<p>x % 2<sup>n</sup> = x &amp; (2<sup>n</sup> - 1)</p>
+</blockquote>
+
+<p>并且<strong>位运算的效率远远高出模运算</strong>，这就是Java设计的高明之处</p>
+
+<p>当触发扩容时，将容量增加一倍，同时使用两次<code>System.arraycopy</code>将原数组拷贝到新数组中，现引用<a href="https://www.jianshu.com/p/b65c22587bdb">ArrayDeque扩容</a>将其机制作简要阐述：</p>
+
+<blockquote>
+<p>假如默认容量16，此时数组情况如图
+<img src="/img/ArrayDeque_full.png" alt="JOvQtx.png" /></p>
+
+<p>当再次调用<code>addFirst(&quot;G&quot;)</code>时，</p>
+
+<p><img src="/img/ArrayDeque_full_2.png" alt="JOvUHA.png" /></p>
+
+<p>此时head==tail，触发扩容，将会创建一个大小为 <strong>16*2</strong> 的新数组，然后通过两次拷贝将原数组的数据复制到新数组</p>
+
+<ul>
+<li>第一次将<strong><em>G-H</em></strong>拷贝到新数组</li>
+<li>第二次将<strong><em>A-F</em></strong>拷贝到新数组</li>
+</ul>
+
+<p><img src="/img/ArrayDeque_full_3.jpg" alt="JOvXU1.jpg" /></p>
+
+<p style="text-align:center;font-style:italic;font-size:.9rem">ArrayDeque扩容图解<sup>  来源见水印</sup></p>
+</blockquote>
+
+<p>参考如下示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">initializationTest</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+  <span class="n">Deque</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">aq</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayDeque</span><span class="o">&lt;&gt;(</span><span class="n">5</span><span class="o">);</span>
+  <span class="c1">// actual circle array size: 8
+</span><span class="c1"></span>  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;array size : &#34;</span> <span class="o">+</span> <span class="n">getElements</span><span class="o">(</span><span class="n">aq</span><span class="o">).</span><span class="na">length</span><span class="o">);</span>
+  <span class="c1">// double capacity while i = 7
+</span><span class="c1"></span>  <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">8</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+    <span class="n">aq</span><span class="o">.</span><span class="na">offerLast</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+  <span class="o">}</span>
+  <span class="n">Object</span><span class="o">[]</span> <span class="n">elements</span> <span class="o">=</span> <span class="n">getElements</span><span class="o">(</span><span class="n">aq</span><span class="o">);</span>
+  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">elements</span><span class="o">));</span>
+  <span class="n">aq</span><span class="o">.</span><span class="na">addLast</span><span class="o">(</span><span class="n">19</span><span class="o">);</span>
+  <span class="n">aq</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">e</span><span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">e</span> <span class="o">+</span> <span class="s">&#34;\t&#34;</span><span class="o">));</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">T</span><span class="o">[]</span> <span class="nf">getElements</span><span class="o">(</span><span class="n">Deque</span><span class="o">&lt;?&gt;</span> <span class="n">aq</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+  <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">cls</span> <span class="o">=</span> <span class="n">ArrayDeque</span><span class="o">.</span><span class="na">class</span><span class="o">;</span>
+  <span class="n">Field</span> <span class="n">ef</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="na">getDeclaredField</span><span class="o">(</span><span class="s">&#34;elements&#34;</span><span class="o">);</span>
+  <span class="n">ef</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+  <span class="k">return</span>  <span class="o">(</span><span class="n">T</span><span class="o">[])</span> <span class="n">ef</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">aq</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="cm">/* output:
+</span><span class="cm">array size : 8
+</span><span class="cm">[0, 1, 2, 3, 4, 5, 6, 7, null, null, null, null, null, null, null, null]
+</span><span class="cm">0	1	2	3	4	5	6	7	19
+</span><span class="cm">*/</span><span class="o">//~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>ArrayDeque的具体方法就不再赘述了，其囊括了作为Queue以及Stack的的实现</p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:1"><em>A collection designed for holding elements prior to processing</em>
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+<li id="fn:n2">head和tail在循环数组中的行为是如何？
+ <a class="footnote-return" href="#fnref:n2"><sup>[return]</sup></a></li>
+</ol>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  
+  <p class="copyright-item" style= text-align:right;>
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-03-22
+        <a href="https://github.com/wangy325/endlessriver/commit/74a1d9353a951d3aec2298289031246f15cb1b98" title="refactor">(74a1d93)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/java%E5%9F%BA%E7%A1%80/">Java基础</a>
+          <a href="/tags/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/">集合框架</a>
+          <a href="/tags/queue/">queue</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/tech/java/collections/set/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Set</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/tech/java/collections/list/">
+            <span class="next-text nav-default">List</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'endlessriver';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=u8za1dzCiImO_8rKldjU1g" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangy325" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangy325.top/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme -
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    
+    
+  </div>
+
+  <span class="copyright-year">
+    <span class="author">wangy325</span>
+    &copy;
+    2019 -
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="copyright"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

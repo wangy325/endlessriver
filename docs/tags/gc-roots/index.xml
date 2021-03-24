@@ -13,10 +13,10 @@
     
     <item>
       <title>JVM垃圾回收概要(转)</title>
-      <link>https://wangy325.top/post/tech/java/java-gc/</link>
+      <link>https://wangy325.top/post/tech/java/jvm/java-gc/</link>
       <pubDate>Wed, 25 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/java-gc/</guid>
+      <guid>https://wangy325.top/post/tech/java/jvm/java-gc/</guid>
       <description>&lt;h1 id=&#34;本节常见面试题&#34;&gt;本节常见面试题&lt;/h1&gt;
 
 &lt;p&gt;问题答案在文中都有提到&lt;/p&gt;

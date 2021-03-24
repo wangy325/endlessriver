@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>How to Use printf in Java (转) - Endless River</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="wangy325" /><meta name="description" content="1 Introduction In this tutorial, we&amp;rsquo;ll demonstrate different examples of formatting with the printf() method.
+The method is part of the java.io.PrintStream class and provides String formatting similar to the printf() function in C.
+2 Syntax We can use one of the following PrintStream methods to format the output:
+1 2  System.out.printf(format, arguments); System.out.printf(locale, format, arguments);   We specify the formatting rules using the format parameter. Rules start with the % character.
+Let&amp;rsquo;s look at a quick example before we dive into the details of the various formatting rules:
+1  System.out.printf(&amp;#34;Hello %s!%n&amp;#34;, &amp;#34;World&amp;#34;);   This produces the following output:
+1  Hello World!   As shown above, the format string contains plain text and two formatting rules. The first rule is used to format the string argument. The second rule adds a newline character to the end of the string.
+" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.55.6 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://wangy325.top/post/tech/java/trans/how2use-printf/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.886d4da2.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="How to Use printf in Java (转)" />
+<meta property="og:description" content="1 Introduction
+
+In this tutorial, we&rsquo;ll demonstrate different examples of formatting with the printf() method.
+
+The method is part of the java.io.PrintStream class and provides String formatting similar to the printf() function in C.
+
+2 Syntax
+
+We can use one of the following PrintStream methods to format the output:
+
+
+1
+2
+
+
+System.out.printf(format, arguments);
+System.out.printf(locale, format, arguments);
+
+
+We specify the formatting rules using the format parameter. Rules start with the % character.
+
+Let&rsquo;s look at a quick example before we dive into the details of the various formatting rules:
+
+
+1
+
+
+System.out.printf(&#34;Hello %s!%n&#34;, &#34;World&#34;);
+
+
+This produces the following output:
+
+
+1
+
+
+Hello World!
+
+
+As shown above, the format string contains plain text and two formatting rules. The first rule is used to format the string argument. The second rule adds a newline character to the end of the string." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangy325.top/post/tech/java/trans/how2use-printf/" />
+<meta property="article:published_time" content="2020-12-10T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2021-03-22T13:40:51&#43;08:00"/>
+
+<meta itemprop="name" content="How to Use printf in Java (转)">
+<meta itemprop="description" content="1 Introduction
+
+In this tutorial, we&rsquo;ll demonstrate different examples of formatting with the printf() method.
+
+The method is part of the java.io.PrintStream class and provides String formatting similar to the printf() function in C.
+
+2 Syntax
+
+We can use one of the following PrintStream methods to format the output:
+
+
+1
+2
+
+
+System.out.printf(format, arguments);
+System.out.printf(locale, format, arguments);
+
+
+We specify the formatting rules using the format parameter. Rules start with the % character.
+
+Let&rsquo;s look at a quick example before we dive into the details of the various formatting rules:
+
+
+1
+
+
+System.out.printf(&#34;Hello %s!%n&#34;, &#34;World&#34;);
+
+
+This produces the following output:
+
+
+1
+
+
+Hello World!
+
+
+As shown above, the format string contains plain text and two formatting rules. The first rule is used to format the string argument. The second rule adds a newline character to the end of the string.">
+
+
+<meta itemprop="datePublished" content="2020-12-10T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-03-22T13:40:51&#43;08:00" />
+<meta itemprop="wordCount" content="1392">
+
+
+
+<meta itemprop="keywords" content="printf," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="How to Use printf in Java (转)"/>
+<meta name="twitter:description" content="1 Introduction
+
+In this tutorial, we&rsquo;ll demonstrate different examples of formatting with the printf() method.
+
+The method is part of the java.io.PrintStream class and provides String formatting similar to the printf() function in C.
+
+2 Syntax
+
+We can use one of the following PrintStream methods to format the output:
+
+
+1
+2
+
+
+System.out.printf(format, arguments);
+System.out.printf(locale, format, arguments);
+
+
+We specify the formatting rules using the format parameter. Rules start with the % character.
+
+Let&rsquo;s look at a quick example before we dive into the details of the various formatting rules:
+
+
+1
+
+
+System.out.printf(&#34;Hello %s!%n&#34;, &#34;World&#34;);
+
+
+This produces the following output:
+
+
+1
+
+
+Hello World!
+
+
+As shown above, the format string contains plain text and two formatting rules. The first rule is used to format the string argument. The second rule adds a newline character to the end of the string."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Endless River</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">主题</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a><a href="/friendlink/">
+        <li class="mobile-menu-item">友链</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Endless River</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">主题</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/friendlink/">友链</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">How to Use printf in Java (转)</h1>
+
+      <div class="post-meta">
+          <span>
+              <span class="icomoonfree icon-calendar"></span>
+              <span class="post-time"> 2020-12-10</span>
+          </span>
+
+        <div class="post-category">
+              <span class="icomoonfree icon-folder"></span>
+            <a href="/categories/java/"> java </a>
+            </div>
+          <span class="icomoonfree icon-sigma"></span>
+          <span class="more-meta analyse"> 约 1392 字 </span>
+          <span class="icomoonfree icon-clock"></span>
+          <span class="more-meta analyse"> 预计阅读 3 分钟 </span>
+        <span class="icomoonfree icon-eye"></span>
+          <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-introduction">1 Introduction</a></li>
+<li><a href="#2-syntax">2 Syntax</a>
+<ul>
+<li><a href="#2-1-format-rules">2.1 Format Rules</a></li>
+<li><a href="#2-2-conversion-characters">2.2 Conversion Characters</a></li>
+<li><a href="#2-3-optional-modifiers">2.3 Optional Modifiers</a></li>
+</ul></li>
+<li><a href="#3-line-separator">3 Line Separator</a></li>
+<li><a href="#4-boolean-formatting">4 Boolean Formatting</a></li>
+<li><a href="#5-string-formatting">5 String Formatting</a></li>
+<li><a href="#6-char-formatting">6 Char Formatting</a></li>
+<li><a href="#7-number-formatting">7 Number Formatting</a>
+<ul>
+<li><a href="#7-1-integer-formatting">7.1 Integer Formatting</a></li>
+<li><a href="#7-2-float-and-double-formatting">7.2 Float and Double Formatting</a></li>
+</ul></li>
+<li><a href="#8-date-and-time-formatting">8 Date and Time Formatting</a>
+<ul>
+<li><a href="#8-1-time-formatting">8.1 Time Formatting</a></li>
+<li><a href="#8-2-date-formatting">8.2 Date Formatting</a></li>
+</ul></li>
+<li><a href="#9-summary">9 Summary</a></li>
+<li><a href="#reference">Reference</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="1-introduction">1 Introduction</h1>
+
+<p>In this tutorial, we&rsquo;ll demonstrate different examples of formatting with the printf() method.</p>
+
+<p>The method is part of the java.io.PrintStream class and provides String formatting similar to the printf() function in C.</p>
+
+<h1 id="2-syntax">2 Syntax</h1>
+
+<p>We can use one of the following PrintStream methods to format the output:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">format</span><span class="o">,</span> <span class="n">arguments</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">locale</span><span class="o">,</span> <span class="n">format</span><span class="o">,</span> <span class="n">arguments</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>We specify the formatting rules using the format parameter. Rules start with the <code>%</code> character.</p>
+
+<p>Let&rsquo;s look at a quick example before we dive into the details of the various formatting rules:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;Hello %s!%n&#34;</span><span class="o">,</span> <span class="s">&#34;World&#34;</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>This produces the following output:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">Hello World!</pre></td></tr></table>
+</div>
+</div>
+<p>As shown above, the format string contains plain text and two formatting rules. The first rule is used to format the string argument. The second rule adds a newline character to the end of the string.</p>
+
+<h2 id="2-1-format-rules">2.1 Format Rules</h2>
+
+<p>Let&rsquo;s have a look at format string more closely. It consists of literals and format specifiers. Format specifiers include flags, width, precision, and conversion characters in the following sequence:</p>
+
+<blockquote>
+<p><code>%[flags][width][.precision]conversion-character</code></p>
+</blockquote>
+
+<p>Specifiers in the brackets are optional.</p>
+
+<p>Internally, printf() uses the <a href="https://www.baeldung.com/java-string-formatter"><code>java.util.Formatter</code></a> class to parse the format string and generate the output. Additional format string options can be found in the Formatter <a href="https://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#syntax">Javadoc</a>.</p>
+
+<h2 id="2-2-conversion-characters">2.2 Conversion Characters</h2>
+
+<p>The conversion-character is required and determines how the argument is formatted. Conversion characters are only valid for certain data types. Some common ones are:</p>
+
+<ul>
+<li><strong><em>s</em></strong> – formats strings</li>
+<li><strong><em>d</em></strong> – formats decimal integers</li>
+<li><strong><em>f</em></strong> – formats the floating-point numbers</li>
+<li><strong><em>t</em></strong>– formats date/time values</li>
+</ul>
+
+<p>We&rsquo;ll explore these and a few others later in the article.</p>
+
+<h2 id="2-3-optional-modifiers">2.3 Optional Modifiers</h2>
+
+<p><strong>The [<em>flags</em>] define standard ways to modify the output</strong> and are most common for formatting integers and floating point numbers.</p>
+
+<p><strong>The [<em>width</em>] specifies the field width for outputting the argument</strong>. It represents the minimum number of characters written to the output.</p>
+
+<p><strong>The [<em>.precision</em>] specifies the number of digits of precision</strong> when outputting floating-point values. Additionally, we can use it to define the length of a substring to extract from a String.</p>
+
+<h1 id="3-line-separator">3 Line Separator</h1>
+
+<p><strong>To break the string into separate lines, we have a <code>%n</code> specifier:</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;baeldung%nline%nterminator&#34;</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>The code snippet above will produce the following output:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">baeldung
+line
+terminator</pre></td></tr></table>
+</div>
+</div>
+<p>The <code>%n</code> separator printf() will automatically insert the host system&rsquo;s native line separator.</p>
+
+<h1 id="4-boolean-formatting">4 Boolean Formatting</h1>
+
+<p>**To format boolean values, we use the <code>%b</code> format. It works the following way: If the input value is true, the output is <em>true</em>. Otherwise, the output is <em>false</em>.</p>
+
+<p>So, if we do:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%b%n&#34;</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%B%n&#34;</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%B%n&#34;</span><span class="o">,</span> <span class="n">5</span><span class="o">.</span><span class="na">3</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%b%n&#34;</span><span class="o">,</span> <span class="s">&#34;random text&#34;</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Then we&rsquo;ll see:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">false
+FALSE
+TRUE
+true</pre></td></tr></table>
+</div>
+</div>
+<p>Notice that we can use <code>%B</code> for <strong>uppercase formatting</strong>.</p>
+
+<h1 id="5-string-formatting">5 String Formatting</h1>
+
+<p>To format a simple string, we&rsquo;ll use the <code>%s</code> combination. Additionally, we can <strong>make the string uppercase</strong>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">printf</span><span class="o">(</span><span class="s">&#34;&#39;%s&#39; %n&#34;</span><span class="o">,</span> <span class="s">&#34;baeldung&#34;</span><span class="o">);</span>
+<span class="n">printf</span><span class="o">(</span><span class="s">&#34;&#39;%S&#39; %n&#34;</span><span class="o">,</span> <span class="s">&#34;baeldung&#34;</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>And the output is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">&#39;baeldung&#39;
+&#39;BAELDUNG&#39;</pre></td></tr></table>
+</div>
+</div>
+<p>Also, to specify a minimum length, we can specify a width:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">printf</span><span class="o">(</span><span class="s">&#34;&#39;%15s&#39; %n&#34;</span><span class="o">,</span> <span class="s">&#34;baeldung&#34;</span><span class="o">);</span>
+<span class="n">printf</span><span class="o">(</span><span class="s">&#34;&#39;%1s&#39; %n&#34;</span><span class="o">,</span> <span class="s">&#34;baeldung&#34;</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Which gives us:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">&#39;       baeldung&#39;
+&#39;baeldung&#39;</pre></td></tr></table>
+</div>
+</div>
+<p>If we need to left-justify our string, then we can use the <code>-</code> flag:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">printf</span><span class="o">(</span><span class="s">&#34;&#39;%-10s&#39; %n&#34;</span><span class="o">,</span> <span class="s">&#34;baeldung&#34;</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>And the output is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">&#39;baeldung  &#39;</pre></td></tr></table>
+</div>
+</div>
+<p>Even more, we can <strong>limit the number of characters</strong> in our output by specifying a precision:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%2.2s&#34;</span><span class="o">,</span> <span class="s">&#34;Hi there!&#34;</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%10.2s&#34;</span><span class="o">,</span> <span class="s">&#34;Hi there!&#34;</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%1.2s&#34;</span><span class="o">,</span> <span class="s">&#34;Hi there!&#34;</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>The first ‘x&rsquo; number in <code>%x.ys</code> syntax is the width. ‘y&rsquo; is the number of chars.</p>
+
+<p>For our example here, the output is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">Hi
+      Hi
+Hi</pre></td></tr></table>
+</div>
+</div>
+<h1 id="6-char-formatting">6 Char Formatting</h1>
+
+<p>The result of <code>%c</code> is a Unicode character:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%c%n&#34;</span><span class="o">,</span> <span class="sc">&#39;s&#39;</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%C%n&#34;</span><span class="o">,</span> <span class="sc">&#39;s&#39;</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>The capital letter C will uppercase the result:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">s
+S</pre></td></tr></table>
+</div>
+</div>
+<p>But, if we give it an invalid argument, then Formatter will throw <em>IllegalFormatConversionException</em>.</p>
+
+<h1 id="7-number-formatting">7 Number Formatting</h1>
+
+<h2 id="7-1-integer-formatting">7.1 Integer Formatting</h2>
+
+<p>The <code>printf()</code> method accepts all the integers available in the language; byte, short, int, long and BigInteger if we use <code>%d</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;simple integer: %d%n&#34;</span><span class="o">,</span> <span class="n">10000L</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>With the help of the ‘d&rsquo; character, we&rsquo;ll have:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">simple integer: 10000</pre></td></tr></table>
+</div>
+</div>
+<p>In case we need to format our number with the <strong>thousands separator</strong>, we can use the <code>,</code> flag. And we can also format our results for different locales:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">Locale</span><span class="o">.</span><span class="na">US</span><span class="o">,</span> <span class="s">&#34;%,d %n&#34;</span><span class="o">,</span> <span class="n">10000</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">Locale</span><span class="o">.</span><span class="na">ITALY</span><span class="o">,</span> <span class="s">&#34;%,d %n&#34;</span><span class="o">,</span> <span class="n">10000</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>As we see, the formatting in the US is different than in Italy:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">10,000
+10.000</pre></td></tr></table>
+</div>
+</div>
+<h2 id="7-2-float-and-double-formatting">7.2 Float and Double Formatting</h2>
+
+<p>To format a float number, we&rsquo;ll need the <code>%f</code> format:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%f%n&#34;</span><span class="o">,</span> <span class="n">5</span><span class="o">.</span><span class="na">1473</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Which will output:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">5.147300</pre></td></tr></table>
+</div>
+</div>
+<p>Of course, the first thing that comes to mind is to <strong>control the precision</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;&#39;%5.2f&#39;%n&#34;</span><span class="o">,</span> <span class="n">5</span><span class="o">.</span><span class="na">1473</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Here we define the width of our number as 5, and the length of the decimal part is 2:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">&#39; 5.15&#39;</pre></td></tr></table>
+</div>
+</div>
+<p>Here we have one space padding from the beginning of the number to support the predefined width.</p>
+
+<p>To have our output in <strong>scientific notation</strong>, we just use the <code>%e</code> conversion character:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;&#39;%5.2e&#39;%n&#34;</span><span class="o">,</span> <span class="n">5</span><span class="o">.</span><span class="na">1473</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>And the result is the following:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">&#39;5.15e+00&#39;</pre></td></tr></table>
+</div>
+</div>
+<h1 id="8-date-and-time-formatting">8 Date and Time Formatting</h1>
+
+<p>For date and time formatting, the conversion string is a sequence of two characters: the <code>t</code> or <code>T</code> character and the conversion suffix. Let&rsquo;s explore the most common time and date formatting suffix characters with the examples.</p>
+
+<p>Definitely, for more advanced formatting we can use <a href="https://www.baeldung.com/java-datetimeformatter">DateTimeFormatter</a> which has been available since Java 8.</p>
+
+<h2 id="8-1-time-formatting">8.1 Time Formatting</h2>
+
+<p>First, let&rsquo;s see the list of some useful suffix characters for Time Formatting:</p>
+
+<ul>
+<li><code>H</code>, <code>M</code>, <code>S</code>  – characters are responsible for extracting the hours, minutes and second from the input Date</li>
+<li><code>L</code>, <code>N</code>  – to represent the time in milliseconds and nanoseconds accordingly</li>
+<li><code>p</code> – adds am/pm formatting</li>
+<li><code>z</code> – prints out the timezone offset
+Now, let&rsquo;s say we wanted to print out the time part of a Date:</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">Date</span> <span class="n">date</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Date</span><span class="o">();</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%tT%n&#34;</span><span class="o">,</span> <span class="n">date</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>The code above along with ‘%tT&rsquo; combination produces the following output:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">13:51:15</pre></td></tr></table>
+</div>
+</div>
+<p>In case we need more detailed formatting, we can call for different time segments:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;hours %tH: minutes %tM: seconds %tS%n&#34;</span><span class="o">,</span> <span class="n">date</span><span class="o">,</span> <span class="n">date</span><span class="o">,</span> <span class="n">date</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Having used ‘H&rsquo;, ‘M&rsquo;, and ‘S&rsquo; we get:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">hours 13: minutes 51: seconds 15</pre></td></tr></table>
+</div>
+</div>
+<p>Though, listing date multiple times is a pain. Alternatively, to <strong>get rid of multiple arguments</strong>, we can use the index reference of our input parameter which is 1$ in our case:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%1$tH:%1$tM:%1$tS %1$tp %1$tL %1$tN %1$tz %n&#34;</span><span class="o">,</span> <span class="n">date</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Here we want as an output the current time, am/pm,  time in milliseconds, nanoseconds and the timezone offset:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">13:51:15 pm 061 061000000 +0400</pre></td></tr></table>
+</div>
+</div>
+<h2 id="8-2-date-formatting">8.2 Date Formatting</h2>
+
+<p>Like time formatting, we have special formatting characters for date formatting:</p>
+
+<ul>
+<li><code>A</code> – prints out the full day of the week</li>
+<li><code>d</code> – formats a two-digit day of the month</li>
+<li><code>B</code> – is for the full month name</li>
+<li><code>m</code> – formats a two-digit month</li>
+<li><code>Y</code> – outputs a year in four digits</li>
+<li><code>y</code> – outputs the last two digits of the year</li>
+</ul>
+
+<p>So, if we wanted to show the day of the week, followed by the month:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%1$tA, %1$tB %1$tY %n&#34;</span><span class="o">,</span> <span class="n">date</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Then using ‘A&rsquo;, ‘B&rsquo;, and ‘Y&rsquo;, we&rsquo;d get:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">Thursday, November 2018</pre></td></tr></table>
+</div>
+</div>
+<p>To have our results all in numeric format, we can replace the ‘A&rsquo;, ‘B&rsquo;, ‘Y ‘ letters with ‘d&rsquo;, ‘m&rsquo;, ‘y&rsquo;:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%1$td.%1$tm.%1$ty %n&#34;</span><span class="o">,</span> <span class="n">date</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Which will result in:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">22.11.18</pre></td></tr></table>
+</div>
+</div>
+<h1 id="9-summary">9 Summary</h1>
+
+<p>In this article, we discussed how to use the PrintStream#printf method to format output. We looked at the different format patterns used to control the output for common data types.</p>
+
+<hr />
+
+<h1 id="reference">Reference</h1>
+
+<ul>
+<li><a href="https://www.baeldung.com/java-printstream-printf#conversion_chars">Formatting with printf() in Java</a></li>
+</ul>
+    </div>
+
+    <div class="post-copyright">
+  
+  <p class="copyright-item" style= text-align:right;>
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-03-22
+        <a href="https://github.com/wangy325/endlessriver/commit/74a1d9353a951d3aec2298289031246f15cb1b98" title="refactor">(74a1d93)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/printf/">printf</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/chaos/annual-summary-2020/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">2020年度总结</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/tech/algo/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">
+            <span class="next-text nav-default">背包问题</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'endlessriver';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=u8za1dzCiImO_8rKldjU1g" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangy325" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangy325.top/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme -
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    
+    
+  </div>
+
+  <span class="copyright-year">
+    <span class="author">wangy325</span>
+    &copy;
+    2019 -
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="copyright"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -13,10 +13,10 @@
     
     <item>
       <title>List</title>
-      <link>https://wangy325.top/post/tech/java/list/</link>
+      <link>https://wangy325.top/post/tech/java/collections/list/</link>
       <pubDate>Wed, 29 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/list/</guid>
+      <guid>https://wangy325.top/post/tech/java/collections/list/</guid>
       <description>&lt;p&gt;接下来的集合框架系列文章讲解了常见的集合框架实现，此系列涉及到的实现都是&lt;strong&gt;线程不安全&lt;/strong&gt;的&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;https://wangy325.top/img/Collection.png&#34; alt=&#34;JXUL1s.png&#34; /&gt;&lt;/p&gt;

@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Java8中的新日期和时间工具库 - Endless River</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="wangy325" /><meta name="description" content=" mybatis自 3.4.5 开始，已经支持使用LocaldateTime作为时间查询入参，映射类型为TimeStamp，参考地址: https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers
+ 1 前言 在介绍Java SE 8中新的日期时间库前，先了解下Java 8之前的日期时间工具的诟病。
+在Java SE 8前，日期时间工具库在java.util包中，包括：
+ java.util.Date：表示日期和时间 java.util.Calendar以及其实现子类：表示各种日历系统，常用的是格林威治日历java.util.GregorianCalendar java.util.TimeZone以及其实现子类：表示时区偏移量和夏令时  以及辅助其进行格式化和解析的工具库在java.text包中，包括：
+ java.text.DateFormat：格式化日期时间和解析日期时间的工具抽象类 java.text.SimpleDateFormat：DateDateFormat的实现 " />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.55.6 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://wangy325.top/post/tech/java/basic/java-new-time-api/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.886d4da2.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Java8中的新日期和时间工具库" />
+<meta property="og:description" content="
+mybatis自 3.4.5 开始，已经支持使用LocaldateTime作为时间查询入参，映射类型为TimeStamp，参考地址: https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers
+
+
+1 前言
+
+在介绍Java SE 8中新的日期时间库前，先了解下Java 8之前的日期时间工具的诟病。
+
+在Java SE 8前，日期时间工具库在java.util包中，包括：
+
+
+java.util.Date：表示日期和时间
+java.util.Calendar以及其实现子类：表示各种日历系统，常用的是格林威治日历java.util.GregorianCalendar
+java.util.TimeZone以及其实现子类：表示时区偏移量和夏令时
+
+
+以及辅助其进行格式化和解析的工具库在java.text包中，包括：
+
+
+java.text.DateFormat：格式化日期时间和解析日期时间的工具抽象类
+java.text.SimpleDateFormat：DateDateFormat的实现
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangy325.top/post/tech/java/basic/java-new-time-api/" />
+<meta property="article:published_time" content="2021-02-02T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2021-03-22T13:40:51&#43;08:00"/>
+
+<meta itemprop="name" content="Java8中的新日期和时间工具库">
+<meta itemprop="description" content="
+mybatis自 3.4.5 开始，已经支持使用LocaldateTime作为时间查询入参，映射类型为TimeStamp，参考地址: https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers
+
+
+1 前言
+
+在介绍Java SE 8中新的日期时间库前，先了解下Java 8之前的日期时间工具的诟病。
+
+在Java SE 8前，日期时间工具库在java.util包中，包括：
+
+
+java.util.Date：表示日期和时间
+java.util.Calendar以及其实现子类：表示各种日历系统，常用的是格林威治日历java.util.GregorianCalendar
+java.util.TimeZone以及其实现子类：表示时区偏移量和夏令时
+
+
+以及辅助其进行格式化和解析的工具库在java.text包中，包括：
+
+
+java.text.DateFormat：格式化日期时间和解析日期时间的工具抽象类
+java.text.SimpleDateFormat：DateDateFormat的实现
+">
+
+
+<meta itemprop="datePublished" content="2021-02-02T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-03-22T13:40:51&#43;08:00" />
+<meta itemprop="wordCount" content="6955">
+
+
+
+<meta itemprop="keywords" content="Java," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java8中的新日期和时间工具库"/>
+<meta name="twitter:description" content="
+mybatis自 3.4.5 开始，已经支持使用LocaldateTime作为时间查询入参，映射类型为TimeStamp，参考地址: https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers
+
+
+1 前言
+
+在介绍Java SE 8中新的日期时间库前，先了解下Java 8之前的日期时间工具的诟病。
+
+在Java SE 8前，日期时间工具库在java.util包中，包括：
+
+
+java.util.Date：表示日期和时间
+java.util.Calendar以及其实现子类：表示各种日历系统，常用的是格林威治日历java.util.GregorianCalendar
+java.util.TimeZone以及其实现子类：表示时区偏移量和夏令时
+
+
+以及辅助其进行格式化和解析的工具库在java.text包中，包括：
+
+
+java.text.DateFormat：格式化日期时间和解析日期时间的工具抽象类
+java.text.SimpleDateFormat：DateDateFormat的实现
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Endless River</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">主题</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a><a href="/friendlink/">
+        <li class="mobile-menu-item">友链</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Endless River</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">主题</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/friendlink/">友链</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Java8中的新日期和时间工具库</h1>
+
+      <div class="post-meta">
+          <span>
+              <span class="icomoonfree icon-calendar"></span>
+              <span class="post-time"> 2021-02-02</span>
+          </span>
+
+        <div class="post-category">
+              <span class="icomoonfree icon-folder"></span>
+            <a href="/categories/java/"> java </a>
+            </div>
+          <span class="icomoonfree icon-sigma"></span>
+          <span class="more-meta analyse"> 约 6955 字 </span>
+          <span class="icomoonfree icon-clock"></span>
+          <span class="more-meta analyse"> 预计阅读 14 分钟 </span>
+        <span class="icomoonfree icon-eye"></span>
+          <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-前言">1 前言</a></li>
+<li><a href="#2-概览">2 概览</a></li>
+<li><a href="#3-java-time优点">3  java.time优点</a>
+<ul>
+<li><a href="#3-1-设计">3.1 设计</a></li>
+<li><a href="#3-2-命名">3.2 命名</a></li>
+<li><a href="#3-3-合理的接口设计">3.3 合理的接口设计</a></li>
+</ul></li>
+<li><a href="#4-java-time使用示例">4 java.time使用示例</a></li>
+<li><a href="#5-补充内容">5 补充内容</a>
+<ul>
+<li><a href="#5-1-时区">5.1 时区</a></li>
+<li><a href="#5-2-子午线">5.2 子午线</a></li>
+<li><a href="#5-3-本初子午线">5.3 本初子午线</a></li>
+<li><a href="#5-4-国际标准iso-8601">5.4 国际标准ISO 8601</a></li>
+<li><a href="#5-5-协调世界时">5.5 协调世界时</a></li>
+<li><a href="#5-6-utc偏移量">5.6 UTC偏移量</a></li>
+<li><a href="#5-7-格林尼治平时">5.7 格林尼治平时</a></li>
+</ul></li>
+<li><a href="#6-参考">6 参考</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <blockquote>
+<p>mybatis自 3.4.5 开始，已经支持使用LocaldateTime作为时间查询入参，映射类型为TimeStamp，参考地址: <a href="https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers">https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers</a></p>
+</blockquote>
+
+<h1 id="1-前言">1 前言</h1>
+
+<p>在介绍Java SE 8中新的日期时间库前，先了解下Java 8之前的日期时间工具的诟病。</p>
+
+<p>在Java SE 8前，日期时间工具库在<code>java.util</code>包中，包括：</p>
+
+<ul>
+<li><code>java.util.Date</code>：表示日期和时间</li>
+<li><code>java.util.Calendar</code>以及其实现子类：表示各种日历系统，常用的是格林威治日历<code>java.util.GregorianCalendar</code></li>
+<li><code>java.util.TimeZone</code>以及其实现子类：表示时区偏移量和夏令时</li>
+</ul>
+
+<p>以及辅助其进行格式化和解析的工具库在java.text包中，包括：</p>
+
+<ul>
+<li><code>java.text.DateFormat</code>：格式化日期时间和解析日期时间的工具抽象类</li>
+<li><code>java.text.SimpleDateFormat</code>：DateDateFormat的实现</li>
+</ul>
+
+<p>从以上的简述中，对java 8之前的日期时间库，有所宏观视觉。下面简要总结下其设计上的瑕疵和被开发者无限吐槽的诟病：</p>
+
+<ul>
+<li>从以上的api上看，java 8之前的日期时间工具库缺乏年、月、日、时间、星期的单独抽象；</li>
+<li><code>Date</code>日期时间类既描述日期又描述时间，耦合，且<code>Date</code>不仅在<code>java.util</code>包中存在，在<code>java.sql</code>中也存在，重复名称，容易导致bug发生；</li>
+<li>api的设计上晦涩，难用，不够生动，难以以自然人类的思维理解日期时间。年月日需要从<code>Calendar</code>中获取；</li>
+<li>最被开发者抱怨的是<strong>类型不安全</strong>，<code>Calendar</code>类中全局属性是可变的，在多线程访问时，会存在线程安全问题。<code>SimpleDateFormat</code>格式化和解析日期，需要使用年月日时分秒，所以持有了<code>Calendar</code>属性，<strong>导致其也是非线程安全</strong>；</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 以下都是Calendar中持有的全局属性
+</span><span class="c1">// 这些全局属性都是可变的，提供了set
+</span><span class="c1"></span><span class="kd">protected</span> <span class="kt">int</span> <span class="n">fields</span><span class="o">[];</span>
+<span class="kd">transient</span> <span class="kd">private</span> <span class="kt">int</span> <span class="n">stamp</span><span class="o">[];</span>
+<span class="kd">protected</span> <span class="kt">long</span> <span class="n">time</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="kt">boolean</span>  <span class="n">isTimeSet</span><span class="o">;</span>
+
+<span class="c1">// 在其子类GregorianCalendar中
+</span><span class="c1"></span><span class="kd">private</span> <span class="kd">transient</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">zoneOffsets</span><span class="o">;</span>
+
+<span class="c1">// setTime方法会调用此方法
+</span><span class="c1">// 该方法中修改了上述的很多全局属性
+</span><span class="c1"></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTimeInMillis</span><span class="o">(</span><span class="kt">long</span> <span class="n">millis</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// If we don&#39;t need to recalculate the calendar field values,
+</span><span class="c1"></span>        <span class="c1">// do nothing.
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(</span><span class="n">time</span> <span class="o">==</span> <span class="n">millis</span> <span class="o">&amp;&amp;</span> <span class="n">isTimeSet</span> <span class="o">&amp;&amp;</span> <span class="n">areFieldsSet</span> <span class="o">&amp;&amp;</span> <span class="n">areAllFieldsSet</span>
+            <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">zone</span> <span class="k">instanceof</span> <span class="n">ZoneInfo</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">!((</span><span class="n">ZoneInfo</span><span class="o">)</span><span class="n">zone</span><span class="o">).</span><span class="na">isDirty</span><span class="o">())</span> <span class="o">{</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="n">millis</span><span class="o">;</span>
+        <span class="n">isTimeSet</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="n">areFieldsSet</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="n">computeFields</span><span class="o">();</span>
+        <span class="n">areAllFieldsSet</span> <span class="o">=</span> <span class="n">areFieldsSet</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>所以在多线程环境中使用<code>Calendar</code>是非线程安全的 ，多个线程修改其属性域会导致<strong>数据一致性和可见性</strong>问题。</p>
+
+<p>在<code>DateFormat</code>中持有了<code>Calendar</code>属性，用于解析和格式化日期：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 从注释上看，Calendar用于计算日期时间域
+</span><span class="c1"></span><span class="cm">/**
+</span><span class="cm"> * The {@link Calendar} instance used for calculating the date-time fields
+</span><span class="cm"> * and the instant of time. This field is used for both formatting and
+</span><span class="cm"> * parsing.
+</span><span class="cm"> *
+</span><span class="cm"> * &lt;p&gt;Subclasses should initialize this field to a {@link Calendar}
+</span><span class="cm"> * appropriate for the {@link Locale} associated with this
+</span><span class="cm"> * &lt;code&gt;DateFormat&lt;/code&gt;.
+</span><span class="cm"> * @serial
+</span><span class="cm"> */</span>
+<span class="kd">protected</span> <span class="n">Calendar</span> <span class="n">calendar</span><span class="o">;</span>
+
+<span class="c1">// Called from Format after creating a FieldDelegate
+</span><span class="c1"></span><span class="kd">private</span> <span class="n">StringBuffer</span> <span class="nf">format</span><span class="o">(</span><span class="n">Date</span> <span class="n">date</span><span class="o">,</span> <span class="n">StringBuffer</span> <span class="n">toAppendTo</span><span class="o">,</span>
+                            <span class="n">FieldDelegate</span> <span class="n">delegate</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// Convert input date to time field list
+</span><span class="c1"></span>    <span class="n">calendar</span><span class="o">.</span><span class="na">setTime</span><span class="o">(</span><span class="n">date</span><span class="o">);</span>
+
+    <span class="kt">boolean</span> <span class="n">useDateFormatSymbols</span> <span class="o">=</span> <span class="n">useDateFormatSymbols</span><span class="o">();</span>
+
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">compiledPattern</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">tag</span> <span class="o">=</span> <span class="n">compiledPattern</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&gt;&gt;&gt;</span> <span class="n">8</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">compiledPattern</span><span class="o">[</span><span class="n">i</span><span class="o">++]</span> <span class="o">&amp;</span> <span class="n">0xff</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">count</span> <span class="o">==</span> <span class="n">255</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="n">compiledPattern</span><span class="o">[</span><span class="n">i</span><span class="o">++]</span> <span class="o">&lt;&lt;</span> <span class="n">16</span><span class="o">;</span>
+            <span class="n">count</span> <span class="o">|=</span> <span class="n">compiledPattern</span><span class="o">[</span><span class="n">i</span><span class="o">++];</span>
+        <span class="o">}</span>
+
+        <span class="k">switch</span> <span class="o">(</span><span class="n">tag</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">case</span> <span class="nl">TAG_QUOTE_ASCII_CHAR:</span>
+            <span class="n">toAppendTo</span><span class="o">.</span><span class="na">append</span><span class="o">((</span><span class="kt">char</span><span class="o">)</span><span class="n">count</span><span class="o">);</span>
+            <span class="k">break</span><span class="o">;</span>
+
+        <span class="k">case</span> <span class="nl">TAG_QUOTE_CHARS:</span>
+            <span class="n">toAppendTo</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">compiledPattern</span><span class="o">,</span> <span class="n">i</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="n">count</span><span class="o">;</span>
+            <span class="k">break</span><span class="o">;</span><span class="nl">
+</span><span class="nl">
+</span><span class="nl">        default:</span>
+            <span class="n">subFormat</span><span class="o">(</span><span class="n">tag</span><span class="o">,</span> <span class="n">count</span><span class="o">,</span> <span class="n">delegate</span><span class="o">,</span> <span class="n">toAppendTo</span><span class="o">,</span> <span class="n">useDateFormatSymbols</span><span class="o">);</span>
+            <span class="k">break</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">toAppendTo</span><span class="o">;</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><code>format</code>方法中设置了全局成员<code>Calendar</code>的time，多线程访问时每次都会改变Calendar类，导致format格式化时会出现线程安全问题。所以<code>DateFormat</code>和其子类<code>SimpleDateFormat</code>都是<strong>非类型安全</strong>。</p>
+
+<p>这个可以说是被开发者极度抱怨的。所以<strong>在使用日期格式工具时大多数都会重新new或者使用ThreadLocal</strong>。</p>
+
+<p>基于此诸多问题，java设计者终于在Java SE 8中引入了新的日期时间库。新的日期时间库的易用程度会让你振服！下面开始进入主题，Java SE 8中的日期时间库<code>java.time</code>。</p>
+
+<h1 id="2-概览">2 概览</h1>
+
+<p>先认识下<a href="joda.org">joda</a>项目，joda项目包括：</p>
+
+<ul>
+<li><strong>Joda-Time - Basic types for Date and Time</strong></li>
+<li>Joda-Money - Basic types for Money</li>
+<li>Joda-Beans - Next generation JavaBeans</li>
+<li>Joda-Convert - String to Object conversion</li>
+<li>Joda-Collect - Additional collection data structures</li>
+</ul>
+
+<p>其中<code>Joda-Time</code>是日期时间三方库，但是在java 8之前，joda time其实是标准的日期时间库，其出色的语义表达，易用易于理解的api，类型安全的特性，大受开发者的追捧。而且其日历系统遵循的是<a href="https://zh.wikipedia.org/wiki/ISO_8601#%E6%97%A5%E5%8E%86%E6%97%A5%E6%9C%9F%E8%A1%A8%E7%A4%BA%E6%B3%95">IOS_8601</a>国际标准，同时还包括其他的非标准的日历系统。支持时区、持续时间、格式化和解析功能。</p>
+
+<p>在java 8之前可以依赖joda time三方库，使用其日期时间库。</p>
+
+<p>但在java 8中提出了<a href="https://jcp.org/aboutJava/communityprocess/pfd/jsr310/JSR-310-guide.html">JSR 310</a>: Date and Time API规范，该规范即新版的日期时间库<code>java.time</code>规约。可以说JSR-310的设计上汲取了大量的joda time的特性。新版本的日期时间库基于JSR 310: Date and Time API开发，<code>java.time</code>是基于国际化标准日历系统（International Organization for Standardization）ISO_8601，同时<code>java.time.chrono</code>支持对全球日历系统的扩展。</p>
+
+<p>JSR-310中设计的<code>java.time</code>包括年、月、星期、日期时间、持续时间段、瞬时、时钟、时区的抽象及处理。且api的设计上使用易读易于理解的名称和设计模式，让使用者欣然接受。而且提供旧版和新版api之间的互通以处理兼容性问题。</p>
+
+<p>下面看张概览图，从宏观角度了解下<code>java.time</code></p>
+
+<p><img src="/img/java8-time.png" alt="img" /></p>
+
+<ul>
+<li>第一层是对年、月、月中日、星期的抽象；</li>
+<li>第二层是对日期、日期时间、时区的抽象，其中时区分为时区Id（Europe/Paris）和时区偏移量(Z/+hh:mm/-hh:mm)；</li>
+<li>第三层是对区域时间和便宜时间的抽象；</li>
+<li>第四层是对瞬时和时钟的抽象；</li>
+<li>第五层是对时序时段和持续周期的抽象</li>
+<li>右侧层是辅助工具类，如：日期时间格式、日期时间调整器、其他的日历系统；</li>
+</ul>
+
+<p>java 8中日期时间库共分为五个package：</p>
+
+<ul>
+<li><code>java.time</code>：基于ISO_8601日历系统实现的日期时间库</li>
+<li><code>java.time.chrono</code>：全球日历系统扩展库，可以自行扩展</li>
+<li><code>java.time.format</code>：日期时间格式，包含大量预定义的格式，可以自行扩展</li>
+<li><code>java.time.zone</code>：时区信息库</li>
+<li><code>java.time.temporal</code>：日期时间调整辅助库</li>
+</ul>
+
+<p>关于日期时间库的使用详细过程，推荐查看oracle提供的java教程<a href="https://docs.oracle.com/javase/tutorial/datetime/index.html">The Java™ Tutorials——Trail: Date Time</a></p>
+
+<h1 id="3-java-time优点">3  java.time优点</h1>
+
+<h2 id="3-1-设计">3.1 设计</h2>
+
+<p><code>java.time</code>中使用了大量的设计模式：</p>
+
+<ul>
+<li><strong>工厂模式</strong>：<code>now()</code>工厂方法直接生成当前日期时间或者瞬时；<code>of()</code>工厂方法根据年月日时分秒生成日期或者日期时间；</li>
+<li><strong>装饰模式</strong>：时区时间<code>ZoneDateTime</code>/偏移时间<code>OffsetDateTime</code>，都是在<code>LocalDateTime</code>的基础上加上时区/偏移量的修饰成为时区时间，然后可以进行时区转换；</li>
+<li><strong>建造者模式</strong>：<code>Calendar</code>中加入建造者类，用于生成新的<code>Calendar</code>对象；</li>
+</ul>
+
+<h2 id="3-2-命名">3.2 命名</h2>
+
+<p>java 8中的日期时间库类名、方法名命名上都是极其形象生动，易于理解，让开发者极易于使用——语义清晰精确！如：LocalDate中提供的now表示现在的日期，of用于年月日组成的日期（这里和英文中的of意义非常贴切），plus/minus加减等等；</p>
+
+<h2 id="3-3-合理的接口设计">3.3 合理的接口设计</h2>
+
+<ul>
+<li><code>LocalDate</code>表示日期，由年月日组成，提供了获取所在年，所在月，所在日的api，提供所在一年的第几天api，用于比较日期前后api，替换年份、月份、日的api，这些api使得日期或者日期时间的处理上得到的功能上的极大提升；</li>
+<li>抽象出年、月、日、星期、日期、日期时间、瞬时、周期诸多接口，对事物本质有了细腻的抽象，并提供了相互转换的能力——提供极强的处理能力和语言表达能力；</li>
+<li>对于遗留的日期时间库<code>Calendar/Date/Timezone</code>和新的日期时间库的互通性；</li>
+<li>将全球的非标准日历系统单独抽象并支持扩展，从标准日历系统中隔离（符合设计原则：对修改关闭，对扩展开放）</li>
+</ul>
+
+<h1 id="4-java-time使用示例">4 java.time使用示例</h1>
+
+<p>得益于新日期时间框架的设计，无论是类名还是方法名以及可读性，都相当容易理解，其上手成本比Date/Calendar要低得多。</p>
+
+<p>并且，LocalDateTime/LocalDate之间，以及它们和jdk 1.8之前的Date也可以互相转换。</p>
+
+<p>以下是一个使用示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Intro</span> <span class="o">{</span>
+    <span class="kd">static</span> <span class="n">String</span> <span class="n">yyyy</span> <span class="o">=</span> <span class="s">&#34;yyyy&#34;</span><span class="o">;</span>
+    <span class="kd">static</span> <span class="n">String</span> <span class="n">yyyy_MM</span> <span class="o">=</span> <span class="s">&#34;yyy-MM&#34;</span><span class="o">;</span>
+    <span class="kd">static</span> <span class="n">String</span> <span class="n">yyyy_MM_dd</span> <span class="o">=</span> <span class="s">&#34;yyyy-MM-dd&#34;</span><span class="o">;</span>
+    <span class="kd">static</span> <span class="n">String</span> <span class="n">yyyy_MM_dd_HH_mm_ss</span> <span class="o">=</span> <span class="s">&#34;yyyy-MM-dd HH:mm:ss&#34;</span><span class="o">;</span>
+    <span class="kd">static</span> <span class="n">String</span> <span class="n">yyyy_MM_dd_HH_mm_ss_SSS</span> <span class="o">=</span> <span class="s">&#34;yyyy-MM-dd HH:mm:ss.SSS&#34;</span><span class="o">;</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * If the pattern like &#39;yyyy&#39;, result {@link LocalDateTime} could be like &#39;yyyy-01-01 00:00:00&#39;.&lt;br&gt;
+</span><span class="cm">     * If the pattern like &#39;yyyy-MM&#39;, result {@link LocalDateTime} could be like &#39;yyyy-MM-01 00:00:00&#39;.&lt;br&gt;
+</span><span class="cm">     * If the pattern like &#39;yyyy-MM-dd&#39;, result {@link LocalDateTime} could be like &#39;yyyy-MM-dd 00:00:00&#39;.&lt;br&gt;
+</span><span class="cm">     * Other patterns acts the same.
+</span><span class="cm">     * &lt;p&gt;
+</span><span class="cm">     *
+</span><span class="cm">     * &lt;b&gt;Important:&lt;/b&gt; the pattern and the the {@link LocalDateTime#parse(CharSequence, DateTimeFormatter)} method&#39;s input {@link CharSequence} must match.
+</span><span class="cm">     * e.g. The following method call will throw {@link java.time.format.DateTimeParseException}:
+</span><span class="cm">     * &lt;pre&gt;
+</span><span class="cm">     *      LocalDateTime localDateTime = LocalDateTime.parse(&#34;2021&#34;,dtfBuilder(&#34;yyyy-MM&#34;));
+</span><span class="cm">     * &lt;/pre&gt;
+</span><span class="cm">     *
+</span><span class="cm">     * @param pattern the string pattern
+</span><span class="cm">     * @see DateTimeFormatter javadoc
+</span><span class="cm">     * @see LocalDateTime#parse(CharSequence, DateTimeFormatter)
+</span><span class="cm">     */</span>
+    <span class="kd">static</span> <span class="n">DateTimeFormatter</span> <span class="nf">dtfBuilder</span><span class="o">(</span><span class="n">String</span> <span class="n">pattern</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">DateTimeFormatterBuilder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">appendPattern</span><span class="o">(</span><span class="n">pattern</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">parseDefaulting</span><span class="o">(</span><span class="n">ChronoField</span><span class="o">.</span><span class="na">YEAR_OF_ERA</span><span class="o">,</span> <span class="n">LocalDateTime</span><span class="o">.</span><span class="na">now</span><span class="o">().</span><span class="na">getYear</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">parseDefaulting</span><span class="o">(</span><span class="n">ChronoField</span><span class="o">.</span><span class="na">MONTH_OF_YEAR</span><span class="o">,</span> <span class="n">1</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">parseDefaulting</span><span class="o">(</span><span class="n">ChronoField</span><span class="o">.</span><span class="na">DAY_OF_MONTH</span><span class="o">,</span> <span class="n">1</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">parseDefaulting</span><span class="o">(</span><span class="n">ChronoField</span><span class="o">.</span><span class="na">HOUR_OF_DAY</span><span class="o">,</span> <span class="n">0</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">parseDefaulting</span><span class="o">(</span><span class="n">ChronoField</span><span class="o">.</span><span class="na">MINUTE_OF_HOUR</span><span class="o">,</span> <span class="n">0</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">parseDefaulting</span><span class="o">(</span><span class="n">ChronoField</span><span class="o">.</span><span class="na">SECOND_OF_MINUTE</span><span class="o">,</span> <span class="n">0</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">parseDefaulting</span><span class="o">(</span><span class="n">ChronoField</span><span class="o">.</span><span class="na">NANO_OF_SECOND</span><span class="o">,</span> <span class="n">0</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">toFormatter</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="n">SimpleDateFormat</span> <span class="nf">sdfBuilder</span><span class="o">(</span><span class="n">String</span> <span class="n">pattern</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">SimpleDateFormat</span><span class="o">(</span><span class="n">pattern</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * solution1:
+</span><span class="cm">     * Get yyyy-MM-dd 00:00:00, start of the day.&lt;br&gt;
+</span><span class="cm">     * If you use yyyy-MM-dd as parameter
+</span><span class="cm">     */</span>
+    <span class="kd">static</span> <span class="n">Date</span> <span class="nf">getStartOfDay</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">LocalDateTime</span> <span class="n">localDateTime</span> <span class="o">=</span> <span class="n">LocalDateTime</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&#34;2021-02-02&#34;</span><span class="o">,</span>
+                <span class="n">dtfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd</span><span class="o">));</span>
+        <span class="n">Instant</span> <span class="n">instant</span> <span class="o">=</span> <span class="n">localDateTime</span><span class="o">.</span><span class="na">atZone</span><span class="o">(</span><span class="n">ZoneId</span><span class="o">.</span><span class="na">systemDefault</span><span class="o">()).</span><span class="na">toInstant</span><span class="o">();</span>
+        <span class="k">return</span> <span class="n">Date</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">instant</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * solution2:
+</span><span class="cm">     * get yyyy-MM-dd 00:00:00, start of the day.&lt;br&gt;
+</span><span class="cm">     * If you use yyyy-MM-dd as parameter&lt;br&gt;
+</span><span class="cm">     * &lt;p&gt;
+</span><span class="cm">     * Using {@link LocalDate#atStartOfDay()}
+</span><span class="cm">     *
+</span><span class="cm">     * @param dateString datePattern like 2012-09-08
+</span><span class="cm">     */</span>
+    <span class="kd">static</span> <span class="n">Date</span> <span class="nf">getStartOfDay</span><span class="o">(</span><span class="n">String</span> <span class="n">dateString</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ParseException</span> <span class="o">{</span>
+        <span class="c1">//由于dtfBuilder的设置 这里的时间已经是 00:00:00
+</span><span class="c1"></span>        <span class="n">LocalDate</span> <span class="n">localDate</span> <span class="o">=</span> <span class="n">LocalDate</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">dateString</span><span class="o">,</span> <span class="n">dtfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd</span><span class="o">));</span>
+        <span class="n">ZonedDateTime</span> <span class="n">zonedDateTime</span> <span class="o">=</span> <span class="n">localDate</span><span class="o">.</span><span class="na">atStartOfDay</span><span class="o">(</span><span class="n">ZoneId</span><span class="o">.</span><span class="na">systemDefault</span><span class="o">());</span>
+        <span class="k">return</span> <span class="n">Date</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">zonedDateTime</span><span class="o">.</span><span class="na">toInstant</span><span class="o">());</span>
+<span class="c1">//        return sdfBuilder().parse(zonedDateTime.format(dtfBuilder(yyyy_MM_dd_HH_mm_ss)));
+</span><span class="c1"></span>    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     *
+</span><span class="cm">     */</span>
+    <span class="kd">static</span> <span class="n">Date</span> <span class="nf">getStartOfDay</span><span class="o">(</span><span class="n">LocalDate</span> <span class="n">localDate</span><span class="o">){</span>
+        <span class="n">ZonedDateTime</span> <span class="n">zonedDateTime</span> <span class="o">=</span> <span class="n">localDate</span><span class="o">.</span><span class="na">atStartOfDay</span><span class="o">(</span><span class="n">ZoneId</span><span class="o">.</span><span class="na">systemDefault</span><span class="o">());</span>
+
+        <span class="n">LocalDateTime</span> <span class="n">localDateTime</span> <span class="o">=</span> <span class="n">localDate</span><span class="o">.</span><span class="na">atStartOfDay</span><span class="o">();</span>
+        <span class="n">Instant</span> <span class="n">instant</span> <span class="o">=</span> <span class="n">localDateTime</span><span class="o">.</span><span class="na">toInstant</span><span class="o">(</span><span class="n">ZoneOffset</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">&#34;+8&#34;</span><span class="o">));</span>
+<span class="c1">//        return Date.from(zonedDateTime.toInstant());
+</span><span class="c1"></span>        <span class="k">return</span> <span class="n">Date</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">instant</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * Get yyyy-MM-dd 23:59:59.999, end of the day.&lt;br&gt;
+</span><span class="cm">     * By using {@link LocalDateTime#plus(long, TemporalUnit)}
+</span><span class="cm">     */</span>
+    <span class="kd">static</span> <span class="n">Date</span> <span class="nf">getEndOfDay</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">//由于dtfBuilder的设置 这里的时间已经是 00:00:00
+</span><span class="c1"></span>        <span class="n">LocalDateTime</span> <span class="n">localDateTime</span> <span class="o">=</span> <span class="n">LocalDateTime</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&#34;2020-12-21&#34;</span><span class="o">,</span> <span class="n">dtfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd</span><span class="o">));</span>
+
+        <span class="c1">//plusXxx()方法没有提供毫秒/微秒的相应方法，直接到纳秒； 相应的，可以使用plus方法指定单位
+</span><span class="c1"></span>        <span class="n">localDateTime</span> <span class="o">=</span> <span class="n">localDateTime</span><span class="o">.</span><span class="na">plusHours</span><span class="o">(</span><span class="n">23</span><span class="o">).</span><span class="na">plusMinutes</span><span class="o">(</span><span class="n">59</span><span class="o">).</span><span class="na">plusSeconds</span><span class="o">(</span><span class="n">59</span><span class="o">).</span><span class="na">plusNanos</span><span class="o">(</span><span class="n">999_999_999</span><span class="o">);</span>
+
+        <span class="cm">/*
+</span><span class="cm">         *  好方法，将其下级单位的值清零
+</span><span class="cm">         *  ChronoUnit.DAYS: 清零hh:mm:ss.SSS
+</span><span class="cm">         *  最大单位 DAYS，也就是说此方法只能用来清零时间
+</span><span class="cm">         */</span>
+        <span class="n">localDateTime</span> <span class="o">=</span> <span class="n">localDateTime</span><span class="o">.</span><span class="na">truncatedTo</span><span class="o">(</span><span class="n">ChronoUnit</span><span class="o">.</span><span class="na">DAYS</span><span class="o">);</span>
+        <span class="n">localDateTime</span> <span class="o">=</span> <span class="n">localDateTime</span>
+                <span class="o">.</span><span class="na">plus</span><span class="o">(</span><span class="n">23</span><span class="o">,</span> <span class="n">ChronoUnit</span><span class="o">.</span><span class="na">HOURS</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">plus</span><span class="o">(</span><span class="n">59</span><span class="o">,</span> <span class="n">ChronoUnit</span><span class="o">.</span><span class="na">MINUTES</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">plus</span><span class="o">(</span><span class="n">59</span><span class="o">,</span> <span class="n">ChronoUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">plus</span><span class="o">(</span><span class="n">999</span><span class="o">,</span> <span class="n">ChronoUnit</span><span class="o">.</span><span class="na">MILLIS</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">Date</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">localDateTime</span><span class="o">.</span><span class="na">atZone</span><span class="o">(</span><span class="n">ZoneId</span><span class="o">.</span><span class="na">systemDefault</span><span class="o">()).</span><span class="na">toInstant</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * Get yyyy-MM-dd 23:59:59.999, end of the day.&lt;br&gt;
+</span><span class="cm">     * By using {@link LocalDate#atTime(LocalTime)}
+</span><span class="cm">     *
+</span><span class="cm">     * @param dateString date pattern like &#39;2012-09-18&#39;
+</span><span class="cm">     */</span>
+    <span class="kd">static</span> <span class="n">Date</span> <span class="nf">getEndOfDay</span><span class="o">(</span><span class="n">String</span> <span class="n">dateString</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">LocalDate</span> <span class="n">localDate</span> <span class="o">=</span> <span class="n">LocalDate</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">dateString</span><span class="o">,</span> <span class="n">dtfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd</span><span class="o">));</span>
+<span class="c1">//        localDate.
+</span><span class="c1"></span>        <span class="n">LocalDateTime</span> <span class="n">localDateTime</span> <span class="o">=</span> <span class="n">localDate</span><span class="o">.</span><span class="na">atTime</span><span class="o">(</span><span class="n">23</span><span class="o">,</span> <span class="n">59</span><span class="o">,</span> <span class="n">59</span><span class="o">,</span> <span class="n">999_999_999</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">Date</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">localDateTime</span><span class="o">.</span><span class="na">atZone</span><span class="o">(</span><span class="n">ZoneId</span><span class="o">.</span><span class="na">systemDefault</span><span class="o">()).</span><span class="na">toInstant</span><span class="o">());</span>
+
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * Get first day of month
+</span><span class="cm">     *
+</span><span class="cm">     * @param dateString pattern like &#39;2020-10-25&#39;
+</span><span class="cm">     * @return
+</span><span class="cm">     */</span>
+    <span class="kd">static</span> <span class="n">Date</span> <span class="nf">getFirstDayOfMonth</span><span class="o">(</span><span class="n">String</span> <span class="n">dateString</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">LocalDateTime</span> <span class="n">localDateTime</span> <span class="o">=</span> <span class="n">LocalDateTime</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">dateString</span><span class="o">,</span> <span class="n">dtfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd</span><span class="o">));</span>
+        <span class="n">localDateTime</span> <span class="o">=</span> <span class="n">localDateTime</span><span class="o">.</span><span class="na">withDayOfMonth</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">Date</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">localDateTime</span><span class="o">.</span><span class="na">atZone</span><span class="o">(</span><span class="n">ZoneId</span><span class="o">.</span><span class="na">systemDefault</span><span class="o">()).</span><span class="na">toInstant</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * Get the first day of year.
+</span><span class="cm">     *
+</span><span class="cm">     * @param yearString pattern like &#39;2012&#39;
+</span><span class="cm">     */</span>
+    <span class="kd">static</span> <span class="n">Date</span> <span class="nf">getFirstDayOfYear</span><span class="o">(</span><span class="n">String</span> <span class="n">yearString</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">LocalDateTime</span> <span class="n">localDateTime</span> <span class="o">=</span> <span class="n">LocalDateTime</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">yearString</span><span class="o">,</span> <span class="n">dtfBuilder</span><span class="o">(</span><span class="n">yyyy</span><span class="o">));</span>
+        <span class="k">return</span> <span class="n">Date</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">localDateTime</span><span class="o">.</span><span class="na">atZone</span><span class="o">(</span><span class="n">ZoneId</span><span class="o">.</span><span class="na">systemDefault</span><span class="o">()).</span><span class="na">toInstant</span><span class="o">());</span>
+    <span class="o">}</span>
+
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ParseException</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sdfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd_HH_mm_ss</span><span class="o">).</span><span class="na">format</span><span class="o">(</span><span class="n">getStartOfDay</span><span class="o">()));</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sdfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd_HH_mm_ss</span><span class="o">).</span><span class="na">format</span><span class="o">(</span><span class="n">getStartOfDay</span><span class="o">(</span><span class="s">&#34;2021-02-02&#34;</span><span class="o">)));</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sdfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd_HH_mm_ss_SSS</span><span class="o">).</span><span class="na">format</span><span class="o">(</span><span class="n">getStartOfDay</span><span class="o">(</span><span class="n">LocalDate</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&#34;2021-02-22&#34;</span><span class="o">,</span> <span class="n">dtfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd</span><span class="o">)))));</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sdfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd_HH_mm_ss_SSS</span><span class="o">).</span><span class="na">format</span><span class="o">(</span><span class="n">getEndOfDay</span><span class="o">()));</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sdfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd_HH_mm_ss_SSS</span><span class="o">).</span><span class="na">format</span><span class="o">(</span><span class="n">getEndOfDay</span><span class="o">(</span><span class="s">&#34;2020-12-21&#34;</span><span class="o">)));</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sdfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd</span><span class="o">).</span><span class="na">format</span><span class="o">(</span><span class="n">getFirstDayOfMonth</span><span class="o">(</span><span class="s">&#34;2020-12-18&#34;</span><span class="o">)));</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sdfBuilder</span><span class="o">(</span><span class="n">yyyy_MM_dd_HH_mm_ss</span><span class="o">).</span><span class="na">format</span><span class="o">(</span><span class="n">getFirstDayOfYear</span><span class="o">(</span><span class="s">&#34;2012&#34;</span><span class="o">)));</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>源码地址：<a href="https://github.com/wangy325/java-review/blob/master/src/main/java/com/wangy/common/time/Intro.java">https://github.com/wangy325/java-review/blob/master/src/main/java/com/wangy/common/time/Intro.java</a></p>
+
+<h1 id="5-补充内容">5 补充内容</h1>
+
+<h2 id="5-1-时区">5.1 时区</h2>
+
+<p>时区是地球上的区域使用同一个时间定义。以前，人们通过观察太阳的位置（时角）决定时间，这就使得不同经度的地方的时间有所不同（地方时）。1863年，首次使用时区的概念。时区通过设立一个区域的标准时间部分地解决了这个问题。</p>
+
+<p>世界各个国家位于地球不同位置上，因此不同国家，特别是东西跨度大的国家日出、日落时间必定有所偏差。这些偏差就是所谓的时差。</p>
+
+<p>理论时区以被15整除的子午线为中心，向东西两侧延伸7.5度，即每15°划分一个时区，这是<strong>理论时区</strong>。理论时区的时间采用其中央经线（或标准经线）的地方时。所以每差一个时区，区时相差一个小时，相差多少个时区，就相差多少个小时。东边的时区时间比西边的时区时间早。为了避免日期的紊乱，提出<strong>国际日期变更线</strong>的概念</p>
+
+<p>但是，为了避开国界线，有的时区的形状并不规则，而且比较大的国家以国家内部行政分界线为时区界线，这是<strong>实际时区</strong>，即法定时区。请参见<a href="https://zh.wikipedia.org/wiki/%E6%97%B6%E5%8C%BA%E5%88%97%E8%A1%A8#UTC%EF%BC%88WET_-%E6%AD%90%E6%B4%B2%E8%A5%BF%E9%83%A8%E6%99%82%E5%8D%80%EF%BC%8CGMT-_%E6%A0%BC%E6%9E%97%E5%A8%81%E6%B2%BB%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4%EF%BC%89">时区列表</a>。</p>
+
+<h2 id="5-2-子午线">5.2 子午线</h2>
+
+<p>即<strong>经线</strong>，和纬线一样是人类为度量而假设出来的辅助线，定义为地球表面连接南北两极的大圆线上的半圆弧。任两根经线的长度相等，相交于南北两极点。每一根经线都有其相对应的数值，称为经度。经线指示南北方向。</p>
+
+<h2 id="5-3-本初子午线">5.3 本初子午线</h2>
+
+<p>即<strong>0度经线</strong>，亦称格林尼治子午线或本初经线，是经过英国格林尼治天文台的一条经线（亦称子午线）。本初子午线的东西两边分别定为东经和西经，于180度相遇。</p>
+
+<h2 id="5-4-国际标准iso-8601">5.4 国际标准ISO 8601</h2>
+
+<p><a href="https://zh.wikipedia.org/wiki/ISO_8601">国际标准ISO 8601</a>：是国际标准化组织的日期和时间的表示方法，全称为《数据存储和交换形式·信息交换·日期和时间的表示方法》。目前是2004年12月1日发行的第三版“ISO8601:2004”以替代1998年的第一版“ISO8601:1988”与2000年的第二版“ISO8601:2000”。</p>
+
+<p>年由4位数字组成YYYY，或者带正负号的四或五位数字表示±YYYYY。以公历公元1年为0001年，以公元前1年为0000年，公元前2年为-0001年，其他以此类推。应用其他纪年法要换算成公历，但如果发送和接受信息的双方有共同一致同意的其他纪年法，可以自行应用。</p>
+
+<h2 id="5-5-协调世界时">5.5 协调世界时</h2>
+
+<blockquote>
+<p>英语：Coordinated Universal Time，</p>
+
+<p>法语：Temps Universel Coordonné，简称UTC</p>
+</blockquote>
+
+<p>是最主要的世界时间标准，其以原子时秒长为基础，在时刻上尽量接近于格林尼治标准时间。中华民国采用CNS 7648的《资料元及交换格式–资讯交换–日期及时间的表示法》（与ISO 8601类似）称之为世界协调时间。中华人民共和国采用ISO 8601:2000的国家标准GB/T 7408-2005《数据元和交换格式 信息交换 日期和时间表示法》中亦称之为协调世界时。</p>
+
+<p>协调世界时是世界上调节时钟和时间的主要时间标准，它与0度经线的平太阳时相差不超过1秒，并不遵守夏令时。协调世界时是最接近格林威治标准时间（GMT）的几个替代时间系统之一。对于大多数用途来说，UTC时间被认为能与GMT时间互换，但GMT时间已不再被科学界所确定。</p>
+
+<p>如果时间是以协调世界时（UTC）表示，则在时间后面直接加上一个“Z”（不加空格）。“Z”是协调世界时中0时区的标志。因此，“09:30 UTC”就写作“09:30Z”或是“0930Z”。“14:45:15 UTC”则为“14:45:15Z”或“144515Z”。</p>
+
+<h2 id="5-6-utc偏移量">5.6 UTC偏移量</h2>
+
+<p>UTC偏移量用以下形式表示：±[hh]:[mm]、±[hh][mm]、或者±[hh]。如果所在区时比协调世界时早1个小时（例如柏林冬季时间），那么时区标识应为“+01:00”、“+0100”或者直接写作“+01”。这也同上面的“Z”一样直接加在时间后面。
+&ldquo;UTC+8&rdquo;表示当协调世界时（UTC）时间为凌晨2点的时候，当地的时间为2+8点，即早上10点。</p>
+
+<h2 id="5-7-格林尼治平时">5.7 格林尼治平时</h2>
+
+<blockquote>
+<p>英语：Greenwich Mean Time，GMT）</p>
+</blockquote>
+
+<p>是指位于英国伦敦郊区的皇家格林尼治天文台当地的平太阳时，因为本初子午线被定义为通过那里的经线。</p>
+
+<p>自1924年2月5日开始，格林尼治天文台负责每隔一小时向全世界发放调时信息。</p>
+
+<p>格林尼治平时的正午是指当平太阳横穿格林尼治子午线时（也就是在格林尼治上空最高点时）的时间。由于地球每天的自转是有些不规则的，而且正在缓慢减速，因此格林尼治平时基于天文观测本身的缺陷，已经被原子钟报时的协调世界时（UTC）所取代。</p>
+
+<h1 id="6-参考">6 参考</h1>
+
+<ul>
+<li>原文地址：<a href="https://www.cnblogs.com/lxyit/p/9442135.html">https://www.cnblogs.com/lxyit/p/9442135.html</a></li>
+<li>is-java-util-calendar-thread-safe-or-not：<a href="https://stackoverflow.com/questions/12131324/is-java-util-calendar-thread-safe-or-not">https://stackoverflow.com/questions/12131324/is-java-util-calendar-thread-safe-or-not</a></li>
+<li>如何使用1： <a href="https://www.jianshu.com/p/19bd58b30660">https://www.jianshu.com/p/19bd58b30660</a></li>
+<li>如何使用2：<a href="https://github.com/wangy325/java-review/blob/master/src/main/java/com/wangy/common/time/Intro.java">https://github.com/wangy325/java-review/blob/master/src/main/java/com/wangy/common/time/Intro.java</a></li>
+<li>exceptions-may-occure：<a href="https://stackoverflow.com/questions/27454025/unable-to-obtain-localdatetime-from-temporalaccessor-when-parsing-localdatetime">https://stackoverflow.com/questions/27454025/unable-to-obtain-localdatetime-from-temporalaccessor-when-parsing-localdatetime</a></li>
+<li>JSR 310：<a href="https://jcp.org/aboutJava/communityprocess/pfd/jsr310/JSR-310-guide.html">https://jcp.org/aboutJava/communityprocess/pfd/jsr310/JSR-310-guide.html</a></li>
+<li>时区：<a href="https://zh.wikipedia.org/wiki/%E6%97%B6%E5%8C%BA">https://zh.wikipedia.org/wiki/%E6%97%B6%E5%8C%BA</a></li>
+<li>时区列表：<a href="https://zh.wikipedia.org/wiki/%E6%97%B6%E5%8C%BA%E5%88%97%E8%A1%A8#UTC%EF%BC%88WET_-%E6%AD%90%E6%B4%B2%E8%A5%BF%E9%83%A8%E6%99%82%E5%8D%80%EF%BC%8CGMT-_%E6%A0%BC%E6%9E%97%E5%A8%81%E6%B2%BB%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4%EF%BC%89">https://zh.wikipedia.org/wiki/%E6%97%B6%E5%8C%BA%E5%88%97%E8%A1%A8#UTC%EF%BC%88WET_-%E6%AD%90%E6%B4%B2%E8%A5%BF%E9%83%A8%E6%99%82%E5%8D%80%EF%BC%8CGMT-_%E6%A0%BC%E6%9E%97%E5%A8%81%E6%B2%BB%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4%EF%BC%89</a></li>
+<li>经线：<a href="https://zh.wikipedia.org/wiki/%E7%BB%8F%E7%BA%BF">https://zh.wikipedia.org/wiki/%E7%BB%8F%E7%BA%BF</a></li>
+<li>ISO 8601：<a href="https://zh.wikipedia.org/wiki/ISO_8601">https://zh.wikipedia.org/wiki/ISO_8601</a></li>
+<li>UTC：<a href="https://zh.wikipedia.org/wiki/%E5%8D%8F%E8%B0%83%E4%B8%96%E7%95%8C%E6%97%B6">https://zh.wikipedia.org/wiki/%E5%8D%8F%E8%B0%83%E4%B8%96%E7%95%8C%E6%97%B6</a></li>
+<li>GMT：<a href="https://zh.wikipedia.org/wiki/%E6%A0%BC%E6%9E%97%E5%B0%BC%E6%B2%BB%E6%A8%99%E6%BA%96%E6%99%82%E9%96%93">https://zh.wikipedia.org/wiki/%E6%A0%BC%E6%9E%97%E5%B0%BC%E6%B2%BB%E6%A8%99%E6%BA%96%E6%99%82%E9%96%93</a></li>
+</ul>
+    </div>
+
+    <div class="post-copyright">
+  
+  <p class="copyright-item" style= text-align:right;>
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-03-22
+        <a href="https://github.com/wangy325/endlessriver/commit/74a1d9353a951d3aec2298289031246f15cb1b98" title="refactor">(74a1d93)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/java/">Java</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/tech/java/test/mockmvc%E7%94%A8%E4%BE%8B2%E5%88%99/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">在SpringBoot项目中使用MockMvc进行接口测试</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/tech/java/job/xxl-sharding-job/">
+            <span class="next-text nav-default">在xxl-job中使用分片任务</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'endlessriver';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=u8za1dzCiImO_8rKldjU1g" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangy325" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangy325.top/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme -
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    
+    
+  </div>
+
+  <span class="copyright-year">
+    <span class="author">wangy325</span>
+    &copy;
+    2019 -
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="copyright"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

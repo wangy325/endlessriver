@@ -1,0 +1,2609 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>倒计时门闩、信号量、交换器及其他 - Endless River</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="wangy325" /><meta name="description" content="Java 1.5以后的并发类库新加入了一些用于解决并发问题的新构件，合理地使用这些构件能够帮助我们写出更加简单且健壮的并发程序。本节内容介绍java.util.concurrent包中一些具有代表性的构件，包括
+ CountDownLatch CyclicBarrier Semaphore Exchanger DelayQueue PriorityBlockingQueue  1 CountDownLatch 在讨论线程的基本概念时，我们说过join()方法可使当前线程等待调用join方法的线程执行完，可以实现简单的无锁同步，使用CountDownLatch可以更加简单的实现这一目的。毕竟，join()方法的语义“加入一个线程”不是很容易就能让人理解。相较于join()方法，CountDownLatch的语义就明确多了。
+在有些文档上，将CountDownLatch译为&amp;rdquo;倒计时门闩【shuān】&amp;rdquo;，其维护一个计数器，这个计数器在CountDownLatch初始化之后便不能重置。在CountDownLatch上调用countDown()方法来将计数值减1，调用这个方法并不会引起阻塞。不过，在这个计数器为0之前，任何调用CountDownLatch的await()方法的任务都将阻塞。
+CountDownLatch的典型用法是将一个任务分割为n个可以独立解决的部分，并创建一个计数器值为n的CountDownLatch，在每个任务完成时，调用countDown()方法将计数器减1，在等待所有任务完成的线程上调用await()方法，将任务阻塞，知道计数器为0之后再继续运行。
+" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.55.6 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://wangy325.top/post/tech/java/concurrency/%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BB%84%E4%BB%B6/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.886d4da2.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="倒计时门闩、信号量、交换器及其他" />
+<meta property="og:description" content="Java 1.5以后的并发类库新加入了一些用于解决并发问题的新构件，合理地使用这些构件能够帮助我们写出更加简单且健壮的并发程序。本节内容介绍java.util.concurrent包中一些具有代表性的构件，包括
+
+
+CountDownLatch
+CyclicBarrier
+Semaphore
+Exchanger
+DelayQueue
+PriorityBlockingQueue
+
+
+1 CountDownLatch
+
+在讨论线程的基本概念时，我们说过join()方法可使当前线程等待调用join方法的线程执行完，可以实现简单的无锁同步，使用CountDownLatch可以更加简单的实现这一目的。毕竟，join()方法的语义“加入一个线程”不是很容易就能让人理解。相较于join()方法，CountDownLatch的语义就明确多了。
+
+在有些文档上，将CountDownLatch译为&rdquo;倒计时门闩【shuān】&rdquo;，其维护一个计数器，这个计数器在CountDownLatch初始化之后便不能重置。在CountDownLatch上调用countDown()方法来将计数值减1，调用这个方法并不会引起阻塞。不过，在这个计数器为0之前，任何调用CountDownLatch的await()方法的任务都将阻塞。
+
+CountDownLatch的典型用法是将一个任务分割为n个可以独立解决的部分，并创建一个计数器值为n的CountDownLatch，在每个任务完成时，调用countDown()方法将计数器减1，在等待所有任务完成的线程上调用await()方法，将任务阻塞，知道计数器为0之后再继续运行。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangy325.top/post/tech/java/concurrency/%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BB%84%E4%BB%B6/" />
+<meta property="article:published_time" content="2020-11-16T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2021-03-22T13:40:51&#43;08:00"/>
+
+<meta itemprop="name" content="倒计时门闩、信号量、交换器及其他">
+<meta itemprop="description" content="Java 1.5以后的并发类库新加入了一些用于解决并发问题的新构件，合理地使用这些构件能够帮助我们写出更加简单且健壮的并发程序。本节内容介绍java.util.concurrent包中一些具有代表性的构件，包括
+
+
+CountDownLatch
+CyclicBarrier
+Semaphore
+Exchanger
+DelayQueue
+PriorityBlockingQueue
+
+
+1 CountDownLatch
+
+在讨论线程的基本概念时，我们说过join()方法可使当前线程等待调用join方法的线程执行完，可以实现简单的无锁同步，使用CountDownLatch可以更加简单的实现这一目的。毕竟，join()方法的语义“加入一个线程”不是很容易就能让人理解。相较于join()方法，CountDownLatch的语义就明确多了。
+
+在有些文档上，将CountDownLatch译为&rdquo;倒计时门闩【shuān】&rdquo;，其维护一个计数器，这个计数器在CountDownLatch初始化之后便不能重置。在CountDownLatch上调用countDown()方法来将计数值减1，调用这个方法并不会引起阻塞。不过，在这个计数器为0之前，任何调用CountDownLatch的await()方法的任务都将阻塞。
+
+CountDownLatch的典型用法是将一个任务分割为n个可以独立解决的部分，并创建一个计数器值为n的CountDownLatch，在每个任务完成时，调用countDown()方法将计数器减1，在等待所有任务完成的线程上调用await()方法，将任务阻塞，知道计数器为0之后再继续运行。">
+
+
+<meta itemprop="datePublished" content="2020-11-16T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-03-22T13:40:51&#43;08:00" />
+<meta itemprop="wordCount" content="10784">
+
+
+
+<meta itemprop="keywords" content="Java进阶,并发,阻塞队列,同步器,信号量,计数器," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="倒计时门闩、信号量、交换器及其他"/>
+<meta name="twitter:description" content="Java 1.5以后的并发类库新加入了一些用于解决并发问题的新构件，合理地使用这些构件能够帮助我们写出更加简单且健壮的并发程序。本节内容介绍java.util.concurrent包中一些具有代表性的构件，包括
+
+
+CountDownLatch
+CyclicBarrier
+Semaphore
+Exchanger
+DelayQueue
+PriorityBlockingQueue
+
+
+1 CountDownLatch
+
+在讨论线程的基本概念时，我们说过join()方法可使当前线程等待调用join方法的线程执行完，可以实现简单的无锁同步，使用CountDownLatch可以更加简单的实现这一目的。毕竟，join()方法的语义“加入一个线程”不是很容易就能让人理解。相较于join()方法，CountDownLatch的语义就明确多了。
+
+在有些文档上，将CountDownLatch译为&rdquo;倒计时门闩【shuān】&rdquo;，其维护一个计数器，这个计数器在CountDownLatch初始化之后便不能重置。在CountDownLatch上调用countDown()方法来将计数值减1，调用这个方法并不会引起阻塞。不过，在这个计数器为0之前，任何调用CountDownLatch的await()方法的任务都将阻塞。
+
+CountDownLatch的典型用法是将一个任务分割为n个可以独立解决的部分，并创建一个计数器值为n的CountDownLatch，在每个任务完成时，调用countDown()方法将计数器减1，在等待所有任务完成的线程上调用await()方法，将任务阻塞，知道计数器为0之后再继续运行。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Endless River</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">主题</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a><a href="/friendlink/">
+        <li class="mobile-menu-item">友链</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Endless River</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">主题</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/friendlink/">友链</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">倒计时门闩、信号量、交换器及其他</h1>
+
+      <div class="post-meta">
+          <span>
+              <span class="icomoonfree icon-calendar"></span>
+              <span class="post-time"> 2020-11-16</span>
+          </span>
+
+        <div class="post-category">
+              <span class="icomoonfree icon-folder"></span>
+            <a href="/categories/java/"> java </a>
+            </div>
+          <span class="icomoonfree icon-sigma"></span>
+          <span class="more-meta analyse"> 约 10784 字 </span>
+          <span class="icomoonfree icon-clock"></span>
+          <span class="more-meta analyse"> 预计阅读 22 分钟 </span>
+        <span class="icomoonfree icon-eye"></span>
+          <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#1-countdownlatch">1 CountDownLatch</a></li>
+<li><a href="#2-cyclicbarrier">2 CyclicBarrier</a></li>
+<li><a href="#3-semaphore">3 Semaphore</a></li>
+<li><a href="#4-exchanger">4 Exchanger</a></li>
+<li><a href="#5-priorityblockingqueue">5 PriorityBlockingQueue</a></li>
+<li><a href="#6-delayqueue">6 DelayQueue</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>Java 1.5以后的并发类库新加入了一些用于解决并发问题的新构件，合理地使用这些构件能够帮助我们写出更加简单且健壮的并发程序。本节内容介绍<code>java.util.concurrent</code>包中一些具有代表性的构件，包括</p>
+
+<ul>
+<li>CountDownLatch</li>
+<li>CyclicBarrier</li>
+<li>Semaphore</li>
+<li>Exchanger</li>
+<li>DelayQueue</li>
+<li>PriorityBlockingQueue</li>
+</ul>
+
+<h1 id="1-countdownlatch">1 CountDownLatch</h1>
+
+<p>在讨论线程的基本概念时，我们说过<code>join()</code>方法可使当前线程等待调用join方法的线程执行完，可以实现简单的<a href="../线程基础概念/#9-加入一个线程">无锁同步</a>，使用CountDownLatch可以更加简单的实现这一目的。毕竟，<code>join()</code>方法的语义“加入一个线程”不是很容易就能让人理解。相较于<code>join()</code>方法，CountDownLatch的语义就明确多了。</p>
+
+<p>在有些文档上，将CountDownLatch译为&rdquo;倒计时门闩【shuān】&rdquo;，其维护一个计数器，这个计数器在CountDownLatch初始化之后便<strong>不能重置</strong>。在CountDownLatch上调用<code>countDown()</code>方法来将计数值减1，调用这个方法并不会引起阻塞。不过，在这个计数器为0之前，任何调用CountDownLatch的<code>await()</code>方法的任务都将阻塞。</p>
+
+<p>CountDownLatch的典型用法是将一个任务分割为n个可以独立解决的部分，并创建一个计数器值为n的CountDownLatch，在每个任务完成时，调用<code>countDown()</code>方法将计数器减1，在等待所有任务完成的线程上调用<code>await()</code>方法，将任务阻塞，知道计数器为0之后再继续运行。</p>
+
+<p>下面的代码演示了CountdownLatch的用法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CountDownLatchDemo</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">TaskPortion</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">counter</span><span class="o">++;</span>
+        <span class="kd">private</span> <span class="kd">static</span> <span class="n">Random</span> <span class="n">rand</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="o">(</span><span class="n">47</span><span class="o">);</span>
+        <span class="kd">private</span> <span class="kd">final</span> <span class="n">CountDownLatch</span> <span class="n">latch</span><span class="o">;</span>
+
+        <span class="n">TaskPortion</span><span class="o">(</span><span class="n">CountDownLatch</span> <span class="n">latch</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">latch</span> <span class="o">=</span> <span class="n">latch</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">doWork</span><span class="o">();</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// Acceptable way to exit
+</span><span class="c1"></span>            <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+                <span class="n">latch</span><span class="o">.</span><span class="na">countDown</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="kt">void</span> <span class="nf">doWork</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+            <span class="n">TimeUnit</span><span class="o">.</span><span class="na">MILLISECONDS</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">rand</span><span class="o">.</span><span class="na">nextInt</span><span class="o">(</span><span class="n">2000</span><span class="o">));</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">this</span> <span class="o">+</span> <span class="s">&#34;completed&#34;</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&#34;%1$-3d &#34;</span><span class="o">,</span> <span class="n">id</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/** Waits on the CountDownLatch: */</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">WaitingTask</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">counter</span><span class="o">++;</span>
+        <span class="kd">private</span> <span class="kd">final</span> <span class="n">CountDownLatch</span> <span class="n">latch</span><span class="o">;</span>
+
+        <span class="n">WaitingTask</span><span class="o">(</span><span class="n">CountDownLatch</span> <span class="n">latch</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">latch</span> <span class="o">=</span> <span class="n">latch</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">latch</span><span class="o">.</span><span class="na">await</span><span class="o">();</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;Latch barrier passed for &#34;</span> <span class="o">+</span> <span class="k">this</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">this</span> <span class="o">+</span> <span class="s">&#34; interrupted&#34;</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&#34;WaitingTask %1$-3d &#34;</span><span class="o">,</span> <span class="n">id</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">SIZE</span> <span class="o">=</span> <span class="n">10</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">ExecutorService</span> <span class="n">exec</span> <span class="o">=</span> <span class="n">Executors</span><span class="o">.</span><span class="na">newCachedThreadPool</span><span class="o">();</span>
+        <span class="c1">// 所有任务都必须使用同一个CountDownLatch对象
+</span><span class="c1"></span>        <span class="n">CountDownLatch</span> <span class="n">latch</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CountDownLatch</span><span class="o">(</span><span class="n">SIZE</span><span class="o">);</span>
+        <span class="n">exec</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="k">new</span> <span class="n">WaitingTask</span><span class="o">(</span><span class="n">latch</span><span class="o">));</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">SIZE</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">exec</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="k">new</span> <span class="n">TaskPortion</span><span class="o">(</span><span class="n">latch</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;Launched all tasks&#34;</span><span class="o">);</span>
+        <span class="n">exec</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span> <span class="c1">// Quit when all tasks complete
+</span><span class="c1"></span>    <span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/* output (sample)
+</span><span class="cm">Launched all tasks
+</span><span class="cm">7   completed
+</span><span class="cm">9   completed
+</span><span class="cm">5   completed
+</span><span class="cm">8   completed
+</span><span class="cm">1   completed
+</span><span class="cm">2   completed
+</span><span class="cm">6   completed
+</span><span class="cm">4   completed
+</span><span class="cm">0   completed
+</span><span class="cm">3   completed
+</span><span class="cm">Latch barrier passed for WaitingTask 0  
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>上面的示例中，WaitingTask将会阻塞，直到所有的TaskPortion执行完成，TaskPortion完成之后调用了<code>countDown()</code>方法，注意，<code>countDown()</code>方法是在finally块中调用的，这是为了防止TaskPortion出现异常而导致任务一直阻塞。当计数器为0后，我们看到WaitingTask成功执行。</p>
+
+<p><code>await()</code>还有一个重载方法<code>await(long, TimeUnit)</code>，避免任务让线程一直等待。</p>
+
+<h1 id="2-cyclicbarrier">2 CyclicBarrier</h1>
+
+<p>CyclicBarrier被称为“同步屏障”，事实上就可以把它理解为一个屏障，多个任务调用屏障的<code>await()</code>方法将被阻塞，直到所有的任务都进入阻塞，那么屏障开启，所有任务继续执行。这看起来和CountDownLatch非常像，不过CountDownLatch只能触发一次，而CyclicBarrier可以多次重用，这是它们的主要区别之一。</p>
+
+<p>和CountDownLatch一样，CyclicBarrier接受一个整型参数，表示可限制的线程数。除此之外，CyclicBarrier还可以接受一个Runnable作为参数，这个参数称作<code>barrierAction</code>，<code>barrierAction</code>在所有线程到达屏障之后即开始执行，其他任务<strong>只能等待</strong><code>barrierAction</code>执行完毕之后才能继续执行，这是CyclicBarrier和CountDownLatch的区别之二。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestCyclicBarrier</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">StringBuffer</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">();</span>
+    <span class="cm">/** CyclicBarrier的构造器任务总是会先执行完毕 */</span>
+    <span class="kd">static</span> <span class="n">CyclicBarrier</span> <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CyclicBarrier</span><span class="o">(</span><span class="n">2</span><span class="o">,</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+        <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">3</span><span class="o">);</span>
+    <span class="o">});</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">ASSERT_VALUE</span> <span class="o">=</span> <span class="n">312</span><span class="o">;</span>
+
+    <span class="kd">static</span> <span class="kt">int</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">c</span><span class="o">.</span><span class="na">await</span><span class="o">();</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// ignore;
+</span><span class="c1"></span>            <span class="o">}</span>
+            <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+        <span class="o">});</span>
+        <span class="n">t</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">c</span><span class="o">.</span><span class="na">await</span><span class="o">();</span>
+            <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">2</span><span class="o">);</span>
+            <span class="n">t</span><span class="o">.</span><span class="na">join</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// ignore
+</span><span class="c1"></span>        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">())</span> <span class="o">|</span> <span class="o">(</span><span class="n">sb</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="n">0</span><span class="o">,</span> <span class="n">sb</span><span class="o">.</span><span class="na">length</span><span class="o">())).</span><span class="na">length</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="k">for</span> <span class="o">(;</span> <span class="o">;</span> <span class="o">)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">r</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">((</span><span class="n">r</span> <span class="o">=</span> <span class="n">run</span><span class="o">())</span> <span class="o">!=</span> <span class="n">ASSERT_VALUE</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// should be 321
+</span><span class="c1"></span>                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">r</span><span class="o">);</span>
+                <span class="k">return</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>上例中，barrier有一个<code>barrierAction</code>和2个“屏障任务”，main方法的输出大概率为312，小概率为321，不会出现其他结果，所以main方法无论执行多长时间，其总会结束。由于<code>barrierAction</code>总是先执行，故结果总是3xx<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>，其先执行完毕的原因在源码中很容易找到：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">//...
+</span><span class="c1">// 所有任务到达屏障
+</span><span class="c1"></span><span class="k">if</span> <span class="o">(</span><span class="n">index</span> <span class="o">==</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>  <span class="c1">// tripped
+</span><span class="c1"></span><span class="kt">boolean</span> <span class="n">ranAction</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+<span class="k">try</span> <span class="o">{</span>
+    <span class="kd">final</span> <span class="n">Runnable</span> <span class="n">command</span> <span class="o">=</span> <span class="n">barrierCommand</span><span class="o">;</span>
+    <span class="c1">//直接在当前线程调用command的run方法
+</span><span class="c1"></span>    <span class="k">if</span> <span class="o">(</span><span class="n">command</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="n">command</span><span class="o">.</span><span class="na">run</span><span class="o">();</span>
+    <span class="n">ranAction</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="n">nextGeneration</span><span class="o">();</span>
+    <span class="k">return</span> <span class="n">0</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(!</span><span class="n">ranAction</span><span class="o">)</span>
+            <span class="n">breakBarrier</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="o">//...</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>不过，屏障开启后，任务的执行顺序完全是由cpu调度的。同时，本例中的CyclicBarrier是静态域，在main方法重复执行时，并不会重新初始化，因此也直接证明了CyclicBarrier的可重用性——屏障开启后，任务继续执行后调用屏障的<code>await()</code>方法同样会阻塞而等待所有任务到达屏障，依次循环。</p>
+
+<p>下例的“赛马游戏”<sup class="footnote-ref" id="fnref:2"><a href="#fn:2">2</a></sup>完美地阐述了CyclicBarrier可以多次重用的特点，马每次跑一步，不过不同的马步长不同，等待所有的马都“跑出这一步”后，屏障开启，先确定是否有马到达终点，如有则结束赛跑，否则继续下一轮，直到有马越过终点线，下面是示例代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span><span class="lnt">97
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HorseRace</span> <span class="o">{</span>
+
+    <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Horse</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">counter</span><span class="o">++;</span>
+        <span class="kd">private</span> <span class="kt">int</span> <span class="n">strides</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="kd">static</span> <span class="n">Random</span> <span class="n">rand</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="o">(</span><span class="n">47</span><span class="o">);</span>
+        <span class="kd">private</span> <span class="kd">static</span> <span class="n">CyclicBarrier</span> <span class="n">barrier</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">Horse</span><span class="o">(</span><span class="n">CyclicBarrier</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">barrier</span> <span class="o">=</span> <span class="n">b</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getStrides</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">strides</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="k">while</span> <span class="o">(!</span><span class="n">Thread</span><span class="o">.</span><span class="na">interrupted</span><span class="o">())</span> <span class="o">{</span>
+                    <span class="n">strides</span> <span class="o">+=</span> <span class="n">rand</span><span class="o">.</span><span class="na">nextInt</span><span class="o">(</span><span class="n">3</span><span class="o">);</span> <span class="c1">// Produces 0, 1 or 2
+</span><span class="c1"></span>                    <span class="n">barrier</span><span class="o">.</span><span class="na">await</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// A legitimate way to exit
+</span><span class="c1"></span>            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">BrokenBarrierException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// This one we want to know about
+</span><span class="c1"></span>                <span class="k">throw</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="s">&#34;Horse &#34;</span> <span class="o">+</span> <span class="n">id</span> <span class="o">+</span> <span class="s">&#34; &#34;</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">tracks</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">StringBuilder</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">();</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">getStrides</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">s</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&#34;*&#34;</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="n">s</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+            <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">FINISH_LINE</span> <span class="o">=</span> <span class="n">20</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Horse</span><span class="o">&gt;</span> <span class="n">horses</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+    <span class="kd">private</span> <span class="n">ExecutorService</span> <span class="n">exec</span> <span class="o">=</span> <span class="n">Executors</span><span class="o">.</span><span class="na">newCachedThreadPool</span><span class="o">();</span>
+    <span class="kd">private</span> <span class="n">CyclicBarrier</span> <span class="n">barrier</span><span class="o">;</span>
+
+    <span class="cm">/** 这是一构造器 */</span>
+    <span class="kd">public</span> <span class="nf">HorseRace</span><span class="o">(</span><span class="kt">int</span> <span class="n">nHorses</span><span class="o">,</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">pause</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">barrier</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CyclicBarrier</span><span class="o">(</span><span class="n">nHorses</span><span class="o">,</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="n">StringBuilder</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">();</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">FINISH_LINE</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">s</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&#34;=&#34;</span><span class="o">);</span> <span class="c1">// The fence on the racetrack
+</span><span class="c1"></span>            <span class="o">}</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+            <span class="k">for</span> <span class="o">(</span><span class="n">Horse</span> <span class="n">horse</span> <span class="o">:</span> <span class="n">horses</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">horse</span><span class="o">.</span><span class="na">tracks</span><span class="o">());</span>
+            <span class="o">}</span>
+            <span class="k">for</span> <span class="o">(</span><span class="n">Horse</span> <span class="n">horse</span> <span class="o">:</span> <span class="n">horses</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">horse</span><span class="o">.</span><span class="na">getStrides</span><span class="o">()</span> <span class="o">&gt;=</span> <span class="n">FINISH_LINE</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">horse</span> <span class="o">+</span> <span class="s">&#34;won!&#34;</span><span class="o">);</span>
+                    <span class="n">exec</span><span class="o">.</span><span class="na">shutdownNow</span><span class="o">();</span>
+                    <span class="k">return</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">TimeUnit</span><span class="o">.</span><span class="na">MILLISECONDS</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">pause</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;barrier-action sleep interrupted&#34;</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nHorses</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">Horse</span> <span class="n">horse</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Horse</span><span class="o">(</span><span class="n">barrier</span><span class="o">);</span>
+            <span class="n">horses</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">horse</span><span class="o">);</span>
+            <span class="n">exec</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">horse</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">nHorses</span> <span class="o">=</span> <span class="n">7</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">pause</span> <span class="o">=</span> <span class="n">200</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">args</span><span class="o">.</span><span class="na">length</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// Optional argument
+</span><span class="c1"></span>            <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="n">0</span><span class="o">]);</span>
+            <span class="n">nHorses</span> <span class="o">=</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="n">0</span> <span class="o">?</span> <span class="n">n</span> <span class="o">:</span> <span class="n">nHorses</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">args</span><span class="o">.</span><span class="na">length</span> <span class="o">&gt;</span> <span class="n">1</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// Optional argument
+</span><span class="c1"></span>            <span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="n">1</span><span class="o">]);</span>
+            <span class="n">pause</span> <span class="o">=</span> <span class="n">p</span> <span class="o">&gt;</span> <span class="o">-</span><span class="n">1</span> <span class="o">?</span> <span class="n">p</span> <span class="o">:</span> <span class="n">pause</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">new</span> <span class="n">HorseRace</span><span class="o">(</span><span class="n">nHorses</span><span class="o">,</span> <span class="n">pause</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>实际上程序通过获取每匹马的<code>strides</code>域来判断马是否到达终点。在TIJ原书中，对<code>strides</code>域的有关操作做了同步处理，而本例中移除了这些同步，这是否安全？虽然CyclicBarrier的<code>barrierAction</code>和<code>HorseRace</code>都访问了<code>strides</code>域，不过，二者访问域的时间一定是错开的：前者在所有马都到达屏障后开始访问，而此时的马处于阻塞状态，而马获得访问权时，<code>barrierAction</code>一定没在执行。因此本例中，不使用同步也是安全的。</p>
+
+<p>CyclicBarrier还有一些特殊方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">reset</span><span class="o">();</span>
+    <span class="n">这个方法将CyclicBarrier重置到初始状态</span>
+    <span class="n">注意</span><span class="err">，</span><span class="n">这个方法会导致已经在屏障处等待的线程抛出BrokenBarrierException</span>
+    <span class="n">如果确实需要一个新的CyclicBarrier来执行操作</span><span class="err">，</span><span class="n">新建一个实例是更好的选择</span>
+
+<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getNumberWaiting</span><span class="o">()</span> <span class="o">;</span>
+    <span class="n">这个方法获取在屏障等待的线程数</span>
+
+<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getParties</span><span class="o">()</span> <span class="o">;</span>
+    <span class="n">这个方法获取所有的线程数</span><span class="err">（</span><span class="n">用来构建CyclicBarrier实例的int入参</span><span class="err">）</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>下面的例子展示了在任务执行时重置CyclicBarrier的操作，这个示例只是为了展示上面几个方法的用法，<strong>千万不要</strong>在执行任务时贸然去做这样的操作！如果处理不得当将很大可能引发阻塞或其他并发问题。</p>
+
+<blockquote>
+<p>笔者本意是计划执行批量任务，这些任务有一个域来计算其运行次数，并可能在某个任务上调用<code>reset()</code>方法，在<code>reset()</code>调用之前和之后的任务其运行次数会有差别，通过这个运行差异在<code>barrierAction</code>中来终结线程池。事实上这个预想完全落空了，<code>reset()</code>之后，如果不再次使所有线程重新到达屏障处等待，<code>barrierAction</code>就不可能执行</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ResetCyclicBarrier</span> <span class="o">{</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">reSetBarrierIf</span><span class="o">(</span><span class="kt">int</span> <span class="n">parties</span><span class="o">,</span> <span class="kt">int</span> <span class="n">bound</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">TaskMayFail</span><span class="o">[]</span> <span class="n">tasks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TaskMayFail</span><span class="o">[</span><span class="n">parties</span><span class="o">];</span>
+        <span class="n">ThreadPoolExecutor</span> <span class="n">exec</span> <span class="o">=</span> <span class="o">(</span><span class="n">ThreadPoolExecutor</span><span class="o">)</span> <span class="n">Executors</span><span class="o">.</span><span class="na">newCachedThreadPool</span><span class="o">();</span>
+        <span class="n">exec</span><span class="o">.</span><span class="na">setKeepAliveTime</span><span class="o">(</span><span class="n">0</span><span class="o">,</span> <span class="n">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">);</span>
+        <span class="n">AtomicInteger</span> <span class="n">ai</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AtomicInteger</span><span class="o">();</span>
+        <span class="n">CyclicBarrier</span> <span class="n">c2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CyclicBarrier</span><span class="o">(</span><span class="n">parties</span><span class="o">,</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="c1">// if reset barrier while task is running, the
+</span><span class="c1"></span>            <span class="c1">// barrier action can not reach in this cycle
+</span><span class="c1"></span>            <span class="c1">// until relaunch all parties to reach at barrier
+</span><span class="c1"></span>            <span class="c1">// in next round
+</span><span class="c1"></span>            <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+            <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">tasks</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">runtime</span><span class="o">;</span>
+            <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">parties</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">r</span> <span class="o">!=</span> <span class="n">tasks</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">runtime</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">tasks</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">+</span> <span class="s">&#34;:&#34;</span> <span class="o">+</span> <span class="n">tasks</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">runtime</span> <span class="o">+</span> <span class="s">&#34;: &#34;</span> <span class="o">+</span> <span class="n">r</span><span class="o">);</span>
+                    <span class="n">exec</span><span class="o">.</span><span class="na">shutdownNow</span><span class="o">();</span>
+                    <span class="k">return</span><span class="o">;</span>
+                <span class="o">}</span>
+                <span class="n">r</span> <span class="o">=</span> <span class="n">tasks</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">runtime</span><span class="o">;</span>
+                <span class="n">i</span><span class="o">++;</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">parties</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">TaskMayFail</span> <span class="n">taskMayFail</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TaskMayFail</span><span class="o">(</span><span class="n">c2</span><span class="o">,</span> <span class="n">ai</span><span class="o">,</span> <span class="n">bound</span><span class="o">);</span>
+            <span class="n">tasks</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">taskMayFail</span><span class="o">;</span>
+            <span class="n">exec</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">taskMayFail</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">TaskMayFail</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+        <span class="kd">static</span> <span class="n">Random</span> <span class="n">rand</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="o">();</span>
+        <span class="kd">static</span> <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span>
+        <span class="kd">final</span> <span class="n">CyclicBarrier</span> <span class="n">cb</span><span class="o">;</span>
+        <span class="kd">final</span> <span class="n">AtomicInteger</span> <span class="n">reSetCount</span><span class="o">;</span>
+        <span class="kd">final</span> <span class="kt">int</span> <span class="n">bound</span><span class="o">;</span>
+        <span class="kd">final</span> <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">count</span><span class="o">++;</span>
+        <span class="kt">int</span> <span class="n">runtime</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+
+
+        <span class="kd">public</span> <span class="nf">TaskMayFail</span><span class="o">(</span><span class="n">CyclicBarrier</span> <span class="n">cb</span><span class="o">,</span> <span class="n">AtomicInteger</span> <span class="n">reSetCount</span><span class="o">,</span> <span class="kt">int</span> <span class="n">bound</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">cb</span> <span class="o">=</span> <span class="n">cb</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">reSetCount</span> <span class="o">=</span> <span class="n">reSetCount</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">bound</span> <span class="o">=</span> <span class="n">bound</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="s">&#34;[TaskMayFail-&#34;</span> <span class="o">+</span> <span class="n">id</span> <span class="o">+</span> <span class="s">&#34;-runtime-&#34;</span> <span class="o">+</span> <span class="n">runtime</span> <span class="o">+</span> <span class="s">&#34;]&#34;</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="k">while</span> <span class="o">(!</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">isInterrupted</span><span class="o">())</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">rand</span><span class="o">.</span><span class="na">nextBoolean</span><span class="o">())</span> <span class="o">{</span>
+                        <span class="c1">// bound值可调整reset的概率
+</span><span class="c1"></span>                        <span class="k">if</span> <span class="o">(</span><span class="n">rand</span><span class="o">.</span><span class="na">nextInt</span><span class="o">(</span><span class="n">bound</span><span class="o">)</span> <span class="o">==</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="k">throw</span> <span class="k">new</span> <span class="n">ArithmeticException</span><span class="o">();</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span>
+                    <span class="n">runtime</span><span class="o">++;</span>
+                    <span class="n">cb</span><span class="o">.</span><span class="na">await</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">ArithmeticException</span> <span class="n">ae</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">reSetCount</span><span class="o">.</span><span class="na">incrementAndGet</span><span class="o">();</span>
+                <span class="k">while</span> <span class="o">(</span><span class="n">cb</span><span class="o">.</span><span class="na">getNumberWaiting</span><span class="o">()</span> <span class="o">&lt;</span> <span class="o">(</span><span class="n">cb</span><span class="o">.</span><span class="na">getParties</span><span class="o">()</span> <span class="o">-</span> <span class="n">reSetCount</span><span class="o">.</span><span class="na">intValue</span><span class="o">()))</span> <span class="o">{</span>
+                    <span class="c1">// waiting for all parties reach at barrier
+</span><span class="c1"></span>                    <span class="c1">// or all parties throws exception
+</span><span class="c1"></span>                <span class="o">}</span>
+                <span class="c1">// reset barrier
+</span><span class="c1"></span>                <span class="n">cb</span><span class="o">.</span><span class="na">reset</span><span class="o">();</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%s-%s reset %s%n&#34;</span><span class="o">,</span>
+                    <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">(),</span>
+                    <span class="k">this</span><span class="o">,</span>
+                    <span class="n">cb</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="o">|</span> <span class="n">BrokenBarrierException</span> <span class="n">ae</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">reSetCount</span><span class="o">.</span><span class="na">incrementAndGet</span><span class="o">();</span>
+                <span class="c1">// once barrier reset, other parties wait on barrier
+</span><span class="c1"></span>                <span class="c1">// will throw BrokenBarrierException
+</span><span class="c1"></span>                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%s-%s return by broken barrier.%n&#34;</span><span class="o">,</span>
+                    <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">(),</span>
+                    <span class="k">this</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+                <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">interrupt</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">reSetBarrierIf</span><span class="o">(</span><span class="n">13</span><span class="o">,</span> <span class="n">100</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/* output (sample)
+</span><span class="cm">pool-1-thread-3-[TaskMayFail-3-runtime-19] reset java.util.concurrent.CyclicBarrier@618bfe9a
+</span><span class="cm">pool-1-thread-4-[TaskMayFail-4-runtime-20] return by broken barrier.
+</span><span class="cm">pool-1-thread-9-[TaskMayFail-9-runtime-20] return by broken barrier.
+</span><span class="cm">pool-1-thread-8-[TaskMayFail-8-runtime-20] return by broken barrier.
+</span><span class="cm">pool-1-thread-5-[TaskMayFail-5-runtime-20] return by broken barrier.
+</span><span class="cm">pool-1-thread-12-[TaskMayFail-12-runtime-20] return by broken barrier.
+</span><span class="cm">pool-1-thread-7-[TaskMayFail-7-runtime-20] return by broken barrier.
+</span><span class="cm">pool-1-thread-13-[TaskMayFail-13-runtime-20] return by broken barrier.
+</span><span class="cm">pool-1-thread-1-[TaskMayFail-1-runtime-20] return by broken barrier.
+</span><span class="cm">pool-1-thread-11-[TaskMayFail-11-runtime-20] return by broken barrier.
+</span><span class="cm">pool-1-thread-2-[TaskMayFail-2-runtime-20] return by broken barrier.
+</span><span class="cm">pool-1-thread-10-[TaskMayFail-10-runtime-20] return by broken barrier.
+</span><span class="cm">pool-1-thread-6-[TaskMayFail-6-runtime-19] reset java.util.concurrent.CyclicBarrier@618bfe9a
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>从输出可以看到，CyclicBarrier可以重复使用。上例的设计很巧妙，因为屏障在开启之后，任务可能很快就进入抛出<code>ArithmeticException</code>而进入<code>reset</code>流程，而此时其他任务可能在屏障处等待或者还未执行，若此时贸然reset，那些等待的线程会抛出<code>BrokenBarrierException</code>并退出，但是未执行的线程并未意识到reset的发生（可以这么表述），依然进入阻塞，如果没有再次任务进入<code>reset</code>流程，程序很快将因为没有足够多的线程到达屏障而阻塞<sup class="footnote-ref" id="fnref:3"><a href="#fn:3">3</a></sup>。</p>
+
+<p>所以，上例引入一个原子变量，用于跟踪进入reset和已经退出的任务数，那么剩余的线程应该就是到达屏障的线程数，利用这个限制来保证<strong>所有的线程都得到处理</strong>，以简化问题的复杂性，一旦确定所有的线程都被处理，就可以执行<code>reset()</code>方法。同时<code>reset()</code>之后，<code>barrierAction</code>便无法执行。</p>
+
+<h1 id="3-semaphore">3 Semaphore</h1>
+
+<p>无论是显式锁还是通过synchronized关键字获取的隐式锁，其在任一时刻都只能让一个任务访问资源，而Semaphore（计数信号量）允许多个任务同时访问资源。可以把Semaphore看作是持有对象访问许可（permits）的“security”。访问对象时，须先通过<code>acquire()</code>获取许可，若此时没有许可可用，那么<code>acquire()</code>将阻塞，否则获取许可，可用许可数-1；使用完资源后，通过<code>release()</code>方法返还许可。事实上，并没有实际上的许可证对象，Semaphore通过协同各个线程工作，来达到目的。</p>
+
+<p>Semaphore的构造器接受一个“公平性参数”。不传入此参数或传入<i>false</i>时，线程获取许可的顺序无法保证，即使线程阻塞了很久，其仍然可能被刚调用<code>acquire()</code>方法的线程“抢走”许可，这可能会导致线程“饿死”。当传入<i>true</i>时，Semphore保证线程获取许可的顺序和其调用<code>acquire()</code>方法之后被执行的顺序一致<sup class="footnote-ref" id="fnref:4"><a href="#fn:4">4</a></sup>，也就是先执行的任务先获取许可（FIFO）。需要说明的是，<code>tryAcquire()</code>方法不遵循公平性原则，如果有许可可用，它直接获取之。在使用Semaphore时，一般将其设置为<strong>公平</strong>的</p>
+
+<p>Semaphore通常用于限制访问资源的线程数量，典型的例子就是控制“池”的并发访问量。下例中使用Semaphore控制池中的对象方法，当需要使用时，可以将它们“签出”（checkout），使用完毕之后再将其“签入”（checkin），使用泛型类封装功能<sup class="footnote-ref" id="fnref:5"><a href="#fn:5">5</a></sup>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">Pool</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">size</span><span class="o">;</span>
+    <span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">items</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="kt">boolean</span><span class="o">[]</span> <span class="n">checkedOut</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Semaphore</span> <span class="n">available</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Pool</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">classObject</span><span class="o">,</span> <span class="kt">int</span> <span class="n">size</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">size</span> <span class="o">=</span> <span class="n">size</span><span class="o">;</span>
+        <span class="n">checkedOut</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">boolean</span><span class="o">[</span><span class="n">size</span><span class="o">];</span>
+        <span class="n">available</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Semaphore</span><span class="o">(</span><span class="n">size</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+        <span class="c1">// Load pool with objects that can be checked out:
+</span><span class="c1"></span>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="c1">// Assumes a default constructor:
+</span><span class="c1"></span>                <span class="n">items</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">classObject</span><span class="o">.</span><span class="na">newInstance</span><span class="o">());</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="n">T</span> <span class="nf">checkOut</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="n">available</span><span class="o">.</span><span class="na">acquire</span><span class="o">();</span>
+        <span class="k">return</span> <span class="n">getItem</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kt">void</span> <span class="nf">checkIn</span><span class="o">(</span><span class="n">T</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">releaseItem</span><span class="o">(</span><span class="n">x</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">available</span><span class="o">.</span><span class="na">release</span><span class="o">();</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;release &#34;</span> <span class="o">+</span> <span class="n">x</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kt">void</span> <span class="nf">checkAllIn</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">available</span><span class="o">.</span><span class="na">release</span><span class="o">(</span><span class="n">releaseAll</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">synchronized</span> <span class="n">T</span> <span class="nf">getItem</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(!</span><span class="n">checkedOut</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">{</span>
+                <span class="n">checkedOut</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+                <span class="k">return</span> <span class="n">items</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="c1">// Semaphore prevents reaching here
+</span><span class="c1"></span>        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">synchronized</span> <span class="kt">boolean</span> <span class="nf">releaseItem</span><span class="o">(</span><span class="n">T</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="n">items</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="n">item</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">index</span> <span class="o">==</span> <span class="o">-</span><span class="n">1</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Not in the list
+</span><span class="c1"></span>        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">checkedOut</span><span class="o">[</span><span class="n">index</span><span class="o">])</span> <span class="o">{</span>
+            <span class="n">checkedOut</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+
+            <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="c1">// Wasn&#39;t checked out
+</span><span class="c1"></span>        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">synchronized</span> <span class="kt">int</span> <span class="nf">releaseAll</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">items</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">checkedOut</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">{</span>
+                <span class="n">checkedOut</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+                <span class="o">++</span><span class="n">r</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">r</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>这个池使用<code>checkout</code>和<code>checkIn</code>方法来签出和签入对象，在签出对象之前调用<code>acquire()</code>，如果没有可用对象，那么<code>checkOut</code>将阻塞。由于Semaphore的机制，<code>checkOut</code>方法并不需要使用同步，但是<code>getItem</code>方法则需要同步了，Semaphore协同多线程对资源的访问，但是并不能保证多线程对资源修改的并发安全，这是两回事<sup class="footnote-ref" id="fnref:6"><a href="#fn:6">6</a></sup>。<code>checkIn</code>方法则判断给定对象是否被使用，是则签入之，否则不做任何操作，同样的，<code>releaseItem</code>方法也需要使用同步。</p>
+
+<blockquote>
+<p><em>The semaphore encapsulates the synchronization needed to restrict access to the pool, separately from
+any synchronization needed to maintain the consistency of the pool itself.</em></p>
+</blockquote>
+
+<p>接下来我们可以测试这个池能否正常工作了:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SemaphoreDemo</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">AcquireTask</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">counter</span><span class="o">++;</span>
+        <span class="kd">private</span> <span class="kd">final</span> <span class="n">Pool</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">pool</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">AcquireTask</span><span class="o">(</span><span class="n">Pool</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">pool</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">pool</span> <span class="o">=</span> <span class="n">pool</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">T</span> <span class="n">item</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="na">checkOut</span><span class="o">();</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">this</span> <span class="o">+</span> <span class="s">&#34; acquire &#34;</span> <span class="o">+</span> <span class="n">item</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// Acceptable way to terminate
+</span><span class="c1"></span>            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="s">&#34;CheckoutTask-&#34;</span> <span class="o">+</span> <span class="n">id</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">ReleaseTask</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">counter</span><span class="o">++;</span>
+        <span class="kd">private</span> <span class="kd">final</span> <span class="n">Pool</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">pool</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">ReleaseTask</span><span class="o">(</span><span class="n">Pool</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">pool</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">pool</span> <span class="o">=</span> <span class="n">pool</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">items</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="na">items</span><span class="o">;</span>
+                <span class="k">for</span> <span class="o">(</span><span class="n">T</span> <span class="n">item</span> <span class="o">:</span> <span class="n">items</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">pool</span><span class="o">.</span><span class="na">checkIn</span><span class="o">(</span><span class="n">item</span><span class="o">);</span>
+                <span class="o">}</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// Acceptable way to terminate
+</span><span class="c1"></span>            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="s">&#34;AcquireTask-&#34;</span> <span class="o">+</span> <span class="n">id</span> <span class="o">+</span> <span class="s">&#34; &#34;</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Fat</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="kd">volatile</span> <span class="kt">double</span> <span class="n">d</span><span class="o">;</span> <span class="c1">// Prevent optimization
+</span><span class="c1"></span>        <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">counter</span><span class="o">++;</span>
+
+        <span class="kd">public</span> <span class="nf">Fat</span><span class="o">()</span> <span class="o">{</span>
+            <span class="c1">// Expensive, interruptible operation:
+</span><span class="c1"></span>            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">10000</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">d</span> <span class="o">+=</span> <span class="o">(</span><span class="n">Math</span><span class="o">.</span><span class="na">PI</span> <span class="o">+</span> <span class="n">Math</span><span class="o">.</span><span class="na">E</span><span class="o">)</span> <span class="o">/</span> <span class="o">(</span><span class="kt">double</span><span class="o">)</span> <span class="n">i</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="s">&#34;Fat-&#34;</span> <span class="o">+</span> <span class="n">id</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">final</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">SIZE</span> <span class="o">=</span> <span class="n">5</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">test</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+        <span class="kd">final</span> <span class="n">Pool</span><span class="o">&lt;</span><span class="n">Fat</span><span class="o">&gt;</span> <span class="n">pool</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Pool</span><span class="o">&lt;&gt;(</span><span class="n">Fat</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">SIZE</span><span class="o">);</span>
+        <span class="n">ExecutorService</span> <span class="n">exec</span> <span class="o">=</span> <span class="n">Executors</span><span class="o">.</span><span class="na">newCachedThreadPool</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">SIZE</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">exec</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="k">new</span> <span class="n">AcquireTask</span><span class="o">&lt;&gt;(</span><span class="n">pool</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="n">exec</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="k">new</span> <span class="n">ReleaseTask</span><span class="o">&lt;&gt;(</span><span class="n">pool</span><span class="o">));</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Fat</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">SIZE</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">Fat</span> <span class="n">f</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="na">checkOut</span><span class="o">();</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="s">&#34;: main() acquire &#34;</span> <span class="o">+</span> <span class="n">f</span><span class="o">);</span>
+            <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">f</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">Future</span><span class="o">&lt;?&gt;</span> <span class="n">blocked</span> <span class="o">=</span> <span class="n">exec</span><span class="o">.</span><span class="na">submit</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="c1">// Semaphore prevents additional checkout,
+</span><span class="c1"></span>                <span class="c1">// so call is blocked:
+</span><span class="c1"></span>                <span class="n">pool</span><span class="o">.</span><span class="na">checkOut</span><span class="o">();</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;checkOut() Interrupted&#34;</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+        <span class="n">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">2</span><span class="o">);</span>
+        <span class="n">blocked</span><span class="o">.</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span> <span class="c1">// Break out of blocked call
+</span><span class="c1"></span>        <span class="c1">// release all items
+</span><span class="c1"></span>        <span class="n">pool</span><span class="o">.</span><span class="na">checkAllIn</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Fat</span> <span class="n">f</span> <span class="o">:</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">pool</span><span class="o">.</span><span class="na">checkIn</span><span class="o">(</span><span class="n">f</span><span class="o">);</span> <span class="c1">// Second checkIn ignored
+</span><span class="c1"></span>        <span class="o">}</span>
+        <span class="n">exec</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">SemaphoreDemo</span> <span class="n">semaphoreDemo</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SemaphoreDemo</span><span class="o">();</span>
+        <span class="n">semaphoreDemo</span><span class="o">.</span><span class="na">test</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/* output(sample)
+</span><span class="cm">AcquireTask-0 acquire Fat-0
+</span><span class="cm">AcquireTask-4 acquire Fat-4
+</span><span class="cm">AcquireTask-3 acquire Fat-3
+</span><span class="cm">AcquireTask-2 acquire Fat-2
+</span><span class="cm">AcquireTask-1 acquire Fat-1
+</span><span class="cm">release Fat-0
+</span><span class="cm">0: main() acquire Fat-0
+</span><span class="cm">release Fat-1
+</span><span class="cm">1: main() acquire Fat-1
+</span><span class="cm">release Fat-2
+</span><span class="cm">2: main() acquire Fat-2
+</span><span class="cm">release Fat-3
+</span><span class="cm">3: main() acquire Fat-3
+</span><span class="cm">release Fat-4
+</span><span class="cm">4: main() acquire Fat-4
+</span><span class="cm">checkOut() Interrupted
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>上例<code>SemaphoreDemo</code>有两个任务，分别用于签入签出对象，程序首先使用<code>AcquireTask</code>签出所有对象，接着使用<code>ReleaseTask</code>签入对象。主线程接着依次签出所有对象，可以看到，主线程的签出过程是被阻塞的，只有对象签入之后，才能被签出。主线程签出所有对象之后，由于没有签入任务，接着的签出任务一定是被阻塞的，主线程休眠2s后中断了阻塞的任务。</p>
+
+<h1 id="4-exchanger">4 Exchanger</h1>
+
+<p>Exchanger是在两个任务之间交换对象的栅栏。当这些任务进入栅栏时，各自拥有一个对象，离开时交换它们拥有的对象。栅栏可以用来设计缓存对象，2个任务分别来使用和清空缓存，当缓存空间满时，则在Exchanger上交换缓存，缓存得以重复使用<sup class="footnote-ref" id="fnref:7"><a href="#fn:7">7</a></sup>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DataBuffer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">buffer</span><span class="o">;</span>
+    <span class="cm">/** 利用size构造一个有界队列 */</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">size</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">DataBuffer</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">cls</span><span class="o">,</span> <span class="kt">int</span> <span class="n">size</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">(</span><span class="n">cls</span><span class="o">,</span> <span class="n">size</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">DataBuffer</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">cls</span><span class="o">,</span> <span class="kt">int</span> <span class="n">size</span><span class="o">,</span> <span class="n">Generator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">gen</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">cls</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="n">NullPointerException</span><span class="o">();</span>
+        <span class="c1">// 检查cls的类型，如果不是队列，则抛出异常
+</span><span class="c1"></span>        <span class="k">if</span> <span class="o">(!</span><span class="n">Queue</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">isAssignableFrom</span><span class="o">(</span><span class="n">cls</span><span class="o">))</span> <span class="k">throw</span> <span class="k">new</span> <span class="n">ClassCastException</span><span class="o">();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">size</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalArgumentException</span><span class="o">();</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">size</span> <span class="o">=</span> <span class="n">size</span><span class="o">;</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">Constructor</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="na">getConstructor</span><span class="o">(</span><span class="kt">int</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+            <span class="n">c</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">buffer</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">newInstance</span><span class="o">(</span><span class="n">size</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NoSuchMethodException</span> <span class="o">|</span> <span class="n">SecurityException</span> <span class="o">|</span> <span class="n">InvocationTargetException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">buffer</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="na">newInstance</span><span class="o">();</span>
+        <span class="o">}</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">gen</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+                <span class="n">buffer</span><span class="o">.</span><span class="na">offer</span><span class="o">(</span><span class="n">gen</span><span class="o">.</span><span class="na">next</span><span class="o">());</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">synchronized</span> <span class="kt">boolean</span> <span class="nf">isFull</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">buffer</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;=</span> <span class="n">size</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">synchronized</span> <span class="kt">boolean</span> <span class="nf">isEmpty</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">buffer</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">synchronized</span> <span class="kt">int</span> <span class="nf">bufferSize</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">buffer</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">synchronized</span> <span class="kd">public</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">getBuffer</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">buffer</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">synchronized</span> <span class="kt">boolean</span> <span class="nf">addToBuffer</span><span class="o">(</span><span class="n">T</span> <span class="n">t</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(!</span><span class="n">isFull</span><span class="o">())</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">buffer</span><span class="o">.</span><span class="na">offer</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">synchronized</span> <span class="n">T</span> <span class="nf">takeFromBuffer</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(!</span><span class="n">isEmpty</span><span class="o">())</span> <span class="o">{</span>
+            <span class="n">buffer</span><span class="o">.</span><span class="na">remove</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><code>DataBuffer</code>接受一个<code>Queue&lt;T&gt;</code>类型参数，用来初始化缓存队列，并且利用size指定了缓存队列的容量，作为是“达到栅栏”的前置条件。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BufferSwap</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">class</span> <span class="nc">FillTask</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="n">DataBuffer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">db</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="kd">final</span> <span class="n">Exchanger</span><span class="o">&lt;</span><span class="n">DataBuffer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">ex</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="kd">final</span> <span class="n">Generator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">gen</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">FillTask</span><span class="o">(</span><span class="n">DataBuffer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">db</span><span class="o">,</span> <span class="n">Generator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">gen</span><span class="o">,</span> <span class="n">Exchanger</span><span class="o">&lt;</span><span class="n">DataBuffer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">db</span> <span class="o">=</span> <span class="n">db</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">gen</span> <span class="o">=</span> <span class="n">gen</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">ex</span> <span class="o">=</span> <span class="n">ex</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="k">while</span> <span class="o">(</span><span class="n">db</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">db</span><span class="o">.</span><span class="na">isFull</span><span class="o">())</span> <span class="o">{</span>
+                        <span class="n">db</span> <span class="o">=</span> <span class="n">ex</span><span class="o">.</span><span class="na">exchange</span><span class="o">(</span><span class="n">db</span><span class="o">);</span>
+                    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                        <span class="n">db</span><span class="o">.</span><span class="na">addToBuffer</span><span class="o">(</span><span class="n">gen</span><span class="o">.</span><span class="na">next</span><span class="o">());</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// right to exit here
+</span><span class="c1"></span>            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">class</span> <span class="nc">EmptyTask</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+
+        <span class="kd">private</span> <span class="n">DataBuffer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">db</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="kd">final</span> <span class="n">Exchanger</span><span class="o">&lt;</span><span class="n">DataBuffer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">ex</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">ecLimit</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">EmptyTask</span><span class="o">(</span><span class="n">DataBuffer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">db</span><span class="o">,</span> <span class="n">Exchanger</span><span class="o">&lt;</span><span class="n">DataBuffer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">ex</span><span class="o">,</span> <span class="kt">int</span> <span class="n">limit</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">db</span> <span class="o">=</span> <span class="n">db</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">ex</span> <span class="o">=</span> <span class="n">ex</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">ecLimit</span> <span class="o">=</span> <span class="n">limit</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="k">while</span> <span class="o">(</span><span class="n">ec</span><span class="o">.</span><span class="na">intValue</span><span class="o">()</span> <span class="o">&lt;</span> <span class="n">ecLimit</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">db</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
+                        <span class="n">db</span> <span class="o">=</span> <span class="n">ex</span><span class="o">.</span><span class="na">exchange</span><span class="o">(</span><span class="n">db</span><span class="o">);</span>
+                        <span class="n">ec</span><span class="o">.</span><span class="na">incrementAndGet</span><span class="o">();</span>
+                    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                        <span class="n">db</span><span class="o">.</span><span class="na">takeFromBuffer</span><span class="o">();</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// exit by interrupted
+</span><span class="c1"></span>            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/** 交换缓存的次数，用来限制程序的运行 */</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">AtomicInteger</span> <span class="n">ec</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AtomicInteger</span><span class="o">();</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * @param size  the buffer size
+</span><span class="cm">     * @param limit the exchange time limit
+</span><span class="cm">     */</span>
+    <span class="kt">void</span> <span class="nf">test</span><span class="o">(</span><span class="kt">int</span> <span class="n">size</span><span class="o">,</span> <span class="kt">int</span> <span class="n">limit</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Exchanger</span><span class="o">&lt;</span><span class="n">DataBuffer</span><span class="o">&lt;</span><span class="n">Fat</span><span class="o">&gt;&gt;</span> <span class="n">xh</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Exchanger</span><span class="o">&lt;&gt;();</span>
+        <span class="n">Generator</span><span class="o">&lt;</span><span class="n">Fat</span><span class="o">&gt;</span> <span class="n">generator</span> <span class="o">=</span> <span class="n">BasicGenerator</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">Fat</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="c1">// ignore class check
+</span><span class="c1"></span>        <span class="c1">// can not solve the issue actually...
+</span><span class="c1"></span>        <span class="n">DataBuffer</span><span class="o">&lt;</span><span class="n">Fat</span><span class="o">&gt;</span> <span class="n">fullBuffer</span><span class="o">,</span> <span class="n">emptyBuffer</span><span class="o">;</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">fullBuffer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DataBuffer</span><span class="o">(</span><span class="n">ArrayBlockingQueue</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">size</span><span class="o">,</span> <span class="n">generator</span><span class="o">);</span>
+            <span class="n">emptyBuffer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DataBuffer</span><span class="o">(</span><span class="n">ArrayBlockingQueue</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">size</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;initialization failure&#34;</span><span class="o">);</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">ExecutorService</span> <span class="n">pool</span> <span class="o">=</span> <span class="n">Executors</span><span class="o">.</span><span class="na">newCachedThreadPool</span><span class="o">();</span>
+        <span class="n">Future</span><span class="o">&lt;?&gt;</span> <span class="n">t1</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">new</span> <span class="n">FillTask</span><span class="o">(</span><span class="n">fullBuffer</span><span class="o">,</span> <span class="n">generator</span><span class="o">,</span> <span class="n">xh</span><span class="o">));</span>
+        <span class="n">Future</span><span class="o">&lt;?&gt;</span> <span class="n">done</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">new</span> <span class="n">EmptyTask</span><span class="o">&lt;&gt;(</span><span class="n">emptyBuffer</span><span class="o">,</span> <span class="n">xh</span><span class="o">,</span> <span class="n">limit</span><span class="o">));</span>
+        <span class="k">for</span> <span class="o">(;</span> <span class="o">;</span> <span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">done</span><span class="o">.</span><span class="na">isDone</span><span class="o">())</span> <span class="o">{</span>
+                <span class="n">t1</span><span class="o">.</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+                <span class="k">break</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">pool</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
+        <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Fat</span><span class="o">&gt;</span> <span class="n">full</span> <span class="o">=</span> <span class="n">fullBuffer</span><span class="o">.</span><span class="na">getBuffer</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&#34;fullTask&#39;s buffer: &#34;</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Fat</span> <span class="n">fat</span> <span class="o">:</span> <span class="n">full</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%s\t&#34;</span><span class="o">,</span> <span class="n">fat</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">ocvnut</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;++++++++++++++++++++++++++++++++&#34;</span><span class="o">);</span>
+        <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Fat</span><span class="o">&gt;</span> <span class="n">empty</span> <span class="o">=</span> <span class="n">emptyBuffer</span><span class="o">.</span><span class="na">getBuffer</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&#34;emptyTask&#39;s buffer:&#34;</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Fat</span> <span class="n">fat</span> <span class="o">:</span> <span class="n">empty</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&#34;%s\t&#34;</span><span class="o">,</span> <span class="n">fat</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">BufferSwap</span> <span class="n">bs</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferSwap</span><span class="o">();</span>
+        <span class="n">bs</span><span class="o">.</span><span class="na">test</span><span class="o">(</span><span class="n">10</span><span class="o">,</span> <span class="n">100</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/* output
+</span><span class="cm">fillTask&#39;s buffer: Fat-1000	Fat-1001	Fat-1002	Fat-1003	Fat-1004	Fat-1005	Fat-1006	Fat-1007	Fat-1008	Fat-1009
+</span><span class="cm">++++++++++++++++++++++++++++++++
+</span><span class="cm">emptyTask&#39;s buffer: Fat-990	Fat-991	Fat-992	Fat-993	Fat-994	Fat-995	Fat-996	Fat-997	Fat-998	Fat-999
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><code>BufferSwap</code>中有2个任务，<code>FillTask</code>用来使用缓存，当缓存队列未满时，一直向缓存中添加对象，一旦缓存已满，则进入“栅栏”；而<code>EmptyTask</code>用来清空已满的缓存队列，知道缓存队列为空进入”栅栏”，同时为了限制缓存交换的次数，我们在缓存交换达到限制时停止<code>EmptyTask</code>。在<code>test()</code>方法中，我们初始化了2个缓存对象<code>fullBuffer</code>和<code>emptyBuffer</code>，前者会初始化一个满的缓存，后者则会初始化一个空的缓存。本例中传入的类型参数是<code>ArrayBlockingQueue.class</code>，并且忽略了类型检查<sup class="footnote-ref" id="fnref:8"><a href="#fn:8">8</a></sup>。</p>
+
+<p>之后提交这2个缓存任务，使用<code>Future&lt;?&gt;</code>来检查<code>EmptyTask</code>的状态并适时取消<code>FillTask</code>。这样做时可行的，因为<code>FillTask</code>一定会在最后一次交换之后继续使用而占满缓存空间进入“栅栏”处阻塞，使用<code>Future.cancel()</code>可以中断其阻塞并抛出中断异常，从而结束运行。随后重看2个任务阻塞队列中的对象，输出符合期望<sup class="footnote-ref" id="fnref:note"><a href="#fn:note">9</a></sup>。</p>
+
+<h1 id="5-priorityblockingqueue">5 PriorityBlockingQueue</h1>
+
+<p>就是一个基础的可阻塞的<a href="../queue/#1-priorityqueue">优先级队列</a>，当队列为空时，从队列中获取元素时被阻塞。其余特性和优先级队列是一致的。</p>
+
+<p>下例展示了如何构建一个<span id ="pt">可以放入优先级队列</span>的任务：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">PrioritizedTask</span> <span class="kd">implements</span> <span class="n">Runnable</span><span class="o">,</span> <span class="n">Comparable</span><span class="o">&lt;</span><span class="n">PrioritizedTask</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">protected</span> <span class="kd">static</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">PrioritizedTask</span><span class="o">&gt;</span> <span class="n">sequence</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+    <span class="kd">private</span> <span class="n">Random</span> <span class="n">rand</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="o">(</span><span class="n">47</span><span class="o">);</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">counter</span><span class="o">++;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">priority</span><span class="o">;</span>
+
+
+    <span class="kd">public</span> <span class="nf">PrioritizedTask</span><span class="o">(</span><span class="kt">int</span> <span class="n">priority</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">priority</span> <span class="o">=</span> <span class="n">priority</span><span class="o">;</span>
+        <span class="n">sequence</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compareTo</span><span class="o">(</span><span class="n">PrioritizedTask</span> <span class="n">arg</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">priority</span> <span class="o">&lt;</span> <span class="n">arg</span><span class="o">.</span><span class="na">priority</span> <span class="o">?</span> <span class="n">1</span> <span class="o">:</span>
+            <span class="o">(</span><span class="n">priority</span> <span class="o">&gt;</span> <span class="n">arg</span><span class="o">.</span><span class="na">priority</span> <span class="o">?</span> <span class="o">-</span><span class="n">1</span> <span class="o">:</span> <span class="n">0</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">TimeUnit</span><span class="o">.</span><span class="na">MILLISECONDS</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">rand</span><span class="o">.</span><span class="na">nextInt</span><span class="o">(</span><span class="n">250</span><span class="o">));</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// Acceptable way to exit
+</span><span class="c1"></span>        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&#34;[%1$-3d]&#34;</span><span class="o">,</span> <span class="n">priority</span><span class="o">)</span> <span class="o">+</span>
+            <span class="s">&#34; Task &#34;</span> <span class="o">+</span> <span class="n">id</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">summary</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&#34;(&#34;</span> <span class="o">+</span> <span class="n">id</span> <span class="o">+</span> <span class="s">&#34;:&#34;</span> <span class="o">+</span> <span class="n">priority</span> <span class="o">+</span> <span class="s">&#34;)&#34;</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">EndSentinel</span> <span class="kd">extends</span> <span class="n">PrioritizedTask</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="n">ExecutorService</span> <span class="n">exec</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">EndSentinel</span><span class="o">(</span><span class="n">ExecutorService</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kd">super</span><span class="o">(-</span><span class="n">1</span><span class="o">);</span> <span class="c1">// Lowest priority in this program
+</span><span class="c1"></span>            <span class="n">exec</span> <span class="o">=</span> <span class="n">e</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+            <span class="k">for</span> <span class="o">(</span><span class="n">PrioritizedTask</span> <span class="n">pt</span> <span class="o">:</span> <span class="n">sequence</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">pt</span><span class="o">.</span><span class="na">summary</span><span class="o">());</span>
+                <span class="k">if</span> <span class="o">(++</span><span class="n">count</span> <span class="o">%</span> <span class="n">5</span> <span class="o">==</span> <span class="n">0</span><span class="o">)</span>
+                    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+            <span class="o">}</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">this</span> <span class="o">+</span> <span class="s">&#34; Calling shutdownNow()&#34;</span><span class="o">);</span>
+            <span class="n">exec</span><span class="o">.</span><span class="na">shutdownNow</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><code>PrioritizedTask</code>实现了Runnable和Comparable接口，有一个int型<code>priority</code>域，用来表示任务的优先级，在<code>compareTo</code>方法中的逻辑表示，优先级高的将会优先出队。其还有一个静态域，用来记录所有任务被置入队列的顺序。<code>PrioritizedTask</code>有一个静态内部类，也是其子类，它被称作“结束哨兵”，它的优先级为-1，代表它会最后出队，当执行这个任务时，代表任务所有的任务执行完毕，可以关闭线程池资源。</p>
+
+<p>在接下来的示例中，将模拟生产者和消费者，执行PriorityBlockingQueue中的任务，我们可以从程序的输出观察优先级队列的出队（被执行）的顺序：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">PriorityBlockingQueueDemo</span> <span class="o">{</span>
+
+    <span class="kd">static</span> <span class="kd">class</span> <span class="nc">PrioritizedTaskProducer</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="n">Random</span> <span class="n">rand</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="o">(</span><span class="n">47</span><span class="o">);</span>
+        <span class="kd">private</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Runnable</span><span class="o">&gt;</span> <span class="n">queue</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="n">ExecutorService</span> <span class="n">exec</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">PrioritizedTaskProducer</span><span class="o">(</span>
+            <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Runnable</span><span class="o">&gt;</span> <span class="n">q</span><span class="o">,</span> <span class="n">ExecutorService</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">queue</span> <span class="o">=</span> <span class="n">q</span><span class="o">;</span>
+            <span class="n">exec</span> <span class="o">=</span> <span class="n">e</span><span class="o">;</span> <span class="c1">// Used for EndSentinel
+</span><span class="c1"></span>        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+            <span class="c1">// Unbounded queue; never blocks.
+</span><span class="c1"></span>            <span class="c1">// Fill it up fast with random priorities:
+</span><span class="c1"></span>            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">20</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">queue</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">PrioritizedTask</span><span class="o">(</span><span class="n">rand</span><span class="o">.</span><span class="na">nextInt</span><span class="o">(</span><span class="n">10</span><span class="o">)));</span>
+                <span class="n">Thread</span><span class="o">.</span><span class="na">yield</span><span class="o">();</span>
+            <span class="o">}</span>
+            <span class="c1">// Trickle in highest-priority jobs:
+</span><span class="c1"></span>            <span class="k">try</span> <span class="o">{</span>
+                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                    <span class="n">TimeUnit</span><span class="o">.</span><span class="na">MILLISECONDS</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">250</span><span class="o">);</span>
+                    <span class="n">queue</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">PrioritizedTask</span><span class="o">(</span><span class="n">10</span><span class="o">));</span>
+                <span class="o">}</span>
+                <span class="c1">// Add jobs, lowest priority first:
+</span><span class="c1"></span>                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+                    <span class="n">queue</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">PrioritizedTask</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
+                <span class="c1">// A sentinel to stop all the tasks:
+</span><span class="c1"></span>                <span class="n">queue</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">PrioritizedTask</span><span class="o">.</span><span class="na">EndSentinel</span><span class="o">(</span><span class="n">exec</span><span class="o">));</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// Acceptable way to exit
+</span><span class="c1"></span>            <span class="o">}</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;Finished PrioritizedTaskProducer&#34;</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kd">class</span> <span class="nc">PrioritizedTaskConsumer</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="n">PriorityBlockingQueue</span><span class="o">&lt;</span><span class="n">Runnable</span><span class="o">&gt;</span> <span class="n">q</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">PrioritizedTaskConsumer</span><span class="o">(</span>
+            <span class="n">PriorityBlockingQueue</span><span class="o">&lt;</span><span class="n">Runnable</span><span class="o">&gt;</span> <span class="n">q</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">q</span> <span class="o">=</span> <span class="n">q</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="k">while</span> <span class="o">(!</span><span class="n">Thread</span><span class="o">.</span><span class="na">interrupted</span><span class="o">())</span>
+                    <span class="c1">// Use current thread to run the task:
+</span><span class="c1"></span>                    <span class="n">q</span><span class="o">.</span><span class="na">take</span><span class="o">().</span><span class="na">run</span><span class="o">();</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// Acceptable way to exit
+</span><span class="c1"></span>            <span class="o">}</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;Finished PrioritizedTaskConsumer&#34;</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">ExecutorService</span> <span class="n">exec</span> <span class="o">=</span> <span class="n">Executors</span><span class="o">.</span><span class="na">newCachedThreadPool</span><span class="o">();</span>
+        <span class="n">PriorityBlockingQueue</span><span class="o">&lt;</span><span class="n">Runnable</span><span class="o">&gt;</span> <span class="n">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PriorityBlockingQueue</span><span class="o">&lt;&gt;();</span>
+        <span class="n">exec</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="k">new</span> <span class="n">PrioritizedTaskProducer</span><span class="o">(</span><span class="n">queue</span><span class="o">,</span> <span class="n">exec</span><span class="o">));</span>
+        <span class="n">exec</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="k">new</span> <span class="n">PrioritizedTaskConsumer</span><span class="o">(</span><span class="n">queue</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/* output(partial)
+</span><span class="cm">[9  ] Task 5
+</span><span class="cm">[9  ] Task 13
+</span><span class="cm">[9  ] Task 14
+</span><span class="cm">[8  ] Task 10
+</span><span class="cm">... other 15 tasks
+</span><span class="cm">[0  ] Task 18
+</span><span class="cm">[10 ] Task 20
+</span><span class="cm">... other 7 tasks
+</span><span class="cm">[10 ] Task 28
+</span><span class="cm">Finished PrioritizedTaskProducer
+</span><span class="cm">[10 ] Task 29
+</span><span class="cm">... other 9 tasks
+</span><span class="cm">[0  ] Task 30
+</span><span class="cm">(0:8)(1:5)(2:3)(3:1)(4:1)
+</span><span class="cm">(5:9)(6:8)(7:0)(8:2)(9:7)
+</span><span class="cm">(10:8)(11:8)(12:1)(13:9)(14:9)
+</span><span class="cm">(15:8)(16:8)(17:1)(18:0)(19:8)
+</span><span class="cm">(20:10)(21:10)(22:10)(23:10)(24:10)
+</span><span class="cm">(25:10)(26:10)(27:10)(28:10)(29:10)
+</span><span class="cm">(30:0)(31:1)(32:2)(33:3)(34:4)
+</span><span class="cm">(35:5)(36:6)(37:7)(38:8)(39:9)
+</span><span class="cm">(40:-1)
+</span><span class="cm">[-1 ] Task 40 Calling shutdownNow()
+</span><span class="cm">Finished PrioritizedTaskConsumer
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><code>PrioritizedTaskProducer</code>任务负责向队列添加40个任务，前20个任务不间断地添加进队，且随机0-10的优先级；后10个任务是间隔固定时间添加优先级为10的任务，最后10个任务不间断添加优先级递增到9的任务，最后添加&rdquo;结束哨兵&rdquo;任务，其将打印所有任务添加到队列的顺序。<code>PrioritizedTaskConsumer</code>则是不间断的尝试从队列中取出任务执行。从输出可以看到，队列中如果有优先级高的任务，它一定是先出队的。</p>
+
+<p>这个例子不需要任何显式同步，因为阻塞队列提供了所需的同步。</p>
+
+<h1 id="6-delayqueue">6 DelayQueue</h1>
+
+<p>DelayQueue是一个无界的阻塞队列，利用PriorityQueue实现，用于存放实现Delay接口<sup class="footnote-ref" id="fnref:9"><a href="#fn:9">10</a></sup>的对象，队列中的对象只能在其到期之后才能被取出。同时其还是一个有序队列，即队头的元素将最先到期，若没有任何元素到期，就不会有队头元素，<code>poll()</code>方法将返回<code>null</code>，因此DelayQueue<strong>不接受</strong><code>null</code>作为元素。</p>
+
+<p>实际上，在了解了<code>ScheduledThreadPoolExecutor.ScheduledFutureTask</code>的<a href="../计划执行任务/#4-4-任务出队">出队规则</a>之后，DelayQueue的出队的实现也就不言自明了——当leader被设置时，表明有任务即将出队，其他任务进入等待，该任务出队之后重置leader：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// Delayqueue.take
+</span><span class="c1"></span><span class="kd">public</span> <span class="n">E</span> <span class="nf">take</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+    <span class="kd">final</span> <span class="n">ReentrantLock</span> <span class="n">lock</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">lock</span><span class="o">;</span>
+    <span class="n">lock</span><span class="o">.</span><span class="na">lockInterruptibly</span><span class="o">();</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(;;)</span> <span class="o">{</span>
+            <span class="n">E</span> <span class="n">first</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="na">peek</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">first</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+                <span class="n">available</span><span class="o">.</span><span class="na">await</span><span class="o">();</span>
+            <span class="k">else</span> <span class="o">{</span>
+                <span class="kt">long</span> <span class="n">delay</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="na">getDelay</span><span class="o">(</span><span class="n">NANOSECONDS</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">delay</span> <span class="o">&lt;=</span> <span class="n">0</span><span class="o">)</span>
+                    <span class="k">return</span> <span class="n">q</span><span class="o">.</span><span class="na">poll</span><span class="o">();</span>
+                <span class="n">first</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span> <span class="c1">// don&#39;t retain ref while waiting
+</span><span class="c1"></span>                <span class="k">if</span> <span class="o">(</span><span class="n">leader</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+                    <span class="n">available</span><span class="o">.</span><span class="na">await</span><span class="o">();</span>
+                <span class="k">else</span> <span class="o">{</span>
+                    <span class="n">Thread</span> <span class="n">thisThread</span> <span class="o">=</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">();</span>
+                    <span class="n">leader</span> <span class="o">=</span> <span class="n">thisThread</span><span class="o">;</span>
+                    <span class="k">try</span> <span class="o">{</span>
+                        <span class="n">available</span><span class="o">.</span><span class="na">awaitNanos</span><span class="o">(</span><span class="n">delay</span><span class="o">);</span>
+                    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="n">leader</span> <span class="o">==</span> <span class="n">thisThread</span><span class="o">)</span>
+                            <span class="n">leader</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">leader</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">q</span><span class="o">.</span><span class="na">peek</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+            <span class="n">available</span><span class="o">.</span><span class="na">signal</span><span class="o">();</span>
+        <span class="n">lock</span><span class="o">.</span><span class="na">unlock</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>下例展示了如何构造一个可以放入DelayQueue中的任务，这个示例的基本逻辑和<a href="#pt">PrioritizedTask</a>相当：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DelayQueueDemo</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">DelayedTask</span> <span class="kd">implements</span> <span class="n">Runnable</span><span class="o">,</span> <span class="n">Delayed</span> <span class="o">{</span>
+        <span class="kd">protected</span> <span class="kd">static</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">DelayedTask</span><span class="o">&gt;</span> <span class="n">sequence</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">counter</span><span class="o">++;</span>
+        <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">delta</span><span class="o">;</span>
+        <span class="cm">/** 到期时间 */</span>
+        <span class="kd">private</span> <span class="kd">final</span> <span class="kt">long</span> <span class="n">trigger</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">DelayedTask</span><span class="o">(</span><span class="kt">int</span> <span class="n">delayInMilliseconds</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">delta</span> <span class="o">=</span> <span class="n">delayInMilliseconds</span><span class="o">;</span>
+            <span class="n">trigger</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">nanoTime</span><span class="o">()</span> <span class="o">+</span> <span class="n">NANOSECONDS</span><span class="o">.</span><span class="na">convert</span><span class="o">(</span><span class="n">delta</span><span class="o">,</span> <span class="n">MILLISECONDS</span><span class="o">);</span>
+            <span class="n">sequence</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">long</span> <span class="nf">getDelay</span><span class="o">(</span><span class="n">TimeUnit</span> <span class="n">unit</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">unit</span><span class="o">.</span><span class="na">convert</span><span class="o">(</span><span class="n">trigger</span> <span class="o">-</span> <span class="n">System</span><span class="o">.</span><span class="na">nanoTime</span><span class="o">(),</span> <span class="n">NANOSECONDS</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compareTo</span><span class="o">(</span><span class="n">Delayed</span> <span class="n">arg</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">DelayedTask</span> <span class="n">that</span> <span class="o">=</span> <span class="o">(</span><span class="n">DelayedTask</span><span class="o">)</span> <span class="n">arg</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">trigger</span> <span class="o">&lt;</span> <span class="n">that</span><span class="o">.</span><span class="na">trigger</span><span class="o">)</span> <span class="k">return</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">trigger</span> <span class="o">&gt;</span> <span class="n">that</span><span class="o">.</span><span class="na">trigger</span><span class="o">)</span> <span class="k">return</span> <span class="n">1</span><span class="o">;</span>
+            <span class="k">return</span> <span class="n">0</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="k">this</span> <span class="o">+</span> <span class="s">&#34; &#34;</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&#34;[%1$-4d]&#34;</span><span class="o">,</span> <span class="n">delta</span><span class="o">)</span> <span class="o">+</span> <span class="s">&#34; Task &#34;</span> <span class="o">+</span> <span class="n">id</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">summary</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="s">&#34;(&#34;</span> <span class="o">+</span> <span class="n">id</span> <span class="o">+</span> <span class="s">&#34;:&#34;</span> <span class="o">+</span> <span class="n">delta</span> <span class="o">+</span> <span class="s">&#34;)&#34;</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="kd">static</span> <span class="kd">class</span> <span class="nc">EndSentinel</span> <span class="kd">extends</span> <span class="n">DelayedTask</span> <span class="o">{</span>
+            <span class="kd">private</span> <span class="n">ExecutorService</span> <span class="n">exec</span><span class="o">;</span>
+
+            <span class="kd">public</span> <span class="nf">EndSentinel</span><span class="o">(</span><span class="kt">int</span> <span class="n">delay</span><span class="o">,</span> <span class="n">ExecutorService</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="kd">super</span><span class="o">(</span><span class="n">delay</span><span class="o">);</span>
+                <span class="n">exec</span> <span class="o">=</span> <span class="n">e</span><span class="o">;</span>
+            <span class="o">}</span>
+
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+                <span class="k">for</span> <span class="o">(</span><span class="n">DelayedTask</span> <span class="n">pt</span> <span class="o">:</span> <span class="n">sequence</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">pt</span><span class="o">.</span><span class="na">summary</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34; &#34;</span><span class="o">);</span>
+                <span class="o">}</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">this</span> <span class="o">+</span> <span class="s">&#34; Calling shutdownNow()&#34;</span><span class="o">);</span>
+                <span class="n">exec</span><span class="o">.</span><span class="na">shutdownNow</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kd">class</span> <span class="nc">DelayedTaskConsumer</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="n">DelayQueue</span><span class="o">&lt;</span><span class="n">DelayedTask</span><span class="o">&gt;</span> <span class="n">q</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">DelayedTaskConsumer</span><span class="o">(</span><span class="n">DelayQueue</span><span class="o">&lt;</span><span class="n">DelayedTask</span><span class="o">&gt;</span> <span class="n">q</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">q</span> <span class="o">=</span> <span class="n">q</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="k">while</span> <span class="o">(!</span><span class="n">Thread</span><span class="o">.</span><span class="na">interrupted</span><span class="o">())</span>
+                    <span class="c1">// Run task with the current thread
+</span><span class="c1"></span>                    <span class="n">q</span><span class="o">.</span><span class="na">take</span><span class="o">().</span><span class="na">run</span><span class="o">();</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// Acceptable way to exit
+</span><span class="c1"></span>            <span class="o">}</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;Finished DelayedTaskConsumer&#34;</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Random</span> <span class="n">rand</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="o">(</span><span class="n">47</span><span class="o">);</span>
+        <span class="n">ExecutorService</span> <span class="n">exec</span> <span class="o">=</span> <span class="n">Executors</span><span class="o">.</span><span class="na">newCachedThreadPool</span><span class="o">();</span>
+        <span class="n">DelayQueue</span><span class="o">&lt;</span><span class="n">DelayedTask</span><span class="o">&gt;</span> <span class="n">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DelayQueue</span><span class="o">&lt;&gt;();</span>
+        <span class="c1">// Fill with tasks that have random delays:
+</span><span class="c1"></span>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">20</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+            <span class="n">queue</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="k">new</span> <span class="n">DelayedTask</span><span class="o">(</span><span class="n">rand</span><span class="o">.</span><span class="na">nextInt</span><span class="o">(</span><span class="n">5000</span><span class="o">)));</span>
+        <span class="c1">// Set the stopping point
+</span><span class="c1"></span>        <span class="n">queue</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">DelayedTask</span><span class="o">.</span><span class="na">EndSentinel</span><span class="o">(</span><span class="n">5000</span><span class="o">,</span> <span class="n">exec</span><span class="o">));</span>
+        <span class="n">exec</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="k">new</span> <span class="n">DelayedTaskConsumer</span><span class="o">(</span><span class="n">queue</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/* output（sample）
+</span><span class="cm">[128 ] Task 11 [200 ] Task 7 [429 ] Task 5 [520 ] Task 18 [555 ] Task 1 [961 ] Task 4 [998 ] Task 16 [1207] Task 9 [1693] Task 2 [1809] Task 14 [1861] Task 3 [2278] Task 15 [3288] Task 10 [3551] Task 12 [4258] Task 0 [4258] Task 19 [4522] Task 8 [4589] Task 13 [4861] Task 17 [4868] Task 6
+</span><span class="cm">(0:4258) (1:555) (2:1693) (3:1861) (4:961) (5:429) (6:4868) (7:200) (8:4522) (9:1207) (10:3288) (11:128) (12:3551) (13:4589) (14:1809) (15:2278) (16:998) (17:4861) (18:520) (19:4258) (20:5000)
+</span><span class="cm">[5000] Task 20 Calling shutdownNow()
+</span><span class="cm">Finished DelayedTaskConsumer
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>从输出可以看到，任务入队的顺序和任务出队的顺序没有任何关系，任务是按照超时先后出队的。</p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:1">这个示例演化自<a href="https://book.douban.com/subject/26591326/">《Java并发编程的艺术》方腾飞等.著</a>，第八章8.2节代码清单8-4。不过该书中关于这段代码的运行解释是不正确的，本例也证明了这一点。
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+<li id="fn:2">《Thinking in Java》 4th Edition, 第21章21.7.2示例代码。
+ <a class="footnote-return" href="#fnref:2"><sup>[return]</sup></a></li>
+<li id="fn:3">就算有任务再次进入了reset流程，也依然可能存在上面描述的问题，这仅仅增加了程序运行的不稳定性。
+ <a class="footnote-return" href="#fnref:3"><sup>[return]</sup></a></li>
+<li id="fn:4">并不能保证先调用<code>acquire()</code>方法的线程就能先获得许可，而是先调用方法的线程先执行内部逻辑的线程优先获取许可。所以有可能线程a先于线程b调用<code>acquire()</code>方法，但是却晚于线程b到达“等待点”。
+ <a class="footnote-return" href="#fnref:4"><sup>[return]</sup></a></li>
+<li id="fn:5">这个示例演化自Semaphore的javaDoc：<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Semaphore.html。">https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Semaphore.html。</a>
+ <a class="footnote-return" href="#fnref:5"><sup>[return]</sup></a></li>
+<li id="fn:6">如果使用是个“许可证数”为1的Semaphore，其作用相当于一个独占锁，任意时刻只有一个任务能够获取许可并且对资源进行修改，此时，<code>getItem</code>方法可以不使用同步。
+ <a class="footnote-return" href="#fnref:6"><sup>[return]</sup></a></li>
+<li id="fn:7">这个示例演化自Exchanger的javaDoc：<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Exchanger.html。">https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Exchanger.html。</a>
+ <a class="footnote-return" href="#fnref:7"><sup>[return]</sup></a></li>
+<li id="fn:8">忽略类型检查的原因是因为尚不能处理泛型编程的所有问题。理论上这里传入任意Queue<T>实现类都是可以的，但是由于示例中所用的实例Fat并没有实现Comparable接口，所以当传入优先级队列时，构造器会抛出初始化异常。
+ <a class="footnote-return" href="#fnref:8"><sup>[return]</sup></a></li>
+<li id="fn:note">这里还存在一个潜在问题：<code>EmptyTask</code>完成时取消<code>FillTask</code>，<code>FillTask</code>的状态会影响程序的结果，若后者是在Exchanger处被阻塞时取消，那将抛出中断异常，程序输出如示例中说的那样；若后者在向缓存中添加对象时被中断，<code>shutdown()</code>方法无法立刻中止<code>FillTask</code>的运行，它将继续运行至进入栅栏而抛出异常，但是，主线程中的遍历(在使用普通队列时)就可能会抛出ConcorrentModificationException。解决此问题的方法是在<code>FillTask</code>中分别处理2种取消的情况，或者在主线程中使用<code>awaitTermination</code>等待<code>FillTask</code>抛出异常而终结。
+ <a class="footnote-return" href="#fnref:note"><sup>[return]</sup></a></li>
+<li id="fn:9">Delay接口实际上继承了Comparable接口。
+ <a class="footnote-return" href="#fnref:9"><sup>[return]</sup></a></li>
+</ol>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  
+  <p class="copyright-item" style= text-align:right;>
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-03-22
+        <a href="https://github.com/wangy325/endlessriver/commit/74a1d9353a951d3aec2298289031246f15cb1b98" title="refactor">(74a1d93)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/java%E8%BF%9B%E9%98%B6/">Java进阶</a>
+          <a href="/tags/%E5%B9%B6%E5%8F%91/">并发</a>
+          <a href="/tags/%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97/">阻塞队列</a>
+          <a href="/tags/%E5%90%8C%E6%AD%A5%E5%99%A8/">同步器</a>
+          <a href="/tags/%E4%BF%A1%E5%8F%B7%E9%87%8F/">信号量</a>
+          <a href="/tags/%E8%AE%A1%E6%95%B0%E5%99%A8/">计数器</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/tech/java/redis/bloom-filter/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">布隆过滤器(转)</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/tech/java/concurrency/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/">
+            <span class="next-text nav-default">计划执行任务</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'endlessriver';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=u8za1dzCiImO_8rKldjU1g" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangy325" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangy325.top/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme -
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    
+    
+  </div>
+
+  <span class="copyright-year">
+    <span class="author">wangy325</span>
+    &copy;
+    2019 -
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="copyright"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Set - Endless River</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="wangy325" /><meta name="description" content="Set是不含重复元素的集，严格来讲，Set不允许当e1.equals(e2)为真时， e1 和 e2 同时出现在集合中。Set最多允许一个null元素
+将可变对象置入Set时需要特别小心，当对象的改动影响到了元素之间的equals()比较的结果，那么Set的行为就变得不确定了。因此，不能将Set本身作为Set的元素
+" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.55.6 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://wangy325.top/post/tech/java/collections/set/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.886d4da2.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Set" />
+<meta property="og:description" content="Set是不含重复元素的集，严格来讲，Set不允许当e1.equals(e2)为真时， e1 和 e2 同时出现在集合中。Set最多允许一个null元素
+
+将可变对象置入Set时需要特别小心，当对象的改动影响到了元素之间的equals()比较的结果，那么Set的行为就变得不确定了。因此，不能将Set本身作为Set的元素" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wangy325.top/post/tech/java/collections/set/" />
+<meta property="article:published_time" content="2020-05-06T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2021-03-22T13:40:51&#43;08:00"/>
+
+<meta itemprop="name" content="Set">
+<meta itemprop="description" content="Set是不含重复元素的集，严格来讲，Set不允许当e1.equals(e2)为真时， e1 和 e2 同时出现在集合中。Set最多允许一个null元素
+
+将可变对象置入Set时需要特别小心，当对象的改动影响到了元素之间的equals()比较的结果，那么Set的行为就变得不确定了。因此，不能将Set本身作为Set的元素">
+
+
+<meta itemprop="datePublished" content="2020-05-06T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-03-22T13:40:51&#43;08:00" />
+<meta itemprop="wordCount" content="3045">
+
+
+
+<meta itemprop="keywords" content="Java基础,集合框架,set," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Set"/>
+<meta name="twitter:description" content="Set是不含重复元素的集，严格来讲，Set不允许当e1.equals(e2)为真时， e1 和 e2 同时出现在集合中。Set最多允许一个null元素
+
+将可变对象置入Set时需要特别小心，当对象的改动影响到了元素之间的equals()比较的结果，那么Set的行为就变得不确定了。因此，不能将Set本身作为Set的元素"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Endless River</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">主题</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于</li>
+      </a><a href="/friendlink/">
+        <li class="mobile-menu-item">友链</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Endless River</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">主题</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/friendlink/">友链</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Set</h1>
+
+      <div class="post-meta">
+          <span>
+              <span class="icomoonfree icon-calendar"></span>
+              <span class="post-time"> 2020-05-06</span>
+          </span>
+
+        <div class="post-category">
+              <span class="icomoonfree icon-folder"></span>
+            <a href="/categories/java/"> java </a>
+            </div>
+          <span class="icomoonfree icon-sigma"></span>
+          <span class="more-meta analyse"> 约 3045 字 </span>
+          <span class="icomoonfree icon-clock"></span>
+          <span class="more-meta analyse"> 预计阅读 7 分钟 </span>
+        <span class="icomoonfree icon-eye"></span>
+          <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#1-span-id-hashtable-散列集-span">1 <span id="hashtable">散列集</span></a>
+<ul>
+<li><a href="#1-1-hashset">1.1 HashSet</a></li>
+<li><a href="#1-2-linkedhashset">1.2 LinkedHashSet</a></li>
+</ul></li>
+<li><a href="#2-treeset">2 TreeSet</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>Set是<strong>不含重复元素的集</strong>，严格来讲，Set不允许当<code>e1.equals(e2)</code>为真时， <em>e1</em> 和 <em>e2</em> 同时出现在集合中。Set最多允许一个<code>null</code>元素</p>
+
+<p>将<strong>可变对象</strong>置入Set时需要特别小心，当对象的改动影响到了元素之间的<code>equals()</code>比较的结果，那么Set的行为就变得不确定了。因此，<strong>不能将Set本身作为Set的元素</strong></p>
+
+<h2 id="1-span-id-hashtable-散列集-span">1 <span id="hashtable">散列集</span></h2>
+
+<div class="admonition warning"><p class="admonition-title">warning</p>
+  
+关于散列的桶与桶中的元素，还有部分描述可能存在问题
+
+</div>
+
+<p>数组和链表能够记录元素的插入顺序，这对于通过索引快速对元素执行操作很有利，但是如果忘记了索引，那么需要从头遍历，这在数据量很大的情况下效率低下。在<strong>不考虑元素的顺序情况下，能提供快速查询</strong>所需要的数据，这就是<strong>散列表</strong>(<em>hash table</em>)</p>
+
+<p>散列表为每个对象计算一个整数，称为<strong>散列码</strong>( <em>hash code</em> )，这意味着如果将自定义对象作为Set的对象，那么必须要<strong>负责实现这个类的 <em>hashCode</em> 方法</strong>，还有一点要注意的是，hashCode和equals方法之间存在<a href="#hashCode">约束关系</a>，因此<strong>最好也重写equals方法以保证一致性</strong></p>
+
+<p>Java中的散列表是用<strong>链表数组</strong>实现的，每个链表称为<strong>桶</strong></p>
+
+<p><img src="/img/hash_table.png" alt="YSl88s.png" style="zoom:50%;margin-left: 300px" /></p>
+
+<p style="text-align:center;font-size:.9rem;font-style:italic">散列表(hash table)  <sup> form Core Java</sup></p>
+
+<p>设有散列表桶数为 <em>x</em> ，有对象 <em>y</em> ，那么散列表如何存入对象呢？</p>
+
+<p>$$
+z = hash(y) \% x
+$$
+那么对象 <em>y</em> 应该放在 <em>z</em> 号<strong>桶</strong>中</p>
+
+<p>若桶被<strong>占满</strong><sup class="footnote-ref" id="fnref:8"><a href="#fn:8">1</a></sup>了，就会发生<strong>散列冲突(<em>hash collection</em>)</strong>，散列表会尽量避免散列冲突</p>
+
+<blockquote>
+<p>在Java 8 中，桶满时链表会转换成为<em>平衡二叉树</em></p>
+</blockquote>
+
+<p><strong>保证散列中桶数富余能够有效提升散列表的性能</strong>，反之若要插入的元素过多，散列表的性能就会降低</p>
+
+<p>散列表一般可初始化桶数，通常将桶数设置为容量的75%～150%。若不知道元素的个数，散列表太满就会导致<strong>再散列</strong>（ <em>rehashed</em> ），在散列就是创建一个桶数更多的表（加倍），将所有的元素copy到新表，丢弃原来的表。在散列由<strong>桶数</strong>和<strong>装填因子（ <em>load factor</em> ）</strong>两方面决定，如果不加指定，<strong>装填因子默认为0.75</strong>，若
+$$
+散列元素数 &gt; 桶数 * 装填因子
+$$
+就会发生<strong>再散列</strong></p>
+
+<p>Java标准类库中，散列表的桶数总是2<sup>n</sup>，默认值是16</p>
+
+<h3 id="1-1-hashset">1.1 HashSet</h3>
+
+<p>HashSet是由HashMap实现的基于散列表的集合，允许至多一个<code>null</code>元素</p>
+
+<p>不论桶数，当元素被合理地分配在散列表的桶中时，HashSet的基本操作（add，remove，contains和size）的效率是一致的；但是迭代HashSet所需要的时间则与元素数量以及组成<strong>集</strong>的HashMap桶数正相关。因此合理的设置桶数非常有必要</p>
+
+<p>与List不同的是，HashSet的迭代器不能保证元素的迭代顺序，并且迭代器也是 <em>fail-fast</em> 的，在使用迭代器时同样需要留意 <em>ConcurrentModificationException</em></p>
+
+<p>HashSet主要字段：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java">  <span class="kd">private</span> <span class="kd">transient</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">E</span><span class="o">,</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">map</span><span class="o">;</span>
+
+  <span class="c1">// Dummy value to associate with an Object in the backing Map
+</span><span class="c1"></span>  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Object</span> <span class="n">PRESENT</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Object</span><span class="o">();</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>HashSet构造器：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"> <span class="kd">public</span> <span class="nf">HashSet</span><span class="o">()</span> <span class="o">{</span><span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();}</span>
+ <span class="kd">public</span> <span class="nf">HashSet</span><span class="o">(</span><span class="n">Collection</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">c</span><span class="o">)</span> <span class="o">{...}</span>
+ <span class="kd">public</span> <span class="nf">HashSet</span><span class="o">(</span><span class="kt">int</span> <span class="n">initialCapacity</span><span class="o">,</span> <span class="kt">float</span> <span class="n">loadFactor</span><span class="o">)</span> <span class="o">{...}</span>
+ <span class="kd">public</span> <span class="nf">HashSet</span><span class="o">(</span><span class="kt">int</span> <span class="n">initialCapacity</span><span class="o">)</span> <span class="o">{...}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>所以HashSet就是一个所有值为<code>PRESENT</code>常量的 HashMap的KeySet</strong>，参考如下示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">static</span> <span class="kt">void</span> <span class="nf">initializationTest</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+  <span class="n">Set</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">hs</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;();</span>
+
+  <span class="n">hs</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+  <span class="n">hs</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">2</span><span class="o">);</span>
+
+  <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">cls</span> <span class="o">=</span> <span class="n">HashSet</span><span class="o">.</span><span class="na">class</span><span class="o">;</span>
+
+  <span class="n">Field</span> <span class="n">fm</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="na">getDeclaredField</span><span class="o">(</span><span class="s">&#34;map&#34;</span><span class="o">);</span>
+  <span class="n">fm</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">fm</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">hs</span><span class="o">).</span><span class="na">getClass</span><span class="o">());</span>
+  <span class="nd">@SuppressWarnings</span><span class="o">(</span><span class="s">&#34;unchecked&#34;</span><span class="o">)</span>
+  <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">o</span> <span class="o">=</span> <span class="o">(</span><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;)</span> <span class="n">fm</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">hs</span><span class="o">);</span>
+  <span class="k">for</span> <span class="o">(</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">entry</span> <span class="o">:</span> <span class="n">o</span><span class="o">.</span><span class="na">entrySet</span><span class="o">())</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">entry</span><span class="o">.</span><span class="na">getKey</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;:&#34;</span> <span class="o">+</span> <span class="n">entry</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/* output
+</span><span class="cm">class java.util.HashMap
+</span><span class="cm">1:java.lang.Object@1540e19d
+</span><span class="cm">2:java.lang.Object@1540e19d
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>如果将自定义对象存入HashSet，必须覆盖 <em>equals</em> 和 <em>hashCode</em> 方法</strong></p>
+
+<h3 id="1-2-linkedhashset">1.2 LinkedHashSet</h3>
+
+<p>HashSet的子类，与HashSet的 区别在于LinkedHashSet使用双端链表维护集中的元素，因此元素能够被有序迭代（迭代顺序是元素的插入顺序），当元素添加到集中时，便会并入LinkedList中</p>
+
+<p><img src="/img/linked_hash.png" alt="YAQUu4.png" style="zoom:67%; margin-left: 260px" /></p>
+
+<p style="text-align:center;font-size:.9rem;font-style:italic">链表散列表 <sup> from Core Java</sup></p>
+
+<p>HashSet中有一个包访问权限的构造器，专门用来构造LinkedHashSet：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">HashSet</span><span class="o">(</span><span class="kt">int</span> <span class="n">initialCapacity</span><span class="o">,</span> <span class="kt">float</span> <span class="n">loadFactor</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">dummy</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashMap</span><span class="o">&lt;&gt;(</span><span class="n">initialCapacity</span><span class="o">,</span> <span class="n">loadFactor</span><span class="o">);</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>可以看到，LinkedHashSet实质上是LinkedHashMap的是个KeySet</p>
+
+<p>和<span id="performance">HashSet</span>的区别（性能上）:</p>
+
+<ul>
+<li>性能稍微比HashSet低一点</li>
+<li>由于加入了链表，迭代LinkedHashSet时只与集合的容量(size)有关，而与桶数无关；而HashSet的迭代效率与二者都有关</li>
+<li>LinkedHashSet设置过大的桶数所带来的性能（负）影响小于HashSet</li>
+</ul>
+
+<h2 id="2-treeset">2 TreeSet</h2>
+
+<p><strong>树集</strong>是由<strong>红—黑树</strong>实现的有序集合(<em>sorted collection</em>)。在Java集合框架中，TreeSet由TreeMap实现，和HashSet一样，<strong>TreeSet是TreeMap的所有值为<code>new Object()</code>的keySet</strong></p>
+
+<p>TreeSet是NavigableSet和SortedSet的实现，其中NavigableSet接口继承了SortedSet接口</p>
+
+<p><span id="sortedset">SortedSet</span>接口定义了如下方法：</p>
+
+<blockquote>
+<ul>
+<li><strong>Comparator&lt;? super E&gt; comparator();</strong></li>
+</ul>
+
+<p>获取用于排序的比较器，若使用comparable则返回null</p>
+
+<ul>
+<li><strong>SortedSet&lt;E&gt; subSet(E fromElement, E toElement);</strong></li>
+</ul>
+
+<p>返回一个子集，元素范围从 <em>fromElement</em> （含）到 <em>toElement</em> （不含），当 <em>fromElement</em> 和 <em>toElement</em> 相等时，返回空集，返回的集合是一个<strong>视图</strong>，对此视图的修改会作用到原集合上，反之亦然</p>
+
+<ul>
+<li><p><strong>SortedSet&lt;E&gt; headSet(E toElement);</strong></p></li>
+
+<li><p><strong>SortedSet&lt;E&gt; tailSet(E fromElement);</strong></p></li>
+</ul>
+
+<p>返回一个子集，元素小于/大于 <em>toElement/fromElement</em> ，返回的集合是一个<strong>视图</strong>，对此视图的修改会作用到原集合上，反之亦然</p>
+
+<ul>
+<li><p><strong>E first();</strong></p></li>
+
+<li><p><strong>E last();</strong></p></li>
+</ul>
+
+<p>获取集合中最小/最大的元素</p>
+</blockquote>
+
+<p>NavigableSet继承了SortedSet，并新增了方法：</p>
+
+<blockquote>
+<ul>
+<li><p><strong>E lower(E e);</strong></p></li>
+
+<li><p><strong>E higher(E e);</strong></p></li>
+</ul>
+
+<p>返回小于 <em>e</em> 的最大/大于 <em>e</em> 的 最小元素，若不存在则返回null</p>
+
+<ul>
+<li><p><strong>E floor(E e);</strong></p></li>
+
+<li><p><strong>E ceiling(E e);</strong></p></li>
+</ul>
+
+<p>返回小于等于 <em>e</em> 的最大/大于等于 <em>e</em> 的 最小元素，若不存在则返回null</p>
+
+<ul>
+<li><p><strong>E pollFirst();</strong></p></li>
+
+<li><p><strong>E pollLast();</strong></p></li>
+</ul>
+
+<p>获取并删除集合中的最小/最大元素，若集合为空则返回null</p>
+
+<ul>
+<li><strong>Iterator<E> descendingIterator();</strong></li>
+</ul>
+
+<p>获取倒序迭代器</p>
+</blockquote>
+
+<p>TreeSet中的元素总是有序的，排序规则可以是默认的自然排序（ <em>comparable</em> ）或在构造器中指定比较器（ <em>comparator</em> ），和<strong>PriorityQueue一样，若向TreeSet插入未排序的元素，会抛出 <code>ClassCastException</code></strong></p>
+
+<p>需要注意的是，在使用自定义比较规则时，置入TreeSet中的元素需要考虑到<b><em>comparable/comparator</em> 方法和 <em>equals</em> 方法的一致性</b></p>
+
+<p>参考如下示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//... 省略头部
+</span><span class="c1"></span><span class="kd">static</span> <span class="kt">void</span> <span class="nf">consistenceTest</span><span class="o">()</span> <span class="o">{</span>
+  <span class="kd">class</span> <span class="nc">Item</span> <span class="kd">implements</span> <span class="n">Serializable</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">code</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Item</span><span class="o">(</span><span class="kt">int</span> <span class="n">code</span><span class="o">,</span> <span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">code</span> <span class="o">=</span> <span class="n">code</span><span class="o">;</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="n">Object</span> <span class="n">o</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="k">this</span> <span class="o">==</span> <span class="n">o</span><span class="o">)</span> <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">o</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">getClass</span><span class="o">()</span> <span class="o">!=</span> <span class="n">o</span><span class="o">.</span><span class="na">getClass</span><span class="o">())</span> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+
+      <span class="n">Item</span> <span class="n">item</span> <span class="o">=</span> <span class="o">(</span><span class="n">Item</span><span class="o">)</span> <span class="n">o</span><span class="o">;</span>
+
+      <span class="k">if</span> <span class="o">(</span><span class="n">code</span> <span class="o">!=</span> <span class="n">item</span><span class="o">.</span><span class="na">code</span><span class="o">)</span> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+      <span class="k">return</span> <span class="n">Objects</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">item</span><span class="o">.</span><span class="na">name</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">hashCode</span><span class="o">()</span> <span class="o">{</span>
+      <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">code</span><span class="o">;</span>
+      <span class="n">result</span> <span class="o">=</span> <span class="n">31</span> <span class="o">*</span> <span class="n">result</span> <span class="o">+</span> <span class="o">(</span><span class="n">name</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">?</span> <span class="n">name</span><span class="o">.</span><span class="na">hashCode</span><span class="o">()</span> <span class="o">:</span> <span class="n">0</span><span class="o">);</span>
+      <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+  <span class="c1">// 故意修改比较器的相等逻辑
+</span><span class="c1"></span>  <span class="n">SortedSet</span><span class="o">&lt;</span><span class="n">Item</span><span class="o">&gt;</span> <span class="n">ss</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeSet</span><span class="o">&lt;&gt;((</span><span class="n">o1</span><span class="o">,</span> <span class="n">o2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">o1</span><span class="o">.</span><span class="na">code</span> <span class="o">-</span> <span class="n">o2</span><span class="o">.</span><span class="na">code</span> <span class="o">+</span> <span class="n">1</span><span class="o">);</span>
+  <span class="n">Item</span> <span class="n">item</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Item</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="s">&#34;apple&#34;</span><span class="o">);</span>
+  <span class="n">ss</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">item</span><span class="o">);</span>
+  <span class="n">ss</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">item</span><span class="o">);</span>
+  <span class="c1">// Set中出现重复元素
+</span><span class="c1"></span>  <span class="n">ss</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="cm">/* output:
+</span><span class="cm">TreeSetTest$1Item@58b8379
+</span><span class="cm">TreeSetTest$1Item@58b8379
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>上例中，对于Item对象 <em>a</em> 和 <em>b</em> ，以及Item的比较器 <em>c</em> ，有
+$$
+a.equals(b) &amp;&amp; c.compare(a,b)!=0
+$$
+成立，那么第二次add()就会返回true，此时TreeSet中出现了<strong>重复的元素</strong>！这与<strong>Set.add</strong>方法的约束相悖，为什么？原因在于尽管Set是以equals来判断元素相等的，但是TreeSet使用的是比较器规定的方法，上例在TreeSet的角度看， <em>a</em> 和 <em>b</em> 并不等，<strong>这样会使集合出现难以理解的行为</strong></p>
+
+<p>因此，<strong>保持比较器和equals方法的一致性是很重要的</strong></p>
+
+<p>值得一提的是，NavigableSet的获取子集的方法，可以用来对原集合进行修改；同样地，<strong>若原集合发生改变，子集也会随之改变</strong></p>
+
+<blockquote>
+<p>这与ArrayList的SubList不同，SubList获取子集后对原集合的修改会引发<em>ConcurrentModificationException</em></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">//...省略头部
+</span><span class="c1"></span><span class="kd">static</span> <span class="kt">void</span> <span class="nf">eleTest</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">TreeSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">ss</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{{</span>
+    <span class="n">add</span><span class="o">(</span><span class="s">&#34;nokia&#34;</span><span class="o">);</span>
+    <span class="n">add</span><span class="o">(</span><span class="s">&#34;motorola&#34;</span><span class="o">);</span>
+    <span class="n">add</span><span class="o">(</span><span class="s">&#34;apple&#34;</span><span class="o">);</span>
+    <span class="n">add</span><span class="o">(</span><span class="s">&#34;samsung&#34;</span><span class="o">);</span>
+    <span class="n">add</span><span class="o">(</span><span class="s">&#34;mi&#34;</span><span class="o">);</span>
+    <span class="n">add</span><span class="o">(</span><span class="s">&#34;oppo&#34;</span><span class="o">);</span>
+    <span class="n">add</span><span class="o">(</span><span class="s">&#34;vivo&#34;</span><span class="o">);</span>
+    <span class="n">add</span><span class="o">(</span><span class="s">&#34;sony&#34;</span><span class="o">);</span>
+    <span class="n">add</span><span class="o">(</span><span class="s">&#34;google&#34;</span><span class="o">);</span>
+  <span class="o">}};</span>
+
+  <span class="n">SortedSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">headSet</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="na">headSet</span><span class="o">(</span><span class="s">&#34;oppo&#34;</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+  <span class="c1">// equals
+</span><span class="c1"></span>  <span class="c1">// SortedSet&lt;String&gt; headSet = ss.headSet(&#34;oppo&#34;);
+</span><span class="c1"></span>  <span class="n">ss</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&#34;huawei&#34;</span><span class="o">);</span> <span class="c1">// 之前的子集中也会添加
+</span><span class="c1"></span>  <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">headSet</span><span class="o">.</span><span class="na">iterator</span><span class="o">();</span>
+  <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">i</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
+    <span class="n">j</span><span class="o">++;</span>
+    <span class="n">i</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">j</span> <span class="o">%</span> <span class="n">2</span> <span class="o">==</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">i</span><span class="o">.</span><span class="na">remove</span><span class="o">();</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+  <span class="n">headSet</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;contains google? &#34;</span> <span class="o">+</span> <span class="n">ss</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">&#34;google&#34;</span><span class="o">));</span>
+  <span class="c1">// 获取当前集合的逆序迭代器
+</span><span class="c1"></span>  <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">i2</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="na">descendingIterator</span><span class="o">();</span>
+  <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;vivo&#34;</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">i2</span><span class="o">.</span><span class="na">next</span><span class="o">()));</span>
+<span class="o">}</span>
+<span class="cm">/* output:
+</span><span class="cm">apple
+</span><span class="cm">huawei
+</span><span class="cm">motorola
+</span><span class="cm">contains google? false
+</span><span class="cm">true
+</span><span class="cm">*/</span><span class="o">//:~</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>上例中，获取headSet之后对原集合添加元素，且添加的元素正好在子集的范围中 ，那么子集中也会添加这个元素；</p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:8">每个桶里都有元素么？每个桶至多有多少元素？
+ <a class="footnote-return" href="#fnref:8"><sup>[return]</sup></a></li>
+</ol>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  
+  <p class="copyright-item" style= text-align:right;>
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-03-22
+        <a href="https://github.com/wangy325/endlessriver/commit/74a1d9353a951d3aec2298289031246f15cb1b98" title="refactor">(74a1d93)</a>
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/java%E5%9F%BA%E7%A1%80/">Java基础</a>
+          <a href="/tags/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/">集合框架</a>
+          <a href="/tags/set/">set</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/tech/java/collections/map/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Map</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/tech/java/collections/queue/">
+            <span class="next-text nav-default">Queue</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'endlessriver';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=u8za1dzCiImO_8rKldjU1g" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/wangy325" class="iconfont icon-github" title="github"></a>
+  <a href="https://wangy325.top/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme -
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    
+    
+  </div>
+
+  <span class="copyright-year">
+    <span class="author">wangy325</span>
+    &copy;
+    2019 -
+    2021
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="copyright"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND</a></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "zh-cn".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

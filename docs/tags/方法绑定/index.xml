@@ -13,10 +13,10 @@
     
     <item>
       <title>动态绑定与静态绑定</title>
-      <link>https://wangy325.top/post/tech/java/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/</link>
+      <link>https://wangy325.top/post/tech/java/basic/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/</link>
       <pubDate>Sat, 18 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/</guid>
+      <guid>https://wangy325.top/post/tech/java/basic/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/</guid>
       <description>&lt;p&gt;这是Java方法调用的2个术语，用来描述Java虚拟机方法调用的2种机制&lt;/p&gt;
 
 &lt;h2 id=&#34;6-1-span-id-m10-动态绑定-span&#34;&gt;6.1 &lt;span id = &#34;m10&#34;&gt;动态绑定&lt;/span&gt;&lt;/h2&gt;

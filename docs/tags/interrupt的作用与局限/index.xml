@@ -13,10 +13,10 @@
     
     <item>
       <title>终结任务</title>
-      <link>https://wangy325.top/post/tech/java/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</link>
+      <link>https://wangy325.top/post/tech/java/concurrency/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</link>
       <pubDate>Fri, 23 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://wangy325.top/post/tech/java/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</guid>
+      <guid>https://wangy325.top/post/tech/java/concurrency/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</guid>
       <description>&lt;p&gt;一般地，如果程序运行良好，任务执行完所需操作后自然结束，任务终结&lt;/p&gt;
 
 &lt;p&gt;如果任务执行时出现异常，任务也会终结&lt;/p&gt;
