@@ -1,5 +1,5 @@
 .DS_Store
-themes/*
+themes/even
 nohup.out
 *.tgz
 /docs/post/tech/*_java
