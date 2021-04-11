@@ -11,33 +11,33 @@
   url = "archive"
   weight = 2
 
-[[main]]
-  identifier = "gallery"
-  name = "有图"
-  url = "gallery"
-  weight = 3
-
-[[main]]
-  parent = "gallery"
-  name = "随拍"
-  url = "gallery/mine"
-
-[[main]]
-  parent = "gallery"
-  name = "截句"
-  url = "gallery/quote"
+# [[main]]
+#   identifier = "gallery"
+#   name = "有图"
+#   url = "gallery"
+#   weight = 3
+#
+# [[main]]
+#   parent = "gallery"
+#   name = "随拍"
+#   url = "gallery/mine"
+#
+# [[main]]
+#   parent = "gallery"
+#   name = "截句"
+#   url = "gallery/quote"
 
   [[main]]
     identifier = "showcase"
-    name = "资料柜"
+    name = "仓库"
     url = "showcase"
     weight = 4
 
- [[main]]
-    identifier = "publication"
-    name = "黑板"
-    url = "publication"
-    weight = 5
+ # [[main]]
+ #    identifier = "publication"
+ #    name = "白板"
+ #    url = "publication"
+ #    weight = 5
 
 [[main]]
    identifier = "about"
