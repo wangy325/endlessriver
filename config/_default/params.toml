@@ -7,7 +7,7 @@ useFaviconGenerator = true # https://www.favicon-generator.org/
 meta_image = ""
 themecolor = ""
 
-themeOptions = ["light", "dark", "hacker", "solarized", "kimbie"]
+themeOptions = ["dark", "light", "hacker", "solarized", "kimbie"]
 notAllowedTypesInHome = ["contact", "talks", "about", "showcase", "publication", "presentation", "resume"]
 notAllowedTypesInHomeSidebar = ["about", "archive", "showcase", "publication", "presentation", "resume"]
 notAllowedTypesInArchive = ["about", "talks", "showcase", "publication", "presentation", "resume", "friend", "photo"]
@@ -24,7 +24,7 @@ enableAppbarSearchIcon = false
 enableAppbarLangIcon = false
 
 # header
-homeHeaderType = "text" # text, img, slide, typewriter
+homeHeaderType = "img" # text, img, slide, typewriter
 hideHomeHeaderWhenMobile = false
 
 # menu
