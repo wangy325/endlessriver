@@ -24,7 +24,7 @@ enableAppbarSearchIcon = false
 enableAppbarLangIcon = false
 
 # header
-homeHeaderType = "img" # text, img, slide, typewriter
+homeHeaderType = "text" # text, img, slide, typewriter
 hideHomeHeaderWhenMobile = false
 
 # menu
@@ -208,3 +208,9 @@ commento = false
 [[footerLinks]]
   name = ""
   link = ""
+
+ [copyrightOptions]
+   enableCopyrightLink = true
+   copyrightLink = "http://creativecommons.org/licenses/by-sa/4.0/"
+   copyrightLinkImage = ""
+   copyrightLinkText = " CC BY-SA"

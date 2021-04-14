@@ -16,10 +16,12 @@ image:
 
 
 # 1 Introduction
+
 In this tutorial, we'll demonstrate different examples of formatting with the printf() method.
 
-The method is part of the java.io.PrintStream class and provides String formatting similar to the printf() function in C.
+The method is part of the `java.io.PrintStream` class and provides String formatting similar to the printf() function in C.
 
+<!--more-->
 
 #  2 Syntax
 We can use one of the following PrintStream methods to format the output:
@@ -41,8 +43,6 @@ This produces the following output:
     Hello World!
 
 As shown above, the format string contains plain text and two formatting rules. The first rule is used to format the string argument. The second rule adds a newline character to the end of the string.
-
-<!--more-->
 
 ## 2.1 Format Rules
 
