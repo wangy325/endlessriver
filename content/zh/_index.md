@@ -25,9 +25,9 @@ header:
     paddingY: 0
     align: center
     title:
-      - EndlessRiver
+      - 
     subtitle:
-      -
+      - 胭脂泪，相留醉，几时重。自是人生长恨水长东。
     titleColor:
     titleShadow: true
     titleFontSize: 44
