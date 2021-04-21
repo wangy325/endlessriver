@@ -29,7 +29,7 @@
 
   [[main]]
     identifier = "showcase"
-    name = "仓库"
+    name = "代码"
     url = "showcase"
     weight = 4
 
