@@ -2,7 +2,7 @@
 title: "MySQL锁的简单使用"
 date: 2021-03-24
 lastmod: 2021-03-24
-draft: false
+draft: true
 description: ""
 tags:
 - 锁

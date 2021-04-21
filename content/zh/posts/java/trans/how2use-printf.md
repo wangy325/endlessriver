@@ -1,99 +1,108 @@
 ---
-title: "How to Use printf in Java"
+title: "使用printf格式化输出"
 date: 2020-12-10
-lastmod: 2020-12-10
+lastmod: 2020-04-21
 draft: false
 description: ""
 tags:
 -
 categories:
--
+- java
 
 series:
 - 翻译计划
 image:
 ---
 
+这篇文章介绍了几种常见的使用`printf()`方法进行格式化输出的方法。
 
-# 1 Introduction
-
-In this tutorial, we'll demonstrate different examples of formatting with the printf() method.
-
-The method is part of the `java.io.PrintStream` class and provides String formatting similar to the printf() function in C.
+`printf()`方法隶属于`java.io.PrintStream`类，提供了和C语言中相似的格式化字符串输出的方法。
 
 <!--more-->
 
-#  2 Syntax
-We can use one of the following PrintStream methods to format the output:
+#  1 语法
+
+`printf()`有一些重载方法，可以用来格式化输出：
 
 ```java
 System.out.printf(format, arguments);
 System.out.printf(locale, format, arguments);
 ```
 
-We specify the formatting rules using the format parameter. Rules start with the `%` character.
+`format`参数[^1]用来指定格式化规则，一般以百分号`%`开头。
 
-Let's look at a quick example before we dive into the details of the various formatting rules:
+[^1]: 下文统称为格式化参数，其本身也是一个字符串。
+
+在进一步剖析格式化规则之前，不妨看一个简单的例子：
 
 ```java
 System.out.printf("Hello %s!%n", "World");
 ```
-This produces the following output:
+
+上面的代码输出如下内容：
 
     Hello World!
 
-As shown above, the format string contains plain text and two formatting rules. The first rule is used to format the string argument. The second rule adds a newline character to the end of the string.
+如上所示，格式化参数包含一个字符串（Hello）和2个格式化规则。第一个规则（%s）用来格式化字符串参数（World），第二个规则（%n）则表示在末尾添加一个换行符。
 
-## 2.1 Format Rules
+## 1.1 格式化规则
 
-Let's have a look at format string more closely. It consists of literals and format specifiers. Format specifiers include flags, width, precision, and conversion characters in the following sequence:
-
+格式化参数由纯字符串以及格式化标志符组成，其中格式化标志符包括标记（flags）、宽度、精度、转换字符组成：
 
 > `%[flags][width][.precision]conversion-character`
 
 Specifiers in the brackets are optional.
+方括号内的标识符是可选的。
 
-Internally, printf() uses the [`java.util.Formatter`](https://www.baeldung.com/java-string-formatter) class to parse the format string and generate the output. Additional format string options can be found in the Formatter [Javadoc](https://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#syntax).
+实际上，`printf()`使用 [`java.util.Formatter`](https://www.baeldung.com/java-string-formatter)类来转换格式字符串并进行输出。完整的格式化选项可以从Formatter的 [Javadoc](https://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#syntax)中获取。
 
-## 2.2 Conversion Characters
+## 1.2 转换字符
+
 The conversion-character is required and determines how the argument is formatted. Conversion characters are only valid for certain data types. Some common ones are:
+转换字符是必须的，其决定如何格式化传入的字符串参数。转换字符对应指定的数据类型，一些常见的转换字符有：
 
-- ***s*** – formats strings
-- ***d*** – formats decimal integers
-- ***f*** – formats the floating-point numbers
-- ***t***– formats date/time values
+- ***s*** – 用来格式化字符串
+- ***d*** –用来格式化小数
+- ***f*** – 用来格式化浮点数
+- ***t***– 用来格式化日期/时间类型
 
-We'll explore these and a few others later in the article.
+下文会详细解释这些和一些其他转换字符。
 
-## 2.3 Optional Modifiers
+## 2.3 可选修饰符
 
 **The [*flags*] define standard ways to modify the output** and are most common for formatting integers and floating point numbers.
+**[*flags*]定义了修改输出的标准方法**，是用来格式化整数和浮点数的最常用方法。
 
 **The [*width*] specifies the field width for outputting the argument**. It represents the minimum number of characters written to the output.
+**[*width*]约定了输出参数的宽度（占位）**，它约定的是输出的最小字符数。
 
 **The [*.precision*] specifies the number of digits of precision** when outputting floating-point values. Additionally, we can use it to define the length of a substring to extract from a String.
+**[*.precision*]约定了浮点数的数据精度**，此外，还可以通过其来约定格式化时字符串的长度。
 
-# 3 Line Separator
+# 2 换行符
 
-**To break the string into separate lines, we have a `%n` specifier:**
+使用`%n`来将字符串换行：
 
 ```java
 System.out.printf("baeldung%nline%nterminator");
 ```
 
-The code snippet above will produce the following output:
+上述代码的输出像这样：
 
     baeldung
     line
     terminator
 
-The `%n` separator printf() will automatically insert the host system's native line separator.
+ `printf()`方法中的`%n`会自动插入当前系统中的换行符[^2]。
 
-# 4 Boolean Formatting
+ [^2]: windows系统的默认换行符为'\r\n'（回车换行），linux/unix下为'\n'。
 
-**To format boolean values, we use the `%b` format. It works the following way: If the input value is true, the output is *true*. Otherwise, the output is *false*.
 
-So, if we do:
+# 3 布尔值的格式化
+
+`printf()`使用`%b`来格式化布尔值，当传入的值（？）是true，其输出*true*，否则输出*false*。
+
+参考下例：
 
 ```Java
 System.out.printf("%b%n", null);
@@ -102,51 +111,59 @@ System.out.printf("%B%n", 5.3);
 System.out.printf("%b%n", "random text");
 ```
 
-Then we'll see:
+上面的输出为：
 
     false
     FALSE
     TRUE
     true
 
-Notice that we can use `%B` for **uppercase formatting**.
+可以`%B`来使printf输出大写。
 
-# 5 String Formatting
+# 4 字符串格式化
 
-To format a simple string, we'll use the `%s` combination. Additionally, we can **make the string uppercase**:
+`printf()`使用`%s`来格式化字符串。同样地，`%S`用于输出大写。
+
+
+如代码
 
 ```Java
 printf("'%s' %n", "baeldung");
 printf("'%S' %n", "baeldung");
 ```
 
-And the output is:
+输出:
 
     'baeldung'
     'BAELDUNG'
 
-Also, to specify a minimum length, we can specify a width:
+前文提过，可以使用[*width*]来约定字符串的最小长度：
 
 ```Java
 printf("'%15s' %n", "baeldung");
 printf("'%1s' %n", "baeldung");
 ```
 
-Which gives us:
+输出为:
 
     '       baeldung'
     'baeldung'
 
-If we need to left-justify our string, then we can use the `-` flag:
+从输出可知，默认格式为右对其，并且当字符串长度**大于**约定的最小长度时，*witdh*配置无效。
+
+如果想使输出左对其，可以添加`-`标记（flags）
+
+如
 
 ```Java
 printf("'%-10s' %n", "baeldung");
 ```
-And the output is:
+
+将输出:
 
     'baeldung  '
 
-Even more, we can **limit the number of characters** in our output by specifying a precision:
+此外，可以通过[*.precision*]控制输出字符串的**字符数**：
 
 ```Java
 System.out.printf("%2.2s", "Hi there!");
@@ -154,166 +171,176 @@ System.out.printf("%10.2s", "Hi there!");
 System.out.printf("%1.2s", "Hi there!");
 ```
 
-The first ‘x' number in `%x.ys` syntax is the width. ‘y' is the number of chars.
+ `%x.ys` 格式中的'x'代表*width*，'y'代表*precision*。
 
-For our example here, the output is:
+所以，上例中的输出为：
 
     Hi
           Hi
     Hi
 
-# 6 Char Formatting
+可以看到，precision参数控制着输出字符的个数。
+
+# 5 字符格式化
 
 The result of `%c` is a Unicode character:
+`printf()`使用`%c`来格式化Unicode字符。同样地，`%C`用于输出大写。
 
 ```Java
 System.out.printf("%c%n", 's');
 System.out.printf("%C%n", 's');
 ```
 
-The capital letter C will uppercase the result:
+输出:
 
     s
     S
 
-But, if we give it an invalid argument, then Formatter will throw *IllegalFormatConversionException*.
+值得一提的是，如果传入无效参数，将会抛出*IllegalFormatConversionException*。
 
-# 7 Number Formatting
+# 6 数字格式化
 
-## 7.1 Integer Formatting
+## 6.1 整数格式化
 
-The `printf()` method accepts all the integers available in the language; byte, short, int, long and BigInteger if we use `%d`:
+ `printf()` 方法使用`%d`来格式化整型，其接受所有Java语言的整数： byte、short、 int、 long以及BigInteger。
 
 ```Java
 System.out.printf("simple integer: %d%n", 10000L);
 ```
 
-With the help of the ‘d' character, we'll have:
+在'd'的作用下，上例的输出为：
 
     simple integer: 10000
 
-In case we need to format our number with the **thousands separator**, we can use the `,` flag. And we can also format our results for different locales:
+有时候，可能需要千位分隔符来使较大的数据更易读，可以使用`,`标记。并且可以根据不同地区的使用规范来使用不同的分隔符：
 
 ```Java
 System.out.printf(Locale.US, "%,d %n", 10000);
 System.out.printf(Locale.ITALY, "%,d %n", 10000);
 ```
 
-As we see, the formatting in the US is different than in Italy:
+如我们所见，美国和印度锁使用的千位分隔符是不同的：
 
     10,000
     10.000
 
-## 7.2 Float and Double Formatting
+## 6.2 浮点数和双精度浮点数格式化
 
-To format a float number, we'll need the `%f` format:
+使用 `%f` 来格式化浮点数:
 
 ```Java
 System.out.printf("%f%n", 5.1473);
 ```
-Which will output:
+
+输出:
 
     5.147300
 
-Of course, the first thing that comes to mind is to **control the precision**
+看到这个输出，我们首先想到的就是**控制精度**：
 
 ```Java
 System.out.printf("'%5.2f'%n", 5.1473);
 ```
-Here we define the width of our number as 5, and the length of the decimal part is 2:
+
+上例中，我们约定了数字占用字符宽度[*width*]为5，小数部分的长度[*.precision*]为2:
 
     ' 5.15'
 
-Here we have one space padding from the beginning of the number to support the predefined width.
+可以看到，输出的数字开头存在1个字符的空白填充——由于约定的宽度为5。
 
-To have our output in **scientific notation**, we just use the `%e` conversion character:
+此外，为了获取科学计数法输出，只需要使用`%e`转换字符即可：
 
 ```Java
 System.out.printf("'%5.2e'%n", 5.1473);
 ```
-And the result is the following:
+
+将输出：
 
     '5.15e+00'
 
-# 8 Date and Time Formatting
+# 7 日期和时间格式化
 
-For date and time formatting, the conversion string is a sequence of two characters: the `t` or `T` character and the conversion suffix. Let's explore the most common time and date formatting suffix characters with the examples.
+至于日期和时间的格式化，需要使用`t`或`T`加上一些特殊含义的后缀组合。下面的示例中展示了一些常用的日期时间格式化的后缀字符。
 
-Definitely, for more advanced formatting we can use [DateTimeFormatter](https://www.baeldung.com/java-datetimeformatter) which has been available since Java 8.
+实际上，Java8提供了更加完整易用的 [DateTimeFormatter](https://www.baeldung.com/java-datetimeformatter)来进行日期时间的格式化[^3]。
 
-## 8.1 Time Formatting
+[^3]: 关于Java8的新日期时间库，也可以参考[这篇文章](../../basic/java-new-time-api)
 
-First, let's see the list of some useful suffix characters for Time Formatting:
+## 7.1 时间格式化
 
-- `H`, `M`, `S`  – characters are responsible for extracting the hours, minutes and second from the input Date
-- `L`, `N`  – to represent the time in milliseconds and nanoseconds accordingly
-- `p` – adds am/pm formatting
-- `z` – prints out the timezone offset
-Now, let's say we wanted to print out the time part of a Date:
+首先介绍关于常用时间格式化的后缀字符及其含义：
+
+- `H`, `M`, `S`  – 时/分/秒
+- `L`, `N`  – 毫秒/纳秒
+- `p` – 上午/下午（am/pm）
+- `z` – 时区
+
+接下来，试试格式化输出日期：
 
 ```Java
 Date date = new Date();
 System.out.printf("%tT%n", date);
 ```
-The code above along with ‘%tT' combination produces the following output:
+
+'%tT' 格式输出如下所示：
 
     13:51:15
 
-In case we need more detailed formatting, we can call for different time segments:
+如果需要更详细的输出，不妨看看使用上面的后缀字符：
 
 ```Java
 System.out.printf("hours %tH: minutes %tM: seconds %tS%n", date, date, date);
 ```
-Having used ‘H', ‘M', and ‘S' we get:
+
+通过使用‘H’，‘M’，‘S’，得到如下输出：
 
     hours 13: minutes 51: seconds 15
 
-Though, listing date multiple times is a pain. Alternatively, to **get rid of multiple arguments**, we can use the index reference of our input parameter which is 1$ in our case:
+你肯定会觉得要获取一个时间单位，就要传入一个date实例很麻烦，Java的设计者也是这么认为，所以，可以通过使用参数索引字符`1$`来规避掉需要重复传递的参数：
 
 ```Java
 System.out.printf("%1$tH:%1$tM:%1$tS %1$tp %1$tL %1$tN %1$tz %n", date);
 ```
 
-Here we want as an output the current time, am/pm,  time in milliseconds, nanoseconds and the timezone offset:
+看，借助`1$`，传入一个date实例就获取了所有的信息：
 
     13:51:15 pm 061 061000000 +0400
 
-## 8.2 Date Formatting
+## 7.2 日期格式化
 
-Like time formatting, we have special formatting characters for date formatting:
+和时间格式化类似，日期格式化也有特定的字符后缀：
 
-- `A` – prints out the full day of the week
-- `d` – formats a two-digit day of the month
-- `B` – is for the full month name
-- `m` – formats a two-digit month
-- `Y` – outputs a year in four digits
-- `y` – outputs the last two digits of the year
+- `A` – 输出星期全名
+- `d` – 输出2位数的日期
+- `B` – 输出完整的月份名称
+- `m` – 输出2位数的月份
+- `Y` – 输出4位数的年份
+- `y` – 输出2位数的年份
 
-So, if we wanted to show the day of the week, followed by the month:
+如果我们想打印星期，可以这样做：
 
 ```Java
 System.out.printf("%1$tA, %1$tB %1$tY %n", date);
 ```
-Then using ‘A', ‘B', and ‘Y', we'd get:
+
+输出：
 
     Thursday, November 2018
 
-To have our results all in numeric format, we can replace the ‘A', ‘B', ‘Y ‘ letters with ‘d', ‘m', ‘y':
+也可以获得数字形式的输出：
 
 ```java
 System.out.printf("%1$td.%1$tm.%1$ty %n", date);
 ```
 
-Which will result in:
+输出：
 
     22.11.18
 
-# 9 Summary
+# 8 总结
 
-In this article, we discussed how to use the PrintStream#printf method to format output. We looked at the different format patterns used to control the output for common data types.
+此文讨论了`printf()`的常见用法，介绍了使用`printf()`对常见数据类型进行格式化输出的方法。
 
 ---
 
-# Reference
-
-- [Formatting with printf() in Java](https://www.baeldung.com/java-printstream-printf#conversion_chars)
+- 原文地址 [Formatting with printf() in Java](https://www.baeldung.com/java-printstream-printf#conversion_chars)
