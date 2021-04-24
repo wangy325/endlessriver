@@ -12,7 +12,7 @@ author: "wangy325"
 
 ---
 
-现在流行在项目中使用[swagger](swagger.io)对接口进行测试，这确实很方便、直观。
+现在流行在项目中使用[swagger](https://swagger.io)对接口进行测试，这确实很方便、直观。
 
 但是MockMvc作为spring-test包中指定的测试框架，在没有使用swagger的项目中，使用其进行测试是很好的选择。
 
