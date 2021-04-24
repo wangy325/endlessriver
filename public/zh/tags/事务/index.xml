@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" 
+  xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+  xmlns:dc="http://purl.org/dc/elements/1.1/" 
+  xmlns:atom="http://www.w3.org/2005/Atom" 
+  xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" 
+  xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>事务 on EndlessRiver</title>
+    <link>https://wangy325.top/zh/tags/%E4%BA%8B%E5%8A%A1/</link>
+    <description>Recent content in 事务 on EndlessRiver</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <managingEditor>wangy325@qq.com (wangy325)</managingEditor>
+    <webMaster>wangy325@qq.com (wangy325)</webMaster>
+    <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
+    <lastBuildDate>Fri, 27 Nov 2020 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://wangy325.top/zh/tags/%E4%BA%8B%E5%8A%A1/index.xml" rel="self" type="application/rss+xml" />
+    
+
+      
+      <item>
+        <title>mysql事务与隔离级别</title>
+        <link>https://wangy325.top/zh/posts/java/sql/mysql%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/</link>
+        <pubDate>Fri, 27 Nov 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Fri, 27 Nov 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/sql/mysql%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/</guid>
+        <description>&lt;p&gt;mysql事务属于老生常谈的内容了，并不指望这一篇文章将其搞透，本篇文章只是将mysql事务的外衣扒了，让其看起来不再那么神秘与华丽。有时候，新手总是对“事务”这两个字怀有莫名的恐惧感，因为其藏在mysql内部，偷偷地工作着，就好像你没有凝视深渊，而深渊却在凝视你。&lt;/p&gt;
+&lt;p&gt;事务的概念可以这样理解：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在mysql中，有些操作必须要分步完成，那么我们可以把这些分步完成的操作声明为一个“事务”，用来保证mysql数据一致性。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;
+    对于单条sql语句而言，mysql将其处理为一个「隐式事务」。
+&lt;p&gt;看起来，事务的概念还是有些空泛。事实上，有了一定的并发基础后（这也是这篇文章写在java并发之后的原因），更加容易理解事务这个概念，这并不是说事务一个并发概念，不过，事务是有了并发之后才衍生的概念，这很容易理解。试想一个只容许一个客户端连接的mysql服务，是否需要“事务”呢？答案应该是否定的。单个客户端执行sql语句总是有序的，数据一致性就能得到保证了&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;。试想，如果是多客户端的系统（事实上正是如此）同时执行sql语句，就好似多线程同时访问资源一样，对于数据库系统而言，所有的数据表都是共享资源&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;，那么事务就像是那把保证并发安全的锁。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>acid</category>
+            
+          
+            
+              <category>事务</category>
+            
+          
+        
+        
+          
+            
+              <category>MySQL</category>
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+
+    
+  </channel>
+</rss>

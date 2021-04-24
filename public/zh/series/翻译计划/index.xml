@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" 
+  xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+  xmlns:dc="http://purl.org/dc/elements/1.1/" 
+  xmlns:atom="http://www.w3.org/2005/Atom" 
+  xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" 
+  xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>翻译计划 on EndlessRiver</title>
+    <link>https://wangy325.top/zh/series/%E7%BF%BB%E8%AF%91%E8%AE%A1%E5%88%92/</link>
+    <description>Recent content in 翻译计划 on EndlessRiver</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <managingEditor>wangy325@qq.com (wangy325)</managingEditor>
+    <webMaster>wangy325@qq.com (wangy325)</webMaster>
+    <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
+    <lastBuildDate>Wed, 10 Feb 2021 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://wangy325.top/zh/series/%E7%BF%BB%E8%AF%91%E8%AE%A1%E5%88%92/index.xml" rel="self" type="application/rss+xml" />
+    
+
+      
+      <item>
+        <title>使用Logback记录日志</title>
+        <link>https://wangy325.top/zh/posts/java/trans/guide-to-logback-cn/</link>
+        <pubDate>Wed, 10 Feb 2021 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Tue, 21 Apr 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/trans/guide-to-logback-cn/</guid>
+        <description>&lt;h1 id=&#34;使用logback记录日志&#34;&gt;使用Logback记录日志&lt;/h1&gt;
+&lt;h1 id=&#34;1-概览&#34;&gt;1 概览&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://logback.qos.ch/&#34;&gt;Logback&lt;/a&gt;是Java应用中使用最广的日志框架之一，它是&lt;a href=&#34;https://logback.qos.ch/reasonsToSwitch.html&#34;&gt;其前辈框架Log4j的替代者&lt;/a&gt;。相比Log4j，Logback在日志处理速度、配置多样性、对旧日志文件的处理灵活性上均要优于Log4j。&lt;/p&gt;
+&lt;p&gt;这篇文章将介绍Logback的主要组成结构并指导你使用Logback构建更好的程序。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+          
+        
+        
+          
+            
+              <category>log</category>
+            
+          
+        
+        
+          
+            
+              <category>翻译计划</category>
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>使用printf格式化输出</title>
+        <link>https://wangy325.top/zh/posts/java/trans/how2use-printf/</link>
+        <pubDate>Thu, 10 Dec 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Tue, 21 Apr 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/trans/how2use-printf/</guid>
+        <description>&lt;p&gt;这篇文章介绍了几种常见的使用&lt;code&gt;printf()&lt;/code&gt;方法进行格式化输出的方法。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;printf()&lt;/code&gt;方法隶属于&lt;code&gt;java.io.PrintStream&lt;/code&gt;类，提供了和C语言中相似的格式化字符串输出的方法。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+          
+        
+        
+          
+            
+              <category>java</category>
+            
+          
+        
+        
+          
+            
+              <category>翻译计划</category>
+            
+          
+        
+      </item>
+      
+
+    
+  </channel>
+</rss>

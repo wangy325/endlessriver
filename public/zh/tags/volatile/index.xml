@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" 
+  xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+  xmlns:dc="http://purl.org/dc/elements/1.1/" 
+  xmlns:atom="http://www.w3.org/2005/Atom" 
+  xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" 
+  xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>volatile on EndlessRiver</title>
+    <link>https://wangy325.top/zh/tags/volatile/</link>
+    <description>Recent content in volatile on EndlessRiver</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <managingEditor>wangy325@qq.com (wangy325)</managingEditor>
+    <webMaster>wangy325@qq.com (wangy325)</webMaster>
+    <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
+    <lastBuildDate>Tue, 27 Oct 2020 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://wangy325.top/zh/tags/volatile/index.xml" rel="self" type="application/rss+xml" />
+    
+
+      
+      <item>
+        <title>Java内存模型与volatile关键字(转)</title>
+        <link>https://wangy325.top/zh/posts/java/concurrency/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E4%B8%8Evolatile%E5%85%B3%E9%94%AE%E5%AD%97/</link>
+        <pubDate>Tue, 27 Oct 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 28 Oct 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/concurrency/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E4%B8%8Evolatile%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
+        <description>&lt;p&gt;本文转自&lt;a href=&#34;http://www.cnblogs.com/dolphin0520/p/3920373.html&#34;&gt;Matrix海子&lt;/a&gt;，是描述&lt;code&gt;volatile&lt;/code&gt;关键字非常好的一篇文章，从Java的内存模型开始，归本溯源的阐述了&lt;code&gt;volatile&lt;/code&gt;关键字在并发中的作用与局限&lt;/p&gt;
+&lt;p&gt;此文部分内容参照了《深入理解Java虚拟机》&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>volatile</category>
+            
+          
+        
+        
+          
+            
+              <category>并发</category>
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>资源访问受限-并发之二</title>
+        <link>https://wangy325.top/zh/posts/java/concurrency/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BA%8C/</link>
+        <pubDate>Wed, 20 May 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/concurrency/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BA%8C/</guid>
+        <description>&lt;p&gt;在&lt;a href=&#34;../%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%B8%80&#34;&gt;上一篇文章&lt;/a&gt;中，虽然创建了多线程，并且线程之间出现了一些&lt;strong&gt;不可预测&lt;/strong&gt;的CPU调度，但是由于线程之间是&lt;strong&gt;相互隔离&lt;/strong&gt;的——&lt;strong&gt;线程没有访问共同的资源&lt;/strong&gt;，尽管在执行任务的过程可能被CPU剥夺运行权，但是当它们再次获得运行权时对运行结果并没有影响，它们是安全的。&lt;/p&gt;
+&lt;p&gt;考虑一种情况，如果&lt;strong&gt;多个线程访问同一个资源&lt;/strong&gt;，并对资源内容进行修改，会发生什么情况？&lt;/p&gt;
+&lt;p&gt;对于&lt;strong&gt;非原子性&lt;/strong&gt;操作，多线程下会出现&lt;strong&gt;竞争条件&lt;/strong&gt;，&lt;code&gt;accounts[to] += amount&lt;/code&gt;操作，可以被拆分为多个CPU指令：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;加载accounts[to]到寄存器&lt;/li&gt;
+&lt;li&gt;增加amount&lt;/li&gt;
+&lt;li&gt;将结果写回acounts[to]&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;线程运行到&lt;strong&gt;任何一个步骤时都可能被剥夺运行权&lt;/strong&gt;。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>锁</category>
+            
+          
+            
+              <category>synchronized</category>
+            
+          
+            
+              <category>volatile</category>
+            
+          
+        
+        
+          
+            
+              <category>并发</category>
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+
+    
+  </channel>
+</rss>

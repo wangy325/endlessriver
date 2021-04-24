@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" 
+  xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+  xmlns:dc="http://purl.org/dc/elements/1.1/" 
+  xmlns:atom="http://www.w3.org/2005/Atom" 
+  xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" 
+  xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>执行器 on EndlessRiver</title>
+    <link>https://wangy325.top/zh/tags/%E6%89%A7%E8%A1%8C%E5%99%A8/</link>
+    <description>Recent content in 执行器 on EndlessRiver</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <managingEditor>wangy325@qq.com (wangy325)</managingEditor>
+    <webMaster>wangy325@qq.com (wangy325)</webMaster>
+    <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
+    <lastBuildDate>Tue, 10 Nov 2020 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://wangy325.top/zh/tags/%E6%89%A7%E8%A1%8C%E5%99%A8/index.xml" rel="self" type="application/rss+xml" />
+    
+
+      
+      <item>
+        <title>计划执行任务</title>
+        <link>https://wangy325.top/zh/posts/java/concurrency/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</link>
+        <pubDate>Tue, 10 Nov 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Sun, 15 Nov 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/concurrency/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</guid>
+        <description>&lt;p&gt;除了ThreadPoolExecutor之外，Java执行器（Executor）框架还提供了可以在指定延迟之后执行一次或周期执行任务的接口&lt;code&gt;ScheduledExecutorService&lt;/code&gt;，较&lt;a href=&#34;https://docs.oracle.com/javase/8/docs/api/java/util/Timer.html&#34;&gt;java.util.Timer&lt;/a&gt;而言，它是更好的选择&lt;/p&gt;
+&lt;p&gt;与&lt;a href=&#34;../%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/#3-%E7%BA%BF%E7%A8%8B%E6%B1%A0&#34;&gt;线程池&lt;/a&gt;不同的是，用于计划执行的&lt;code&gt;ScheduledThreadPoolExecutor&lt;/code&gt;使用&lt;code&gt;ScheduledFutureTask&lt;/code&gt;作为任务，使用&lt;code&gt;DelayedWorkQueue&lt;/code&gt;作为任务队列，以实现计划（周期）执行的目的&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wangy325.top/img/scheduledFutureTask.png&#34; alt=&#34;xx&#34; /&gt;&lt;/p&gt;
+&lt;p style=&#34;text-align:center; font-size:.9rem; font-style:italic&#34;&gt;ScheduledThreadPoolExecutor继承关系图&lt;/p&gt;
+&lt;p&gt;从&lt;code&gt;ScheduledThreadPoolExecutor&lt;/code&gt;的继承关系图可以看到，其是&lt;code&gt;ThreadPoolExecutor&lt;/code&gt;的导出类，其提交任务和执行任务以及关闭线程池的逻辑应和线程池相差无几，其重点差别在于&lt;strong&gt;任务对象以及任务队列&lt;/strong&gt;的封装上，后文将会详述&lt;code&gt;ScheduledThreadPoolExecutor&lt;/code&gt;的任务计划执行以及周期执行机制&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>线程池</category>
+            
+          
+            
+              <category>执行器</category>
+            
+          
+        
+        
+          
+            
+              <category>并发</category>
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>执行器与线程池</title>
+        <link>https://wangy325.top/zh/posts/java/concurrency/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/</link>
+        <pubDate>Tue, 03 Nov 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Tue, 03 Nov 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/concurrency/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/</guid>
+        <description>&lt;p&gt;Java并发系列的文章到目前为止，虽然没有特别说明，但是使用执行器(Executor(s))的次数已经难以计数了，&lt;code&gt;Executors&lt;/code&gt;提供了一些非常方便的静态方法，可以根据需要创建不同的&lt;code&gt;ExecutorService&lt;/code&gt;，然后调用其&lt;code&gt;execute(Runnable)&lt;/code&gt;或&lt;code&gt;submit(Callable&amp;lt;T&amp;gt;)&lt;/code&gt;方法。在多线程的条件下，执行器还有一个非常明显的优势，它使用线程池管理线程，避免了系统创建和销毁线程的开销。在一般的Java并发过程中，也建议使用执行器完成任务而非显式地创建线程。&lt;/p&gt;
+&lt;p&gt;本文将从执行器开始，阐述Java中的线程池。&lt;/p&gt;
+&lt;h1 id=&#34;1-executors&#34;&gt;1 Executors&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;java.util.concurrent.Executors&lt;/code&gt;类提供了许多静态方法来获取不同类型的 &lt;strong&gt;线程池&lt;/strong&gt;，下表列出其常用方法&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;方法&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;概要&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;newFixedThreadPool&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;创建固定大小的线程池，线程会一直保留&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;newCachedThreadPool&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;创建线程池，该线程池在必要时创建新线程，旧线程也会被重用，线程空闲60s被销毁&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;newSingleThreadExecutor&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;相当于newFixedThreadPool(1)，其能保证任务顺序执行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;newScheduledThreadPool&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;用于预定执行一次或周期执行的线程池&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;newSingleThreadScheduledExecutor&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;用于预定执行一次或周期执行的单线程池&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p style=&#34;text-align:center; font-size:.9rem; font-style:italic&#34;&gt;Executors用于构造线程池的部分方法&lt;/p&gt;
+&lt;p&gt;上表中的前3个方法返回&lt;code&gt;ThreadPoolExecutor&lt;/code&gt;实例，后面2个方法返回&lt;code&gt;ScheduledExecutorService&lt;/code&gt;接口的实例，不管是ThreadPoolExecutor或是ScheduledExecutorService，都是&lt;code&gt;ExecutorService&lt;/code&gt;的实现，&lt;code&gt;ExecutorService&lt;/code&gt;接口是设计用来处理任务的接口，其顶层接口是&lt;code&gt;java.util.concurrent.Executor&lt;/code&gt;，该接口简单地定义了一个执行任务的方法：&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>执行器</category>
+            
+          
+            
+              <category>线程池</category>
+            
+          
+        
+        
+          
+            
+              <category>并发</category>
+            
+          
+        
+        
+      </item>
+      
+
+    
+  </channel>
+</rss>

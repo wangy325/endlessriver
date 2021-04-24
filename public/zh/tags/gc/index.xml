@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" 
+  xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+  xmlns:dc="http://purl.org/dc/elements/1.1/" 
+  xmlns:atom="http://www.w3.org/2005/Atom" 
+  xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" 
+  xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>gc on EndlessRiver</title>
+    <link>https://wangy325.top/zh/tags/gc/</link>
+    <description>Recent content in gc on EndlessRiver</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <managingEditor>wangy325@qq.com (wangy325)</managingEditor>
+    <webMaster>wangy325@qq.com (wangy325)</webMaster>
+    <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
+    <lastBuildDate>Wed, 25 Nov 2020 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://wangy325.top/zh/tags/gc/index.xml" rel="self" type="application/rss+xml" />
+    
+
+      
+      <item>
+        <title>JVM垃圾回收概要(转)</title>
+        <link>https://wangy325.top/zh/posts/java/jvm/java-gc/</link>
+        <pubDate>Wed, 25 Nov 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 25 Nov 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/jvm/java-gc/</guid>
+        <description>&lt;h1 id=&#34;本节常见面试题&#34;&gt;本节常见面试题&lt;/h1&gt;
+&lt;p&gt;问题答案在文中都有提到&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如何判断对象是否死亡（两种方法）。&lt;/li&gt;
+&lt;li&gt;简单的介绍一下强引用、软引用、弱引用、虚引用（虚引用与软引用和弱引用的区别、使用软引用能带来的好处）。&lt;/li&gt;
+&lt;li&gt;如何判断一个常量是废弃常量&lt;/li&gt;
+&lt;li&gt;如何判断一个类是无用的类&lt;/li&gt;
+&lt;li&gt;垃圾收集有哪些算法，各自的特点？&lt;/li&gt;
+&lt;li&gt;HotSpot 为什么要分为新生代和老年代？&lt;/li&gt;
+&lt;li&gt;常见的垃圾回收器有哪些？&lt;/li&gt;
+&lt;li&gt;介绍一下 CMS,G1 收集器。&lt;/li&gt;
+&lt;li&gt;Minor Gc 和 Full GC 有什么不同呢？&lt;/li&gt;
+&lt;/ul&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>gc</category>
+            
+          
+        
+        
+          
+            
+              <category>JVM</category>
+            
+          
+        
+        
+          
+            
+              <category>转载</category>
+            
+          
+        
+      </item>
+      
+
+    
+  </channel>
+</rss>

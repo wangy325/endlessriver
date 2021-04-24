@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" 
+  xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+  xmlns:dc="http://purl.org/dc/elements/1.1/" 
+  xmlns:atom="http://www.w3.org/2005/Atom" 
+  xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" 
+  xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>Categories on EndlessRiver</title>
+    <link>https://wangy325.top/zh/categories/</link>
+    <description>Recent content in Categories on EndlessRiver</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <managingEditor>wangy325@qq.com (wangy325)</managingEditor>
+    <webMaster>wangy325@qq.com (wangy325)</webMaster>
+    <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
+    <lastBuildDate>Sat, 20 Feb 2021 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://wangy325.top/zh/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+
+      
+      <item>
+        <title>SpringBoot</title>
+        <link>https://wangy325.top/zh/categories/springboot/</link>
+        <pubDate>Sat, 20 Feb 2021 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        
+        <guid>https://wangy325.top/zh/categories/springboot/</guid>
+        <description></description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
+      
+      <item>
+        <title>log</title>
+        <link>https://wangy325.top/zh/categories/log/</link>
+        <pubDate>Wed, 10 Feb 2021 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        
+        <guid>https://wangy325.top/zh/categories/log/</guid>
+        <description></description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
+      
+      <item>
+        <title>单元测试</title>
+        <link>https://wangy325.top/zh/categories/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</link>
+        <pubDate>Sun, 07 Feb 2021 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        
+        <guid>https://wangy325.top/zh/categories/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</guid>
+        <description></description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
+      
+      <item>
+        <title>Java8</title>
+        <link>https://wangy325.top/zh/categories/java8/</link>
+        <pubDate>Tue, 02 Feb 2021 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        
+        <guid>https://wangy325.top/zh/categories/java8/</guid>
+        <description></description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
+      
+      <item>
+        <title>随笔</title>
+        <link>https://wangy325.top/zh/categories/%E9%9A%8F%E7%AC%94/</link>
+        <pubDate>Thu, 31 Dec 2020 20:57:00 +0800</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        
+        <guid>https://wangy325.top/zh/categories/%E9%9A%8F%E7%AC%94/</guid>
+        <description></description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
+      
+      <item>
+        <title>java</title>
+        <link>https://wangy325.top/zh/categories/java/</link>
+        <pubDate>Thu, 10 Dec 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        
+        <guid>https://wangy325.top/zh/categories/java/</guid>
+        <description></description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
+      
+      <item>
+        <title>JVM</title>
+        <link>https://wangy325.top/zh/categories/jvm/</link>
+        <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        
+        <guid>https://wangy325.top/zh/categories/jvm/</guid>
+        <description></description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
+      
+      <item>
+        <title>MySQL</title>
+        <link>https://wangy325.top/zh/categories/mysql/</link>
+        <pubDate>Fri, 27 Nov 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        
+        <guid>https://wangy325.top/zh/categories/mysql/</guid>
+        <description></description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
+      
+      <item>
+        <title>redis</title>
+        <link>https://wangy325.top/zh/categories/redis/</link>
+        <pubDate>Tue, 24 Nov 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        
+        <guid>https://wangy325.top/zh/categories/redis/</guid>
+        <description></description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
+      
+      <item>
+        <title>并发</title>
+        <link>https://wangy325.top/zh/categories/%E5%B9%B6%E5%8F%91/</link>
+        <pubDate>Mon, 16 Nov 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        
+        <guid>https://wangy325.top/zh/categories/%E5%B9%B6%E5%8F%91/</guid>
+        <description></description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
+      
+      <item>
+        <title>fdfs</title>
+        <link>https://wangy325.top/zh/categories/fdfs/</link>
+        <pubDate>Sat, 31 Aug 2019 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        
+        <guid>https://wangy325.top/zh/categories/fdfs/</guid>
+        <description></description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
+      
+      <item>
+        <title>cron</title>
+        <link>https://wangy325.top/zh/categories/cron/</link>
+        <pubDate>Thu, 13 Dec 2018 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        
+        <guid>https://wangy325.top/zh/categories/cron/</guid>
+        <description></description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
+      
+      <item>
+        <title>设计模式</title>
+        <link>https://wangy325.top/zh/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+        <pubDate>Wed, 05 Dec 2018 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        
+        <guid>https://wangy325.top/zh/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</guid>
+        <description></description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
+      
+      <item>
+        <title>mybatis</title>
+        <link>https://wangy325.top/zh/categories/mybatis/</link>
+        <pubDate>Fri, 21 Sep 2018 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        
+        <guid>https://wangy325.top/zh/categories/mybatis/</guid>
+        <description></description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
+      
+      <item>
+        <title>git</title>
+        <link>https://wangy325.top/zh/categories/git/</link>
+        <pubDate>Thu, 20 Sep 2018 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        
+        <guid>https://wangy325.top/zh/categories/git/</guid>
+        <description></description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
+      
+
+    
+  </channel>
+</rss>

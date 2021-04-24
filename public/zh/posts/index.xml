@@ -1,0 +1,2265 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" 
+  xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+  xmlns:dc="http://purl.org/dc/elements/1.1/" 
+  xmlns:atom="http://www.w3.org/2005/Atom" 
+  xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" 
+  xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>文章列表 on EndlessRiver</title>
+    <link>https://wangy325.top/zh/posts/</link>
+    <description>Recent content in 文章列表 on EndlessRiver</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <managingEditor>wangy325@qq.com (wangy325)</managingEditor>
+    <webMaster>wangy325@qq.com (wangy325)</webMaster>
+    <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
+    <lastBuildDate>Sat, 20 Feb 2021 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://wangy325.top/zh/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+
+      
+      <item>
+        <title>一次服务器OOM故障</title>
+        <link>https://wangy325.top/zh/posts/server/2021-02-20_%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%85%E9%9A%9C/</link>
+        <pubDate>Sat, 20 Feb 2021 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 14 Apr 2021 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/server/2021-02-20_%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%85%E9%9A%9C/</guid>
+        <description>&lt;p&gt;使用idm下载y2b视频导致服务器内存溢出，内核强制关闭了服务进程。&lt;/p&gt;
+&lt;p&gt;通过系统日志定位原因，并探讨了服务器维护的几个相关命令。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+          
+        
+        
+          
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>在SpringBoot中使用MessageSource</title>
+        <link>https://wangy325.top/zh/posts/java/spring/use-springboot-messagesource/</link>
+        <pubDate>Sat, 20 Feb 2021 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Sat, 20 Feb 2021 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/spring/use-springboot-messagesource/</guid>
+        <description>&lt;blockquote&gt;
+&lt;p&gt;&lt;span id=&#34;hook&#34;&gt;几个说明&lt;/span&gt;：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;del&gt;properties配置文件中，&lt;code&gt;spring.messages.basename&lt;/code&gt;&lt;strong&gt;必须&lt;/strong&gt;要加classpath前缀。如 &lt;code&gt;spring.messages.basename=classpath:i18n/messages&lt;/code&gt;&lt;/del&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;del&gt;必须要手动配置&lt;code&gt;MessageSource&lt;/code&gt;，springboot不会自动配置之&lt;/del&gt;；&lt;/li&gt;
+&lt;li&gt;如果使用&lt;code&gt;MessageSource.getMessage()&lt;/code&gt;方法，第一个参数的引用形式为&lt;code&gt;&amp;quot;code&amp;quot;&lt;/code&gt;，而不是&lt;code&gt;&amp;quot;{code}&amp;quot;&lt;/code&gt;或者&lt;code&gt;&amp;quot;${code}&amp;quot;&lt;/code&gt;。如messageSource.getMessage(&amp;ldquo;test.msg&amp;rdquo;, null, &lt;del&gt;Locale.getDefault()&lt;/del&gt;)；&lt;/li&gt;
+&lt;li&gt;在配置&lt;code&gt;LocalValidatorFactoryBean&lt;/code&gt;之后，才可以在&lt;code&gt;javax.validation.constraints&lt;/code&gt;包下的注解（&lt;code&gt;@Size&lt;/code&gt;，&lt;code&gt;@NotNull&lt;/code&gt;&amp;hellip;）下的&lt;em&gt;&lt;strong&gt;message&lt;/strong&gt;&lt;/em&gt;属性中使用&lt;code&gt;&amp;quot;{code}&amp;quot;&lt;/code&gt;的形式声明校验提示信息。如&lt;br /&gt;
+&lt;code&gt;@NotNull(message = &amp;quot;{leftTime.not.null}&amp;quot;)&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;springMVC的locale配置和JVM的locale配置不一样，在application.properties中配置的&lt;code&gt;spring.mvc.locale=zh_CN&lt;/code&gt;实际上配置的是&lt;code&gt;WebMvcProperties&lt;/code&gt;，在获取消息时，locale信息应该使用&lt;code&gt;webMvcProperties.getLocale()&lt;/code&gt;&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;获取&lt;strong&gt;而不是&lt;/strong&gt;使用&lt;code&gt;Locale.getDefault()&lt;/code&gt;获取。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;1-概览&#34;&gt;1 概览&lt;/h2&gt;
+&lt;p&gt;MessageSource is a powerful feature available in Spring applications. This helps application developers handle various complex scenarios with writing much extra code, such as environment-specific configuration, internationalization or configurable values.&lt;/p&gt;
+&lt;p&gt;One more scenario could be modifying the default validation messages to more user-friendly/custom messages.&lt;/p&gt;
+&lt;p&gt;In this tutorial, we&amp;rsquo;ll see how to configure and manage custom validation MessageSource in the application using Spring Boot.&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>MessageSource</category>
+            
+          
+            
+              <category>i18n</category>
+            
+          
+        
+        
+          
+            
+              <category>SpringBoot</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>使用Logback记录日志</title>
+        <link>https://wangy325.top/zh/posts/java/trans/guide-to-logback-cn/</link>
+        <pubDate>Wed, 10 Feb 2021 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Tue, 21 Apr 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/trans/guide-to-logback-cn/</guid>
+        <description>&lt;h1 id=&#34;使用logback记录日志&#34;&gt;使用Logback记录日志&lt;/h1&gt;
+&lt;h1 id=&#34;1-概览&#34;&gt;1 概览&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://logback.qos.ch/&#34;&gt;Logback&lt;/a&gt;是Java应用中使用最广的日志框架之一，它是&lt;a href=&#34;https://logback.qos.ch/reasonsToSwitch.html&#34;&gt;其前辈框架Log4j的替代者&lt;/a&gt;。相比Log4j，Logback在日志处理速度、配置多样性、对旧日志文件的处理灵活性上均要优于Log4j。&lt;/p&gt;
+&lt;p&gt;这篇文章将介绍Logback的主要组成结构并指导你使用Logback构建更好的程序。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+          
+        
+        
+          
+            
+              <category>log</category>
+            
+          
+        
+        
+          
+            
+              <category>翻译计划</category>
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>在SpringBoot项目中使用MockMvc进行接口测试</title>
+        <link>https://wangy325.top/zh/posts/java/test/mockmvc%E7%94%A8%E4%BE%8B2%E5%88%99/</link>
+        <pubDate>Sun, 07 Feb 2021 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Mon, 08 Mar 2021 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/test/mockmvc%E7%94%A8%E4%BE%8B2%E5%88%99/</guid>
+        <description>&lt;p&gt;现在流行在项目中使用&lt;a href=&#34;swagger.io&#34;&gt;swagger&lt;/a&gt;对接口进行测试，这确实很方便、直观。&lt;/p&gt;
+&lt;p&gt;但是MockMvc作为spring-test包中指定的测试框架，在没有使用swagger的项目中，使用其进行测试是很好的选择。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>mockito</category>
+            
+          
+        
+        
+          
+            
+              <category>单元测试</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>Java8中的新日期和时间工具库</title>
+        <link>https://wangy325.top/zh/posts/java/basic/java-new-time-api/</link>
+        <pubDate>Tue, 02 Feb 2021 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Tue, 02 Feb 2021 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/basic/java-new-time-api/</guid>
+        <description>&lt;blockquote&gt;
+&lt;p&gt;mybatis自 3.4.5 开始，已经支持使用LocaldateTime作为时间查询入参，映射类型为TimeStamp，参考地址: &lt;a href=&#34;https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers&#34;&gt;https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&#34;1-前言&#34;&gt;1 前言&lt;/h1&gt;
+&lt;p&gt;在介绍Java SE 8中新的日期时间库前，先了解下Java 8之前的日期时间工具的诟病。&lt;/p&gt;
+&lt;p&gt;在Java SE 8前，日期时间工具库在&lt;code&gt;java.util&lt;/code&gt;包中，包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;java.util.Date&lt;/code&gt;：表示日期和时间&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;java.util.Calendar&lt;/code&gt;以及其实现子类：表示各种日历系统，常用的是格林威治日历&lt;code&gt;java.util.GregorianCalendar&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;java.util.TimeZone&lt;/code&gt;以及其实现子类：表示时区偏移量和夏令时&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以及辅助其进行格式化和解析的工具库在java.text包中，包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;java.text.DateFormat&lt;/code&gt;：格式化日期时间和解析日期时间的工具抽象类&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;java.text.SimpleDateFormat&lt;/code&gt;：DateDateFormat的实现&lt;/li&gt;
+&lt;/ul&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>DateTime</category>
+            
+          
+        
+        
+          
+            
+              <category>Java8</category>
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>在xxl-job中使用分片任务</title>
+        <link>https://wangy325.top/zh/posts/java/job/xxl-sharding-job/</link>
+        <pubDate>Mon, 25 Jan 2021 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Tue, 26 Jan 2021 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/job/xxl-sharding-job/</guid>
+        <description>&lt;p&gt;本文介绍在如何在xxl-job中使用创建并使用分片任务。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>任务调度</category>
+            
+          
+        
+        
+          
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>2020年度总结</title>
+        <link>https://wangy325.top/zh/posts/z/annual-summary-2020/</link>
+        <pubDate>Thu, 31 Dec 2020 20:57:00 +0800</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Thu, 31 Dec 2020 23:30:00 +0800</atom:modified>
+        <guid>https://wangy325.top/zh/posts/z/annual-summary-2020/</guid>
+        <description>&lt;p&gt;2020，我，作为一个处于危机边缘而不自觉的人，果不其然地，陷入了失业的漩涡。这不是“主动离职”4个字就能概括的一年，里面包含了太多的曲折与困难。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+          
+        
+        
+          
+            
+              <category>随笔</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>使用printf格式化输出</title>
+        <link>https://wangy325.top/zh/posts/java/trans/how2use-printf/</link>
+        <pubDate>Thu, 10 Dec 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Tue, 21 Apr 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/trans/how2use-printf/</guid>
+        <description>&lt;p&gt;这篇文章介绍了几种常见的使用&lt;code&gt;printf()&lt;/code&gt;方法进行格式化输出的方法。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;printf()&lt;/code&gt;方法隶属于&lt;code&gt;java.io.PrintStream&lt;/code&gt;类，提供了和C语言中相似的格式化字符串输出的方法。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+          
+        
+        
+          
+            
+              <category>java</category>
+            
+          
+        
+        
+          
+            
+              <category>翻译计划</category>
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>背包问题</title>
+        <link>https://wangy325.top/zh/posts/algo/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/</link>
+        <pubDate>Fri, 04 Dec 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Fri, 04 Dec 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/algo/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/</guid>
+        <description>&lt;p&gt;背包问题其实属于&lt;strong&gt;动态规划&lt;/strong&gt;（ &lt;em&gt;Dynamic Programming&lt;/em&gt; ）问题的一种。动态规划的手段是将大问题拆解为多个小问题，小问题解决之后，大问题也就随之而解。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>动态规划</category>
+            
+          
+        
+        
+          
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>Java内存区域详解(转)</title>
+        <link>https://wangy325.top/zh/posts/java/jvm/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E8%AF%A6%E8%A7%A3/</link>
+        <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Mon, 30 Nov 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/jvm/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E8%AF%A6%E8%A7%A3/</guid>
+        <description>&lt;blockquote&gt;
+&lt;p&gt;如果没有特殊说明，都是针对的是 HotSpot 虚拟机。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr /&gt;
+&lt;h1 id=&#34;1-概述&#34;&gt;1 概述&lt;/h1&gt;
+&lt;p&gt;对于 Java 程序员来说，在虚拟机自动内存管理机制下，不再需要像 C/C++程序开发程序员这样为每一个 new 操作去写对应的 delete/free 操作，不容易出现内存泄漏和内存溢出问题。正是因为 Java 程序员把内存控制权利交给 Java 虚拟机，一旦出现内存泄漏和溢出方面的问题，如果不了解虚拟机是怎样使用内存的，那么排查错误将会是一个非常艰巨的任务。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>Java虚拟机</category>
+            
+          
+        
+        
+          
+            
+              <category>JVM</category>
+            
+          
+        
+        
+          
+            
+              <category>转载</category>
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>mysql事务与隔离级别</title>
+        <link>https://wangy325.top/zh/posts/java/sql/mysql%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/</link>
+        <pubDate>Fri, 27 Nov 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Fri, 27 Nov 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/sql/mysql%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/</guid>
+        <description>&lt;p&gt;mysql事务属于老生常谈的内容了，并不指望这一篇文章将其搞透，本篇文章只是将mysql事务的外衣扒了，让其看起来不再那么神秘与华丽。有时候，新手总是对“事务”这两个字怀有莫名的恐惧感，因为其藏在mysql内部，偷偷地工作着，就好像你没有凝视深渊，而深渊却在凝视你。&lt;/p&gt;
+&lt;p&gt;事务的概念可以这样理解：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在mysql中，有些操作必须要分步完成，那么我们可以把这些分步完成的操作声明为一个“事务”，用来保证mysql数据一致性。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;
+    对于单条sql语句而言，mysql将其处理为一个「隐式事务」。
+&lt;p&gt;看起来，事务的概念还是有些空泛。事实上，有了一定的并发基础后（这也是这篇文章写在java并发之后的原因），更加容易理解事务这个概念，这并不是说事务一个并发概念，不过，事务是有了并发之后才衍生的概念，这很容易理解。试想一个只容许一个客户端连接的mysql服务，是否需要“事务”呢？答案应该是否定的。单个客户端执行sql语句总是有序的，数据一致性就能得到保证了&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;。试想，如果是多客户端的系统（事实上正是如此）同时执行sql语句，就好似多线程同时访问资源一样，对于数据库系统而言，所有的数据表都是共享资源&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;，那么事务就像是那把保证并发安全的锁。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>acid</category>
+            
+          
+            
+              <category>事务</category>
+            
+          
+        
+        
+          
+            
+              <category>MySQL</category>
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>JVM垃圾回收概要(转)</title>
+        <link>https://wangy325.top/zh/posts/java/jvm/java-gc/</link>
+        <pubDate>Wed, 25 Nov 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 25 Nov 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/jvm/java-gc/</guid>
+        <description>&lt;h1 id=&#34;本节常见面试题&#34;&gt;本节常见面试题&lt;/h1&gt;
+&lt;p&gt;问题答案在文中都有提到&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如何判断对象是否死亡（两种方法）。&lt;/li&gt;
+&lt;li&gt;简单的介绍一下强引用、软引用、弱引用、虚引用（虚引用与软引用和弱引用的区别、使用软引用能带来的好处）。&lt;/li&gt;
+&lt;li&gt;如何判断一个常量是废弃常量&lt;/li&gt;
+&lt;li&gt;如何判断一个类是无用的类&lt;/li&gt;
+&lt;li&gt;垃圾收集有哪些算法，各自的特点？&lt;/li&gt;
+&lt;li&gt;HotSpot 为什么要分为新生代和老年代？&lt;/li&gt;
+&lt;li&gt;常见的垃圾回收器有哪些？&lt;/li&gt;
+&lt;li&gt;介绍一下 CMS,G1 收集器。&lt;/li&gt;
+&lt;li&gt;Minor Gc 和 Full GC 有什么不同呢？&lt;/li&gt;
+&lt;/ul&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>gc</category>
+            
+          
+        
+        
+          
+            
+              <category>JVM</category>
+            
+          
+        
+        
+          
+            
+              <category>转载</category>
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>redis必知必会(转)</title>
+        <link>https://wangy325.top/zh/posts/java/redis/redis-all/</link>
+        <pubDate>Tue, 24 Nov 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Tue, 24 Nov 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/redis/redis-all/</guid>
+        <description>&lt;p&gt;简单来说 &lt;strong&gt;Redis 就是一个使用 C 语言开发的数据库&lt;/strong&gt;，不过与传统数据库不同的是 &lt;strong&gt;Redis 的数据是存在内存中的&lt;/strong&gt; ，也就是它是内存数据库，所以读写速度非常快，因此 Redis 被广泛应用于缓存方向。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>redis</category>
+            
+          
+        
+        
+          
+            
+              <category>redis</category>
+            
+          
+        
+        
+          
+            
+              <category>转载</category>
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>布隆过滤器(转)</title>
+        <link>https://wangy325.top/zh/posts/java/redis/bloom-filter/</link>
+        <pubDate>Mon, 23 Nov 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Mon, 23 Nov 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/redis/bloom-filter/</guid>
+        <description>&lt;p&gt;海量数据处理以及缓存穿透这两个场景让我认识了 布隆过滤器 ，我查阅了一些资料来了解它，但是很多现成资料并不满足我的需求，所以就决定自己总结一篇关于布隆过滤器的文章。希望通过这篇文章让更多人了解布隆过滤器，并且会实际去使用它！&lt;/p&gt;
+&lt;p&gt;下面我们将分为几个方面来介绍布隆过滤器：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;什么是布隆过滤器？&lt;/li&gt;
+&lt;li&gt;布隆过滤器的原理介绍。&lt;/li&gt;
+&lt;li&gt;布隆过滤器使用场景。&lt;/li&gt;
+&lt;li&gt;通过 Java 编程手动实现布隆过滤器。&lt;/li&gt;
+&lt;li&gt;利用Google开源的Guava中自带的布隆过滤器。&lt;/li&gt;
+&lt;li&gt;Redis 中的布隆过滤器。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;1什么是布隆过滤器&#34;&gt;1.什么是布隆过滤器？&lt;/h3&gt;
+&lt;p&gt;首先，我们需要了解布隆过滤器的概念。&lt;/p&gt;
+&lt;p&gt;布隆过滤器（Bloom Filter）是一个叫做 Bloom 的老哥于1970年提出的。我们可以把它看作由二进制向量（或者说位数组）和一系列随机映射函数（哈希函数）两部分组成的数据结构。相比于我们平时常用的的 List、Map 、Set 等数据结构，它占用空间更少并且效率更高，但是缺点是其返回的结果是概率性的，而不是非常准确的。理论情况下添加到集合中的元素越多，误报的可能性就越大。并且，存放在布隆过滤器的数据不容易删除。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>bloomfilter</category>
+            
+          
+        
+        
+          
+            
+          
+        
+        
+          
+            
+              <category>转载</category>
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>倒计时门闩、信号量、交换器及其他</title>
+        <link>https://wangy325.top/zh/posts/java/concurrency/%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BB%84%E4%BB%B6/</link>
+        <pubDate>Mon, 16 Nov 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Mon, 16 Nov 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/concurrency/%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BB%84%E4%BB%B6/</guid>
+        <description>&lt;p&gt;Java 1.5以后的并发类库新加入了一些用于解决并发问题的新构件，合理地使用这些构件能够帮助我们写出更加简单且健壮的并发程序。本节内容介绍&lt;code&gt;java.util.concurrent&lt;/code&gt;包中一些具有代表性的构件，包括&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CountDownLatch&lt;/li&gt;
+&lt;li&gt;CyclicBarrier&lt;/li&gt;
+&lt;li&gt;Semaphore&lt;/li&gt;
+&lt;li&gt;Exchanger&lt;/li&gt;
+&lt;li&gt;DelayQueue&lt;/li&gt;
+&lt;li&gt;PriorityBlockingQueue&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;1-countdownlatch&#34;&gt;1 CountDownLatch&lt;/h1&gt;
+&lt;p&gt;在讨论线程的基本概念时，我们说过&lt;code&gt;join()&lt;/code&gt;方法可使当前线程等待调用join方法的线程执行完，可以实现简单的&lt;a href=&#34;../%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%B8%80/#9-%E5%8A%A0%E5%85%A5%E4%B8%80%E4%B8%AA%E7%BA%BF%E7%A8%8Bjoin&#34;&gt;无锁同步&lt;/a&gt;，使用CountDownLatch可以更加简单的实现这一目的。毕竟，&lt;code&gt;join()&lt;/code&gt;方法的语义“加入一个线程”不是很容易就能让人理解。相较于&lt;code&gt;join()&lt;/code&gt;方法，CountDownLatch的语义就明确多了。&lt;/p&gt;
+&lt;p&gt;在有些文档上，将CountDownLatch译为&amp;quot;倒计时门闩【shuān】&amp;quot;，其维护一个计数器，这个计数器在CountDownLatch初始化之后便&lt;strong&gt;不能重置&lt;/strong&gt;。在CountDownLatch上调用&lt;code&gt;countDown()&lt;/code&gt;方法来将计数值减1，调用这个方法并不会引起阻塞。不过，在这个计数器为0之前，任何调用CountDownLatch的&lt;code&gt;await()&lt;/code&gt;方法的任务都将阻塞。&lt;/p&gt;
+&lt;p&gt;CountDownLatch的典型用法是将一个任务分割为n个可以独立解决的部分，并创建一个计数器值为n的CountDownLatch，在每个任务完成时，调用&lt;code&gt;countDown()&lt;/code&gt;方法将计数器减1，在等待所有任务完成的线程上调用&lt;code&gt;await()&lt;/code&gt;方法，将任务阻塞，知道计数器为0之后再继续运行。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>信号量</category>
+            
+          
+            
+              <category>交换器</category>
+            
+          
+        
+        
+          
+            
+              <category>并发</category>
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>计划执行任务</title>
+        <link>https://wangy325.top/zh/posts/java/concurrency/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</link>
+        <pubDate>Tue, 10 Nov 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Sun, 15 Nov 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/concurrency/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</guid>
+        <description>&lt;p&gt;除了ThreadPoolExecutor之外，Java执行器（Executor）框架还提供了可以在指定延迟之后执行一次或周期执行任务的接口&lt;code&gt;ScheduledExecutorService&lt;/code&gt;，较&lt;a href=&#34;https://docs.oracle.com/javase/8/docs/api/java/util/Timer.html&#34;&gt;java.util.Timer&lt;/a&gt;而言，它是更好的选择&lt;/p&gt;
+&lt;p&gt;与&lt;a href=&#34;../%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/#3-%E7%BA%BF%E7%A8%8B%E6%B1%A0&#34;&gt;线程池&lt;/a&gt;不同的是，用于计划执行的&lt;code&gt;ScheduledThreadPoolExecutor&lt;/code&gt;使用&lt;code&gt;ScheduledFutureTask&lt;/code&gt;作为任务，使用&lt;code&gt;DelayedWorkQueue&lt;/code&gt;作为任务队列，以实现计划（周期）执行的目的&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wangy325.top/img/scheduledFutureTask.png&#34; alt=&#34;xx&#34; /&gt;&lt;/p&gt;
+&lt;p style=&#34;text-align:center; font-size:.9rem; font-style:italic&#34;&gt;ScheduledThreadPoolExecutor继承关系图&lt;/p&gt;
+&lt;p&gt;从&lt;code&gt;ScheduledThreadPoolExecutor&lt;/code&gt;的继承关系图可以看到，其是&lt;code&gt;ThreadPoolExecutor&lt;/code&gt;的导出类，其提交任务和执行任务以及关闭线程池的逻辑应和线程池相差无几，其重点差别在于&lt;strong&gt;任务对象以及任务队列&lt;/strong&gt;的封装上，后文将会详述&lt;code&gt;ScheduledThreadPoolExecutor&lt;/code&gt;的任务计划执行以及周期执行机制&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>线程池</category>
+            
+          
+            
+              <category>执行器</category>
+            
+          
+        
+        
+          
+            
+              <category>并发</category>
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>执行器与线程池</title>
+        <link>https://wangy325.top/zh/posts/java/concurrency/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/</link>
+        <pubDate>Tue, 03 Nov 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Tue, 03 Nov 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/concurrency/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/</guid>
+        <description>&lt;p&gt;Java并发系列的文章到目前为止，虽然没有特别说明，但是使用执行器(Executor(s))的次数已经难以计数了，&lt;code&gt;Executors&lt;/code&gt;提供了一些非常方便的静态方法，可以根据需要创建不同的&lt;code&gt;ExecutorService&lt;/code&gt;，然后调用其&lt;code&gt;execute(Runnable)&lt;/code&gt;或&lt;code&gt;submit(Callable&amp;lt;T&amp;gt;)&lt;/code&gt;方法。在多线程的条件下，执行器还有一个非常明显的优势，它使用线程池管理线程，避免了系统创建和销毁线程的开销。在一般的Java并发过程中，也建议使用执行器完成任务而非显式地创建线程。&lt;/p&gt;
+&lt;p&gt;本文将从执行器开始，阐述Java中的线程池。&lt;/p&gt;
+&lt;h1 id=&#34;1-executors&#34;&gt;1 Executors&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;java.util.concurrent.Executors&lt;/code&gt;类提供了许多静态方法来获取不同类型的 &lt;strong&gt;线程池&lt;/strong&gt;，下表列出其常用方法&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;方法&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;概要&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;newFixedThreadPool&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;创建固定大小的线程池，线程会一直保留&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;newCachedThreadPool&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;创建线程池，该线程池在必要时创建新线程，旧线程也会被重用，线程空闲60s被销毁&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;newSingleThreadExecutor&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;相当于newFixedThreadPool(1)，其能保证任务顺序执行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;newScheduledThreadPool&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;用于预定执行一次或周期执行的线程池&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;newSingleThreadScheduledExecutor&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;用于预定执行一次或周期执行的单线程池&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p style=&#34;text-align:center; font-size:.9rem; font-style:italic&#34;&gt;Executors用于构造线程池的部分方法&lt;/p&gt;
+&lt;p&gt;上表中的前3个方法返回&lt;code&gt;ThreadPoolExecutor&lt;/code&gt;实例，后面2个方法返回&lt;code&gt;ScheduledExecutorService&lt;/code&gt;接口的实例，不管是ThreadPoolExecutor或是ScheduledExecutorService，都是&lt;code&gt;ExecutorService&lt;/code&gt;的实现，&lt;code&gt;ExecutorService&lt;/code&gt;接口是设计用来处理任务的接口，其顶层接口是&lt;code&gt;java.util.concurrent.Executor&lt;/code&gt;，该接口简单地定义了一个执行任务的方法：&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>执行器</category>
+            
+          
+            
+              <category>线程池</category>
+            
+          
+        
+        
+          
+            
+              <category>并发</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>死锁</title>
+        <link>https://wangy325.top/zh/posts/java/concurrency/%E6%AD%BB%E9%94%81/</link>
+        <pubDate>Fri, 30 Oct 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Fri, 30 Oct 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/concurrency/%E6%AD%BB%E9%94%81/</guid>
+        <description>&lt;p&gt;Java有能力使任务为等待某些条件成立而进入阻塞状态，所以就有可能出现这样一种情况：某个任务在等待另一个任务，而后者又在等待其他的任务，这样一直等待下去，直到等待链上的最后一个任务又在等待第一个任务释放锁，这样就出现了任务之间相互等待的连续循环现象，这种情况出现之后，没有哪个任务能够执行，于是 &lt;strong&gt;死锁&lt;/strong&gt; 出现&lt;/p&gt;
+&lt;p&gt;死锁之所以难以规避，其重要的原因就在于其不确定性，可能程序运行良好，但是有潜在的死锁风险，这个风险在某些域的初始条件变化时，变得特别大，导致程序很快死锁。同时，死锁的出现也很难复现，它就像埋在程序里的地雷&lt;/p&gt;
+&lt;p&gt;我们不妨回顾在&lt;a href=&#34;../%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BA%8C/#2-1-span-id-condition-%E6%9D%A1%E4%BB%B6-span&#34;&gt;转账问题&lt;/a&gt;中使用的等待条件——如账户余额不足时使任务等待，在余额足够的时候再进行转账。这个程序没有问题，因为有100个账户每个账户初始金额1000元，而转账金额&lt;strong&gt;不大于&lt;/strong&gt;初始金额，所以任一时刻都会有账户的金额满足转账条件。但是如果去除转账金额不大于1000的限制，死锁就会发生，这很容易理解&lt;/p&gt;
+&lt;p&gt;比如有2个账户&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;账户1 余额200元
+账户2 余额300元
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;账户1向账户2转账300元，余额不足，等待；账户2向账户1转账400，余额不足等待；程序就进入死锁&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>死锁</category>
+            
+          
+            
+              <category>线程本地存储</category>
+            
+          
+        
+        
+          
+            
+              <category>并发</category>
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>Java内存模型与volatile关键字(转)</title>
+        <link>https://wangy325.top/zh/posts/java/concurrency/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E4%B8%8Evolatile%E5%85%B3%E9%94%AE%E5%AD%97/</link>
+        <pubDate>Tue, 27 Oct 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 28 Oct 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/concurrency/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E4%B8%8Evolatile%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
+        <description>&lt;p&gt;本文转自&lt;a href=&#34;http://www.cnblogs.com/dolphin0520/p/3920373.html&#34;&gt;Matrix海子&lt;/a&gt;，是描述&lt;code&gt;volatile&lt;/code&gt;关键字非常好的一篇文章，从Java的内存模型开始，归本溯源的阐述了&lt;code&gt;volatile&lt;/code&gt;关键字在并发中的作用与局限&lt;/p&gt;
+&lt;p&gt;此文部分内容参照了《深入理解Java虚拟机》&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>volatile</category>
+            
+          
+        
+        
+          
+            
+              <category>并发</category>
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>生产者-消费者与阻塞队列</title>
+        <link>https://wangy325.top/zh/posts/java/concurrency/%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%8E%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97/</link>
+        <pubDate>Mon, 26 Oct 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Mon, 26 Oct 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/concurrency/%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%8E%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97/</guid>
+        <description>&lt;p&gt;在讨论线程协作的时候，已经讨论了生产者与消费者雏形，比如录音是生产者，而播放则是消费者；同样的，在汽车打蜡的模型中，打蜡可看作生产者，抛光可看作消费者；只是它们的关系是简单的生产-消费关系。&lt;/p&gt;
+&lt;p&gt;除了简单的线程协同之外，Java提供了&lt;strong&gt;同步队列&lt;/strong&gt;来解决线程的协同问题，本节重点讨论这部分的内容。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>阻塞队列</category>
+            
+          
+        
+        
+          
+            
+              <category>并发</category>
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>终结任务</title>
+        <link>https://wangy325.top/zh/posts/java/concurrency/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</link>
+        <pubDate>Fri, 23 Oct 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Fri, 23 Oct 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/concurrency/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</guid>
+        <description>&lt;p&gt;一般地，如果程序运行良好，任务执行完所需操作后自然结束，任务终结。&lt;/p&gt;
+&lt;p&gt;如果任务执行时出现异常，任务也会终结。&lt;/p&gt;
+&lt;p&gt;在设计多个线程协同工作的任务时，需要判断&lt;strong&gt;任务终结的条件&lt;/strong&gt;，以便合适地终结任务，这点尤为重要。&lt;/p&gt;
+&lt;p&gt;在本节中主要讨论在多线程协同工作的情况下，如何合适的终结任务。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>中断任务</category>
+            
+          
+        
+        
+          
+            
+              <category>并发</category>
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>获取任务的返回值</title>
+        <link>https://wangy325.top/zh/posts/java/concurrency/%E8%8E%B7%E5%8F%96%E4%BB%BB%E5%8A%A1%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC/</link>
+        <pubDate>Tue, 20 Oct 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Tue, 20 Oct 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/concurrency/%E8%8E%B7%E5%8F%96%E4%BB%BB%E5%8A%A1%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC/</guid>
+        <description>&lt;p&gt;要创建一个任务，通常实现Runnable接口。考虑一个经典的问题：用多线程分段计算0-100的加和，我们需要把每个线程计算的值汇总，然后再求和，那么应该怎样获取每个任务返回值呢？&lt;/p&gt;
+&lt;p&gt;Java提供了Callable和Future接口，使任务有提供返回值的能力&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>Future</category>
+            
+          
+            
+              <category>Callable</category>
+            
+          
+            
+              <category>FutureTask</category>
+            
+          
+        
+        
+          
+            
+              <category>并发</category>
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>HashMap的源码分析（一）</title>
+        <link>https://wangy325.top/zh/posts/java/collections/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%80/</link>
+        <pubDate>Thu, 24 Sep 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Thu, 24 Sep 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/collections/hashmap%E7%9A%84%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%80/</guid>
+        <description>&lt;p&gt;HashMap基于散列表，散列表中每一个Node节点（桶）是链表，当两个条目（entry）的key的hash值对桶数（capacity）取模的值相等时，这两个entry会存储在同一个链表中。但当链表中元素达到一定数目时，链表结构会转变为&lt;strong&gt;树结构&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;此文中没有讨论HashMap中涉及到树结构的源码。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>集合框架</category>
+            
+          
+            
+              <category>HashMap</category>
+            
+          
+        
+        
+          
+            
+              <category>java</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>资源访问受限-并发之二</title>
+        <link>https://wangy325.top/zh/posts/java/concurrency/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BA%8C/</link>
+        <pubDate>Wed, 20 May 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/concurrency/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BA%8C/</guid>
+        <description>&lt;p&gt;在&lt;a href=&#34;../%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%B8%80&#34;&gt;上一篇文章&lt;/a&gt;中，虽然创建了多线程，并且线程之间出现了一些&lt;strong&gt;不可预测&lt;/strong&gt;的CPU调度，但是由于线程之间是&lt;strong&gt;相互隔离&lt;/strong&gt;的——&lt;strong&gt;线程没有访问共同的资源&lt;/strong&gt;，尽管在执行任务的过程可能被CPU剥夺运行权，但是当它们再次获得运行权时对运行结果并没有影响，它们是安全的。&lt;/p&gt;
+&lt;p&gt;考虑一种情况，如果&lt;strong&gt;多个线程访问同一个资源&lt;/strong&gt;，并对资源内容进行修改，会发生什么情况？&lt;/p&gt;
+&lt;p&gt;对于&lt;strong&gt;非原子性&lt;/strong&gt;操作，多线程下会出现&lt;strong&gt;竞争条件&lt;/strong&gt;，&lt;code&gt;accounts[to] += amount&lt;/code&gt;操作，可以被拆分为多个CPU指令：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;加载accounts[to]到寄存器&lt;/li&gt;
+&lt;li&gt;增加amount&lt;/li&gt;
+&lt;li&gt;将结果写回acounts[to]&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;线程运行到&lt;strong&gt;任何一个步骤时都可能被剥夺运行权&lt;/strong&gt;。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>锁</category>
+            
+          
+            
+              <category>synchronized</category>
+            
+          
+            
+              <category>volatile</category>
+            
+          
+        
+        
+          
+            
+              <category>并发</category>
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>线程与任务-并发之一</title>
+        <link>https://wangy325.top/zh/posts/java/concurrency/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%B8%80/</link>
+        <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/concurrency/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%B8%80/</guid>
+        <description>&lt;p&gt;并发是生产过程不可能绕过去的坎，&lt;del&gt;要编写高性能的程序，必须使用并发&lt;/del&gt;。&lt;/p&gt;
+&lt;p&gt;并发的本质是多个线程同时处理任务&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;，不同于进程，线程之间的资源是共享的，当程序不够严谨时，使用多线程就可能带来问题，这是要反复讨论并发的原因之一。&lt;/p&gt;
+&lt;p&gt;在Java中，必须明白一点：线程由Thread类启动，但Thread类并不执行任何操作，&lt;strong&gt;它只是驱动赋予它的任务&lt;/strong&gt;。因此将&lt;strong&gt;线程与任务&lt;/strong&gt;的概念区分开，有利于理解并发。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>线程</category>
+            
+          
+        
+        
+          
+            
+              <category>并发</category>
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>Collections工具类</title>
+        <link>https://wangy325.top/zh/posts/java/collections/collections/</link>
+        <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/collections/collections/</guid>
+        <description>&lt;p&gt;集合框架中一个重要的类，其实是Collection接口的&lt;strong&gt;伴随类&lt;/strong&gt;，其中定义了许多实用方法，用来获取&lt;strong&gt;集合视图&lt;/strong&gt;，或提供一些方便的操作集合元素的&lt;strong&gt;算法&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;由于视图是直接封装的Collection接口，&lt;strong&gt;因此其方法有些局限&lt;/strong&gt;，并且由于特殊的设计，部分操作是不允许的（会抛出 &lt;em&gt;UnsupportedOperationExceptin&lt;/em&gt; ）。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>集合框架</category>
+            
+          
+            
+              <category>Collections工具类</category>
+            
+          
+        
+        
+          
+            
+              <category>java</category>
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>Map</title>
+        <link>https://wangy325.top/zh/posts/java/collections/map/</link>
+        <pubDate>Sun, 10 May 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/collections/map/</guid>
+        <description>&lt;p&gt;Map即映射，即键-值对，键不允许重复，并且一个键最多映射一个值。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>集合框架</category>
+            
+          
+            
+              <category>Map</category>
+            
+          
+        
+        
+          
+            
+              <category>java</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>Set</title>
+        <link>https://wangy325.top/zh/posts/java/collections/set/</link>
+        <pubDate>Wed, 06 May 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/collections/set/</guid>
+        <description>&lt;p&gt;Set是&lt;strong&gt;不含重复元素的集&lt;/strong&gt;，严格来讲，Set不允许当&lt;code&gt;e1.equals(e2)&lt;/code&gt;为真时， &lt;em&gt;e1&lt;/em&gt; 和 &lt;em&gt;e2&lt;/em&gt; 同时出现在集合中。Set最多允许一个&lt;code&gt;null&lt;/code&gt;元素。&lt;/p&gt;
+&lt;p&gt;将&lt;strong&gt;可变对象&lt;/strong&gt;置入Set时需要特别小心，当对象的改动影响到了元素之间的&lt;code&gt;equals()&lt;/code&gt;比较的结果，那么Set的行为就变得不确定了。因此，&lt;strong&gt;不能将Set本身作为Set的元素&lt;/strong&gt;。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>集合框架</category>
+            
+          
+            
+              <category>Set</category>
+            
+          
+        
+        
+          
+            
+              <category>java</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>Queue</title>
+        <link>https://wangy325.top/zh/posts/java/collections/queue/</link>
+        <pubDate>Sat, 02 May 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/collections/queue/</guid>
+        <description>&lt;p&gt;Queue（队列），实际开发过程中，在单线程环境下使用的情况下不多，Queue作为集合框架中重要组成似乎习惯性被忽略，队列总是先持有元素，再处理元素&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://wangy325.top/img/Queue.png&#34; alt=&#34;J7NBrQ.png&#34; /&gt;&lt;/p&gt;
+&lt;p style=&#34;text-align:center;font-size:.9rem;font-style:italic&#34;&gt;Queue继承关系简图&lt;/p&gt;
+&lt;p&gt;除了Collection定义的操作之外，Queue定义了额外的插入/删除/检查元素的操作，这些操作有2种形式：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;center&#34;&gt;&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;&lt;em&gt;Throws Exception&lt;/em&gt;&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;&lt;em&gt;Returns special value&lt;/em&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;strong&gt;Insert&lt;/strong&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;add(e)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;offer(e)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;strong&gt;Remove&lt;/strong&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;remove()&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;poll()&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;strong&gt;Examine&lt;/strong&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;element()&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;peek()&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;如表所示，add/remove/element方法失败后抛出异常。offer/poll/peek方法失败后返回一个特殊值（null或false，视具体操作不同），需要说明的是，&lt;code&gt;offer()&lt;/code&gt;方法主要是为&lt;strong&gt;有容量限制的队列&lt;/strong&gt;设计的&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>集合框架</category>
+            
+          
+            
+              <category>Queue</category>
+            
+          
+        
+        
+          
+            
+              <category>java</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>List</title>
+        <link>https://wangy325.top/zh/posts/java/collections/list/</link>
+        <pubDate>Wed, 29 Apr 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/collections/list/</guid>
+        <description></description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>集合框架</category>
+            
+          
+            
+              <category>List</category>
+            
+          
+        
+        
+          
+            
+              <category>java</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>内部类</title>
+        <link>https://wangy325.top/zh/posts/java/basic/%E5%86%85%E9%83%A8%E7%B1%BB/</link>
+        <pubDate>Thu, 23 Apr 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/basic/%E5%86%85%E9%83%A8%E7%B1%BB/</guid>
+        <description>&lt;p&gt;将一个类定义在另一个类的内部，这就是内部类。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;定义言简意赅 ，内涵丰富多彩。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Flight2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+  	&lt;span class=&#34;c1&#34;&gt;// inner class
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Comp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;String&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;String&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;getName&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(){&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+        &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;setName&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;name&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Dest&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;String&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;Dest&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;to&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+        &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;String&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;showDest&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(){&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+	&lt;span class=&#34;c1&#34;&gt;// use method to get inner class instance
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Comp&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;comp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(){&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Comp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+	&lt;span class=&#34;c1&#34;&gt;// use method to get inner class instance
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Dest&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;dest&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;){&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Dest&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+
+    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;ship&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(){&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;Comp&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;c&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;comp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+      	&lt;span class=&#34;n&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;setName&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;South Air&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;Dest&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;d&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;dest&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;HK&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;the flight is &amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;getName&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34; to &amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;d&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;showDest&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;());&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+
+    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;Flight2&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;f2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Flight2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;f2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;ship&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+    	&lt;span class=&#34;c1&#34;&gt;// OuterClassName.InnerClassName to refer inner class
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;        &lt;span class=&#34;n&#34;&gt;Flight2&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;f2s&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;  &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Flight2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;Flight2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;Comp&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;comp&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;f2s&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;comp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;Flight2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;Dest&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;d2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;f2s&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;dest&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;New York&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;通过&lt;code&gt;new&lt;/code&gt;关键字实例化内部类和使用普通类并没有什么区别。&lt;/p&gt;
+&lt;p&gt;需要说明的是：当创建一个内部类的引用时，需要使用&lt;code&gt;OuterClassName.InnerClassName&lt;/code&gt;这样的格式指明内部类的类型。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>内部类</category>
+            
+          
+            
+              <category>工厂方法</category>
+            
+          
+            
+              <category>lambda</category>
+            
+          
+        
+        
+          
+            
+              <category>java</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>lambda表达式</title>
+        <link>https://wangy325.top/zh/posts/java/basic/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+        <pubDate>Wed, 22 Apr 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/basic/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
+        <description>&lt;h2 id=&#34;1-lambda表达式&#34;&gt;1 lambda表达式&lt;/h2&gt;
+&lt;p&gt;lambda表达式是一个&lt;strong&gt;可传递的代码块&lt;/strong&gt;，可以在以后执行&lt;strong&gt;一次或多次&lt;/strong&gt;。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>lambda</category>
+            
+          
+        
+        
+          
+            
+              <category>Java8</category>
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>抽象类与接口</title>
+        <link>https://wangy325.top/zh/posts/java/basic/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/</link>
+        <pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/basic/%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3/</guid>
+        <description>&lt;p&gt;抽象类是由&lt;code&gt;abstract&lt;/code&gt;关键字修饰的类。将一个普通类用&lt;code&gt;abstract&lt;/code&gt;修饰，它就是抽象类。&lt;/p&gt;
+&lt;p&gt;若使用&lt;code&gt;abstract&lt;/code&gt;修饰方法，那么称该方法为&lt;strong&gt;抽象方法&lt;/strong&gt;，抽象方法没有方法体。&lt;/p&gt;
+&lt;h2 id=&#34;81-抽象类&#34;&gt;8.1 抽象类&lt;/h2&gt;
+&lt;p&gt;但是抽象类有一些特征：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;抽象类不能被实例化（虽然抽象类可以声明域和构造器）&lt;/li&gt;
+&lt;li&gt;抽象方法必须置于抽象类中&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果你继承某抽象类，但是却不想实现某个抽象方法，可以继续让方法保持抽象，如此做&lt;strong&gt;导出类也要被声明为抽象类&lt;/strong&gt;。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;AbsTest&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;S&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;S&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+
+ &lt;span class=&#34;kd&#34;&gt;abstract&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;F&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;F&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;F constructor&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+
+    &lt;span class=&#34;kd&#34;&gt;abstract&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+
+    &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(){&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;F.g()&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;S&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;F&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;S&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;kd&#34;&gt;super&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;S constructor&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+
+    &lt;span class=&#34;nd&#34;&gt;@Override&lt;/span&gt;
+    &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;S.f()&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;cm&#34;&gt;/* output
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;F constructor
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;S constructor
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;S.f()
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;F.g()
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;*/&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//:~
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>工厂方法</category>
+            
+          
+        
+        
+          
+            
+              <category>java</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>Object超类（一）</title>
+        <link>https://wangy325.top/zh/posts/java/basic/object%E8%B6%85%E7%B1%BB/</link>
+        <pubDate>Sun, 19 Apr 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/basic/object%E8%B6%85%E7%B1%BB/</guid>
+        <description>&lt;p&gt;在Java中，如果一个类没有明确地指出超类，那么Object就是这个类的超类。实际上，Object类是所有类超类，这个类定义了一些重要的方法。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>Object</category>
+            
+          
+        
+        
+          
+            
+              <category>java</category>
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>动态绑定与静态绑定</title>
+        <link>https://wangy325.top/zh/posts/java/basic/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/</link>
+        <pubDate>Sat, 18 Apr 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/basic/%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A/</guid>
+        <description>&lt;p&gt;这是Java方法调用的2个术语，用来描述Java虚拟机方法调用的2种机制。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+          
+        
+        
+          
+            
+              <category>java</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>final关键字</title>
+        <link>https://wangy325.top/zh/posts/java/basic/final%E5%85%B3%E9%94%AE%E5%AD%97/</link>
+        <pubDate>Fri, 17 Apr 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/basic/final%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
+        <description>&lt;p&gt;不同的使用环境下，&lt;code&gt;final&lt;/code&gt;关键字的含义有细微差别，但通常它指“这是无法改变的”。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>final</category>
+            
+          
+        
+        
+          
+            
+              <category>java</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>传值还是传引用</title>
+        <link>https://wangy325.top/zh/posts/java/basic/%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/</link>
+        <pubDate>Wed, 15 Apr 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/basic/%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/</guid>
+        <description>&lt;p&gt;Java语言设计总是&lt;strong&gt;按值调用&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;按值调用：方法接收的是调用者提供的值&lt;/p&gt;
+&lt;p&gt;按引用调用：方法接收的是调用者提供的变量地址&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;一个方法可以修改传递引用所对应的变量值，但是不能修改传递值所对应的变量值。&lt;/p&gt;
+&lt;h2 id=&#34;31-span-id--m11基本数据类型参数span&#34;&gt;3.1 &lt;span id = &#34;m11&#34;&gt;基本数据类型参数&lt;/span&gt;&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;一个方法不能修改一个基本数据类型的参数（数值类型或布尔值）。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;参考如下代码：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// doesn&amp;#39;t work
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;ByValue&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;tripleValue&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;x = &amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+
+    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;tripleValue&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;y = &amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;cm&#34;&gt;/* output:
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;x = 30
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;y = 10
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;*/&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//:~
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;方法执行时，&lt;code&gt;x&lt;/code&gt;被初始化为&lt;code&gt;y&lt;/code&gt;&lt;strong&gt;值的一个拷贝&lt;/strong&gt;，方法执行后 ，&lt;code&gt;x&lt;/code&gt;值变为30，&lt;code&gt;y&lt;/code&gt;仍为10，之后&lt;code&gt;x&lt;/code&gt;不再使用。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+          
+        
+        
+          
+            
+              <category>java</category>
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>static关键字</title>
+        <link>https://wangy325.top/zh/posts/java/basic/static%E5%85%B3%E9%94%AE%E5%AD%97/</link>
+        <pubDate>Tue, 14 Apr 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/basic/static%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
+        <description>&lt;p&gt;static关键字意为“静态的”，其语义可以理解为“类的对象”(不要理解为Class对象)，即不需要对象实例，可以直接通过&lt;code&gt;类名.字段名&lt;/code&gt;的形式直接访问。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>static</category>
+            
+          
+        
+        
+          
+            
+              <category>java</category>
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>访问权限修饰符</title>
+        <link>https://wangy325.top/zh/posts/java/basic/%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/</link>
+        <pubDate>Mon, 13 Apr 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/basic/%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/</guid>
+        <description>&lt;blockquote&gt;
+&lt;p&gt;本系列内容主要来自TIJ，Java核心技术卷以及Java SE 8 API&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;11-包访问权限&#34;&gt;1.1 包访问权限&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;当前包中的所有其他类对该包内的某个类的成员具有访问权限，但这并不意味着&lt;strong&gt;能够访问到&lt;/strong&gt;。是否访问到还要取决于类的成员的修饰符。若类的成员也是包访问权限或者public，那才能够访问到；&lt;/li&gt;
+&lt;li&gt;当前包中的所有类对这个包之外的所有&lt;strong&gt;非public权限的类&lt;/strong&gt;没有访问权限；&lt;/li&gt;
+&lt;li&gt;类控制着哪些代码能够访问自己的成员，具体能否访问还需要看成员的权限。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;12-接口访问权限---public&#34;&gt;1.2 接口访问权限 &amp;ndash;public&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;使用public，意味着public之后声明的成员对每个人都是可用的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;13-你无法访问---private&#34;&gt;1.3 你无法访问 &amp;ndash;private&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;使用private，意味着除了包含该成员的类之外，其他任何类都无法访问这个成员；&lt;/li&gt;
+&lt;li&gt;私有构造器可以&lt;strong&gt;阻止继承&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+        
+          
+            
+              <category>java</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>SpringBoot使用AOP的简单示例</title>
+        <link>https://wangy325.top/zh/posts/java/spring/springboot-aop-demo/</link>
+        <pubDate>Sat, 14 Mar 2020 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Sat, 14 Mar 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/spring/springboot-aop-demo/</guid>
+        <description>&lt;p&gt;有一个cd接口，其实体类用于播放歌曲，同时我们想在播放歌曲的时候记录每个曲目的播放次数。看起来，记录次数这个事和播放曲目是不相干的事情，当然，我们可以在每首歌曲播放完成之后记录，但是更好的办法是使用一个切面，切入到播放方法中，来完成这件事，这样可以减少无关逻辑对代码的侵入。&lt;/p&gt;
+&lt;p&gt;此程序分别使用了基于@Aspect注解和基于XML配置文件2种方式进行了切面注入，2种方式效果是等同的。&lt;/p&gt;
+&lt;p&gt;此程序使用的是Spring AOP，并没有使用功能更加丰富的AspectJ，Spring AOP很大部分借鉴了AspectJ，如果只是简单的方法层面的织入，那么Spring AOP就能够满足需求。如果需要构造器或者属性拦截，或者需要为spring bean引入新方法，那么就需要使用AspectJ了。&lt;/p&gt;
+&lt;h1 id=&#34;1-开始&#34;&gt;1 开始&lt;/h1&gt;
+&lt;p&gt;从&lt;a href=&#34;https://start.spring.io&#34;&gt;start.spring.io&lt;/a&gt;下载空项目，引入Spring AOP依赖：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;nt&#34;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class=&#34;nt&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.springframework.boot&lt;span class=&#34;nt&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class=&#34;nt&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spring-boot-starter-aop&lt;span class=&#34;nt&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;nt&#34;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>AOP</category>
+            
+          
+        
+        
+          
+            
+              <category>SpringBoot</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>安装单机版fdfs服务遇到的问题</title>
+        <link>https://wangy325.top/zh/posts/java/sql/%E5%AE%89%E8%A3%85%E5%8D%95%E6%9C%BA%E7%89%88fdfs%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+        <pubDate>Sat, 31 Aug 2019 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Sat, 31 Aug 2019 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/sql/%E5%AE%89%E8%A3%85%E5%8D%95%E6%9C%BA%E7%89%88fdfs%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+        <description>&lt;p&gt;本文简单记录了2个在安装单机版fdfs服务遇到的问题，虽然报错信息不同，但是问题出在同一个地方：&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+          
+        
+        
+          
+            
+              <category>fdfs</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>关于forever启动node服务的问题</title>
+        <link>https://wangy325.top/zh/posts/js/%E5%85%B3%E4%BA%8Eforever%E5%90%AF%E5%8A%A8node%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+        <pubDate>Wed, 28 Aug 2019 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 28 Aug 2019 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/js/%E5%85%B3%E4%BA%8Eforever%E5%90%AF%E5%8A%A8node%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+        <description>&lt;p&gt;在使用jenkins自动构建node.js项目的时候，由于对forever的不熟悉，构建脚本一直存在一点小问题。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>forever</category>
+            
+          
+        
+        
+        
+      </item>
+      
+      <item>
+        <title>比较器的「退化」</title>
+        <link>https://wangy325.top/zh/posts/java/basic/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/</link>
+        <pubDate>Tue, 27 Aug 2019 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Mon, 21 Oct 2019 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/basic/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/</guid>
+        <description>&lt;p&gt;在使用匿名内部类比较器的时候，idea提供了几个层次的比较器代码优化，给👴整懵逼了。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>lambda</category>
+            
+          
+        
+        
+          
+            
+              <category>java</category>
+            
+          
+        
+        
+          
+            
+          
+        
+      </item>
+      
+      <item>
+        <title>在centOS上安装并配置mysql数据库</title>
+        <link>https://wangy325.top/zh/posts/java/sql/%E5%9C%A8centos%E4%B8%8A%E5%AE%89%E8%A3%85%E5%B9%B6%E9%85%8D%E7%BD%AEmysql%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+        <pubDate>Fri, 16 Aug 2019 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Fri, 16 Aug 2019 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/sql/%E5%9C%A8centos%E4%B8%8A%E5%AE%89%E8%A3%85%E5%B9%B6%E9%85%8D%E7%BD%AEmysql%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
+        <description>&lt;p&gt;文章介绍了在centOS7上安装mysql数据库服务的配置及简单优化过程。在服务器上安装mysql服务网络上能够找到的资源很多了，因此本文没有作详细介绍，本文的重点在于后续的优化配置方面。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+        
+          
+            
+              <category>MySQL</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>Redis Sentinel高可用实现</title>
+        <link>https://wangy325.top/zh/posts/java/redis/build-redis-sentinel/</link>
+        <pubDate>Wed, 14 Aug 2019 16:01:23 +0800</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Mon, 21 Oct 2019 10:01:23 +0800</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/redis/build-redis-sentinel/</guid>
+        <description>&lt;p&gt;Redis &lt;a href=&#34;https://raw.githubusercontent.com/antirez/redis/2.8/00-RELEASENOTES&#34;&gt;v2.8&lt;/a&gt; 之后提供了高可用实现&lt;code&gt;Redis Sentinel&lt;/code&gt;，实现了&lt;strong&gt;主从复制&lt;/strong&gt;以及&lt;del&gt;被动&lt;/del&gt;&lt;strong&gt;主备切换&lt;/strong&gt;。&lt;a href=&#34;https://raw.githubusercontent.com/antirez/redis/3.0/00-RELEASENOTES&#34;&gt;v3.0&lt;/a&gt; 之后提供了分布式实现&lt;code&gt;Redis Cluster&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;本文讨论的是使用Sentinel搭建Redis高可用服务。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If all redis and sentinel instances were deployed in same host, you just build a fake redis-sentinel &lt;em&gt;High-Availability&lt;/em&gt; environment&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&#34;1-准备&#34;&gt;1 准备&lt;/h1&gt;
+&lt;h2 id=&#34;11-linux主机&#34;&gt;1.1 linux主机&lt;/h2&gt;
+&lt;p&gt;本文使用centOS7，需安装gcc：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;yum install gcc
+&lt;span class=&#34;c1&#34;&gt;# or on ubuntu&lt;/span&gt;
+apt-get install gcc
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>redis</category>
+            
+          
+        
+        
+          
+            
+              <category>redis</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>cron表达式速查</title>
+        <link>https://wangy325.top/zh/posts/java/job/%E5%B8%B8%E8%A7%81cron%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%A4%BA%E4%BE%8B/</link>
+        <pubDate>Thu, 13 Dec 2018 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Mon, 29 Mar 2021 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/job/%E5%B8%B8%E8%A7%81cron%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%A4%BA%E4%BE%8B/</guid>
+        <description>&lt;p&gt;cron表达式常用于配置定时任务。cron表达式实际上是由七个子表达式组成。这些表达式之间用空格分隔：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Seconds （秒）&lt;/li&gt;
+&lt;li&gt;Minutes（分）&lt;/li&gt;
+&lt;li&gt;Hours（小时）&lt;/li&gt;
+&lt;li&gt;Day-of-Month （天）&lt;/li&gt;
+&lt;li&gt;Month（月）&lt;/li&gt;
+&lt;li&gt;Day-of-Week （周）&lt;/li&gt;
+&lt;li&gt;Year（年）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;例：表达式&lt;code&gt;0 0 12 ? \* WED&lt;/code&gt; 意思是：每个星期三的中午12点执行。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>cron</category>
+            
+          
+        
+        
+          
+            
+              <category>cron</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>代理模式</title>
+        <link>https://wangy325.top/zh/posts/java/design_pattern/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</link>
+        <pubDate>Wed, 05 Dec 2018 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 07 Apr 2021 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/design_pattern/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</guid>
+        <description>&lt;p&gt;代理可以简单理解为，B类托管A类的功能，并根据需求，对A类的访问作&lt;font color=red&gt;&lt;strong&gt;控制&lt;/strong&gt;&lt;/font&gt;，这里的&lt;font color=red&gt;&lt;strong&gt;控制&lt;/strong&gt;&lt;/font&gt;可以理解为对A类方法执行的流程的影响，包括但不限于：&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>代理模式</category>
+            
+          
+        
+        
+          
+            
+              <category>设计模式</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>一个简单的sql优化示例</title>
+        <link>https://wangy325.top/zh/posts/java/sql/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84sql%E4%BC%98%E5%8C%96%E7%9A%84%E4%BE%8B%E5%AD%90/</link>
+        <pubDate>Wed, 14 Nov 2018 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Wed, 14 Nov 2018 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/sql/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84sql%E4%BC%98%E5%8C%96%E7%9A%84%E4%BE%8B%E5%AD%90/</guid>
+        <description></description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+          
+        
+        
+          
+            
+              <category>MySQL</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>Java接口回调</title>
+        <link>https://wangy325.top/zh/posts/java/design_pattern/java%E6%8E%A5%E5%8F%A3%E5%9B%9E%E8%B0%83/</link>
+        <pubDate>Tue, 16 Oct 2018 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Tue, 16 Oct 2018 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/design_pattern/java%E6%8E%A5%E5%8F%A3%E5%9B%9E%E8%B0%83/</guid>
+        <description>&lt;p&gt;回调模式在web开发中用的较多，本文简单介绍了Java的回调机制，理解此文可以在生产中写出适应业务的回调模型。&lt;/p&gt;
+&lt;h2 id=&#34;模块之间的调用&#34;&gt;模块之间的调用&lt;/h2&gt;
+&lt;p&gt;在一个应用系统中，必然存在模块之间的调用，调用的方式有几种:&lt;/p&gt;
+&lt;h3 id=&#34;1-同步调用&#34;&gt;1. 同步调用&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https:/imgchr.com/i/iZXPMQ&#34;&gt;&lt;img src=&#34;https://s1.ax1x.com/2018/09/18/iZXPMQ.md.png&#34; alt=&#34;iZXPMQ.md.png&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;​						&lt;em&gt;方法A()调用方法B(),并且等待方法B()的返回,然后A()再执行下一步操作&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;此方法适用于B()方法&lt;strong&gt;执行的时间不长&lt;/strong&gt;，如若不然，那么A()方法会长时间等待B()方法执行完成而处于&lt;strong&gt;阻塞&lt;/strong&gt;状态，如此，可能会导致整个流程的阻塞。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>回调模式</category>
+            
+          
+        
+        
+          
+            
+              <category>java</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>MyBatis的trim标签</title>
+        <link>https://wangy325.top/zh/posts/java/sql/mybatis%E4%B8%ADtrim%E6%A0%87%E7%AD%BE%E5%8A%A8%E6%80%81%E6%8B%BC%E6%8E%A5sql/</link>
+        <pubDate>Fri, 21 Sep 2018 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Fri, 21 Sep 2018 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/sql/mybatis%E4%B8%ADtrim%E6%A0%87%E7%AD%BE%E5%8A%A8%E6%80%81%E6%8B%BC%E6%8E%A5sql/</guid>
+        <description>&lt;p&gt;trim标记是一个格式化的标记，可以完成set或者是where标记的功能&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>orm</category>
+            
+          
+        
+        
+          
+            
+              <category>mybatis</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>MySQL中的几个字符串处理函数</title>
+        <link>https://wangy325.top/zh/posts/java/sql/mysql%E7%9A%84%E5%87%A0%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/</link>
+        <pubDate>Fri, 21 Sep 2018 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Fri, 21 Sep 2018 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/java/sql/mysql%E7%9A%84%E5%87%A0%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/</guid>
+        <description>&lt;p&gt;本文介绍了mysql的几个方便的字符串处理函数，通常用于简单的查询结果处理。适用在mapper.xml的语句标签中对数据库字段数据进行简单的处理。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+        
+          
+            
+              <category>MySQL</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>Git入门2</title>
+        <link>https://wangy325.top/zh/posts/vc/git%E5%85%A5%E9%97%A82/</link>
+        <pubDate>Thu, 20 Sep 2018 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Mon, 21 Oct 2019 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/vc/git%E5%85%A5%E9%97%A82/</guid>
+        <description>&lt;p&gt;git fetch 与 git pull&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+          
+        
+        
+          
+            
+              <category>git</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>Git入门1</title>
+        <link>https://wangy325.top/zh/posts/vc/git%E5%85%A5%E9%97%A81/</link>
+        <pubDate>Wed, 19 Sep 2018 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Thu, 02 Apr 2020 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/vc/git%E5%85%A5%E9%97%A81/</guid>
+        <description>&lt;p&gt;本文简单介绍了Git本地仓库的构建，与远程仓库的关联&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+          
+        
+        
+          
+            
+              <category>git</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
+        <title>约束</title>
+        <link>https://wangy325.top/zh/posts/z/restrict/</link>
+        <pubDate>Thu, 06 Sep 2018 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Thu, 06 Sep 2018 00:00:00 +0000</atom:modified>
+        <guid>https://wangy325.top/zh/posts/z/restrict/</guid>
+        <description>&lt;p&gt;这是一个约束文档&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+        
+        
+      </item>
+      
+
+    
+  </channel>
+</rss>
