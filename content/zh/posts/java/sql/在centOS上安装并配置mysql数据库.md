@@ -213,7 +213,7 @@ mysql> select * from user where user ='test'\G;
 
 **mysql 5.7.28中， 如果grant命令执行的用户没有被创建，会默认创建该用户**
 
-更多关于grant的使用，参考官方文档[GRANT Syntax]((https://dev.mysql.com/doc/refman/5.7/en/grant.html))
+更多关于grant的使用，参考官方文档[GRANT Syntax](https://dev.mysql.com/doc/refman/5.7/en/grant.html)
 
 # 数据备份与导入
 
