@@ -363,7 +363,7 @@ public void add(int index, E element) {
 
 ### 2 LinkedList
 
-LinkedList是基于**链表**的有序集合，~~其不能像ArrayList一样通过索引(*index*)访问元素~~，同时LinkedList还实现了双端队列Deque接口，意味着LinkedList可以**实现队列的操作**
+LinkedList是基于**双向链表**实现的有序集合，~~其不能像ArrayList一样通过索引(*index*)访问元素~~，同时LinkedList还实现了Deque接口，意味着LinkedList可以**实现双端队列的操作**
 
 ![JIv7Ae.png](/img/LinkedList.png)
 
