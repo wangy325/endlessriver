@@ -6,8 +6,9 @@ draft: false
 description: ""
 tags:
  - mockito
+ - 单元测试
 categories:
-- 单元测试
+- SpringBoot
 author: "wangy325"
 
 ---
@@ -149,7 +150,7 @@ when(spittleService.pageQuerySpittlesByTimeLine(spittleDTO).thenReturn(page);
 
 这样的形式，因为控制器接收到的必然不是这个指定的`spittleDTO`对象。使用类类型参数，mockito进行参数匹配时，使用`equals`方法比较的对象的相等性，因此可以获取绑定的返回值。
 
-> [Sometimes it's just better to refactor the code to allow equals() matching or even implement equals() method to help out with testing](https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#argument_matchers).
+> [Sometimes its just better to refactor the code to allow equals() matching or even implement equals() method to help out with testing](https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#argument_matchers).
 
 ## 1.4 检验方法被调用的次数
 
@@ -615,7 +616,7 @@ Accept: application/json
 
 ### 分页获取spittle， 根据用户spitterId，请求参数放在GET请求体中的情形:
 GET {{host}}/spittle/user/spittles?lang={{lang}}
-Accept: */*
+Accept: application/json
 Content-Type: application/json
 
 {
@@ -663,11 +664,11 @@ Content-Type: application/json
 
 # 参考
 
-- 本文用例所在项目地址：https://github.com/wangy325/mybatis-plus-starter
-- mockito官网：https://site.mockito.org/
-- mockito API官网：https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html
-- MockMvc java doc：https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/test/web/servlet/MockMvc.html
-- json-path仓库介绍了其基本使用方法：https://github.com/json-path/JsonPath
-- 可能出现的bug：https://stackoverflow.com/questions/47276920/mockito-error-however-there-was-exactly-1-interaction-with-this-mock
-- MockMvc官方文档：https://docs.spring.io/spring-framework/docs/current/reference/html/testing.html#spring-mvc-test-framework
-- MockMVC官方测试示例代码库：https://github.com/spring-projects/spring-framework/tree/master/spring-test/src/test/java/org/springframework/test/web/servlet/samples
+- 本文用例所在项目地址：https://www.github.com/wangy325/mybatis-plus-starter
+- mockito官网：https://www.site.mockito.org/
+- mockito API官网：https://www.javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html
+- MockMvc java doc：https://www.docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/test/web/servlet/MockMvc.html
+- json-path仓库介绍了其基本使用方法：https://www.github.com/json-path/JsonPath
+- 可能出现的bug：https://www.stackoverflow.com/questions/47276920/mockito-error-however-there-was-exactly-1-interaction-with-this-mock
+- MockMvc官方文档：https://www.docs.spring.io/spring-framework/docs/current/reference/html/testing.html#spring-mvc-test-framework
+- MockMVC官方测试示例代码库：https://www.github.com/spring-projects/spring-framework/tree/master/spring-test/src/test/java/org/springframework/test/web/servlet/samples

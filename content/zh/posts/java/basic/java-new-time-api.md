@@ -9,7 +9,7 @@ tags:
 categories:
  - Java8
 series:
-- 
+-
 author: "wangy325"
 ---
 
@@ -410,14 +410,14 @@ UTC偏移量用以下形式表示：±[hh]:[mm]、±[hh][mm]、或者±[hh]。�
 # 6 参考
 
 - 原文地址：https://www.cnblogs.com/lxyit/p/9442135.html
-- is-java-util-calendar-thread-safe-or-not：https://stackoverflow.com/questions/12131324/is-java-util-calendar-thread-safe-or-not
+- is-java-util-calendar-thread-safe-or-not：https://www.stackoverflow.com/questions/12131324/is-java-util-calendar-thread-safe-or-not
 - 如何使用1： https://www.jianshu.com/p/19bd58b30660
-- 如何使用2：https://github.com/wangy325/java-review/blob/master/src/main/java/com/wangy/common/time/Intro.java
-- exceptions-may-occure：https://stackoverflow.com/questions/27454025/unable-to-obtain-localdatetime-from-temporalaccessor-when-parsing-localdatetime
-- JSR 310：https://jcp.org/aboutJava/communityprocess/pfd/jsr310/JSR-310-guide.html
-- 时区：https://zh.wikipedia.org/wiki/%E6%97%B6%E5%8C%BA
-- 时区列表：https://zh.wikipedia.org/wiki/%E6%97%B6%E5%8C%BA%E5%88%97%E8%A1%A8#UTC%EF%BC%88WET_-%E6%AD%90%E6%B4%B2%E8%A5%BF%E9%83%A8%E6%99%82%E5%8D%80%EF%BC%8CGMT-_%E6%A0%BC%E6%9E%97%E5%A8%81%E6%B2%BB%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4%EF%BC%89
-- 经线：https://zh.wikipedia.org/wiki/%E7%BB%8F%E7%BA%BF
-- ISO 8601：https://zh.wikipedia.org/wiki/ISO_8601
-- UTC：https://zh.wikipedia.org/wiki/%E5%8D%8F%E8%B0%83%E4%B8%96%E7%95%8C%E6%97%B6
-- GMT：https://zh.wikipedia.org/wiki/%E6%A0%BC%E6%9E%97%E5%B0%BC%E6%B2%BB%E6%A8%99%E6%BA%96%E6%99%82%E9%96%93
+- 如何使用2：https://www.github.com/wangy325/java-review/blob/master/src/main/java/com/wangy/common/time/Intro.java
+- exceptions-may-occure：https://www.stackoverflow.com/questions/27454025/unable-to-obtain-localdatetime-from-temporalaccessor-when-parsing-localdatetime
+- JSR 310：https://www.jcp.org/aboutJava/communityprocess/pfd/jsr310/JSR-310-guide.html
+- 时区：https://www.zh.wikipedia.org/wiki/%E6%97%B6%E5%8C%BA
+- 时区列表：https://www.zh.wikipedia.org/wiki/%E6%97%B6%E5%8C%BA%E5%88%97%E8%A1%A8#UTC%EF%BC%88WET_-%E6%AD%90%E6%B4%B2%E8%A5%BF%E9%83%A8%E6%99%82%E5%8D%80%EF%BC%8CGMT-_%E6%A0%BC%E6%9E%97%E5%A8%81%E6%B2%BB%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4%EF%BC%89
+- 经线：https://www.zh.wikipedia.org/wiki/%E7%BB%8F%E7%BA%BF
+- ISO 8601：https://www.zh.wikipedia.org/wiki/ISO_8601
+- UTC：https://www.zh.wikipedia.org/wiki/%E5%8D%8F%E8%B0%83%E4%B8%96%E7%95%8C%E6%97%B6
+- GMT：https://www.zh.wikipedia.org/wiki/%E6%A0%BC%E6%9E%97%E5%B0%BC%E6%B2%BB%E6%A8%99%E6%BA%96%E6%99%82%E9%96%93
