@@ -63,7 +63,7 @@ bioImageUrl = "/images/whoami/avatar.jpg"
 useGravatar = false
 location = "GuangZhou, China"
 organization = ""
-link = "https://wangy325.top"
+link = ""
 
 # sidebar
 enableBio = true
