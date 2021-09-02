@@ -7,7 +7,7 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>log on EndlessRiver</title>
-    <link>https://wangy325.top/zh/categories/log/</link>
+    <link>http://wangy325.top/zh/categories/log/</link>
     <description>Recent content in log on EndlessRiver</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -16,17 +16,17 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Wed, 10 Feb 2021 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://wangy325.top/zh/categories/log/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://wangy325.top/zh/categories/log/index.xml" rel="self" type="application/rss+xml" />
     
 
       
       <item>
         <title>使用Logback记录日志</title>
-        <link>https://wangy325.top/zh/posts/java/trans/guide-to-logback-cn/</link>
+        <link>http://wangy325.top/zh/posts/java/trans/guide-to-logback-cn/</link>
         <pubDate>Wed, 10 Feb 2021 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Tue, 21 Apr 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/trans/guide-to-logback-cn/</guid>
+        <guid>http://wangy325.top/zh/posts/java/trans/guide-to-logback-cn/</guid>
         <description>&lt;h1 id=&#34;使用logback记录日志&#34;&gt;使用Logback记录日志&lt;/h1&gt;
 &lt;h1 id=&#34;1-概览&#34;&gt;1 概览&lt;/h1&gt;
 &lt;p&gt;&lt;a href=&#34;https://logback.qos.ch/&#34;&gt;Logback&lt;/a&gt;是Java应用中使用最广的日志框架之一，它是&lt;a href=&#34;https://logback.qos.ch/reasonsToSwitch.html&#34;&gt;其前辈框架Log4j的替代者&lt;/a&gt;。相比Log4j，Logback在日志处理速度、配置多样性、对旧日志文件的处理灵活性上均要优于Log4j。&lt;/p&gt;

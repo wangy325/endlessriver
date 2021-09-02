@@ -7,7 +7,7 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>中断任务 on EndlessRiver</title>
-    <link>https://wangy325.top/zh/tags/%E4%B8%AD%E6%96%AD%E4%BB%BB%E5%8A%A1/</link>
+    <link>http://wangy325.top/zh/tags/%E4%B8%AD%E6%96%AD%E4%BB%BB%E5%8A%A1/</link>
     <description>Recent content in 中断任务 on EndlessRiver</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -16,17 +16,17 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Fri, 23 Oct 2020 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://wangy325.top/zh/tags/%E4%B8%AD%E6%96%AD%E4%BB%BB%E5%8A%A1/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://wangy325.top/zh/tags/%E4%B8%AD%E6%96%AD%E4%BB%BB%E5%8A%A1/index.xml" rel="self" type="application/rss+xml" />
     
 
       
       <item>
         <title>终结任务</title>
-        <link>https://wangy325.top/zh/posts/java/concurrency/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</link>
+        <link>http://wangy325.top/zh/posts/java/concurrency/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</link>
         <pubDate>Fri, 23 Oct 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Fri, 23 Oct 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/concurrency/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</guid>
+        <guid>http://wangy325.top/zh/posts/java/concurrency/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</guid>
         <description>&lt;p&gt;一般地，如果程序运行良好，任务执行完所需操作后自然结束，任务终结。&lt;/p&gt;
 &lt;p&gt;如果任务执行时出现异常，任务也会终结。&lt;/p&gt;
 &lt;p&gt;在设计多个线程协同工作的任务时，需要判断&lt;strong&gt;任务终结的条件&lt;/strong&gt;，以便合适地终结任务，这点尤为重要。&lt;/p&gt;

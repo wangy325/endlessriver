@@ -7,7 +7,7 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>Series on Endless River</title>
-    <link>https://wangy325.top/en/series/</link>
+    <link>http://wangy325.top/en/series/</link>
     <description>Recent content in Series on Endless River</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
@@ -15,7 +15,7 @@
     <webMaster>wangy325@qq.com (wangy325)</webMaster>
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     
-        <atom:link href="https://wangy325.top/en/series/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://wangy325.top/en/series/index.xml" rel="self" type="application/rss+xml" />
     
 
       

@@ -3,62 +3,62 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://wangy325.top/en/zh/</loc>
+    <loc>http://wangy325.top/en/zh/</loc>
   </url>
   
   <url>
-    <loc>https://wangy325.top/en/categories/</loc>
+    <loc>http://wangy325.top/en/categories/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="https://wangy325.top/zh/categories/"
+                href="http://wangy325.top/zh/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://wangy325.top/en/categories/"
+                href="http://wangy325.top/en/categories/"
                 />
   </url>
   
   <url>
-    <loc>https://wangy325.top/en/</loc>
+    <loc>http://wangy325.top/en/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="https://wangy325.top/zh/"
+                href="http://wangy325.top/zh/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://wangy325.top/en/"
+                href="http://wangy325.top/en/"
                 />
   </url>
   
   <url>
-    <loc>https://wangy325.top/en/series/</loc>
+    <loc>http://wangy325.top/en/series/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="https://wangy325.top/zh/series/"
+                href="http://wangy325.top/zh/series/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://wangy325.top/en/series/"
+                href="http://wangy325.top/en/series/"
                 />
   </url>
   
   <url>
-    <loc>https://wangy325.top/en/tags/</loc>
+    <loc>http://wangy325.top/en/tags/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="https://wangy325.top/zh/tags/"
+                href="http://wangy325.top/zh/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://wangy325.top/en/tags/"
+                href="http://wangy325.top/en/tags/"
                 />
   </url>
   

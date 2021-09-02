@@ -7,7 +7,7 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>Series on EndlessRiver</title>
-    <link>https://wangy325.top/zh/series/</link>
+    <link>http://wangy325.top/zh/series/</link>
     <description>Recent content in Series on EndlessRiver</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -16,17 +16,17 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Wed, 10 Feb 2021 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://wangy325.top/zh/series/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://wangy325.top/zh/series/index.xml" rel="self" type="application/rss+xml" />
     
 
       
       <item>
         <title>翻译计划</title>
-        <link>https://wangy325.top/zh/series/%E7%BF%BB%E8%AF%91%E8%AE%A1%E5%88%92/</link>
+        <link>http://wangy325.top/zh/series/%E7%BF%BB%E8%AF%91%E8%AE%A1%E5%88%92/</link>
         <pubDate>Wed, 10 Feb 2021 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         
-        <guid>https://wangy325.top/zh/series/%E7%BF%BB%E8%AF%91%E8%AE%A1%E5%88%92/</guid>
+        <guid>http://wangy325.top/zh/series/%E7%BF%BB%E8%AF%91%E8%AE%A1%E5%88%92/</guid>
         <description></description>
         
         <dc:creator>wangy325</dc:creator>
@@ -40,11 +40,11 @@
       
       <item>
         <title>转载</title>
-        <link>https://wangy325.top/zh/series/%E8%BD%AC%E8%BD%BD/</link>
+        <link>http://wangy325.top/zh/series/%E8%BD%AC%E8%BD%BD/</link>
         <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         
-        <guid>https://wangy325.top/zh/series/%E8%BD%AC%E8%BD%BD/</guid>
+        <guid>http://wangy325.top/zh/series/%E8%BD%AC%E8%BD%BD/</guid>
         <description></description>
         
         <dc:creator>wangy325</dc:creator>

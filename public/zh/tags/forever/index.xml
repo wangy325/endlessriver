@@ -7,7 +7,7 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>forever on EndlessRiver</title>
-    <link>https://wangy325.top/zh/tags/forever/</link>
+    <link>http://wangy325.top/zh/tags/forever/</link>
     <description>Recent content in forever on EndlessRiver</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -16,17 +16,17 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Wed, 28 Aug 2019 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://wangy325.top/zh/tags/forever/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://wangy325.top/zh/tags/forever/index.xml" rel="self" type="application/rss+xml" />
     
 
       
       <item>
         <title>关于forever启动node服务的问题</title>
-        <link>https://wangy325.top/zh/posts/js/%E5%85%B3%E4%BA%8Eforever%E5%90%AF%E5%8A%A8node%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+        <link>http://wangy325.top/zh/posts/js/%E5%85%B3%E4%BA%8Eforever%E5%90%AF%E5%8A%A8node%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</link>
         <pubDate>Wed, 28 Aug 2019 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Wed, 28 Aug 2019 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/js/%E5%85%B3%E4%BA%8Eforever%E5%90%AF%E5%8A%A8node%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+        <guid>http://wangy325.top/zh/posts/js/%E5%85%B3%E4%BA%8Eforever%E5%90%AF%E5%8A%A8node%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
         <description>&lt;p&gt;在使用jenkins自动构建node.js项目的时候，由于对forever的不熟悉，构建脚本一直存在一点小问题。&lt;/p&gt;</description>
         
         <dc:creator>wangy325</dc:creator>

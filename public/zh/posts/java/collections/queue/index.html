@@ -651,9 +651,9 @@
 
   
     
-    var baseurl = JSON.parse("\"https://wangy325.top\"");
+    var baseurl = JSON.parse("\"http://wangy325.top\"");
     
-    var permalink = JSON.parse("\"https://wangy325.top/zh/posts/java/collections/queue/\"");
+    var permalink = JSON.parse("\"http://wangy325.top/zh/posts/java/collections/queue/\"");
     
     var langprefix = JSON.parse("\"/zh\"");
     var searchResults = null;
@@ -1333,12 +1333,12 @@
 <meta property="article:published_time" content="2020-05-02T00:00:00&#43;0000">
 
 <meta name="author" content="wangy325">
-<meta property="article:author" content="https://wangy325.top/zh/posts/java/collections/queue/@wangy325">
+<meta property="article:author" content="http://wangy325.top/zh/posts/java/collections/queue/@wangy325">
 
 
 <meta property="og:site_name" content="EndlessRiver">
 <meta property="og:title" content="Queue">
-<meta property="og:url" content="https://wangy325.top/zh/posts/java/collections/queue/">
+<meta property="og:url" content="http://wangy325.top/zh/posts/java/collections/queue/">
 <meta property="og:type" content="article">
 <meta property="og:description" content="本文介绍了Java集合框架中的队列，以PriorityQueue，LinkedList，ArrayDeque为例。">
 
@@ -1351,7 +1351,7 @@
 
 <meta name="apple-mobile-web-app-status-bar-style" content="#fff">
 
-<link rel="canonical" href="https://wangy325.top/zh/posts/java/collections/queue/">
+<link rel="canonical" href="http://wangy325.top/zh/posts/java/collections/queue/">
 
 <link rel="manifest" href="/manifest.json">
 
@@ -1380,7 +1380,7 @@
     "headline": "Queue",
     "datePublished": "2020-05-02T00:00:00Z",
     "dateModified": "2020-05-27T00:00:00Z",
-    "url" : "https://wangy325.top/zh/posts/java/collections/queue/",
+    "url" : "http://wangy325.top/zh/posts/java/collections/queue/",
     "description": "本文介绍了Java集合框架中的队列，以PriorityQueue，LinkedList，ArrayDeque为例。",
     "keywords": ["集合框架","Queue"],
     "author": {
@@ -1389,12 +1389,12 @@
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://wangy325.top"
+      "@id": "http://wangy325.top"
     },
     "publisher": {
       "@type": "Organization",
       "name": "EndlessRiver",
-      "url": "https://wangy325.top"
+      "url": "http://wangy325.top"
     }
   }
 </script>
@@ -1414,7 +1414,7 @@
     
 </head>
 
-<body id="root" class="theme__dark">
+<body id="root" class="theme__light">
     <script>
         var localTheme = localStorage.getItem('theme');
         if (localTheme) {
@@ -1453,11 +1453,11 @@
       
         
         <a href="#" class="dropdown-item select-theme__item is-active">
-          dark
+          light
         </a>
         
         <a href="#" class="dropdown-item select-theme__item ">
-          light
+          dark
         </a>
         
         <a href="#" class="dropdown-item select-theme__item ">
@@ -1600,11 +1600,11 @@
       
         
         <a href="#" class="dropdown-item select-theme__item is-active">
-          dark
+          light
         </a>
         
         <a href="#" class="dropdown-item select-theme__item ">
-          light
+          dark
         </a>
         
         <a href="#" class="dropdown-item select-theme__item ">
@@ -1684,14 +1684,14 @@
   
   <li >
     
-      <a href="https://wangy325.top/zh/" class="capitalize">EndlessRiver</a>
+      <a href="http://wangy325.top/zh/" class="capitalize">EndlessRiver</a>
     
   </li>
   
   
   <li >
     
-      <a href="https://wangy325.top/zh/posts/" class="capitalize">文章列表</a>
+      <a href="http://wangy325.top/zh/posts/" class="capitalize">文章列表</a>
     
   </li>
   
@@ -1734,16 +1734,16 @@
   🏷️
   
 
-  <li><a href="https://wangy325.top/zh/tags/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/" class="single__tag" title="集合框架">#集合框架</a></li>
+  <li><a href="http://wangy325.top/zh/tags/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/" class="single__tag" title="集合框架">#集合框架</a></li>
 
-  <li><a href="https://wangy325.top/zh/tags/queue/" class="single__tag" title="Queue">#Queue</a></li>
+  <li><a href="http://wangy325.top/zh/tags/queue/" class="single__tag" title="Queue">#Queue</a></li>
 
 </ul>
 
     </div>
     <article class="single__contents" data-dir="ltr" data-ani="true">
       
-      <p>Queue（队列），实际开发过程中，在单线程环境下使用的情况下不多，Queue作为集合框架中重要组成似乎习惯性被忽略，队列总是先持有元素，再处理元素<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+      <p>Queue（队列），实际开发过程中，在单线程环境下使用的情况下不多，Queue作为集合框架中重要组成似乎习惯性被忽略，队列总是先持有元素，再处理元素<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>。</p>
 <p><img src="/img/Queue.png" alt="J7NBrQ.png" /></p>
 <p style="text-align:center;font-size:.9rem;font-style:italic">Queue继承关系简图</p>
 <p>除了Collection定义的操作之外，Queue定义了额外的插入/删除/检查元素的操作，这些操作有2种形式：</p>
@@ -1773,23 +1773,23 @@
 </tr>
 </tbody>
 </table>
-<p>如表所示，add/remove/element方法失败后抛出异常。offer/poll/peek方法失败后返回一个特殊值（null或false，视具体操作不同），需要说明的是，<code>offer()</code>方法主要是为<strong>有容量限制的队列</strong>设计的</p>
-<p>典型的队列遵从FIFO( <em>first-in-first-out</em> )原则，FIFO队列的新元素总是插入到队尾</p>
-<p>当然有例外，<strong>PriorityQueue</strong> 就是之一，它根据给定（或默认）的比较器决定元素顺序；此外还有LIFO( <em>last-in-first-out</em> )队列（如栈）</p>
-<p>不管是何种队列，都可以使用<code>remove()</code>或<code>poll()</code><strong>移除并返回</strong> 队列头元素，至于头元素是“谁”就由队列的排序规则决定。此二者的区别体现在当队列为空时，<code>remove()</code>抛出异常，而<code>poll()</code>返回<code>null</code></p>
-<p><code>element()</code>和<code>peek()</code><strong>获取但不移除</strong> 队列头元素，区别在于当队列为空时，<code>element()</code>抛出异常，而<code>peek()</code>返回<code>null</code></p>
-<p><code>offer()</code>方法尝试向队列中插入一个元素，否则返回<code>false</code>，而<code>Collection.add</code>方法失败之后会抛出（运行时）异常。因此<code>offer()</code>方法适用于定容或有界队列中插入元素</p>
-<p>队列中不允许插入<code>null</code>，或者说<strong>不应</strong>将<code>null</code>插入队列中（LinkedList允许空值），因为<code>null</code>会作为队列方法的特殊返回值（空队列指示器）出现，若将<code>null</code>插入队列，会引发歧义</p>
+<p>如表所示，add/remove/element方法失败后抛出异常。offer/poll/peek方法失败后返回一个特殊值（null或false，视具体操作不同），需要说明的是，<del><code>offer()</code>方法主要是为有容量限制的队列设计的</del> 对于有限队列而言，<code>offer()</code>方法比<code>add()</code>方法更可取。</p>
+<p>典型的队列遵从FIFO( <em>first-in-first-out</em> )原则，FIFO队列的新元素总是插入到队尾。</p>
+<p>当然有例外，<strong>PriorityQueue</strong> 就是之一，它根据给定（或默认）的比较器决定元素顺序；此外还有LIFO( <em>last-in-first-out</em> )队列（如栈）。</p>
+<p>不管是何种队列，都可以使用<code>remove()</code>或<code>poll()</code><strong>移除并返回</strong> 队列头元素，至于头元素是“谁”就由队列的排序规则决定。此二者的区别体现在当队列为空时，<code>remove()</code>抛出异常，而<code>poll()</code>返回<code>null</code>。</p>
+<p><code>element()</code>和<code>peek()</code><strong>获取但不移除</strong> 队列头元素，区别在于当队列为空时，<code>element()</code>抛出异常，而<code>peek()</code>返回<code>null</code>。</p>
+<p><code>offer()</code>方法尝试向队列中插入一个元素，否则返回<code>false</code>，而<code>Collection.add</code>方法失败之后会抛出（运行时）异常。因此<code>offer()</code>方法适用于定容或有界队列中插入元素。</p>
+<p>队列中不允许插入<code>null</code>，或者说<strong>不应</strong>将<code>null</code>插入队列中（LinkedList允许空值），因为<code>null</code>会作为队列方法的特殊返回值（空队列指示器）出现，若将<code>null</code>插入队列，会引发歧义。</p>
 <p><strong>Queue有两个子接口：</strong></p>
 <ol>
 <li>
 <p>BlockingQueue</p>
-<p>Queue中并没有定义 <strong>阻塞队列</strong> 的相关方法，阻塞队列通常在 <strong>并发编程</strong> 中使用。阻塞队列的方法会等待元素出现或（有限）集合空间可用这2个条件之一满足才执行</p>
+<p>Queue中并没有定义 <strong>阻塞队列</strong> 的相关方法，阻塞队列通常在 <strong>并发编程</strong> 中使用。阻塞队列的方法会等待元素出现或（有限）集合空间可用这2个条件之一满足才执行。</p>
 </li>
 <li>
 <p>Deque</p>
-<p><strong>双端队列</strong> 是支持从 <strong>队首和队尾添加/删除元素</strong> 的线性集合，一般来说，Deque <strong>没有容量限制</strong>，但是其也支持有限长度的实现</p>
-<p>Deque定义了支持从双端访问元素的方法，和Queue一样，方法作用有3，形式有2:</p>
+<p><strong>双端队列</strong> 是支持从 <strong>队首和队尾添加/删除元素</strong> 的线性集合，一般来说，Deque <strong>没有容量限制</strong>，但是其也支持有限长度的实现。</p>
+<p>从Deque的定义可知，其比Queue的定义多了队头的入队、队尾的出队以及相应的查看操作：</p>
 <table BORDER CELLPADDING=3 CELLSPACING=1>
   <tr>
     <td></td>
@@ -1825,7 +1825,7 @@
     <td ALIGN=CENTER>peekLast()</td>
   </tr>
  </table>
-<p>与Queue不同的是，获取而不删除的方法由<code>element()</code>变成了<code>getXXX()</code>，这些方法用来在队列头/尾中插入/删除/检查元素，当操作失败时有不同的处理：一组直接抛出异常，一组返回一个特殊值（null或false），同样地，返回特殊值的方法适用于有限容量的队列</p>
+<p>与Queue不同的是，获取而不删除的方法由<code>element()</code>变成了<code>getXXX()</code>，这些方法用来在队列头/尾中插入/删除/检查元素，当操作失败时有不同的处理：一组直接抛出异常，一组返回一个特殊值（null或false）。<del>，同样地，返回特殊值的方法适用于有限容量的队列。</del></p>
 <p>由于Deque继承自Queue，当<strong>其作为Queue使用时，是一个FIFO队列</strong>，新元素会添加至队尾，删除操作删除队首元素，因此下表的方法在Deque作为Queue使用时是等价的：</p>
 </li>
 </ol>
@@ -1887,28 +1887,28 @@
 </tbody>
 </table>
 <blockquote>
-<p>ArrayDeque 就是一个LIFO队列实现</p>
+<p><del>ArrayDeque 就是一个LIFO队列实现</del></p>
 </blockquote>
-<p>和List不同的是，Deque<strong>不提供</strong>使用索引操作集合的方法</p>
-<p>和Queue一样，虽然没有严格约束不能插入<code>null</code>到队列中，也强烈不推荐将<code>null</code>值插入，原因和Queue是一样的</p>
+<p>Deque<strong>不提供</strong>使用索引操作集合的方法。</p>
+<p>和Queue一样，虽然没有严格约束不能插入<code>null</code>到队列中，也强烈不推荐将<code>null</code>值插入。</p>
 <p>除此之外，Deque还提供2个删除元素的方法：</p>
 <blockquote>
 <p>boolean removeFirstOccurrence(Object o);</p>
 <p>boolean removeLastOccurrence(Object o);</p>
 </blockquote>
-<h1 id="1-priorityqueue">1 PriorityQueue</h1>
-<p><strong>优先级队列</strong>是一个有序队列，其<strong>底层是由堆( <em>heap</em> )实现的</strong>，堆是一个可以自我调整的<strong>二叉树</strong>。优先级队列的排序依据可以来自元素的自然排序（实现Comparable接口）或自定义比较器，当使用自然排序规则时，优先级队列不允许插入non-comparable对象</p>
-<p>优先级队列不允许<code>null</code>值</p>
-<p>优先级队列的第一个元素(head)总是按照排序规则计算出最小元素，如果有几个相等的最小元素，那么head为其中任意一个，当使用<code>poll(</code>)或<code>remove()</code>后，其他最小元素自动移动至head</p>
+<h1 id="1-优先级队列non-fifo实现priorityqueue">1 优先级队列(NON-FIFO)实现——PriorityQueue</h1>
+<p>优先级队列不允许<code>null</code>值。</p>
+<p><strong>优先级队列</strong>是一个有序队列，其<strong>底层是由堆( <em>heap</em> )实现的</strong>，堆是一个可以自我调整的<strong>二叉树</strong>。优先级队列的排序依据可以来自元素的自然排序（实现Comparable接口）或自定义比较器，当使用自然排序规则时，优先级队列不允许插入non-comparable对象。</p>
+<p>优先级队列的第一个元素(head)总是按照排序规则计算出最小元素，如果有几个相等的最小元素，那么head为其中任意一个，当使用<code>poll(</code>)或<code>remove()</code>后，其他最小元素自动移动至head。</p>
 <blockquote>
-<p>从输出来看，优先级队列并没有对所有元素进行完全排序，而是队列发生结构性变化时，保证队头元素一定是满足排序规则的</p>
+<p>从输出来看，优先级队列并没有对所有元素进行完全排序，而是队列发生结构性变化时，保证队头元素一定是满足排序规则的最小元素。</p>
 </blockquote>
 <p>优先级队列是自动扩容的，其扩容机制为：</p>
 <ul>
-<li>当队列较小时（&lt;64），容量翻倍</li>
+<li>当队列较小时（&lt;64），容量翻倍；</li>
 <li>当队列长度&gt;64时，容量增加一半（和ArrayList 一样）</li>
 </ul>
-<p>优先级队列也有迭代器，此迭代器不能按照指定排序规则顺序迭代元素——优先级队列并没有对所有元素进行排序，若想获得所有元素的排序，可以使用<code>Arrays.sort(pq.toArray())</code></p>
+<p>优先级队列也有迭代器，此迭代器不能按照指定排序规则顺序迭代元素——优先级队列并没有对所有元素进行排序，若想获得所有元素的排序，可以使用<code>Arrays.sort(pq.toArray())</code>。</p>
 <p>参考下例：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1962,7 +1962,7 @@
 </span><span class="cm">*/</span><span class="c1">//:~
 </span></code></pre></td></tr></table>
 </div>
-</div><p>和上面的叙述一样，PriorityQueue并没有对所有元素进行排序，不过其保证了最小元素始终在队首，并且队列发生结构性变化时，队列中的元素“位置”也会发生变化</p>
+</div><p>和上面的叙述一样，PriorityQueue并没有对所有元素进行排序，不过其保证了最小元素始终在队首，并且队列发生结构性变化时，队列中的元素“位置”也会发生变化。</p>
 <p>下例展示了如何在PriorityQueue中使用自定义比较器：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -2076,11 +2076,11 @@
 </span><span class="cm">*/</span><span class="c1">//:~
 </span></code></pre></td></tr></table>
 </div>
-</div><p>从结果来看，元素在PriorityQueue里<strong>并不是全排序的</strong>，不过其会自动将“最小”的元素移动至队首</p>
-<p>此例中，如果不在构造器中指定比较器，PriorityQueue会在运行时抛出 <code>ClassCastException</code>——试图将<code>PC</code>向上转型为Comparable时异常</p>
-<h1 id="2-linkedlist">2 LinkedList</h1>
-<p>LinkedList是Deque的实现，可以作为双端队列使用，其实现了Deque声明的所有方法</p>
-<p>想将LinkedList作为Deque使用，须将其声明为 Deque</p>
+</div><p>从结果来看，元素在PriorityQueue里<strong>并不是全排序的</strong>，不过其会自动将“最小”的元素移动至队首。</p>
+<p>此例中，如果不在构造器中指定比较器，PriorityQueue会在运行时抛出 <code>ClassCastException</code>——试图将<code>PC</code>向上转型为Comparable时异常。</p>
+<h1 id="2-双端队列的双向链表实现linkedlist">2 双端队列的双向链表实现——LinkedList</h1>
+<p>LinkedList是Deque的实现，可以作为双端队列使用，其实现了Deque声明的所有方法。</p>
+<p>想将LinkedList作为Deque使用，须将其声明为 Deque：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -2089,12 +2089,14 @@
 <pre class="chroma"><code class="language-java" data-lang="java"><span class="n">Deque</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">deque</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedList</span><span class="o">&lt;&gt;();</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>LinkedList基于链表节点的灵活性，很容易就能够实现在首尾两端对元素进行操作</p>
-<h1 id="3-arraydeque">3 ArrayDeque</h1>
-<p>ArrayDeque是由<strong>循环数组</strong>实现的双端队列，没有容量限制，并且能够自动扩容，<strong>不允许</strong> 插入<code>null</code>值</p>
-<p>ArrayDeque作为栈（ <em>LIFO</em> 队列）使用时，效率比<code>java.util.Stack</code>高</p>
-<p>ArrayDeque作为Queue使用时，效率比LinkedList高</p>
-<p>ArrayDeque的迭代器也是 <em>fail-fast</em> 的，意味着和ArrayList一样，在获取迭代器之后使用集合方法对队列进行结构性修改会引发 <em>ConcurrentModificationException</em></p>
+</div><p>LinkedList得益于双向链表节点的灵活性，很容易就能够实现在首尾两端对元素进行操作。</p>
+<h1 id="3-双端队列的循环数组实现arraydeque">3 双端队列的循环数组实现——ArrayDeque</h1>
+<p>ArrayDeque是由<strong>循环数组</strong>实现的双端队列，没有容量限制，并且能够自动扩容，<strong>不允许</strong> 插入<code>null</code>值。</p>
+<blockquote>
+<p>ArrayDeque作为栈（ <em>LIFO</em> 队列）使用时，效率比<code>java.util.Stack</code>高。</p>
+<p>ArrayDeque作为Queue使用时，效率比LinkedList高。</p>
+</blockquote>
+<p>ArrayDeque的迭代器也是 <em>fail-fast</em> 的，意味着和ArrayList一样，在获取迭代器之后使用集合方法对队列进行结构性修改会引发 <em>ConcurrentModificationException</em>。</p>
 <p>ArrayDeque主要的字段域有：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -2110,7 +2112,7 @@
 <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">MIN_INITIAL_CAPACITY</span> <span class="o">=</span> <span class="n">8</span><span class="o">;</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>elements用于存储数据，head和tail分别用来标记队列的头尾。 <em>MIN_INITIAL_CAPACITY</em> 是创列的最小容量（2<sup>3</sup>）。当构造器没有指定容量时，初始化容量为16；只有当指定容量且<strong>数值小于8时</strong>才会使用8作为初始容量</p>
+</div><p>elements用于存储数据，head和tail分别用来标记队列的头尾。 <em>MIN_INITIAL_CAPACITY</em> 是创列的最小容量（2<sup>3</sup>）。当构造器没有指定容量时，初始化容量为16；只有当指定容量且<strong>数值小于8时</strong>才会使用8作为初始容量。</p>
 <p><span id="resize">参考如下源码</span>：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -2156,8 +2158,8 @@
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>若指定容量&gt;8时，那么需要对其进行 <strong>5次右移及位或运算保证最终的容量大小是2<sup>n</sup></strong>，比如传进来的参数是13，那么最后得到的容量就是2<sup>4</sup></p>
-<p>ArrayDeque中，当<code>head==tail</code><sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>时触发扩容，容量增加一倍</p>
+</div><p>若指定容量&gt;8时，那么需要对其进行 <strong>5次右移及位或运算保证最终的容量大小是2<sup>n</sup></strong>，比如传进来的参数是13，那么最后得到的容量就是2<sup>4</sup>。</p>
+<p>ArrayDeque中，当<code>head==tail</code><sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>时触发扩容，容量增加一倍。</p>
 <blockquote>
 <p>TODO</p>
 </blockquote>
@@ -2252,14 +2254,14 @@
 <blockquote>
 <p>x % 2<sup>n</sup> = x &amp; (2<sup>n</sup> - 1)</p>
 </blockquote>
-<p>并且<strong>位运算的效率远远高出模运算</strong>，这就是Java设计的高明之处</p>
+<p>并且<strong>位运算的效率远远高出模运算</strong>，这就是Java设计的高明之处。</p>
 <p>当触发扩容时，将容量增加一倍，同时使用两次<code>System.arraycopy</code>将原数组拷贝到新数组中，现引用<a href="https://www.jianshu.com/p/b65c22587bdb">ArrayDeque扩容</a>将其机制作简要阐述：</p>
 <blockquote>
 <p>假如默认容量16，此时数组情况如图<br />
 <img src="/img/ArrayDeque_full.png" alt="JOvQtx.png" /></p>
 <p>当再次调用<code>addFirst(&quot;G&quot;)</code>时，</p>
 <p><img src="/img/ArrayDeque_full_2.png" alt="JOvUHA.png" /></p>
-<p>此时head==tail，触发扩容，将会创建一个大小为 <strong>16*2</strong> 的新数组，然后通过两次拷贝将原数组的数据复制到新数组</p>
+<p>此时<del>head==tail</del>，触发扩容，将会创建一个大小为 <strong>16*2</strong> 的新数组，然后通过两次拷贝将原数组的数据复制到新数组</p>
 <ul>
 <li>第一次将<em><strong>G-H</strong></em>拷贝到新数组</li>
 <li>第二次将<em><strong>A-F</strong></em>拷贝到新数组</li>
@@ -2324,12 +2326,12 @@
 </span><span class="cm">*/</span><span class="c1">//~
 </span></code></pre></td></tr></table>
 </div>
-</div><p>ArrayDeque的具体方法就不再赘述了，其囊括了作为Queue以及Stack的的实现</p>
+</div><p>ArrayDeque的具体方法就不再赘述了，其囊括了作为Queue以及Stack的的实现。</p>
 <div class="footnotes" role="doc-endnotes">
 <hr />
 <ol>
 <li id="fn:1" role="doc-endnote">
-<p><em>A collection designed for holding elements prior to processing</em> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>A collection designed for holding elements prior to processing <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2" role="doc-endnote">
 <p>head和tail在循环数组中的行为是如何？ <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
@@ -2657,7 +2659,7 @@
 <nav class="pagination-single">
   
     
-      <a href="https://wangy325.top/zh/posts/java/collections/list/" class="pagination-single__left">
+      <a href="http://wangy325.top/zh/posts/java/collections/list/" class="pagination-single__left">
         <div class="pagination-single__icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg>
         </div>
@@ -2666,7 +2668,7 @@
     
     <div class="grow"></div>
     
-      <a href="https://wangy325.top/zh/posts/java/collections/set/" class="pagination-single__right">      
+      <a href="http://wangy325.top/zh/posts/java/collections/set/" class="pagination-single__right">      
         <div class="pagination-single__right-title">Set</div>
         <div class="pagination-single__icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M5 13h11.17l-4.88 4.88c-.39.39-.39 1.03 0 1.42.39.39 1.02.39 1.41 0l6.59-6.59c.39-.39.39-1.02 0-1.41l-6.58-6.6c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L16.17 11H5c-.55 0-1 .45-1 1s.45 1 1 1z"/></svg>
@@ -3394,7 +3396,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (lib && lib.includes('mermaid')) {
       
-      var themeVariant = localStorage.getItem('theme') || JSON.parse("\"dark\"");
+      var themeVariant = localStorage.getItem('theme') || JSON.parse("\"light\"");
 
       if (themeVariant === "dark" || themeVariant === "hacker") {
         mermaid.initialize({ theme: 'dark' });
@@ -3610,7 +3612,7 @@ document.addEventListener('DOMContentLoaded', function () {
         
           
             
-              <a href="https://wangy325.top/zh/posts/java/collections/queue/" data-lang="zh" class="dropdown-item is-active">简体中文</a>
+              <a href="http://wangy325.top/zh/posts/java/collections/queue/" data-lang="zh" class="dropdown-item is-active">简体中文</a>
             
           
         
@@ -3700,7 +3702,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
   
     
-      <a href="https://wangy325.top/zh/posts/index.xml" type="application/rss+xml" title="RSS" aria-label="RSS Feed Link">
+      <a href="http://wangy325.top/zh/posts/index.xml" type="application/rss+xml" title="RSS" aria-label="RSS Feed Link">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><circle fill="currentColor" cx="6.18" cy="17.82" r="2.18"/><path fill="currentColor" d="M5.59 10.23c-.84-.14-1.59.55-1.59 1.4 0 .71.53 1.28 1.23 1.4 2.92.51 5.22 2.82 5.74 5.74.12.7.69 1.23 1.4 1.23.85 0 1.54-.75 1.41-1.59-.68-4.2-3.99-7.51-8.19-8.18zm-.03-5.71C4.73 4.43 4 5.1 4 5.93c0 .73.55 1.33 1.27 1.4 6.01.6 10.79 5.38 11.39 11.39.07.73.67 1.28 1.4 1.28.84 0 1.5-.73 1.42-1.56-.73-7.34-6.57-13.19-13.92-13.92z"/></svg>
       </a>
     
@@ -3789,9 +3791,9 @@ document.addEventListener('DOMContentLoaded', function () {
         <div class="toc toc__outer " data-dir="ltr" data-folding="false" data-ani="true">
           <nav id="TableOfContents">
   <ul>
-    <li><a href="#1-priorityqueue">1 PriorityQueue</a></li>
-    <li><a href="#2-linkedlist">2 LinkedList</a></li>
-    <li><a href="#3-arraydeque">3 ArrayDeque</a></li>
+    <li><a href="#1-优先级队列non-fifo实现priorityqueue">1 优先级队列(NON-FIFO)实现——PriorityQueue</a></li>
+    <li><a href="#2-双端队列的双向链表实现linkedlist">2 双端队列的双向链表实现——LinkedList</a></li>
+    <li><a href="#3-双端队列的循环数组实现arraydeque">3 双端队列的循环数组实现——ArrayDeque</a></li>
   </ul>
 </nav>
         </div>

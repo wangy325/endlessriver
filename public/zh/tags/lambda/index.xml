@@ -7,7 +7,7 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>lambda on EndlessRiver</title>
-    <link>https://wangy325.top/zh/tags/lambda/</link>
+    <link>http://wangy325.top/zh/tags/lambda/</link>
     <description>Recent content in lambda on EndlessRiver</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -16,17 +16,17 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Thu, 23 Apr 2020 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://wangy325.top/zh/tags/lambda/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://wangy325.top/zh/tags/lambda/index.xml" rel="self" type="application/rss+xml" />
     
 
       
       <item>
         <title>内部类</title>
-        <link>https://wangy325.top/zh/posts/java/basic/%E5%86%85%E9%83%A8%E7%B1%BB/</link>
+        <link>http://wangy325.top/zh/posts/java/basic/%E5%86%85%E9%83%A8%E7%B1%BB/</link>
         <pubDate>Thu, 23 Apr 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/basic/%E5%86%85%E9%83%A8%E7%B1%BB/</guid>
+        <guid>http://wangy325.top/zh/posts/java/basic/%E5%86%85%E9%83%A8%E7%B1%BB/</guid>
         <description>&lt;p&gt;将一个类定义在另一个类的内部，这就是内部类。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;定义言简意赅 ，内涵丰富多彩。&lt;/p&gt;
@@ -161,11 +161,11 @@
       
       <item>
         <title>lambda表达式</title>
-        <link>https://wangy325.top/zh/posts/java/basic/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+        <link>http://wangy325.top/zh/posts/java/basic/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
         <pubDate>Wed, 22 Apr 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/basic/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
+        <guid>http://wangy325.top/zh/posts/java/basic/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
         <description>&lt;h2 id=&#34;1-lambda表达式&#34;&gt;1 lambda表达式&lt;/h2&gt;
 &lt;p&gt;lambda表达式是一个&lt;strong&gt;可传递的代码块&lt;/strong&gt;，可以在以后执行&lt;strong&gt;一次或多次&lt;/strong&gt;。&lt;/p&gt;</description>
         
@@ -196,11 +196,11 @@
       
       <item>
         <title>比较器的「退化」</title>
-        <link>https://wangy325.top/zh/posts/java/basic/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/</link>
+        <link>http://wangy325.top/zh/posts/java/basic/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/</link>
         <pubDate>Tue, 27 Aug 2019 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Mon, 21 Oct 2019 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/basic/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/</guid>
+        <guid>http://wangy325.top/zh/posts/java/basic/%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E9%80%80%E5%8C%96/</guid>
         <description>&lt;p&gt;在使用匿名内部类比较器的时候，idea提供了几个层次的比较器代码优化，给👴整懵逼了。&lt;/p&gt;</description>
         
         <dc:creator>wangy325</dc:creator>

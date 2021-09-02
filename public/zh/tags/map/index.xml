@@ -7,7 +7,7 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>Map on EndlessRiver</title>
-    <link>https://wangy325.top/zh/tags/map/</link>
+    <link>http://wangy325.top/zh/tags/map/</link>
     <description>Recent content in Map on EndlessRiver</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -16,17 +16,17 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Sun, 10 May 2020 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://wangy325.top/zh/tags/map/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://wangy325.top/zh/tags/map/index.xml" rel="self" type="application/rss+xml" />
     
 
       
       <item>
         <title>Map</title>
-        <link>https://wangy325.top/zh/posts/java/collections/map/</link>
+        <link>http://wangy325.top/zh/posts/java/collections/map/</link>
         <pubDate>Sun, 10 May 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/collections/map/</guid>
+        <guid>http://wangy325.top/zh/posts/java/collections/map/</guid>
         <description>&lt;p&gt;Map即映射，即键-值对，键不允许重复，并且一个键最多映射一个值。&lt;/p&gt;</description>
         
         <dc:creator>wangy325</dc:creator>

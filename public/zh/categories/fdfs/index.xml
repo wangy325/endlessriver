@@ -7,7 +7,7 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>fdfs on EndlessRiver</title>
-    <link>https://wangy325.top/zh/categories/fdfs/</link>
+    <link>http://wangy325.top/zh/categories/fdfs/</link>
     <description>Recent content in fdfs on EndlessRiver</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -16,17 +16,17 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Sat, 31 Aug 2019 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://wangy325.top/zh/categories/fdfs/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://wangy325.top/zh/categories/fdfs/index.xml" rel="self" type="application/rss+xml" />
     
 
       
       <item>
         <title>安装单机版fdfs服务遇到的问题</title>
-        <link>https://wangy325.top/zh/posts/java/sql/%E5%AE%89%E8%A3%85%E5%8D%95%E6%9C%BA%E7%89%88fdfs%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+        <link>http://wangy325.top/zh/posts/java/sql/%E5%AE%89%E8%A3%85%E5%8D%95%E6%9C%BA%E7%89%88fdfs%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</link>
         <pubDate>Sat, 31 Aug 2019 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Sat, 31 Aug 2019 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/sql/%E5%AE%89%E8%A3%85%E5%8D%95%E6%9C%BA%E7%89%88fdfs%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+        <guid>http://wangy325.top/zh/posts/java/sql/%E5%AE%89%E8%A3%85%E5%8D%95%E6%9C%BA%E7%89%88fdfs%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
         <description>&lt;p&gt;本文简单记录了2个在安装单机版fdfs服务遇到的问题，虽然报错信息不同，但是问题出在同一个地方：&lt;/p&gt;</description>
         
         <dc:creator>wangy325</dc:creator>

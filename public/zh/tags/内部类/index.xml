@@ -7,7 +7,7 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>内部类 on EndlessRiver</title>
-    <link>https://wangy325.top/zh/tags/%E5%86%85%E9%83%A8%E7%B1%BB/</link>
+    <link>http://wangy325.top/zh/tags/%E5%86%85%E9%83%A8%E7%B1%BB/</link>
     <description>Recent content in 内部类 on EndlessRiver</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -16,17 +16,17 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Thu, 23 Apr 2020 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://wangy325.top/zh/tags/%E5%86%85%E9%83%A8%E7%B1%BB/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://wangy325.top/zh/tags/%E5%86%85%E9%83%A8%E7%B1%BB/index.xml" rel="self" type="application/rss+xml" />
     
 
       
       <item>
         <title>内部类</title>
-        <link>https://wangy325.top/zh/posts/java/basic/%E5%86%85%E9%83%A8%E7%B1%BB/</link>
+        <link>http://wangy325.top/zh/posts/java/basic/%E5%86%85%E9%83%A8%E7%B1%BB/</link>
         <pubDate>Thu, 23 Apr 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/basic/%E5%86%85%E9%83%A8%E7%B1%BB/</guid>
+        <guid>http://wangy325.top/zh/posts/java/basic/%E5%86%85%E9%83%A8%E7%B1%BB/</guid>
         <description>&lt;p&gt;将一个类定义在另一个类的内部，这就是内部类。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;定义言简意赅 ，内涵丰富多彩。&lt;/p&gt;

@@ -7,7 +7,7 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>static on EndlessRiver</title>
-    <link>https://wangy325.top/zh/tags/static/</link>
+    <link>http://wangy325.top/zh/tags/static/</link>
     <description>Recent content in static on EndlessRiver</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -16,17 +16,17 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Tue, 14 Apr 2020 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://wangy325.top/zh/tags/static/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://wangy325.top/zh/tags/static/index.xml" rel="self" type="application/rss+xml" />
     
 
       
       <item>
         <title>static关键字</title>
-        <link>https://wangy325.top/zh/posts/java/basic/static%E5%85%B3%E9%94%AE%E5%AD%97/</link>
+        <link>http://wangy325.top/zh/posts/java/basic/static%E5%85%B3%E9%94%AE%E5%AD%97/</link>
         <pubDate>Tue, 14 Apr 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/basic/static%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
+        <guid>http://wangy325.top/zh/posts/java/basic/static%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
         <description>&lt;p&gt;static关键字意为“静态的”，其语义可以理解为“类的对象”(不要理解为Class对象)，即不需要对象实例，可以直接通过&lt;code&gt;类名.字段名&lt;/code&gt;的形式直接访问。&lt;/p&gt;</description>
         
         <dc:creator>wangy325</dc:creator>

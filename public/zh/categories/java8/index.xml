@@ -7,7 +7,7 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>Java8 on EndlessRiver</title>
-    <link>https://wangy325.top/zh/categories/java8/</link>
+    <link>http://wangy325.top/zh/categories/java8/</link>
     <description>Recent content in Java8 on EndlessRiver</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -16,17 +16,17 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Tue, 02 Feb 2021 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://wangy325.top/zh/categories/java8/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://wangy325.top/zh/categories/java8/index.xml" rel="self" type="application/rss+xml" />
     
 
       
       <item>
         <title>Java8中的新日期和时间工具库</title>
-        <link>https://wangy325.top/zh/posts/java/basic/java-new-time-api/</link>
+        <link>http://wangy325.top/zh/posts/java/basic/java-new-time-api/</link>
         <pubDate>Tue, 02 Feb 2021 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Tue, 02 Feb 2021 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/basic/java-new-time-api/</guid>
+        <guid>http://wangy325.top/zh/posts/java/basic/java-new-time-api/</guid>
         <description>&lt;blockquote&gt;
 &lt;p&gt;mybatis自 3.4.5 开始，已经支持使用LocaldateTime作为时间查询入参，映射类型为TimeStamp，参考地址: &lt;a href=&#34;https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers&#34;&gt;https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -71,11 +71,11 @@
       
       <item>
         <title>lambda表达式</title>
-        <link>https://wangy325.top/zh/posts/java/basic/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+        <link>http://wangy325.top/zh/posts/java/basic/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
         <pubDate>Wed, 22 Apr 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/basic/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
+        <guid>http://wangy325.top/zh/posts/java/basic/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
         <description>&lt;h2 id=&#34;1-lambda表达式&#34;&gt;1 lambda表达式&lt;/h2&gt;
 &lt;p&gt;lambda表达式是一个&lt;strong&gt;可传递的代码块&lt;/strong&gt;，可以在以后执行&lt;strong&gt;一次或多次&lt;/strong&gt;。&lt;/p&gt;</description>
         

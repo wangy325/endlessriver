@@ -7,7 +7,7 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>并发 on EndlessRiver</title>
-    <link>https://wangy325.top/zh/categories/%E5%B9%B6%E5%8F%91/</link>
+    <link>http://wangy325.top/zh/categories/%E5%B9%B6%E5%8F%91/</link>
     <description>Recent content in 并发 on EndlessRiver</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -16,17 +16,17 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Mon, 16 Nov 2020 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://wangy325.top/zh/categories/%E5%B9%B6%E5%8F%91/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://wangy325.top/zh/categories/%E5%B9%B6%E5%8F%91/index.xml" rel="self" type="application/rss+xml" />
     
 
       
       <item>
         <title>倒计时门闩、信号量、交换器及其他</title>
-        <link>https://wangy325.top/zh/posts/java/concurrency/%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BB%84%E4%BB%B6/</link>
+        <link>http://wangy325.top/zh/posts/java/concurrency/%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BB%84%E4%BB%B6/</link>
         <pubDate>Mon, 16 Nov 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Mon, 16 Nov 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/concurrency/%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BB%84%E4%BB%B6/</guid>
+        <guid>http://wangy325.top/zh/posts/java/concurrency/%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BB%84%E4%BB%B6/</guid>
         <description>&lt;p&gt;Java 1.5以后的并发类库新加入了一些用于解决并发问题的新构件，合理地使用这些构件能够帮助我们写出更加简单且健壮的并发程序。本节内容介绍&lt;code&gt;java.util.concurrent&lt;/code&gt;包中一些具有代表性的构件，包括&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;CountDownLatch&lt;/li&gt;
@@ -72,14 +72,14 @@
       
       <item>
         <title>计划执行任务</title>
-        <link>https://wangy325.top/zh/posts/java/concurrency/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</link>
+        <link>http://wangy325.top/zh/posts/java/concurrency/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</link>
         <pubDate>Tue, 10 Nov 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Sun, 15 Nov 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/concurrency/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</guid>
+        <guid>http://wangy325.top/zh/posts/java/concurrency/%E8%AE%A1%E5%88%92%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</guid>
         <description>&lt;p&gt;除了ThreadPoolExecutor之外，Java执行器（Executor）框架还提供了可以在指定延迟之后执行一次或周期执行任务的接口&lt;code&gt;ScheduledExecutorService&lt;/code&gt;，较&lt;a href=&#34;https://docs.oracle.com/javase/8/docs/api/java/util/Timer.html&#34;&gt;java.util.Timer&lt;/a&gt;而言，它是更好的选择&lt;/p&gt;
 &lt;p&gt;与&lt;a href=&#34;../%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/#3-%E7%BA%BF%E7%A8%8B%E6%B1%A0&#34;&gt;线程池&lt;/a&gt;不同的是，用于计划执行的&lt;code&gt;ScheduledThreadPoolExecutor&lt;/code&gt;使用&lt;code&gt;ScheduledFutureTask&lt;/code&gt;作为任务，使用&lt;code&gt;DelayedWorkQueue&lt;/code&gt;作为任务队列，以实现计划（周期）执行的目的&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://wangy325.top/img/scheduledFutureTask.png&#34; alt=&#34;xx&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://wangy325.top/img/scheduledFutureTask.png&#34; alt=&#34;xx&#34; /&gt;&lt;/p&gt;
 &lt;p style=&#34;text-align:center; font-size:.9rem; font-style:italic&#34;&gt;ScheduledThreadPoolExecutor继承关系图&lt;/p&gt;
 &lt;p&gt;从&lt;code&gt;ScheduledThreadPoolExecutor&lt;/code&gt;的继承关系图可以看到，其是&lt;code&gt;ThreadPoolExecutor&lt;/code&gt;的导出类，其提交任务和执行任务以及关闭线程池的逻辑应和线程池相差无几，其重点差别在于&lt;strong&gt;任务对象以及任务队列&lt;/strong&gt;的封装上，后文将会详述&lt;code&gt;ScheduledThreadPoolExecutor&lt;/code&gt;的任务计划执行以及周期执行机制&lt;/p&gt;</description>
         
@@ -114,11 +114,11 @@
       
       <item>
         <title>执行器与线程池</title>
-        <link>https://wangy325.top/zh/posts/java/concurrency/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/</link>
+        <link>http://wangy325.top/zh/posts/java/concurrency/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/</link>
         <pubDate>Tue, 03 Nov 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Tue, 03 Nov 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/concurrency/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/</guid>
+        <guid>http://wangy325.top/zh/posts/java/concurrency/%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/</guid>
         <description>&lt;p&gt;Java并发系列的文章到目前为止，虽然没有特别说明，但是使用执行器(Executor(s))的次数已经难以计数了，&lt;code&gt;Executors&lt;/code&gt;提供了一些非常方便的静态方法，可以根据需要创建不同的&lt;code&gt;ExecutorService&lt;/code&gt;，然后调用其&lt;code&gt;execute(Runnable)&lt;/code&gt;或&lt;code&gt;submit(Callable&amp;lt;T&amp;gt;)&lt;/code&gt;方法。在多线程的条件下，执行器还有一个非常明显的优势，它使用线程池管理线程，避免了系统创建和销毁线程的开销。在一般的Java并发过程中，也建议使用执行器完成任务而非显式地创建线程。&lt;/p&gt;
 &lt;p&gt;本文将从执行器开始，阐述Java中的线程池。&lt;/p&gt;
 &lt;h1 id=&#34;1-executors&#34;&gt;1 Executors&lt;/h1&gt;
@@ -183,11 +183,11 @@
       
       <item>
         <title>死锁</title>
-        <link>https://wangy325.top/zh/posts/java/concurrency/%E6%AD%BB%E9%94%81/</link>
+        <link>http://wangy325.top/zh/posts/java/concurrency/%E6%AD%BB%E9%94%81/</link>
         <pubDate>Fri, 30 Oct 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Fri, 30 Oct 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/concurrency/%E6%AD%BB%E9%94%81/</guid>
+        <guid>http://wangy325.top/zh/posts/java/concurrency/%E6%AD%BB%E9%94%81/</guid>
         <description>&lt;p&gt;Java有能力使任务为等待某些条件成立而进入阻塞状态，所以就有可能出现这样一种情况：某个任务在等待另一个任务，而后者又在等待其他的任务，这样一直等待下去，直到等待链上的最后一个任务又在等待第一个任务释放锁，这样就出现了任务之间相互等待的连续循环现象，这种情况出现之后，没有哪个任务能够执行，于是 &lt;strong&gt;死锁&lt;/strong&gt; 出现&lt;/p&gt;
 &lt;p&gt;死锁之所以难以规避，其重要的原因就在于其不确定性，可能程序运行良好，但是有潜在的死锁风险，这个风险在某些域的初始条件变化时，变得特别大，导致程序很快死锁。同时，死锁的出现也很难复现，它就像埋在程序里的地雷&lt;/p&gt;
 &lt;p&gt;我们不妨回顾在&lt;a href=&#34;../%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BA%8C/#2-1-span-id-condition-%E6%9D%A1%E4%BB%B6-span&#34;&gt;转账问题&lt;/a&gt;中使用的等待条件——如账户余额不足时使任务等待，在余额足够的时候再进行转账。这个程序没有问题，因为有100个账户每个账户初始金额1000元，而转账金额&lt;strong&gt;不大于&lt;/strong&gt;初始金额，所以任一时刻都会有账户的金额满足转账条件。但是如果去除转账金额不大于1000的限制，死锁就会发生，这很容易理解&lt;/p&gt;
@@ -228,11 +228,11 @@
       
       <item>
         <title>Java内存模型与volatile关键字(转)</title>
-        <link>https://wangy325.top/zh/posts/java/concurrency/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E4%B8%8Evolatile%E5%85%B3%E9%94%AE%E5%AD%97/</link>
+        <link>http://wangy325.top/zh/posts/java/concurrency/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E4%B8%8Evolatile%E5%85%B3%E9%94%AE%E5%AD%97/</link>
         <pubDate>Tue, 27 Oct 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Wed, 28 Oct 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/concurrency/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E4%B8%8Evolatile%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
+        <guid>http://wangy325.top/zh/posts/java/concurrency/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E4%B8%8Evolatile%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
         <description>&lt;p&gt;本文转自&lt;a href=&#34;http://www.cnblogs.com/dolphin0520/p/3920373.html&#34;&gt;Matrix海子&lt;/a&gt;，是描述&lt;code&gt;volatile&lt;/code&gt;关键字非常好的一篇文章，从Java的内存模型开始，归本溯源的阐述了&lt;code&gt;volatile&lt;/code&gt;关键字在并发中的作用与局限&lt;/p&gt;
 &lt;p&gt;此文部分内容参照了《深入理解Java虚拟机》&lt;/p&gt;</description>
         
@@ -263,11 +263,11 @@
       
       <item>
         <title>生产者-消费者与阻塞队列</title>
-        <link>https://wangy325.top/zh/posts/java/concurrency/%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%8E%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97/</link>
+        <link>http://wangy325.top/zh/posts/java/concurrency/%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%8E%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97/</link>
         <pubDate>Mon, 26 Oct 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Mon, 26 Oct 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/concurrency/%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%8E%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97/</guid>
+        <guid>http://wangy325.top/zh/posts/java/concurrency/%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%8E%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97/</guid>
         <description>&lt;p&gt;在讨论线程协作的时候，已经讨论了生产者与消费者雏形，比如录音是生产者，而播放则是消费者；同样的，在汽车打蜡的模型中，打蜡可看作生产者，抛光可看作消费者；只是它们的关系是简单的生产-消费关系。&lt;/p&gt;
 &lt;p&gt;除了简单的线程协同之外，Java提供了&lt;strong&gt;同步队列&lt;/strong&gt;来解决线程的协同问题，本节重点讨论这部分的内容。&lt;/p&gt;</description>
         
@@ -298,11 +298,11 @@
       
       <item>
         <title>终结任务</title>
-        <link>https://wangy325.top/zh/posts/java/concurrency/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</link>
+        <link>http://wangy325.top/zh/posts/java/concurrency/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</link>
         <pubDate>Fri, 23 Oct 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Fri, 23 Oct 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/concurrency/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</guid>
+        <guid>http://wangy325.top/zh/posts/java/concurrency/%E7%BB%88%E7%BB%93%E4%BB%BB%E5%8A%A1/</guid>
         <description>&lt;p&gt;一般地，如果程序运行良好，任务执行完所需操作后自然结束，任务终结。&lt;/p&gt;
 &lt;p&gt;如果任务执行时出现异常，任务也会终结。&lt;/p&gt;
 &lt;p&gt;在设计多个线程协同工作的任务时，需要判断&lt;strong&gt;任务终结的条件&lt;/strong&gt;，以便合适地终结任务，这点尤为重要。&lt;/p&gt;
@@ -335,11 +335,11 @@
       
       <item>
         <title>获取任务的返回值</title>
-        <link>https://wangy325.top/zh/posts/java/concurrency/%E8%8E%B7%E5%8F%96%E4%BB%BB%E5%8A%A1%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC/</link>
+        <link>http://wangy325.top/zh/posts/java/concurrency/%E8%8E%B7%E5%8F%96%E4%BB%BB%E5%8A%A1%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC/</link>
         <pubDate>Tue, 20 Oct 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Tue, 20 Oct 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/concurrency/%E8%8E%B7%E5%8F%96%E4%BB%BB%E5%8A%A1%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC/</guid>
+        <guid>http://wangy325.top/zh/posts/java/concurrency/%E8%8E%B7%E5%8F%96%E4%BB%BB%E5%8A%A1%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC/</guid>
         <description>&lt;p&gt;要创建一个任务，通常实现Runnable接口。考虑一个经典的问题：用多线程分段计算0-100的加和，我们需要把每个线程计算的值汇总，然后再求和，那么应该怎样获取每个任务返回值呢？&lt;/p&gt;
 &lt;p&gt;Java提供了Callable和Future接口，使任务有提供返回值的能力&lt;/p&gt;</description>
         
@@ -378,11 +378,11 @@
       
       <item>
         <title>资源访问受限-并发之二</title>
-        <link>https://wangy325.top/zh/posts/java/concurrency/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BA%8C/</link>
+        <link>http://wangy325.top/zh/posts/java/concurrency/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BA%8C/</link>
         <pubDate>Wed, 20 May 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/concurrency/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BA%8C/</guid>
+        <guid>http://wangy325.top/zh/posts/java/concurrency/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BA%8C/</guid>
         <description>&lt;p&gt;在&lt;a href=&#34;../%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%B8%80&#34;&gt;上一篇文章&lt;/a&gt;中，虽然创建了多线程，并且线程之间出现了一些&lt;strong&gt;不可预测&lt;/strong&gt;的CPU调度，但是由于线程之间是&lt;strong&gt;相互隔离&lt;/strong&gt;的——&lt;strong&gt;线程没有访问共同的资源&lt;/strong&gt;，尽管在执行任务的过程可能被CPU剥夺运行权，但是当它们再次获得运行权时对运行结果并没有影响，它们是安全的。&lt;/p&gt;
 &lt;p&gt;考虑一种情况，如果&lt;strong&gt;多个线程访问同一个资源&lt;/strong&gt;，并对资源内容进行修改，会发生什么情况？&lt;/p&gt;
 &lt;p&gt;对于&lt;strong&gt;非原子性&lt;/strong&gt;操作，多线程下会出现&lt;strong&gt;竞争条件&lt;/strong&gt;，&lt;code&gt;accounts[to] += amount&lt;/code&gt;操作，可以被拆分为多个CPU指令：&lt;/p&gt;
@@ -428,11 +428,11 @@
       
       <item>
         <title>线程与任务-并发之一</title>
-        <link>https://wangy325.top/zh/posts/java/concurrency/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%B8%80/</link>
+        <link>http://wangy325.top/zh/posts/java/concurrency/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%B8%80/</link>
         <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/concurrency/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%B8%80/</guid>
+        <guid>http://wangy325.top/zh/posts/java/concurrency/%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%B8%80/</guid>
         <description>&lt;p&gt;并发是生产过程不可能绕过去的坎，&lt;del&gt;要编写高性能的程序，必须使用并发&lt;/del&gt;。&lt;/p&gt;
 &lt;p&gt;并发的本质是多个线程同时处理任务&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;，不同于进程，线程之间的资源是共享的，当程序不够严谨时，使用多线程就可能带来问题，这是要反复讨论并发的原因之一。&lt;/p&gt;
 &lt;p&gt;在Java中，必须明白一点：线程由Thread类启动，但Thread类并不执行任何操作，&lt;strong&gt;它只是驱动赋予它的任务&lt;/strong&gt;。因此将&lt;strong&gt;线程与任务&lt;/strong&gt;的概念区分开，有利于理解并发。&lt;/p&gt;</description>

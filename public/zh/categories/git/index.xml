@@ -7,7 +7,7 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>git on EndlessRiver</title>
-    <link>https://wangy325.top/zh/categories/git/</link>
+    <link>http://wangy325.top/zh/categories/git/</link>
     <description>Recent content in git on EndlessRiver</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -16,17 +16,17 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Thu, 20 Sep 2018 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://wangy325.top/zh/categories/git/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://wangy325.top/zh/categories/git/index.xml" rel="self" type="application/rss+xml" />
     
 
       
       <item>
         <title>Git入门2</title>
-        <link>https://wangy325.top/zh/posts/vc/git%E5%85%A5%E9%97%A82/</link>
+        <link>http://wangy325.top/zh/posts/vc/git%E5%85%A5%E9%97%A82/</link>
         <pubDate>Thu, 20 Sep 2018 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Mon, 21 Oct 2019 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/vc/git%E5%85%A5%E9%97%A82/</guid>
+        <guid>http://wangy325.top/zh/posts/vc/git%E5%85%A5%E9%97%A82/</guid>
         <description>&lt;p&gt;git fetch 与 git pull&lt;/p&gt;</description>
         
         <dc:creator>wangy325</dc:creator>
@@ -50,11 +50,11 @@
       
       <item>
         <title>Git入门1</title>
-        <link>https://wangy325.top/zh/posts/vc/git%E5%85%A5%E9%97%A81/</link>
+        <link>http://wangy325.top/zh/posts/vc/git%E5%85%A5%E9%97%A81/</link>
         <pubDate>Wed, 19 Sep 2018 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Thu, 02 Apr 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/vc/git%E5%85%A5%E9%97%A81/</guid>
+        <guid>http://wangy325.top/zh/posts/vc/git%E5%85%A5%E9%97%A81/</guid>
         <description>&lt;p&gt;本文简单介绍了Git本地仓库的构建，与远程仓库的关联&lt;/p&gt;</description>
         
         <dc:creator>wangy325</dc:creator>

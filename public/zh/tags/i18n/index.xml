@@ -7,7 +7,7 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>i18n on EndlessRiver</title>
-    <link>https://wangy325.top/zh/tags/i18n/</link>
+    <link>http://wangy325.top/zh/tags/i18n/</link>
     <description>Recent content in i18n on EndlessRiver</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -16,17 +16,17 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Sat, 20 Feb 2021 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://wangy325.top/zh/tags/i18n/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://wangy325.top/zh/tags/i18n/index.xml" rel="self" type="application/rss+xml" />
     
 
       
       <item>
         <title>在SpringBoot中使用MessageSource</title>
-        <link>https://wangy325.top/zh/posts/java/spring/use-springboot-messagesource/</link>
+        <link>http://wangy325.top/zh/posts/java/spring/use-springboot-messagesource/</link>
         <pubDate>Sat, 20 Feb 2021 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Sat, 20 Feb 2021 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/spring/use-springboot-messagesource/</guid>
+        <guid>http://wangy325.top/zh/posts/java/spring/use-springboot-messagesource/</guid>
         <description>&lt;blockquote&gt;
 &lt;p&gt;&lt;span id=&#34;hook&#34;&gt;几个说明&lt;/span&gt;：&lt;/p&gt;
 &lt;ol&gt;

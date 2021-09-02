@@ -7,7 +7,7 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>bloomfilter on EndlessRiver</title>
-    <link>https://wangy325.top/zh/tags/bloomfilter/</link>
+    <link>http://wangy325.top/zh/tags/bloomfilter/</link>
     <description>Recent content in bloomfilter on EndlessRiver</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -16,17 +16,17 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Mon, 23 Nov 2020 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://wangy325.top/zh/tags/bloomfilter/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://wangy325.top/zh/tags/bloomfilter/index.xml" rel="self" type="application/rss+xml" />
     
 
       
       <item>
         <title>布隆过滤器(转)</title>
-        <link>https://wangy325.top/zh/posts/java/redis/bloom-filter/</link>
+        <link>http://wangy325.top/zh/posts/java/redis/bloom-filter/</link>
         <pubDate>Mon, 23 Nov 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Mon, 23 Nov 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/redis/bloom-filter/</guid>
+        <guid>http://wangy325.top/zh/posts/java/redis/bloom-filter/</guid>
         <description>&lt;p&gt;海量数据处理以及缓存穿透这两个场景让我认识了 布隆过滤器 ，我查阅了一些资料来了解它，但是很多现成资料并不满足我的需求，所以就决定自己总结一篇关于布隆过滤器的文章。希望通过这篇文章让更多人了解布隆过滤器，并且会实际去使用它！&lt;/p&gt;
 &lt;p&gt;下面我们将分为几个方面来介绍布隆过滤器：&lt;/p&gt;
 &lt;ol&gt;

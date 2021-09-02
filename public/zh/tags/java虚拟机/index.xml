@@ -7,7 +7,7 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>Java虚拟机 on EndlessRiver</title>
-    <link>https://wangy325.top/zh/tags/java%E8%99%9A%E6%8B%9F%E6%9C%BA/</link>
+    <link>http://wangy325.top/zh/tags/java%E8%99%9A%E6%8B%9F%E6%9C%BA/</link>
     <description>Recent content in Java虚拟机 on EndlessRiver</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -16,17 +16,17 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Mon, 30 Nov 2020 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://wangy325.top/zh/tags/java%E8%99%9A%E6%8B%9F%E6%9C%BA/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://wangy325.top/zh/tags/java%E8%99%9A%E6%8B%9F%E6%9C%BA/index.xml" rel="self" type="application/rss+xml" />
     
 
       
       <item>
         <title>Java内存区域详解(转)</title>
-        <link>https://wangy325.top/zh/posts/java/jvm/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E8%AF%A6%E8%A7%A3/</link>
+        <link>http://wangy325.top/zh/posts/java/jvm/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E8%AF%A6%E8%A7%A3/</link>
         <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Mon, 30 Nov 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/jvm/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E8%AF%A6%E8%A7%A3/</guid>
+        <guid>http://wangy325.top/zh/posts/java/jvm/java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E8%AF%A6%E8%A7%A3/</guid>
         <description>&lt;blockquote&gt;
 &lt;p&gt;如果没有特殊说明，都是针对的是 HotSpot 虚拟机。&lt;/p&gt;
 &lt;/blockquote&gt;

@@ -7,7 +7,7 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>回调模式 on EndlessRiver</title>
-    <link>https://wangy325.top/zh/tags/%E5%9B%9E%E8%B0%83%E6%A8%A1%E5%BC%8F/</link>
+    <link>http://wangy325.top/zh/tags/%E5%9B%9E%E8%B0%83%E6%A8%A1%E5%BC%8F/</link>
     <description>Recent content in 回调模式 on EndlessRiver</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -16,17 +16,17 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Tue, 16 Oct 2018 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://wangy325.top/zh/tags/%E5%9B%9E%E8%B0%83%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://wangy325.top/zh/tags/%E5%9B%9E%E8%B0%83%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
     
 
       
       <item>
         <title>Java接口回调</title>
-        <link>https://wangy325.top/zh/posts/java/design_pattern/java%E6%8E%A5%E5%8F%A3%E5%9B%9E%E8%B0%83/</link>
+        <link>http://wangy325.top/zh/posts/java/design_pattern/java%E6%8E%A5%E5%8F%A3%E5%9B%9E%E8%B0%83/</link>
         <pubDate>Tue, 16 Oct 2018 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Tue, 16 Oct 2018 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/design_pattern/java%E6%8E%A5%E5%8F%A3%E5%9B%9E%E8%B0%83/</guid>
+        <guid>http://wangy325.top/zh/posts/java/design_pattern/java%E6%8E%A5%E5%8F%A3%E5%9B%9E%E8%B0%83/</guid>
         <description>&lt;p&gt;回调模式在web开发中用的较多，本文简单介绍了Java的回调机制，理解此文可以在生产中写出适应业务的回调模型。&lt;/p&gt;
 &lt;h2 id=&#34;模块之间的调用&#34;&gt;模块之间的调用&lt;/h2&gt;
 &lt;p&gt;在一个应用系统中，必然存在模块之间的调用，调用的方式有几种:&lt;/p&gt;

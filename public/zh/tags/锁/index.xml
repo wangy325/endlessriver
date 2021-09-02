@@ -7,7 +7,7 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>锁 on EndlessRiver</title>
-    <link>https://wangy325.top/zh/tags/%E9%94%81/</link>
+    <link>http://wangy325.top/zh/tags/%E9%94%81/</link>
     <description>Recent content in 锁 on EndlessRiver</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -16,17 +16,17 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Wed, 20 May 2020 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://wangy325.top/zh/tags/%E9%94%81/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://wangy325.top/zh/tags/%E9%94%81/index.xml" rel="self" type="application/rss+xml" />
     
 
       
       <item>
         <title>资源访问受限-并发之二</title>
-        <link>https://wangy325.top/zh/posts/java/concurrency/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BA%8C/</link>
+        <link>http://wangy325.top/zh/posts/java/concurrency/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BA%8C/</link>
         <pubDate>Wed, 20 May 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Wed, 27 May 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/concurrency/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BA%8C/</guid>
+        <guid>http://wangy325.top/zh/posts/java/concurrency/%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%8F%97%E9%99%90-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BA%8C/</guid>
         <description>&lt;p&gt;在&lt;a href=&#34;../%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5-%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%B8%80&#34;&gt;上一篇文章&lt;/a&gt;中，虽然创建了多线程，并且线程之间出现了一些&lt;strong&gt;不可预测&lt;/strong&gt;的CPU调度，但是由于线程之间是&lt;strong&gt;相互隔离&lt;/strong&gt;的——&lt;strong&gt;线程没有访问共同的资源&lt;/strong&gt;，尽管在执行任务的过程可能被CPU剥夺运行权，但是当它们再次获得运行权时对运行结果并没有影响，它们是安全的。&lt;/p&gt;
 &lt;p&gt;考虑一种情况，如果&lt;strong&gt;多个线程访问同一个资源&lt;/strong&gt;，并对资源内容进行修改，会发生什么情况？&lt;/p&gt;
 &lt;p&gt;对于&lt;strong&gt;非原子性&lt;/strong&gt;操作，多线程下会出现&lt;strong&gt;竞争条件&lt;/strong&gt;，&lt;code&gt;accounts[to] += amount&lt;/code&gt;操作，可以被拆分为多个CPU指令：&lt;/p&gt;

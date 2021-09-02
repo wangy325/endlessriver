@@ -7,7 +7,7 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>动态规划 on EndlessRiver</title>
-    <link>https://wangy325.top/zh/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</link>
+    <link>http://wangy325.top/zh/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</link>
     <description>Recent content in 动态规划 on EndlessRiver</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -16,17 +16,17 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Fri, 04 Dec 2020 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://wangy325.top/zh/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://wangy325.top/zh/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/index.xml" rel="self" type="application/rss+xml" />
     
 
       
       <item>
         <title>背包问题</title>
-        <link>https://wangy325.top/zh/posts/algo/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/</link>
+        <link>http://wangy325.top/zh/posts/algo/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/</link>
         <pubDate>Fri, 04 Dec 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Fri, 04 Dec 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/algo/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/</guid>
+        <guid>http://wangy325.top/zh/posts/algo/01%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/</guid>
         <description>&lt;p&gt;背包问题其实属于&lt;strong&gt;动态规划&lt;/strong&gt;（ &lt;em&gt;Dynamic Programming&lt;/em&gt; ）问题的一种。动态规划的手段是将大问题拆解为多个小问题，小问题解决之后，大问题也就随之而解。&lt;/p&gt;</description>
         
         <dc:creator>wangy325</dc:creator>

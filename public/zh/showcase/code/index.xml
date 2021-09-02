@@ -7,7 +7,7 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>Code on EndlessRiver</title>
-    <link>https://wangy325.top/zh/showcase/code/</link>
+    <link>http://wangy325.top/zh/showcase/code/</link>
     <description>Recent content in Code on EndlessRiver</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -16,17 +16,17 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Sun, 19 Jan 2020 21:04:11 +0900</lastBuildDate>
     
-        <atom:link href="https://wangy325.top/zh/showcase/code/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://wangy325.top/zh/showcase/code/index.xml" rel="self" type="application/rss+xml" />
     
 
       
       <item>
         <title>Java Review</title>
-        <link>https://wangy325.top/zh/showcase/code/java-review/</link>
+        <link>http://wangy325.top/zh/showcase/code/java-review/</link>
         <pubDate>Sun, 29 Mar 2020 21:13:42 +0900</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Sun, 29 Mar 2020 21:13:42 +0900</atom:modified>
-        <guid>https://wangy325.top/zh/showcase/code/java-review/</guid>
+        <guid>http://wangy325.top/zh/showcase/code/java-review/</guid>
         <description></description>
         
         <dc:creator>wangy325</dc:creator>
@@ -40,11 +40,11 @@
       
       <item>
         <title>Mybatis Plus in Action With Spiring Boot</title>
-        <link>https://wangy325.top/zh/showcase/code/mybatis-plus-in-action/</link>
+        <link>http://wangy325.top/zh/showcase/code/mybatis-plus-in-action/</link>
         <pubDate>Sun, 29 Mar 2020 21:13:42 +0900</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Sun, 29 Mar 2020 21:13:42 +0900</atom:modified>
-        <guid>https://wangy325.top/zh/showcase/code/mybatis-plus-in-action/</guid>
+        <guid>http://wangy325.top/zh/showcase/code/mybatis-plus-in-action/</guid>
         <description></description>
         
         <dc:creator>wangy325</dc:creator>

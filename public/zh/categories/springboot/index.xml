@@ -7,7 +7,7 @@
   xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>SpringBoot on EndlessRiver</title>
-    <link>https://wangy325.top/zh/categories/springboot/</link>
+    <link>http://wangy325.top/zh/categories/springboot/</link>
     <description>Recent content in SpringBoot on EndlessRiver</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -16,17 +16,17 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Sat, 20 Feb 2021 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://wangy325.top/zh/categories/springboot/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://wangy325.top/zh/categories/springboot/index.xml" rel="self" type="application/rss+xml" />
     
 
       
       <item>
         <title>在SpringBoot中使用MessageSource</title>
-        <link>https://wangy325.top/zh/posts/java/spring/use-springboot-messagesource/</link>
+        <link>http://wangy325.top/zh/posts/java/spring/use-springboot-messagesource/</link>
         <pubDate>Sat, 20 Feb 2021 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Sat, 20 Feb 2021 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/spring/use-springboot-messagesource/</guid>
+        <guid>http://wangy325.top/zh/posts/java/spring/use-springboot-messagesource/</guid>
         <description>&lt;blockquote&gt;
 &lt;p&gt;&lt;span id=&#34;hook&#34;&gt;几个说明&lt;/span&gt;：&lt;/p&gt;
 &lt;ol&gt;
@@ -70,12 +70,47 @@
       </item>
       
       <item>
+        <title>在SpringBoot项目中使用MockMvc进行接口测试</title>
+        <link>http://wangy325.top/zh/posts/java/spring/%E5%9C%A8springboot%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8mockmvc%E8%BF%9B%E8%A1%8C%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95/</link>
+        <pubDate>Sun, 07 Feb 2021 00:00:00 +0000</pubDate>
+        <author>wangy325@qq.com (wangy325)</author>
+        <atom:modified>Mon, 08 Mar 2021 00:00:00 +0000</atom:modified>
+        <guid>http://wangy325.top/zh/posts/java/spring/%E5%9C%A8springboot%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8mockmvc%E8%BF%9B%E8%A1%8C%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95/</guid>
+        <description>&lt;p&gt;现在流行在项目中使用&lt;a href=&#34;https://swagger.io&#34;&gt;swagger&lt;/a&gt;对接口进行测试，这确实很方便、直观。&lt;/p&gt;
+&lt;p&gt;但是MockMvc作为spring-test包中指定的测试框架，在没有使用swagger的项目中，使用其进行测试是很好的选择。&lt;/p&gt;</description>
+        
+        <dc:creator>wangy325</dc:creator>
+        
+        
+        
+        
+          
+            
+              <category>mockito</category>
+            
+          
+            
+              <category>单元测试</category>
+            
+          
+        
+        
+          
+            
+              <category>SpringBoot</category>
+            
+          
+        
+        
+      </item>
+      
+      <item>
         <title>SpringBoot使用AOP的简单示例</title>
-        <link>https://wangy325.top/zh/posts/java/spring/springboot-aop-demo/</link>
+        <link>http://wangy325.top/zh/posts/java/spring/springboot-aop-demo/</link>
         <pubDate>Sat, 14 Mar 2020 00:00:00 +0000</pubDate>
         <author>wangy325@qq.com (wangy325)</author>
         <atom:modified>Sat, 14 Mar 2020 00:00:00 +0000</atom:modified>
-        <guid>https://wangy325.top/zh/posts/java/spring/springboot-aop-demo/</guid>
+        <guid>http://wangy325.top/zh/posts/java/spring/springboot-aop-demo/</guid>
         <description>&lt;p&gt;有一个cd接口，其实体类用于播放歌曲，同时我们想在播放歌曲的时候记录每个曲目的播放次数。看起来，记录次数这个事和播放曲目是不相干的事情，当然，我们可以在每首歌曲播放完成之后记录，但是更好的办法是使用一个切面，切入到播放方法中，来完成这件事，这样可以减少无关逻辑对代码的侵入。&lt;/p&gt;
 &lt;p&gt;此程序分别使用了基于@Aspect注解和基于XML配置文件2种方式进行了切面注入，2种方式效果是等同的。&lt;/p&gt;
 &lt;p&gt;此程序使用的是Spring AOP，并没有使用功能更加丰富的AspectJ，Spring AOP很大部分借鉴了AspectJ，如果只是简单的方法层面的织入，那么Spring AOP就能够满足需求。如果需要构造器或者属性拦截，或者需要为spring bean引入新方法，那么就需要使用AspectJ了。&lt;/p&gt;
