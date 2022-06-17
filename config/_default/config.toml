@@ -1,6 +1,7 @@
-baseURL = "http://wangy325.top"
+baseURL = ""
 title = "Endless River"
 theme = "zzo"
+publishDir = "public"
 
 defaultContentLanguage = "zh"
 defaultContentLanguageInSubdir = true
@@ -15,7 +16,7 @@ enableEmoji = true
 paginate = 13
 rssLimit = 100
 
-enableGitInfo = false
+enableGitInfo = true
 googleAnalytics = ""
 
 [markup]
