@@ -1,4 +1,4 @@
-baseURL = ""
+baseURL = "wangy325.github.io"
 title = "Endless River"
 theme = "zzo"
 publishDir = "public"
@@ -15,9 +15,15 @@ timeout = 10000
 enableEmoji = true
 paginate = 13
 rssLimit = 100
-
 enableGitInfo = true
 googleAnalytics = ""
+
+# front matter
+[frontmatter]
+  date = ['date', 'publishDate', 'lastmod']
+  expiryDate = ['expiryDate']
+  lastmod = [':git', ':fileModTime', 'lastmod', 'publishDate']
+  publishDate = ['publishDate', 'date']
 
 [markup]
   [markup.goldmark]
