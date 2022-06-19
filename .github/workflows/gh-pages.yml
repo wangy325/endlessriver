@@ -36,5 +36,11 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.ref == 'refs/heads/master' }}
         with:
+          # 以下代码只部署到当前仓库 
+          # deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          # publish_dir: ./public
+          #  部署到另一个独立仓库
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          external_repository: wangy325/wangy325.github.io 
+          publish_branch: main
           publish_dir: ./public
