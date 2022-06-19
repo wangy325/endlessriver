@@ -1,4 +1,4 @@
-baseURL = "wangy325.github.io"
+baseURL = "https://wangy325.github.io"
 title = "Endless River"
 theme = "zzo"
 publishDir = "public"
@@ -10,7 +10,7 @@ hasCJKLanguage = true
 summaryLength = 70
 buildFuture = true
 
-copyright = "&copy;{year}, All Rights Reserved"
+copyright = "&copy;2019-{year}, All Rights Reserved"
 timeout = 10000
 enableEmoji = true
 paginate = 13

@@ -19,25 +19,8 @@ header:
     fontSize: 44
     fontColor: yellow
 
-  - type: text
-    height: 200
-    paddingX: 50
-    paddingY: 0
-    align: center
-    title:
-      - 
-    subtitle:
-      - 胭脂泪，相留醉，几时重。自是人生长恨水长东。
-    titleColor:
-    titleShadow: true
-    titleFontSize: 44
-    subtitleColor:
-    subtitleCursive: true
-    subtitleFontSize: 18
-    spaceBetweenTitleSubtitle: 16
-
   - type: img
-    imageSrc: images/header/background.jpg
+    imageSrc: images/header/EiwfpX6mh1w.jpg
     imageSize: cover
     imageRepeat: no-repeat
     imagePosition: center
@@ -56,6 +39,23 @@ header:
     subtitleCursive: true
     subtitleFontSize: 16
     spaceBetweenTitleSubtitle: 20
+
+  - type: text
+    height: 200
+    paddingX: 50
+    paddingY: 0
+    align: center
+    title:
+      - 
+    subtitle:
+      - 胭脂泪，相留醉，几时重。自是人生长恨水长东。
+    titleColor:
+    titleShadow: true
+    titleFontSize: 44
+    subtitleColor:
+    subtitleCursive: true
+    subtitleFontSize: 18
+    spaceBetweenTitleSubtitle: 16
 
   - type: slide
     height: 235
