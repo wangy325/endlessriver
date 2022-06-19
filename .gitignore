@@ -7,3 +7,5 @@ nohup.out
 .idea/
 *.code-workspace
 public/
+gh-pages
+gh-pages.pub
