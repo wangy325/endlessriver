@@ -1,27 +1,27 @@
 ---
-title: "Map"
+title: "Java集合框架之Map"
 date: 2020-05-10
 lastmod: 2020-05-27
 draft: false
-description: "本文介绍了Java集合框架中的映射（Map），主要以HashMap和LinkedHashMap和TreeMap为主。"
+description: "本文介绍了Java集合框架中的映射（Map），主要以HashMap、LinkedHashMap和TreeMap为主。"
 tags:
 - 集合框架
-- Map
 categories:
 - java
 author: "wangy325"
 ---
 
 
-Map即映射，即键-值对，键不允许重复，并且一个键最多映射一个值。
-
-<!--more-->
+Map即映射，即键-值对，键不允许重复，并且一个键最多映射一个值。Map不在Java集合框架的范畴，但是其由集合框架的内容实现。自然也在集合框架的
+讨论之内。
 
 映射提供3种**集合视图**
 
 - 键集 （Set实现）
 - 值集 （Collection实现）
 - Map.Entry集（Set实现）
+
+<!--more-->
 
 由于Map的键是Set，因此使用可变对象作为Map的key时，**需要覆盖 *equals* 和 *hashCode* 方法**，**Map不能使用自身作为key**
 
@@ -42,25 +42,23 @@ Java 8对Map接口进行了优化，新增了主要是针对**函数式接口**�
 > - default void ***replaceAll***(BiFunction<? super K, ? super V, ? extends V> function) {...}
 > - default V ***getOrDefault***(Object key, V defaultValue) {...}
 
-上述方法使用的不多，主要用来对Map键值进行更新，按需查阅API文档
+上述方法使用的不多，主要用来对Map键值进行更新，按需查阅API文档。
 
-
-
-### 1 HashMap
+## 1 HashMap
 
 HashMap是由散列表对键进行散列的，允许null键和null值。HashMap是无序的，这点和HashSet是一样的
 
 > HashMap和**Hashtable**大致相同，区别在与Hashtable是同步的，且Hashtable**不允许null**
 
-HashMap的初始化和扩容机制叙述参见[散列表](../set/#1-span-id-hashtable-散列集-span)，如果初始化时不指定容量（桶数？容量不是键值对数目），默认为16。容量总是2<sup>n</sup>，最大容量是2<sup>30</sup>，每次扩容加倍，**当桶数大于最大桶数后，不再rehash**。容量总是为2的幂次的原理和[ArrayDeque一致](../queue/#3-arraydeque)，通过5次位运算将低位全部转为1，然后执行+1操作进位，变成下一个2<sup>n</sup>。因此HashMap带参构造器指定的capacity最后会初始化为大于其的最近的2<sup>n</sup>。（1变2，3变4，5变8，9变16...）
+HashMap的初始化和扩容机制叙述参见[散列表](../set/#1-span-id-hashtable-散列集-span)，如果初始化时不指定容量（桶数？容量不是键值对数目），默认为16。容量总是2<sup>n</sup>，最大容量是2<sup>30</sup>，每次扩容加倍，**当桶数大于最大桶数后，不再rehash**。容量总是为2的幂次的原理和[ArrayDeque一致](../queue/#3-arraydeque)，通过5次位运算将低位全部转为1，然后执行+1操作进位，变成下一个2<sup>n</sup>。因此HashMap带参构造器指定的capacity最后会初始化为大于其的最近的2<sup>n</sup>（1变2，3变4，5变8，9变16...）。
 
 HashMap使用`table`和`entrySet`分别表示桶数和当前映射中的键值对数：
 
-> transient Node<K,V>[] table;	桶数组，桶由链表构成
+> transient Node<K,V>[] table;	桶数组，桶由链表构成；
 >
 > transient Set<Map.Entry<K,V>> entrySet; 映射中的键值对数，size
 >
-> int threshold; 临界键值对数，等于 table.length * loadFactor，当size > threshold时，发生扩容
+> int threshold; 临界键值对数，等于 table.length * loadFactor，当size > threshold时，触发扩容
 >
 > final float loadFactor; 装载因子，默认0.75
 
@@ -106,11 +104,11 @@ buckets after rehash: 16
 *///:~
 ```
 
-上例解释了HashMap的扩容过程，当映射中的**元素数大于桶数与装载因子之积**时，便会扩容
+上例证实了HashMap的扩容过程，当映射中的**元素数大于桶数与装载因子之积**时，便会扩容。
 
-Map中提供3种**集合视图**，键的，值的和entry的，视图并不能对映射进行完全结构性控制，比如向Map中添加条目，则只能使用`Map.put`方法，使用视图时，除了**删除**这一改变Map结构的操作，其他操作会抛出*UnsurportedOperationException*
+Map中提供3种**集合视图**，键的，值的和entry的，视图并不能对映射进行完全结构性控制，比如向Map中添加条目，则只能使用`Map.put`方法，使用视图时，除了**删除**这一改变Map结构的操作，其他操作会抛出*UnsurportedOperationException*。
 
-HashMap的集合视图都支持迭代器，并可以通过任意视图的迭代器**删除**键值对，但是不支持新增和替换键值对
+HashMap的集合视图都支持迭代器，并可以通过任意视图的迭代器**删除**键值对，但是不支持新增和替换键值对。
 
 ```java
 private static void viewTest() {
@@ -183,11 +181,11 @@ public boolean add(E e) {
 }
 ```
 
-### 2 LinkedHashMap
+## 2 LinkedHashMap
 
-LinkedHashMap(链表散列映射)是HashMap的导出类，像LinkedHashSet与HashSet的关系一样
+LinkedHashMap(链表散列映射)是HashMap的导出类，像LinkedHashSet与HashSet的关系一样。
 
-其与HashMap的差别在于其使用LinkedList来维护键值对插入的顺序，其插入机制和HashMap是一致的
+其与HashMap的差别在于其使用LinkedList来维护键值对插入的顺序，其插入机制和HashMap是一致的。
 
 LinkedHashMap和HashMap的[性能相差不大](../set/#1-2-linkedhashset)与HashSet和LinkedHashSet一致：
 
@@ -197,8 +195,9 @@ LinkedHashMap和HashMap的[性能相差不大](../set/#1-2-linkedhashset)与Hash
 |LinkedHashMap|和HashMap类似，不过其使用LinkedList维护内部次序，因此其迭代顺序是插入顺序或者LRU（最近最少使用）次序，性能稍差于HashMap|
 
 
+### 2.1 LinkedHashMap的元素排序
 
-一般地，LinkedHashMap使用**插入顺序**（ *insertion order* ）。但有特殊情况，LinkedHashMap提供构造参数`accessOrder`，来根据**访问顺序**（ *access order* ）对映射条目进行迭代
+一般地，LinkedHashMap使用**插入顺序**（ *insertion order* ）。但有特殊情况，LinkedHashMap提供构造参数`accessOrder`，来根据**访问顺序**（ *access order* ）对映射条目进行迭代。
 
 主要构造器：
 
@@ -222,7 +221,9 @@ public LinkedHashMap(int initialCapacity,
 }
 ```
 
-当使用访问顺序时，映射条目的会按照最少访问——最多访问的顺序迭代，也就是说每次**有效访问**，受到影响的条目都会“移动”到链表的尾部，这个性质非常适合 **“最近最少使用”**（LRU）高速缓存
+当使用访问顺序时，映射条目的会按照最少访问——最多访问的顺序迭代，也就是说每次**有效访问**，受到影响的条目都会“移动”到链表的尾部，这个性质非常适合 **“最近最少使用”**（LRU）高速缓存。
+
+#### 2.1.1 有效访问
 
 那么哪些方法是有效访问呢？
 
@@ -267,7 +268,7 @@ entry in access order:
 *///:~
 ```
 
-**映射视图的操作不影响迭代顺序**：
+值得一提的是，对LinkedHashMap的**视图操作不影响迭代顺序**：
 
 ```java
 static void viewTest() {
@@ -298,7 +299,9 @@ static void viewTest() {
 *///：～
 ```
 
-关于LinkedHashMap的一个重要的用途，还涉及到一个方法，利用好此方法可以将LinkedHashMap作为缓存使用
+#### 2.1.2 移除最老K-V对
+
+关于LinkedHashMap的一个重要的用途，还有一个重要的方法，利用好此方法可以将LinkedHashMap作为缓存使用。
 
 ```java
 protected boolean removeEldestEntry(Map.Entry<K,V> eldest) {
@@ -306,9 +309,11 @@ protected boolean removeEldestEntry(Map.Entry<K,V> eldest) {
 }
 ```
 
-这个方法在put或者putAll方法插入**新条目**到映射之后调用，也就是说，使用put更新已有key的value不会触发此操作[^9]
+这个方法在`put`或者`putAll`方法**插入新条目**到映射之后调用，也就是说，使用put更新已有key的value不会触发此操作[^1]。
 
-如果方法返回false，不执行操作；返回true，则移除参数`eldest`条目
+[^1]: 实际上使用`put`方法更新已有键值对时，触发的是另一个方法：`afterNodeAccess`，此方法将条目移动至队尾（如果使用访问顺序）。
+
+如果方法返回false，不执行操作；返回true，则移除参数`eldest`条目。
 
 参数 `eldest`是映射的“最旧的”元素——当前最先插入/最少访问的元素，即队头元素：
 
@@ -323,7 +328,7 @@ void afterNodeInsertion(boolean evict) { // possibly remove eldest
 }
 ```
 
-这个方法始终返回false——也就是说**永远不会作任何操作**，可以继承此方法（从访问权限修饰符也知道），用于改变行为
+不重写的前提下，`removeEldestEntry`方法始终返回false——也就是说**永远不会作任何操作**，可以继承此方法（从访问权限修饰符也知道），改变方法行为。
 
 此法可以用来在put和putAll之后操作映射，如此做之后，此法一定要返回false，不再允许映射有后续的操作，原因很简单——若在操作时就remove了`eldest`，返回true之后该如何？
 
@@ -348,7 +353,7 @@ private static void eldestRemoveTest() {
 *///:~
 ```
 
-上例中，每次put后调用`removeEldestEntry`方法，最终映射中只有最后插入的条目
+上例中，每次put后调用`removeEldestEntry`方法，最终映射中只有最后插入的条目。
 
 ```java
 static void lruCacheTest() {
@@ -425,11 +430,11 @@ true
 *///:~
 ```
 
-上例对一个容量为5的LinkedList进行50次随机访问，每次访问后记录访问次数（用value自增），最后删除访问次数不到10次的条目。可以看到，`removeEldestEntry`方法调用了6次，最后映射集中只有访问次数大于10次的键值对了
+上例对一个容量为5的LinkedList进行50次随机访问，每次访问后记录访问次数（用value自增），最后删除访问次数不到10次的条目。可以看到，`removeEldestEntry`方法调用了6次，最后映射集中只有访问次数大于10次的键值对了。
 
-#### 2.1 LinkedHashMap如何链接节点
+### 2.1 LinkedHashMap如何链接节点
 
-我们知道，LinkedHashMap在HashMap的基础上使用linkedList（并不是集合框架中的LinkedList）将键值对链接起来，因此键值对才能够被有序迭代，那么这一动作是在什么时候发生的呢？
+我们知道，LinkedHashMap在HashMap的基础上使用LinkedList（并不是集合框架中的LinkedList，独立实现）将键值对链接起来，因此键值对才能够被有序迭代，那么这一动作是在什么时候发生的呢？
 
 这一过程涉及到2个方法：
 
@@ -454,13 +459,14 @@ private void linkNodeLast(LinkedHashMap.Entry<K,V> p) {
     }
 }
 ```
-上面的两个方法可以看到，每次插入键值对到映射中时，总会和前一个节点建立连接
 
-#### 2.2 LinkedHashMap的回调方法
+上面的两个方法可以看到，每次插入键值对到映射中时，总会和前一个节点建立连接。
 
-LinkedHashMap中有3个重要的回调方法，是LinkedHashMap维护链表以及实现顺序迭代的重要依赖
+### 2.2 LinkedHashMap的回调方法
 
-##### afterNodeRemoval
+LinkedHashMap中有3个重要的回调方法，是LinkedHashMap维护链表以及实现顺序迭代的重要依赖。
+
+#### afterNodeRemoval
 
 ```Java
 // 删除键值对之后调用
@@ -486,7 +492,7 @@ void afterNodeRemoval(Node<K,V> e) { // unlink
 }
 ```
 
-##### afterNodeInsertion
+#### afterNodeInsertion
 
 ```Java
 // 插入新节点之后调用
@@ -504,7 +510,7 @@ void afterNodeInsertion(boolean evict) { // possibly remove eldest
 }
 ```
 
-##### afterNodeAccess
+#### afterNodeAccess
 
 如果构造LinkedHashMap时指定构造参数`accessOrder=true`，那么此法将访问的节点移动至队尾
 
@@ -544,22 +550,23 @@ void afterNodeAccess(Node<K,V> e) { // move node to last
     }
 }
 ```
+
 上述方法的流程图为：
 
-<center>![afterNodeAccess](/img/afterNodeAccess_flow.svg)</center>
+ ![节点访问之后的操作](/img/afterNodeAccess_flow.svg)
 
-### 3 TreeMap
+## 3 TreeMap
 
-TreeSet是TreeMap的KeySet的封装，TreeMap是使用**红—黑树**对键进行排序的有序映射
+TreeSet是TreeMap的KeySet的封装，TreeMap是使用**红—黑树**对键进行排序的有序映射。
 
-TreeMap的继承结构和TreeSet极为相似，对应地，TreeMap是SortedMap和NavigableMap的实现，SortedMap/NavigableMap的接口声明和SortedSet/NavgableSet相似，所声明的方法名都是**自解释型**的，具体可查看JDK文档
+TreeMap的继承结构和TreeSet极为相似，对应地，TreeMap是SortedMap和NavigableMap的实现，SortedMap/NavigableMap的接口声明和SortedSet/NavgableSet相似，所声明的方法名都是**自解释型**的，具体可查看JDK文档。
 
-要将条目插入TreeMap中，key必须是可排序的，排序方式可以是自然排序或者定义比较器，和TreeSet一样，比较器规则必须和equals方法的结果保持一致，以避免映射中出现重复key-value
+要将条目插入TreeMap中，key必须是可排序的，排序方式可以是自然排序或者定义比较器，和TreeSet一样，比较器规则必须和equals方法的结果保持一致，以避免映射中出现重复key-value。
 
-TreeMap的**集合视图**和对应的迭代器表现和HashMap一致
+TreeMap的**集合视图**和对应的迭代器表现和HashMap一致。
 
-- 视图和映射的作用是相互的，即修改映射，视图随之修改，反之亦然，但是视图支持的操作是有限的，注意 *UnsupportedOperationException*
-- 迭代器是 *fail-fast* 的， 只支持remove一个改变映射结构的方法
+- 视图和映射的作用是相互的，即修改映射，视图随之修改，反之亦然，但是视图支持的操作是有限的，注意 *UnsupportedOperationException*；
+- 迭代器是 *fail-fast* 的， 只支持remove一个改变映射结构的方法；
 
 ```java
 static {
@@ -613,7 +620,7 @@ yoga: 说谎
 *///:~
 ```
 
-上例中分别对HashMap使用自然排序和指定比较器的方法，可以看到映射中key的排序差异
+上例中分别对HashMap使用自然排序和指定比较器的方法，可以看到映射中key的排序差异。
 
 当指定TreeMap实现类的名字SortedMap或NavigableMap的实现时，方可使用SortedMap和NavigableMap的实用方法，由于方法名都是解释型的，此处不多作表述：
 
@@ -638,9 +645,7 @@ andy, 一起走过的日子
 *///:~
 ```
 
-> 由于subMap方法是“包前不包尾”的（其他获取子映射视图的方法也一样），为了包尾，可以使用上例的方法
+> 由于subMap方法是“包前不包尾”的（其他获取子映射视图的方法也一样），为了包尾，可以使用上例的方法。
 
-NavigableMap对获取子映射视图的方法进行了扩展，不作过多表述
+NavigableMap对获取子映射视图的方法进行了扩展，不作过多表述。
 
-
-[^9]: 实际上使用put更新已有key的value时，触发的是另一个方法：`afterNodeAccess`，此方法将条目移动至队尾（如果使用访问顺序）
