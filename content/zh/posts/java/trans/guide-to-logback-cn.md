@@ -14,17 +14,13 @@ series:
 image:
 ---
 
-# 使用Logback记录日志
-
-# 1 概览
-
 [Logback](https://logback.qos.ch/)是Java应用中使用最广的日志框架之一，它是[其前辈框架Log4j的替代者](https://logback.qos.ch/reasonsToSwitch.html)。相比Log4j，Logback在日志处理速度、配置多样性、对旧日志文件的处理灵活性上均要优于Log4j。
 
 这篇文章将介绍Logback的主要组成结构并指导你使用Logback构建更好的程序。
 
 <!--more-->
 
-# 2 Logback的组成结构
+## 1 Logback的组成结构
 
 Logback的主要组成结构有3部分：**Logger**、**Appender**、**Layout**。
 
@@ -34,9 +30,9 @@ Logback的主要组成结构有3部分：**Logger**、**Appender**、**Layout**�
 
 *Layout*决定日志的格式化信息。Logback的日志格式信息配置非常丰富，此外，Logback还支持自定义日志格式信息。
 
-# 3 配置Logback
+## 2 配置Logback
 
-## 3.1 引入Maven依赖
+### 2.1 引入Maven依赖
 
 Logback使用SLF4j（Simple Logging Facade for Java）作为其原生接口。在开始之前，我们需要在pom.xml引入Logback和Slf4j的依赖。
 
@@ -63,7 +59,7 @@ Logback使用SLF4j（Simple Logging Facade for Java）作为其原生接口。�
 - [slf4j-api：](https://search.maven.org/classic/#search%7Cgav%7C1%7Cg%3A%22org.slf4j%22%20AND%20a%3A%22slf4j-api%22)
 
 
-## 3.2 类路径
+### 2.2 类路径
 
 除了上述的`logback-core`和`slf4j`之外，Logback运行时还还需要在类路径中依赖`logback-classic.jar`
 
@@ -75,7 +71,7 @@ Logback使用SLF4j（Simple Logging Facade for Java）作为其原生接口。�
 </dependency>
 ```
 
-# 4 基础配置示例
+## 3 基础配置示例
 
 我们先从一个`快速开始`<span id="c4">开始吧</span>。
 
@@ -125,9 +121,9 @@ public class Example {
 2. 我们定义了日志信息输出格式模版。
 3. `Examlple`类创建了一个`Logger`，我们通过`info()`方法将日志信息传递给它处理。
 
-# 5 Logger上下文
+## 4 Logger上下文
 
-## 5.1 创建Logger
+### 4.1 创建Logger
 
 为了使用Logback记录日志，首先使用SLF4J创建一个Logger实例：
 
@@ -159,7 +155,7 @@ logger.info("Example log from {}", Example.class.getSimpleName());
 
 **如果一个Logger没有显式地配置日志级别，它从其最近的父Logger中继承日志级别**。root Logger的默认级别是`DEBUG`。下文将展示如何配置并使用日志上下文。
 
-## 5.2 如何使用日志上下文
+### 4.2 如何使用日志上下文
 
 下面的示例展示了日志上下文的等级关系：
 
@@ -225,7 +221,7 @@ logger.error("This is logged.");
 
 最后，我们看到Logback过滤了任何级别低于ERROR的日志。
 
-## 5.3 参数化日志输出
+### 4.3 参数化日志输出
 
 和上述使用的简单示例不同，大多数日志框架在打印日志信息时，都需要进行字符串拼接或者对象序列化操作，，这些操作都需要进行内存分配，和（可能的）垃圾回收操作。
 
@@ -275,11 +271,11 @@ java.lang.ArithmeticException: / by zero
 
 此外，当向日志方法传递`Exception`实例时，Logback将会打印异常的**堆栈信息**。
 
-# 6 Logback详细配置
+## 5 Logback详细配置
 
 在[第4节](#c4)中，Logback仅仅使用了11行的基础配置，即可完成工作。这是Logback的默认行为，如果Logback没有发现配置文件，它将配置一个`ConsoleAppender`并将其和`root logger`关联。
 
-## 6.1 定位配置文件
+### 5.1 定位配置文件
 
 Logback的配置文件可以放置在classpath中，并且以`logback.xml`或者`logback-test.xml`命名。
 
@@ -293,7 +289,7 @@ Logback发现配置文件的步骤如下：
   当前Logback版本不支持Groovy配置。？？
 {{</notice>}}
 
-## 6.2 基础配置
+### 5.2 基础配置
 
 我们不妨重新看看第4节中的基础配置：
 
@@ -317,7 +313,7 @@ Logback发现配置文件的步骤如下：
 
 接下来是一个`<root>`标签，这个标签设置root logger的日志级别为`DEBUG`，并且将其输出与appender **STDOUT**相关联。
 
-## 6.3 配置文件主动捉虫
+### 5.3 配置文件定位BUG
 
 Logback的配置文件有时候会相当复杂，因此Logback集成了一些机制来进行问题检测。
 
@@ -362,7 +358,7 @@ Logback的配置文件有时候会相当复杂，因此Logback集成了一些机
 
 所有配置文件的状态信息都将输出，这样就很容易定位问题。
 
-## 6.4 自动重载配置文件
+### 5.4 自动重载配置文件
 
 应用程序运行时自动重新加载配置文件往往能有助于定位程序bug。Logback通过`scan`参数来配置自动加载配置文件：
 
@@ -382,7 +378,7 @@ Logback的配置文件有时候会相当复杂，因此Logback集成了一些机
 
 注意scanPeriod的赋值，其带有一个指示时间单位的字符串，其值可以是 milliseconds，seconds， minutes和hours。
 
-## 6.5 配置Loggers
+### 5.5 配置Loggers
 
 在之前的简单配置中，我们配置了root logger的日志级别，并将其与STDOUT（console Appender）相关联。
 
@@ -435,7 +431,7 @@ testslogger.warn("This is logged from tests");
 loggers还可以从root logger继承appender-ref，我们在接下来的配置中能够看到这点。
 
 
-## 6.6 定义属性变量
+### 5.6 定义属性变量
 
 Logback的配置文件支持配置变量，变量可以配置在`<configuration>`标签内的的任何地方。
 
@@ -463,17 +459,17 @@ $ java -DLOG_DIR=/var/log/application com.baeldung.logback.LogbackTests
 通过系统属性指定变量键值对，在Logback配置文件中通过`${propertyName}`的方式即可获取变量的值。
 
 
-# 7 Appenders
+## 6 Appenders
 
 loggers传递日志事件（logging events）给appenders。日志输出（记录）工作实际上是由appender完成的。通常我们认为“日志”就是在控制台或者日志文件中呈现一些内容，但是Logback能做的更多。Logback-core提供了几个有用的appender。
 
-## 7.1 控制台日志
+### 6.1 控制台日志
 
 此文到这里，ConsoleAppender相信你已经不再陌生了。ConsoleAppender主要用来向`System.out`或`System.err`追加信息。
 
 它使用`OutputStreamWriter`来缓冲I/O[^so directing it to System.err does not result in unbuffered writing]。
 
-## 7.2 文件日志
+### 6.2 文件日志
 
 FileAppender将日志信息追加到系统文件。它的配置相对复杂，让我们先试试在之前的配置文件中增加一个FileAppender配置：
 
@@ -527,7 +523,7 @@ Logback可以改变子logger的行为，使其和root logger独立工作：
 通过将`additivity`属性设置为false，可以改变logger的默认行为，logger `com.baeldung.logback.tests`及其导出logger的日志将不再显示在控制台。
 
 
-## 7.3 滚动文件日志
+### 6.3 滚动文件日志
 
 多数时候，将日志文件记录到一个文件中并不是我们期待的（可能会记录一个达几个G的文本文件）。我们常希望日志文件能够基于日期、文件大小、或二者联合配置来“滚动”记录。
 
@@ -584,11 +580,11 @@ RollingFileAppender还支持日志文件压缩，上例中，由于使用了`.gz
 
 此外，Logback还支持自定义日志滚动策略，具体细节可以参考：https://logback.qos.ch/manual/appenders.html#onRollingPolicies
 
-## 7.4 自定义Appender
+### 6.4 自定义Appender
 
 通过继承Logback的任一基础appender类，就可以自定义我们自己的appender了，[这里](https://www.baeldung.com/custom-logback-appender)有一个示例。
 
-# 8 日志输出格式
+## 7 日志输出格式
 
 虽然日志输出格式能够[自定义](https://logback.qos.ch/manual/layouts.html#writingYourOwnLayout)，不过，由于可选参数组合太多，往往花费时间反而得不到想要的效果。实际上，默认的输出格式能够满足大多数应用的需求。
 
@@ -621,7 +617,7 @@ RollingFileAppender还支持日志文件压缩，上例中，由于使用了`.gz
 完整的转换以及格式修饰符可以查看[这里](https://logback.qos.ch/manual/layouts.html#conversionWord)的官方文档。
 
 
-# 9 总结
+## 8 总结
 
 这篇教程总结了Logback的基础用法。
 
