@@ -635,6 +635,6 @@ repl-diskless-load on-empty-db  # Use diskless load only when it is completely s
 - [使用Docker部署Redis集群-三主三从](https://jasonkayzk.github.io/2020/01/17/%E4%BD%BF%E7%94%A8Docker%E9%83%A8%E7%BD%B2Redis%E9%9B%86%E7%BE%A4-%E4%B8%89%E4%B8%BB%E4%B8%89%E4%BB%8E/)
 - [docker安装redis cluster集群](https://blog.csdn.net/damishidai15/article/details/108976378)
 - [Docker实战-部署「Redis集群」](https://cloud.tencent.com/developer/article/1924693)
--[bitnami/redis-cluster](https://hub.docker.com/r/bitnami/redis-cluster)
+- [bitnami/redis-cluster](https://hub.docker.com/r/bitnami/redis-cluster)
 - [处理windows WSL主从同步失败](https://www.cnblogs.com/emmith/p/16466809.html)
 

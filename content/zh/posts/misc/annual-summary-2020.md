@@ -2,7 +2,7 @@
 title: "2020年度总结"
 date: 2020-12-31T20:57:00+08:00
 lastmod: 2020-12-31T23:30:00+08:00
-draft: false
+draft: true
 description: ""
 # hiddenFromHomePage: true # doesn't work
 tags:
