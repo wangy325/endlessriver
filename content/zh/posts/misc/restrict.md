@@ -1,7 +1,7 @@
 ---
 title: "约束"
 date: 2018-09-06
-draft: false
+draft: true
 tags: []
 categories: []
 author: "wangy325"
