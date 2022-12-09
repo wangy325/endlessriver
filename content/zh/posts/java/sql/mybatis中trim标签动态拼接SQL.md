@@ -7,6 +7,7 @@ tags:
 - orm
 categories:
 - mybatis
+- MySQL
 
 author: "wangy325"
 
