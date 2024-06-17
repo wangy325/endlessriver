@@ -1,18 +1,10 @@
 ---
 title: "一次服务器OOM故障"
 date: 2021-02-20
-lastmod: 2021-04-14
-draft: false
-description: ""
-tags:
--
-categories:
--
-series:
--
 author: "wangy325"
-
-image:
+tags: []
+categories: [server]
+# weight: 10
 ---
 
 使用idm下载y2b视频导致服务器内存溢出，内核强制关闭了服务进程。
@@ -21,7 +13,7 @@ image:
 
 <!--more-->
 
-## 1 日志
+## 1 Linux系统日志
 
 系统服务日志地址： `/var/log/messages`
 

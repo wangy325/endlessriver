@@ -1,16 +1,11 @@
 ---
 title: "2020年度总结"
 date: 2020-12-31T20:57:00+08:00
-lastmod: 2020-12-31T23:30:00+08:00
-draft: true
-description: ""
-# hiddenFromHomePage: true # doesn't work
-tags:
--
-categories:
-- 随笔
-
 author: "wangy325"
+bookHidden: true
+draft: true
+tags: []
+categories: []
 ---
 
 2020，我，作为一个处于危机边缘而不自觉的人，果不其然地，陷入了失业的漩涡。这不是“主动离职”4个字就能概括的一年，里面包含了太多的曲折与困难。
