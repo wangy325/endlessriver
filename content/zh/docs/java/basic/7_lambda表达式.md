@@ -7,7 +7,9 @@ author: "wangy325"
 weight: 7
 ---
 
-## 1 lambda表达式
+# Lambda表达式
+
+##  lambda表达式
 
 lambda表达式是一个**可传递的代码块**，可以在以后执行**一次或多次**。
 
@@ -84,7 +86,7 @@ new ArrayList().removeIf(e -> e == null)
 
 无需指定lambda表达式的返回类型。**lambda表达式的返回类型总是可以根据上下文推导得出**。
 
-## 2 <span id="func_interface">函数式接口</span>
+## <span id="func_interface">函数式接口</span>
 
 > 对于只有一个抽象方法的接口，需要这种接口的对象时，就可以提供一个lambda表达式，这种接口叫**函数式接口**
 
@@ -117,7 +119,7 @@ T mapRow(ResultSet rs,int rowNum) throws SQLException
 ```
 
 
-## 3 方法引用
+##  方法引用
 
 如果有现成的方法完成想要传递到其他代码的操作，例如你只想通过forEach打印集合中的元素，可以使用
 
@@ -194,7 +196,7 @@ Arrays.sort(s, String::compareToIgnoreCase);
 
 方法引用种可以使用`this`和`super`关键字，分别表示调用当前类和超类的方法。
 
-## 3 变量作用域
+##  变量作用域
 
 在使用Spring JDBC操作数据库时，需要用到`RowMapper`的回调来处理返回数据，前文已提及，`RowMapper`是一个函数式接口，可以等价为lambda表达式：
 
