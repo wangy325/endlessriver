@@ -1,6 +1,6 @@
 ---
 bookCollapseSection: true
 weight: 10
-title: "translations"
+title: "翻译文章"
 ---
 

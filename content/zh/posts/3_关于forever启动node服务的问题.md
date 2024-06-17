@@ -1,13 +1,11 @@
 ---
 title: "关于forever启动node服务的问题"
 date: 2019-08-28
-lastmod:
 draft: false
 description: "node.js的安装以及forever脚本的使用。"
-tags: [forever]
-categories:
+tags: []
+categories: [javascript]
 author: "wangy325"
-
 ---
 
 

@@ -1,10 +1,10 @@
+# https://github.com/alex-shpak/hugo-book
 # hugo server --minify --themesDir ../.. --baseURL=http://0.0.0.0:1313/theme/hugo-book/
 
-googleAnalytics: ""
+googleAnalytics: "G-HHNKR5H8KN"
 
-# (Optional) If you provide a Disqus shortname, comments will be enabled on
-# all pages.
-disqusShortname: "my-site"
+# (Optional) If you provide a Disqus shortname, comments will be enabled on all pages.
+disqusShortname: "pkendlessriver"
 
 # (Optional) Set this to true if you use capital letters in file names
 disablePathToLower: true
@@ -25,6 +25,7 @@ markup:
       unsafe: true
   tableOfContents:
     startLevel: 1
+    endLevel: 4
 
 # Multi-lingual mode config
 # There are different options to translate files
@@ -36,32 +37,35 @@ languages:
     disabled: false
     languageCode: zh
     languageDirection: ltr
-    languageName: Chinese
+    languageName: 简体中文
     #    params:
     #      subtitle:
     #    title:
     weight: 1
-  en:
-    contentDir: content/en
-    disabled: false
-    languageCode: en
-    languageDirection: ltr
-    languageName: English
-    #    params:
-    #      subtitle: Reference, Tutorials, and Explanations
-    #    title: Project Documentation
-    weight: 2
+  # en:
+  #   contentDir: content/en
+  #   disabled: false
+  #   languageCode: en
+  #   languageDirection: ltr
+  #   languageName: English
+  #   #    params:
+  #   #      subtitle: Reference, Tutorials, and Explanations
+  #   #    title: Project Documentation
+  #   weight: 2
 defaultContentLanguage: zh
 defaultContentLanguageInSubdir: true
 
 menu:
-  # before: []
+  before: []
   after:
     - name: "Github"
       url: "https://github.com/wangy325"
       weight: 10
-    - name: "Hugo Themes"
-      url: "https://themes.gohugo.io/themes/hugo-book/"
+    - name: "Telegram"
+      url: "https://t.me/wangy325"
+      weight: 15
+    - name: "Contact Me"
+      url: "mailto:wangy325@qq.com"
       weight: 20
 
 params:
@@ -105,7 +109,7 @@ params:
   # Enable "Edit this page" links for 'doc' page type.
   # Disabled by default. Uncomment to enable. Requires 'BookRepo' param.
   # Edit path must point to root directory of repo.
-  BookEditPath: edit/main/exampleSite
+  # BookEditPath: edit/main/exampleSite
 
   # Configure the date format used on the pages
   # - In git information

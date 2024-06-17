@@ -3,14 +3,10 @@ title: "MyBatis的trim标签"
 date: 2018-09-21
 draft: false
 description: "mybatis的基础知识。"
-tags:
-- orm
-categories:
-- mybatis
-- MySQL
-
 author: "wangy325"
-
+# weight: 6
+tags: [mybatis]
+categories: []
 ---
 
 

@@ -1,5 +1,6 @@
 ---
-bookCollapseSection: true
-weight: 9
-title: "misc"
+weight: 3
+title: "杂七杂八"
+bookCollapseSection: false
+bookFlatSection: true
 ---
