@@ -6,6 +6,8 @@ author: "wangy325"
 
 ---
 
+# First touch of callback
+
 回调模式在web开发中用的较多，本文简单介绍了Java的回调机制，理解此文可以在生产中写出适应业务的回调模型。
 
 ## 模块之间的调用

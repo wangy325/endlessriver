@@ -7,11 +7,13 @@ author: "wangy325"
 weight: 5
 ---
 
+# Object超类
+
 在Java中，如果一个类没有明确地指出超类，那么Object就是这个类的超类。实际上，Object类是所有类超类，这个类定义了一些重要的方法。
 
 <!--more-->
 
-## 1 equals
+## equals
 
 `equals`方法用来比较两个对象是否相等。不过，在Object类中，这是判断两个对象是否具有**相同的引用**。
 
@@ -106,7 +108,7 @@ class Stu{
 
 > 应该谨慎使用`instanceof`判断操作符号。
 
-## 2 hashCode
+## hashCode
 
 *hash code* （散列码）是由对象导出的一个整型值
 
