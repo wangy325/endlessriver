@@ -7,9 +7,9 @@ printf "\033[0;32mDeploying updates to GitHub...\033[0m\n"
 
 # 构建静态内容
 # if using a theme, replace with `hugo -t <YOURTHEME>`
-hugo -t zzo
+hugo -t hugo-book
 
-# 切换到 Public 文件夹
+# 切换到 /public 文件夹
 cd public
 
 # 添加更改到 git
