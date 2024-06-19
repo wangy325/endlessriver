@@ -22,7 +22,7 @@ Nothing special here
 
   🥳 Have fun
 
-[GitHub](https://github.com/wangy325)    ·   [Telegram](https://t.me/wangy325)    · [Bot](https://t.me/wygemibot)  ·    [Mail](lavawangy@gmail.com)
+[GitHub](https://github.com/wangy325)    ·   [Telegram](https://t.me/wangy325)    · [Bot](https://t.me/wygemibot)  ·   [Mail](mailto:lavawangy@gmail.com)
 
 <!-- 
 todo:

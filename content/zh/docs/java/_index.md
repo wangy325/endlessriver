@@ -3,6 +3,7 @@ weight: 1
 title: "Java核心"
 bookFlatSection: true
 bookCollapseSection: false
+bookComments: false
 ---
 
 ## Java入门
