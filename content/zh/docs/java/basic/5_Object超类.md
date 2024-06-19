@@ -1,7 +1,7 @@
 ---
 title: "Object超类"
 date: 2020-04-19
-categories: []
+categories: [java]
 series: []
 author: "wangy325"
 weight: 5

@@ -1,11 +1,13 @@
 ---
-title: "List"
+title: "List列表"
 date: 2020-04-29
-categories: []
-series: []
+categories: [java]
+tags: [collections]
 author: "wangy325"
 weight: 1
 ---
+
+# List列表
 
 ![JXUL1s.png](/img/Collection.png)
 
@@ -17,7 +19,7 @@ weight: 1
 
 上图列出了集合框架的常见实现，Java集合框架系列文章介绍了图中列出的大部分内容
 
-
+<!--more-->
 
 ## List
 

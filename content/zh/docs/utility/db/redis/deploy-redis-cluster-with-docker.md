@@ -3,6 +3,8 @@ title: "使用docker镜像快速搭建redis集群开发环境"
 date: 2022-08-25T16:01:23+08:00
 author: "wangy325"
 weight: 3
+tags: []
+categories: [redis]
 ---
 
 
@@ -14,6 +16,8 @@ weight: 3
 - [在contOS 8中安装docker-compose](https://www.cnblogs.com/51ma/p/15641138.html)
 
 运行如下命令检查docker和docker-compose的安装情况：
+
+<!--more-->
 
 ```shell
 [xx@CentOS8 ~]$ docker version

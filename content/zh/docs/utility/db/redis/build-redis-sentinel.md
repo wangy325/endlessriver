@@ -3,6 +3,8 @@ title: "Redis Sentinel高可用实现"
 date: 2019-08-14T16:01:23+08:00
 author: "wangy325"
 weight: 2
+tags: []
+categories: [redis]
 ---
 
 Redis [v2.8](https://raw.githubusercontent.com/antirez/redis/2.8/00-RELEASENOTES) 之后提供了高可用实现`Redis Sentinel`，实现了**主从复制**以及~~被动~~**主备切换**。[v3.0](https://raw.githubusercontent.com/antirez/redis/3.0/00-RELEASENOTES) 之后提供了分布式实现`Redis Cluster`。
@@ -10,6 +12,8 @@ Redis [v2.8](https://raw.githubusercontent.com/antirez/redis/2.8/00-RELEASENOTES
 本文讨论的是使用Sentinel搭建Redis高可用服务。
 
 >If all redis and sentinel instances were deployed in same host, you just build a fake redis-sentinel *High-Availability* environment[^v1].
+
+<!--more-->
 
 # 1 准备
 
@@ -22,8 +26,6 @@ yum install gcc
 # or on ubuntu
 apt-get install gcc
 ```
-
-<!--more-->
 
 ## 1.2 Redis 源码
 

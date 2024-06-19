@@ -3,6 +3,8 @@ title: "在centOS上安装并配置mysql数据库"
 date: 2019-08-16
 author: "wangy325"
 weight: 1
+tags: []
+categories: [mysql]
 ---
 
 文章介绍了在centOS7上安装mysql数据库服务的配置及简单优化过程。在服务器上安装mysql服务网络上能够找到的资源很多了，因此本文没有作详细介绍，本文的重点在于后续的优化配置方面。

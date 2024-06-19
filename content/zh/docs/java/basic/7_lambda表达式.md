@@ -1,7 +1,7 @@
 ---
 title: "lambda表达式"
 date: 2020-04-22
-categories: []
+categories: [java]
 series: []
 author: "wangy325"
 weight: 7

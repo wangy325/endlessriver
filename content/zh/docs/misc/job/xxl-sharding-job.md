@@ -1,17 +1,11 @@
 ---
 title: "在xxl-job中使用分片任务"
 date: 2021-01-25
-lastmod: 2021-01-26
 draft: false
 description: ""
-tags:
-- 任务调度
-categories:
--
-series:
--
+tags: []
+categories: [crontab]
 author: "wangy325"
-
 image:
 ---
 

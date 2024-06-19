@@ -3,7 +3,8 @@ title: "MySQL锁的简单使用"
 date: 2021-03-24
 author: "wangy325"
 weight: 5
-draft: true
+tags: [undone]
+categories: [mysql]
 ---
 
 对于MySQL数据库而言，事务的隔离级别在不同程度上保证了数据一致性。这能够满足大部分的业务需求，但是，仍然有那么一小戳事情，仅仅依靠事务不能完美解决。

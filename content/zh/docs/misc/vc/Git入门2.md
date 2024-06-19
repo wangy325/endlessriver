@@ -1,12 +1,9 @@
 ---
 title: "Git入门2"
 date: 2018-09-20
-lastmod: 2019-10-21
 draft: false
-tags:
-- 
-categories:
-- git
+tags: []
+categories: [git]
 author: "wangy325"
 
 ---

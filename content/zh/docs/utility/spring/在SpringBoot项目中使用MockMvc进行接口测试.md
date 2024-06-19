@@ -3,6 +3,8 @@ title: "在SpringBoot项目中使用MockMvc进行接口测试"
 date: 2021-02-07
 author: "wangy325"
 weight: 3
+tags: [spring]
+categories: [java]
 ---
 
 现在流行在项目中使用[swagger](https://swagger.io)对接口进行测试，这确实很方便、直观。

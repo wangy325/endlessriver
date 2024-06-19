@@ -2,7 +2,8 @@
 title: "一个简单的sql优化示例"
 date: 2018-11-14
 author: "wangy325"
-weight: 3
+tags: []
+categories: [mysql]
 ---
 
 

@@ -1,15 +1,19 @@
 ---
 title: "HashMap的源码分析"
 date: 2020-09-24
-categories: []
+categories: [java]
+tags: [collections]
 author: "wangy325"
 weight: 6
 ---
 
+# HashMap的源码分析
 
 HashMap基于散列表，散列表中每一个Node节点（桶）是链表，当两个条目（entry）的key的hash值对桶数（capacity）取模的值相等时，这两个entry会存储在同一个链表中。但当链表中元素达到一定数目时，链表结构会转变为**树结构**。
 
 > 此文中没有讨论HashMap中涉及到树结构的源码。
+
+<!--more-->
 
 ## 1.基础字段
 
@@ -109,6 +113,7 @@ final void putMapEntries(Map<? extends K, ? extends V> m, boolean evict) {
         }
     }
 ```
+
 可以看到，除了最后一个构造器额外调用了`putVal()`方法外，构造器都只做了一些字段初始化工作，那么HashMap的键值对是如何“放入”的呢？
 
 ### 2.2 插入键值对

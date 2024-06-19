@@ -1,14 +1,16 @@
 
 +++
-title = "关于"
-description = "Hugo, the world’s fastest framework for building websites"
+title = "关于..."
+description = ""
 type = "about"
 date = "2017-08-20T21:38:52+08:00"
 +++
 
 {{< youtube "UeeuEplH3D0" >}}
 
-站点的logo取自 [*Pink Floyd*](https://en.wikipedia.org/wiki/Pink_Floyd) 2014年的专辑封面，这是我第一次接触Pink Floyd，也是我第一次接触计算机技术，准确点说，是接触Ubuntu。Pink Floyd我想我会一直听，技术之路，也会一直走。
+这首`Things left unsaid`出自 [*Pink Floyd*](https://en.wikipedia.org/wiki/Pink_Floyd) 2014年的专辑`endless river`，自私地用作博客名字。那时想找点摇滚来听，恰逢**Pink Floyd**这张专辑发行，也是我第一次接触计算机"技术"，准确点说，是接触Ubuntu。我想，Pink Floyd我想我会一直听，技术之路，也会一直走。
+
+<!--more-->
 
 和Ubuntu的关系维持到16年开始着手毕业论文，这一段时间回想起来是非常失败的。究其原因，仅仅是把Ubuntu作为兴趣，止步于猎奇而未深究，就连鸟叔的课文也才看了一半。这也是我长期以来缺乏规划和长远思考的必然结果。
 

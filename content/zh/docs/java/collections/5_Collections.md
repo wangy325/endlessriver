@@ -1,15 +1,19 @@
 ---
 title: "Collections工具类"
 date: 2020-05-12
-categories: []
-series: []
+categories: [java]
+tags: [collections]
 author: "wangy325"
 weight: 5
 ---
 
+# Collections工具类
+
 集合框架中一个重要的类，其实是Collection接口的**伴随类**，其中定义了许多实用方法，用来获取**集合视图**，或提供一些方便的操作集合元素的**算法**。
 
 由于视图是直接封装的Collection接口，**因此其方法有些局限**，并且由于特殊的设计，部分操作是不允许的（会抛出 *UnsupportedOperationExceptin* ）。
+
+<!--more-->
 
 ## 1 不可修改视图
 

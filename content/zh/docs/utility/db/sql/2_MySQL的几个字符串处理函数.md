@@ -3,6 +3,8 @@ title: "MySQL中的几个字符串处理函数"
 date: 2018-09-21
 author: "wangy325"
 weight: 2
+tags: []
+categories: [mysql]
 ---
 
 本文介绍了mysql的几个方便的字符串处理函数，通常用于简单的查询结果处理。适用在mapper.xml的语句标签中对数据库字段数据进行简单的处理。

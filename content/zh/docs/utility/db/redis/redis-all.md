@@ -2,6 +2,8 @@
 title: "redis必知必会(转)"
 date: 2020-11-24
 weight: 1
+tags: []
+categories: [redis]
 libraries:
 - mermaid
 ---
