@@ -2,10 +2,13 @@
 title: "Queue"
 date: 2020-05-02
 draft: false
-categories: []
+categories: [java]
+tags: [collections]
 author: "wangy325"
 weight: 2
 ---
+
+# Queue队列
 
 Queue（队列），实际开发过程中，在单线程环境下使用的情况下不多，Queue作为集合框架中重要组成似乎习惯性被忽略，队列总是先持有元素，再处理元素[^1]。
 
@@ -13,6 +16,7 @@ Queue（队列），实际开发过程中，在单线程环境下使用的情况
 
 <p style="text-align:center;font-size:.9rem;font-style:italic">Queue继承关系简图</p>
 
+<!--more-->
 
 除了Collection定义的操作之外，Queue定义了额外的插入/删除/检查元素的操作，这些操作有2种形式：
 
@@ -26,7 +30,6 @@ Queue（队列），实际开发过程中，在单线程环境下使用的情况
 
 如表所示，add/remove/element方法失败后抛出异常。offer/poll/peek方法失败后返回一个特殊值（null或false，视具体操作不同），需要说明的是，~~`offer()`方法主要是为有容量限制的队列设计的~~ 对于有限队列而言，`offer()`方法比`add()`方法更可取。
 
-<!--more-->
 典型的队列遵从FIFO( *first-in-first-out* )原则，FIFO队列的新元素总是插入到队尾。
 
 当然有例外，**PriorityQueue** 就是之一，它根据给定（或默认）的比较器决定元素顺序；此外还有LIFO( *last-in-first-out* )队列（如栈）。

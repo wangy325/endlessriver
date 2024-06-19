@@ -3,9 +3,13 @@ title: "SpringBoot使用AOP的简单示例"
 date: 2020-03-14
 author: "wangy325"
 weight: 1
+tags: [spring]
+categories: [java]
 ---
 
 有一个cd接口，其实体类用于播放歌曲，同时我们想在播放歌曲的时候记录每个曲目的播放次数。看起来，记录次数这个事和播放曲目是不相干的事情，当然，我们可以在每首歌曲播放完成之后记录，但是更好的办法是使用一个切面，切入到播放方法中，来完成这件事，这样可以减少无关逻辑对代码的侵入。
+
+<!--more-->
 
 此程序分别使用了基于@Aspect注解和基于XML配置文件2种方式进行了切面注入，2种方式效果是等同的。
 
@@ -21,8 +25,6 @@ weight: 1
     <artifactId>spring-boot-starter-aop</artifactId>
 </dependency>
 ```
-
-<!--more-->
 
 # 2 配置
 

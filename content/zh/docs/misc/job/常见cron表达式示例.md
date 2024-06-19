@@ -4,10 +4,8 @@ date: 2018-12-13
 lastmod: 2021-03-29
 description: "cron表达式速查手册。"
 draft: false
-tags:
-- cron
-categories:
-- cron
+tags: []
+categories: [crontab]
 author: "wangy325"
 
 ---

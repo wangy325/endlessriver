@@ -3,6 +3,8 @@ title: "在SpringBoot中使用MessageSource"
 date: 2021-02-20
 author: "wangy325"
 weight: 2
+tags: [translation]
+categories: [java]
 ---
 
 
@@ -16,8 +18,6 @@ weight: 2
 > 5. springMVC的locale配置和JVM的locale配置不一样，在application.properties中配置的`spring.mvc.locale=zh_CN`实际上配置的是`WebMvcProperties`，在获取消息时，locale信息应该使用`webMvcProperties.getLocale()`[^1]获取**而不是**使用`Locale.getDefault()`获取。
 
 ---
-
-## 1 概览
 
 MessageSource is a powerful feature available in Spring applications. This helps application developers handle various complex scenarios with writing much extra code, such as environment-specific configuration, internationalization or configurable values.
 

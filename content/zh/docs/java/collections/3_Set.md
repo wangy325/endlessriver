@@ -1,17 +1,19 @@
 ---
 title: "Set"
 date: 2020-05-06
-categories: []
-series: []
+categories: [java]
+tags: [collections]
 author: "wangy325"
 weight: 3
 ---
 
+# Set集
 
 Set是**不含重复元素的集**，严格来讲，Set不允许当`e1.equals(e2)`为真时， *e1* 和 *e2* 同时出现在集合中。Set最多允许一个`null`元素。
 
 将**可变对象**置入Set时需要特别小心，当对象的改动影响到了元素之间的`equals()`比较的结果，那么Set的行为就变得不确定了。因此，**不能将Set本身作为Set的元素**。
 
+<!--more-->
 
 ## 1 <span id="hashtable">散列集</span>
 

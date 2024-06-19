@@ -2,6 +2,8 @@
 title: "Java内存区域详解(转)"
 date: 2020-11-30
 weight: 1
+caregories: [java]
+tags: [jvm]
 libraries:
 - mermaid
 ---

@@ -6,7 +6,7 @@ description: "mybatis的基础知识。"
 author: "wangy325"
 # weight: 6
 tags: [mybatis]
-categories: []
+categories: [java]
 ---
 
 

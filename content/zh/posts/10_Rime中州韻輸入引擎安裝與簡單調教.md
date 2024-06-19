@@ -2,7 +2,7 @@
 title: "Rime中州韻輸入引擎安裝與簡單調試記錄"
 date: 2024-06-06
 draft: false
-series: []
+series: [rime]
 categories: [utility]
 author: "wangy32"
 # weight: 11

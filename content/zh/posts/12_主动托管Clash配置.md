@@ -2,7 +2,7 @@
 title: "主动管理Clash的代理配置"
 date: 2024-06-15
 author: wangy325
-tags: []
+tags: [clash]
 categories: [utility]
 enableGitInfo: true
 # weight: 15

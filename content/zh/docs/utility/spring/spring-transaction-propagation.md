@@ -3,7 +3,8 @@ title: "spring声明式事务的使用"
 date: 2021-06-04
 author: "wangy325"
 weight: 4
-draft: true
+tags: [spring, undone]
+categories: [java]
 ---
 
 ##  1 从`@Transactional`注解开始
@@ -11,6 +12,8 @@ draft: true
 `@Transactional`注解是使用spring-transaction的最便捷方式。也是使用Spring框架开发最先接触的内容。
 
 当你在一个服务的方法上使用`@Transactional`注解时，意味着你希望为此方法开启事务支持。如果你的项目成功配置了**数据源**和**事务管理器**，Spring会为此方法使用如下默认设置开启事务：
+
+<!--more-->
 
 - 事务传播属性：`PROPAGATION.REQUIRED`
 - 事务隔离级别：`ISOLATION_DEFAULT` （使用数据库的默认隔离级别）

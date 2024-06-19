@@ -57,16 +57,16 @@ defaultContentLanguageInSubdir: true
 
 menu:
   before: []
-  after:
-    - name: "Github"
-      url: "https://github.com/wangy325"
-      weight: 10
-    - name: "Telegram"
-      url: "https://t.me/wangy325"
-      weight: 15
-    - name: "Contact Me"
-      url: "mailto:wangy325@qq.com"
-      weight: 20
+  # after:
+  #   - name: "Github"
+  #     url: "https://github.com/wangy325"
+  #     weight: 10
+  #   - name: "Telegram"
+  #     url: "https://t.me/wangy325"
+  #     weight: 15
+  #   - name: "Contact Me"
+  #     url: "mailto:wangy325@qq.com"
+  #     weight: 20
 
 params:
   # (Optional, default light) Sets color theme: light, dark or auto.

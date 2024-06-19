@@ -2,11 +2,13 @@
 title: "Java集合框架之Map"
 date: 2020-05-10
 draft: false
-categories: []
+categories: [java]
+tags: [collections]
 author: "wangy325"
 weight: 4
 ---
 
+# Map映射
 
 Map即映射，即键-值对，键不允许重复，并且一个键最多映射一个值。Map不在Java集合框架的范畴，但是其由集合框架的内容实现。自然也在集合框架的讨论之内。
 

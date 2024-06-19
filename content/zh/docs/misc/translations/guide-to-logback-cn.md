@@ -1,16 +1,8 @@
 ---
 title: "使用Logback记录日志"
 date: 2021-02-10
-lastmod: 2020-04-21
-draft: false
-description: ""
-tags:
--
-categories:
-- log
-
-series:
-- 翻译计划
+tags: [translation]
+categories: [java]
 image:
 ---
 
