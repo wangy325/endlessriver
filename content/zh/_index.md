@@ -5,6 +5,7 @@ BookComments: false
 BookSearch: fasle
 BookFooter: false
 type: docs
+title: "Home"
 ---
 
 <center style="font-family:monospace;font-size:0.8rem">
@@ -16,7 +17,7 @@ Nothing special here
 
 🎧️ Playing
 
-![](https://spotify-github-profile.vercel.app/api/view?uid=313qmk4iek67zy3nzazka7flgdpq&cover_image=true&theme=novatorem&show_offline=false&background_color=000000&interchange=true&bar_color=ffffff&bar_color_cover=false)
+![](https://spotify-github-profile.kittinanx.com/api/view?uid=313qmk4iek67zy3nzazka7flgdpq&cover_image=true&theme=novatorem&show_offline=false&background_color=000000&interchange=true&bar_color=ffffff&bar_color_cover=false)
 
 <br/>
 

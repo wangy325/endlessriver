@@ -1,13 +1,13 @@
 ---
+title: " 获取JetBrains IDE的永久回退授权"
 date: 2024-07-01
 author: wangy325
 tags: []
 categories: []
 enableGitInfo: true
+BookToC: false
 # weight: 
 ---
-
-## 获取JetBrains IDE的永久回退授权
 
 ⚠️本人并不鼓励使用破解软件！
 
@@ -16,6 +16,8 @@ enableGitInfo: true
 ⚠️此文仅作记录，请勿转载。
 
 ---
+
+<!--more-->
 
 说的那么绕，~~其实就是破解版本~~，还是要委婉一些的。
 
