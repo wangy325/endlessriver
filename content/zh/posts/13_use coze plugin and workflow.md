@@ -5,10 +5,9 @@ author: wangy325
 tags: []
 categories: [utility]
 enableGitInfo: true
+BookToC: false
 # weight: 15
 ---
-
-## 使用Coze的插件和工作流创建自定义AI工具
 
 [Coze](https://www.coze.com/docs/guides/welcome?_lang=zh)是一个提供AI机器人的HUB，利用它市场上提供的Bot，可以很方便地使用AI机器人工作或娱乐。除了市场上五花八门的AI机器人之外，Bot还提供了自定义工作流，插件等功能，用来创建自己的AI工具。
 
@@ -20,6 +19,8 @@ enableGitInfo: true
 
 <!--more-->
 
+本来使用Coze可以完成如下的工作，特别是工作流，有一些可玩性。
+
 - [x] 创建工作流
     - 使用大模型分析输入（*prompt and persona*）
     - 拼装参数
@@ -30,7 +31,18 @@ enableGitInfo: true
 - [x] 与电报机器人整合
 
 ---
+不过开始收费之后，一切都变了。
 
-收费了，调试也不行。
+简单来讲，当日只能使用100次GPT-3.5-turbo的额度（含调试），所以在Coze上调试Genimi是不可行了，这样子很快就会使用完额度。
 
-结束了。
+所以就有了接下来的尝试。
+
+本文结束。
+
+---
+
+以下是且还能用的利用Coze，基于GPT-3.5-turbo 制作的几个简单telegram机器人。
+
+- [fkubot](https://www.coze.com/store/bot/7381770033120149512?panel=1&bid=6d2t48g9s1008)：综合机器人
+- [googy](https://www.coze.com/store/bot/7386697840699113473?panel=1&bid=6d2t4aq3c4g07)：谷歌搜索机器人
+- [kimi](https://www.coze.com/store/bot/7382246708547420178?panel=1&bid=6d2t4aefs9008)：Kimi聊天机器人
