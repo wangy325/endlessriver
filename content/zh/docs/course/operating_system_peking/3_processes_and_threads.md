@@ -1,0 +1,399 @@
+---
+title: "进程和线程模型"
+date: 2024-07-09
+tags: [OS]
+categories: [cource]
+author: "wangy325"
+weight: 3
+---
+
+
+## 进程模型
+
+### 多道程序设计
+
+**MultiProgramming**：多个程序同时进入内存并运行，提高操作系统效率。并发环境。
+
+多个虚拟（逻辑）程序计数器 ---> 物理计数器
+
+### 进程的概念以及进程控制块
+
+#### 进程
+
+ ***Process***：进程是具有独立功能的程序关于**某个数据集合**上的**一次**运行活动，是系统进行*资源分配*和*调度*的独立单位。
+
+- 是程序的一次执行过程
+- 是正在运行的程序的**抽象**
+- 将一个CPU变幻成多个虚拟的CPU （是CPU的抽象）
+- 系统资源以进程为单位分配，如内存、文件、**独立的地址空间**......
+
+#### 进程控制块(PCB)
+
+PCB: Process Control Block
+
+- 又称**进程描述符**、**进程属性**
+- 操作系统用于管理控制进程的一一个专门**数据结构**
+    > 不同操作系统，对PCB的实现可能不同，但是其功能相同。
+    >
+    >Linux中叫`task_sturct`
+    >
+    >Windows中叫`EPROCESS`，`KPROCESS`，`PEB`
+- 记录进程的各种属性，描述进程的动态变化过程
+
+PCB是系统感知进程存在的唯一标志
+    >进程与PCB是一一 对应
+
+进程表: 所有进程的**PCB集合**。在内存的固定区域，大小固定，所以存储的PCB信息也是有限的，这就是操作系统的并发度。
+
+PCB存储了哪些信息？
+
+1） 进程描述信息
+
+- 进程标识符(process ID)，唯一，通常是一个整数
+- 进程名，通常基于可执行文件名，不唯一
+- 用户标识符(user ID)
+- 进程组关系
+
+2）进程控制信息
+
+- 当前状态
+- 优先级(priority)
+- 代码执行入口地址
+- 程序的磁盘地址
+- 运行统计信息(执行时间、页面调度)进程间同步和通信
+- 进程的队列指针
+- 进程的消息队列指针
+
+3）所拥有的资源和使用情况
+
+- 虚拟地址空间的状况
+- 打开文件列表
+
+4）CPU现场信息
+
+- 寄存器值（通用寄存器、程序计数器PC、程序状态字PSW、栈指针）
+- 指向该进程页表的指针
+
+> 还可以从下面三个维度来看看PCB存储的信息
+>
+>- 进程管理
+>- 存储管理
+>- 文件管理
+
+
+### 进程的状态及转换、进程队列
+
+#### 进程的三种基本状态
+
+- 运行态（Running）：占有CPU，并在CPU上运行
+- 就绪态（Ready）：已经具备运行的条件，但没有空闲CPU，故暂时不能运行
+- 等待态（Waiting/Blocked）：因等待某一事件而暂时不能运行（如等待磁盘结果）。也叫做**阻塞态、封锁态或睡眠态**
+
+#### 进程的状态转换
+
+<center style= "font-size:0.8rem;font-style:italic;color:gray">
+<img alt="" src="/img/course/os/3/process_state_shift.png"/>
+<p>
+进程3状态转换示意图</center>
+
+
+#### 其他线程状态
+
+1）创建（New）：
+
+    已完成创建一进程所必要的工作
+        - PID、PCB
+    但尚未同意执行该进程
+        -因为资源有限
+
+2）结束（Terminated）：
+
+    终止执行后，进程进入该状态
+    
+    可完成一些数据统计工作
+    
+    资源回收
+
+3）挂起（Suspend）：
+    用于调节负载
+
+    进程不占用内存空间，其进程映像交换到磁盘上
+
+<center style= "font-size:0.8rem;font-style:italic;color:gray">
+<img alt="" src="/img/course/os/3/process_5state_shift.png"/>
+<p>
+进程5状态转换示意图</center>
+
+#### 进程队列
+
+PCB组成的队列，不同状态的进程，分别进入不同的队列。进程状态变化时，进程程PCB也会从A队列出队而进入B队列。
+
+
+### 进程控制
+
+进程控制操作完成进程各状态之间的转换，由具有特定功能的**原语**完成。
+
+> 原语 (primitive)
+>
+>完成某种特定功能的一段程序，具有不可分割性或不可中断性
+>
+>即原语的执行必须是连续的，在执行过程中不允许被中断[原子操作 (atomic)]
+
+- 进程创建原语
+- 进程撤消原语
+- 阻塞原语
+- 唤醒原语
+- 挂起原语
+- 激活原语
+- 改变进程优先级
+- .....
+
+#### 创建进程
+
+1）给新进程分配一个唯一标识以及进程控制块
+
+2）为进程分配地址空间
+
+3）初始化进程控制块
+    - 设置默认值(如:状态为New, ...)
+
+4）设置相应的队列指针
+    - 如:把新进程加到**就绪**队列链表中
+
+> 不同操作系统创建进程的方法：
+>
+>UNIX: `fork`/`exec`
+>
+>Windows: `CreateProcess`
+
+#### 结束（撤消）进程
+
+1）收回进程所占有的资源
+    - 关闭打开的文件、断开网络连接、回收分配的内存...
+
+2）撤消该进程的PCB
+
+>不同操作系统创建进程的方法：
+>
+>UNIX: `exit`
+>
+>Windows: `TerminateProcess`
+
+#### 线程的阻塞
+
+处于运行状态的进程，在其运行过程中期待某一事件发生，如等待键盘输入、等待磁盘数据传输完成、等待其它进程发送消息当被等待的事件未发生时，由进程**自己执行阻塞原语**，使自己由运行态变为阻塞态。
+
+>不同操作系统创建进程的方法：
+>
+>UNIX: `wait`
+>
+>Windows: `WaitForSingleObject`
+
+#### Unix的几个进程控制操作
+
+>它们都是**系统调用**
+
+1）`fork()`：通过**复制调用**进程来建立新的进程，是最基本的进程建立过程。
+
+2）`exec()`：包括一系列**系统调用**，它们都是通过用一段新的程序代码覆盖原来的地址空间，实现进程执行代码的转换。
+
+3）`wait()`：提供**初级**进程同步操作，能使一个进程等待另外一个进程的结束。
+
+4）`exit()`：用来终止一个进程的运行。
+
+{{< hint info >}}
+> Unix和Linux系统的`fork()`方法虽然都创建进程，但实现逻辑略有不同。
+>
+>Unix在创建进程时，子进程会直接分配一个独立的内存空间，并复制父进程全部文件描述符。
+>
+>Linux则不同，子进程共享父进程的物理内存页，只有在子进程尝试修改页内容时，才会复制父进程的页内容。这个技术叫**COW**（*copy on write*）。
+>
+>得益于Linux的**COW**技术，`fork()`的效率比Unix上更好。
+
+
+***References about fork() and Copy-On-Write***:
+
+*Docs:*
+
+1. [Unix fork() documentation](https://pubs.opengroup.org/onlinepubs/9699919799/functions/fork.html)
+2. [Linux fork() man page](https://man7.org/linux/man-pages/man2/fork.2.html)
+3. [Copy-on-write, wikipeida](https://en.wikipedia.org/wiki/Copy-on-write)
+
+*Discussions:*
+
+4. [Does fork() immediately copy the entire process heap in Linux?](https://unix.stackexchange.com/questions/155017/does-fork-immediately-copy-the-entire-process-heap-in-linux)
+5. [How does copy-on-write give one optimization for fork-exec?](https://stackoverflow.com/questions/74940376/how-does-copy-on-write-give-one-optimization-for-fork-exec)
+6. [What is copy-on-write?](https://stackoverflow.com/questions/628938/what-is-copy-on-write)
+
+{{< /hint >}}
+
+下面的代码展示了创建子进程并等待子进程执行完成的过程：
+
+```c
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <sys/types.h>
+int main(){
+    // 父进程中返回子进程的id
+    // 子进程中返回0
+    int pid = fork();
+
+    if (pid == 0)
+    {
+        printf("child's PID is %d. \n", getpid());
+    } else if (pid > 0) {
+        // 父进程等待子进程执行完成，再继续执行
+        wait(NULL);
+        printf("parent's PID is %d. \n", getpid());
+        printf("child's PID is %d. \n", pid);
+    } else {
+        perror("fork() failed");
+        exit(1);
+    }
+    exit(0); 
+}
+/* output:
+child's PID is 70291. 
+parent's PID is 70290. 
+child's PID is 70291. 
+*/
+```
+
+### 进程的讨论
+
+#### 分类
+
+按用户分：
+    1） 系统进程
+    2）用户进程
+
+按运行方式分：
+    1）前台进程
+    2）后台进程
+
+按资源需求分：
+    1） CPU密集型进程
+    2）I/O密集型进程
+
+>和程序的区别：
+>
+>- 进程更能准确刻画并发，而程序不能。
+>
+>- 程序是静态的，进程是动态的。
+>
+>- 进程有生命周期的，有诞生有消亡短暂的;而程序是相对长久的。
+>
+>- 一个程序可对应多个进程。
+>
+>- 进程具有创建其他进程的功能。
+
+#### 层次结构
+
+不同操作系统，进程的层次有所差异。
+
+{{< hint warning >}}
+
+> ⚠️generated by gpt.
+
+Linux操作系统中的进程层次结构：
+
+- 父子关系：在Linux中，每个进程（除了根进程`init`，进程ID=1）都有一个父进程，创建子进程的进程被称为父进程，而新创建的进程被称为子进程。父进程负责创建、管理和控制子进程，形成了一个层次结构，类似于**树状结构**。
+- 子进程：除了根进程外，每个进程都可以创建一个或多个子进程。当一个进程创建一个子进程时，子进程会继承父进程的某些属性和资源，如内存空间、文件描述符和环境变量。
+- 进程组：在Linux中，可以将属于同一进程层次结构的进程组织成进程组。进程组是一组相关的进程，可以进行集体管理和控制。进程组允许在多个进程之间进行信号传递和进程控制等操作。
+- 进程树：进程层次结构形成了一种树状结构，通常称为进程树。根进程位于树的顶部，子进程从其父进程分支出来。进程树表示了系统中进程之间的关系和依赖。
+
+Windows操作系统中的进程层次结构：
+
+- 父子关系：在Windows中，每个进程（除了系统进程）都有一个父进程，创建子进程的进程被称为父进程，而新创建的进程被称为子进程。父进程负责创建、管理和控制子进程。
+- 子进程继续运行：在Windows中，如果父进程终止，子进程可以继续运行。子进程不会因为父进程的终止而被终止，它可以继续独立运行。
+- 僵尸进程：在Linux中，如果父进程终止，所有与之关联的子进程都会被强制退出。而在Windows中，子进程可以继续运行，即使父进程已经终止。这可能导致僵尸进程的存在，即已经终止但在进程表中仍有条目的进程。
+
+需要注意的是，进程层次结构在Linux和Windows中可能会有一些特定的实现差异，但基本的父子关系和层次结构概念是相似的。
+
+*References:*
+
+1. [What is the process hierarchy in an operating system? - CompuHoy.com](https://www.compuhoy.com/what-is-the-process-hierarchy-in-an-operating-system/)
+2. [Process Hierarchy in Operating System | by Rahul Ahir | Medium](https://medium.com/@ahirlog/process-hierarchy-in-operating-system-5075b768a3ec)
+3. [What is a process hierarchy? - Tutorialspoint](https://www.tutorialspoint.com/what-is-a-process-hierarchy)
+4. [What are the process states in Windows and Linux? - Tutorialspoint](https://www.tutorialspoint.com/what-are-the-process-states-in-windows-and-linux)
+
+{{< /hint >}}
+
+#### 进程地址空间
+
+操作系统给每个进程都分配了一个地址空间。
+
+<center style="font-size:0.8rem;font-style:italic;color:gray">
+<img  alt="" src="/img/course/os/3/process_address_space.png" />
+<p>
+进程地址空间
+</center>
+
+下面的代码示例展示了进程运行时的地址：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int myval;
+int main(int argc, char *argv[])
+{
+    myval = atoi(argv[1]);
+    while(1){
+        printf("myval is %d, loc 0x%lx\n", myval, (long)&myval);
+    }
+}
+```
+
+在不同的终端上运行上述代码，可以看到如下可能的输出：
+
+``` sh
+~ ./myval 7
+myval is 7, loc 0x10d222018
+...
+~ ./myval 8
+myval is 8, loc 0x102f4a018
+...
+```
+
+可以看到，2个程序的变量所指向的地址是不用的。不过，这个地址并不是**物理地址**，而是**虚拟地址**或者叫逻辑地址。
+
+
+#### 进程映像（IMAGE）
+
+指对进程执行活动全过程的静态描述（**进程快照**）。
+
+由**进程地址空间**内容、**硬件寄存器**内容及与该进程相关的**内核数据结构**、**内核栈**组成。
+
+用户相关:
+
+    进程地址空间(包括代码段、数据段、堆和栈、共享库.....)。
+
+寄存器相关:
+
+    程序计数器、指令寄存器、程序状态寄存器、栈指针、通用寄存器等的值。
+
+内核相关:
+
+    1）静态部分: PCB及各种资源数据结构
+    2）动态部分: 内核栈(不同进程在进入内核后使用不同的内核栈)
+
+#### 上下文切换（CONTEXT）
+
+将CPU硬件状态从一个进程换到另一个进程的过程称为**上下文切换**。
+
+进程运行时，其硬件状态保存在CPU上的寄存器中。
+
+    寄存器: 程序计数器、程序状态寄存器、栈指针、通用寄存器、其他控制寄存器的值。
+
+进程不运行时，这些寄存器的值保存在进程控制块PCB中;当操作系统要运行一个新的进程时，将PCB中的相关值送到对应的寄存器中
+
+## 线程模型
+
+### 为什么引入线程
+### 线程的组成
+### 线程机制的实现
+#### 用户级线程
+#### 核心级线程
+#### 混合方式
