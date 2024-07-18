@@ -8,17 +8,21 @@ author: "wangy32"
 # weight: 11
 ---
 
-~~由于未知的原因~~<sup>很有可能是配置文件错误</sup>，使用几年多的Rime（squirrel）输入法发生异常。主要表现为小鹤双拼的键位映射异常（如键入‘budv’的候选词是‘病毒’而不是‘不对’。），检查了许久的配置文件，并没有发现明显异常。距离上次调试Rime已许久，很多细节都已经丢失。经历一番纠结，决定再重新调试一下Rime，并作此记录。
+~~由于未知的原因~~<sup>很有可能是配置文件错误</sup>，使用几年多的Rime（squirrel）输入法发生异常。主要表现为小鹤双拼的键位映射异常（如键入‘budv’的候选词是‘病毒’而不是‘不对’。），检查了许久的配置文件，并没有发现明显异常。距离上次配置Rime已许久，很多细节都已经丢失。一番纠结后，决定再重新调试一下Rime，并作此记录。
 
 <!--more-->
 
 ## 卸载Rime输入法
 
-为了排除一些不必要的影响，从0开始，首先就要卸载掉Mac（11.7.2）上原来抽风的Rime。卸载的方法也很简单。只是删除几个配置/文件即可：
+为了排除一些不必要的影响，从0开始，首先就要卸载掉Mac（11.7.2）上原本的Rime。卸载的方法也很简单。只是删除几个配置/文件即可：
 
 1. 找到系统偏好设置->键盘->输入法，删除鼠须管
 
-<img src="/img/rime/uninstall.png" width="50%" />
+<center style="font-size:0.8rem; font-style:italic; color: grey">
+<img alt = '' src="/img/rime/uninstall.png" width="50%" />
+<p>
+从系统设置中移除鼠须管
+</center>
 
 2. 删除配置文件夹
 `sudo rm -rf ~/Library/Rime`
@@ -31,25 +35,31 @@ author: "wangy32"
 
 ## 安装Rime输入法
 
-这里没有直接使用「东风破」，而是使用brew安装：
+这里没有直接使用〔东风破〕，而是使用brew安装：
 
 `brew install --cast squirrel`
 
 完成后需要重新登入mac。
 
 > 此方式安装的squirrel版本是`0.15.2`，squirrel对MacOS 13以下支持的最高版本是`0.16.2`
+>
+>如果需要更新squirrel，参考[更新homebrew的安装包](./16_update%20homebrew%20packages.md)
 
 安装完成后的鼠须管没有任何配置，默认使用「朙月拼音」中文输入。
 
 此时的Rime是可用的状态，但是还没有恢复到之前的使用状态。配置文件夹也是空空如也。
 
-<img src="/img/rime/install_config_file.png" width="50%" />
+<center style="font-size:0.8rem; font-style:italic; color: grey">
+<img src="/img/rime/install_config_file.png" width="70%" />
+<p>
+初始化状态下的squirrel配置文件夹
+</center>
 
 ## Rime的基本配置文件
 
-这时候就需要使用「东风破」来安装配置文件了。
+这时候就需要使用〔东风破〕来安装配置文件了。
 
-首先需要安装基础配置以及基础词汇
+首先需要安装基础配置以及~~基础词汇~~
 
 ```bash
 git clone --depth 1 https://github.com/rime/plum.git
@@ -58,6 +68,10 @@ bash rime-install prelude
 bash rime-install essay
 bash rime-install luna-pinyin 
 ```
+
+{{< hint warning >}}
+> essay可以不用安装，里面的有些词汇〔很奇怪〕。后续会使用搜狗的词库。
+{{< /hint >}}
 
 克隆「东风破」项目到本地，进入项目文件夹。接下来分别安装：
 
@@ -71,6 +85,8 @@ bash rime-install luna-pinyin
 
 一直到这里都并没有定制化。
 
+不过，通过〔东风破〕，鼠须管增加了很多默认配置文件，这些配置文件在自定义输入方案的时候，都**不要**去更改。接下来的部分，才是定制化输入法的内容。
+
 ## 定制化
 
 ### 用户数据同步
@@ -83,15 +99,22 @@ bash rime-install luna-pinyin
 
 > 同步文件夾可以在硬盘任何地方，上述只是用作演示。
 
+<center style="font-size:0.8rem; font-style:italic; color: grey">
 <img src="/img/rime/sync.png" width="30%" />
+<p>
+同步鼠须管用户配置
+</center>
 
-### squirrel.custom.yaml
+定制化包括两部分，一是应用程序的配置，二是输入方案的配置。
+
+### 应用程序配置
 
 > 📌Squirrel的配置支持「补丁」的方式，意即不用修改通过「plum」安装的默认配置，而是通过创建新的配置文件，以补丁的方式对其进行个性化设置。这样可以避免对默认配置文件作出修改而导致一系列难以排查的问题。
 >
 > Squirrel的配置文件通常以`some_config.yaml`命名，如果要定制化，只需要新创建一个`some_config.custom.yaml`配置文件，然后以`patch`为开头，进行配置即可。
 
 `squirrel.yaml`文件主要配置了鼠鬚管輸入法的一些基本配置，如候選詞的排布方向，字体大小，配色方案等等，是最基础的配置。
+
 以下配置片段截取了一些重要的，仅供参考。
 
 ```yaml
@@ -113,7 +136,9 @@ patch:
 
 如果安装完成squirrel之后，并没有发现`squirrel.yaml`这个配置文件，可以在安装包中找到。安装包的位置在`/Library/Input Method/Squirrel.app`，显示包内容就可拷贝一份放在配置文件夹里了（不拷贝也并无影响）。
 
-如果觉得默认/自带的配色方案都不太喜欢，定制一份「专属」的配色方案也很简单，热心的社区提供了易用的调色板：https://gjrobert.github.io/Rime-See-Me-squirrel/。
+自定义squirrel的这些基础配置只需要创建`squirrel.custom.yaml`配置文件，并修改部分默认配置就行了。
+
+例如若觉得默认/自带的配色方案都不太喜欢，定制一份「专属」的配色方案也很简单，热心的社区提供了易用的[调色板](https://gjrobert.github.io/Rime-See-Me-squirrel/) 。
 
 > 实际上，上面的`cheese_blue`，就是我使用调色板自己捣鼓出来的。😁️
 
@@ -133,9 +158,9 @@ app_options:
 
 上述配置已经包含在默认`squirrel.yaml`配置文件里了。
 
-### default.custom.yaml
+### 输入方案默认配置
 
-`default.custom`配置文件定义了输入方案选单、热键、候选字数量、punctuator「谓句读处理器」、recognizer「可谓规则匹配器」等配置。
+`default.yaml`配置文件定义了输入方案选单、热键、候选字数量、punctuator〔谓句读处理器〕、recognizer〔谓规则匹配器〕等配置。
 
 以下列出了`default.yaml`的配置项（部分）
 
@@ -180,8 +205,10 @@ key_binder:     # 按键绑定
       - key_bindings:/emacs_editing
       - key_bindings:/move_by_word_with_tab
 
- # 输入识别与匹配，一般用来连贯地输入含有字母和数字的组合，如id、邮箱等 
- # 一般来说，如果在中文输入模式下，想输入「mamba24」，就需要先输入「mamba」然后「回车键」上屏，接着使用小键盘输入24，使用特定的模式匹配，可以连贯地输入mamba24
+# 输入识别与匹配，一般用来连贯地输入含有字母和数字的组合，如id、邮箱等 
+# 一般来说，如果在中文输入模式下，想输入「mamba24」，就需要先输入「mamba」
+#  然后「回车键」上屏，接着使用小键盘输入24，
+# 使用特定的模式匹配，可以连贯地输入mamba24
 recognizer: 
   patterns:
     email: "^[A-Za-z][-_.0-9A-Za-z]*@.*$"
@@ -199,7 +226,7 @@ ascii_composer:  # 设置caps、shift、control等键的作用
     Eisu_toggle: clear
 ```
 
-此次定制化的主要配置集中在：
+定制化的主要配置集中在：
 
 1. schema_list：配置输入方案
 2. switcher/hotkeys：配置方案切换的快捷键
@@ -238,10 +265,10 @@ patch:
       Eisu_toggle: clear
 ```
 
-> mac原生输入法支持使用`caps`按键支持中/英切换，如若使用鼠须管，可以关闭这一偏好，让其仅作大小写切换。
+> mac原生输入法支持使用`caps`按键支持中/英切换，如若使用鼠须管，可以关闭这一偏好，让其仅作大小写切换。鼠须管使用`shift`切换〔中/英〕输入。
 
 
-### double_pinyin_flypy.custom.yaml
+### 小鹤双拼输入方案配置
 
 上文提到的配置都算是输入引擎的通用性配置，如果想真正定制输入法，还得从`double_pinyin_flypy.schema.yaml`入手，这是小鹤双拼的配置项。稍作「补丁」，便可以让它更好为输入服务。
 
@@ -265,9 +292,14 @@ patch:
 
 `bash rime-install emoji:customize:double_pinyin_flypy`
 
-上述命令对「小鹤双拼」输入法安装了对emoji的支持，透过安装日志，其实可以看到实际上就是对`double_pinyin_flypy.custom.yaml`打上补丁。
+上述命令对〔小鹤双拼〕输入法安装了对emoji的支持，透过安装日志，其实可以看到实际上就是对`double_pinyin_flypy.custom.yaml`打上补丁。
 
-<img src="/img/rime/install_emoji.png" width="70%" />
+<center style="font-size:0.8rem; font-style:italic; color: grey">
+<img  alt = '' src="/img/rime/install_emoji.png" width="100%" />
+<p>
+plum安装对小鹤双拼的emoji支持
+</center>
+
 
 查看配置文件，可以看到多了如下配置：
 
@@ -282,7 +314,13 @@ patch:
 
 此时，输入法的选单有一些小小的变化，即加入了emoji建议的开关：
 
- <img src="/img/rime/quick_setting.png" width="50%" />
+
+<center style="font-size:0.8rem; font-style:italic; color: grey">
+ <img alt= ‘’ src="/img/rime/quick_setting.png" width="70%" />
+ <p>
+ emoji支持安装完成后的输入法选单变化
+</center>
+
 
  调出此选单，按「6」可以选择开启或者关闭emoji建议。
 
@@ -292,17 +330,25 @@ patch:
 
 重新部署后，就可以直接在候选词中输入emoji：
 
-<img src="/img/rime/emoji_suggestion1.png" width="50%" />
+<center style="font-size:0.8rem; font-style:italic; color: grey">
+<img alt = '' src="/img/rime/emoji_suggestion1.png" width="50%" />
+</center>
 
-上图使用的小鹤双拼输入法，*不过拼音显示的内容是全拼*。
+>上图使用的小鹤双拼输入法，*不过拼音显示的内容是全拼*，这个〔缺陷〕会在后续配置中优化。
 
 需要注意的是，不同版本的系统可能对emoji的支持不同，可能会出现部分乱码，这样的候选字很影响输入体验。
 
-<img src="/img/rime/error_code.png"  width="50%"/>
+<center style="font-size:0.8rem; font-style:italic; color: grey">
+<img alt= '' src="/img/rime/error_code.png"  width="50%"/>
+</center>
 
-比较直接的处理方法，就是在`opencc`文件夹里面，找到对应的emoji字典，删掉里面乱码的内容🤭。
+直接的处理方法，就是在`opencc`文件夹里面，找到对应的emoji字典，删掉里面乱码的内容🤭。
 
-<img src="/img/rime/opencc_emoji.png" width="50%"/>
+<center style="font-size:0.8rem; font-style:italic; color: grey">
+<img alt= '' src="/img/rime/opencc_emoji.png" width="50%"/>
+<p>
+emoji字典中可能会存在部分乱码的内容
+</center>
 
 ##### 自定义符号上屏
 
@@ -314,7 +360,9 @@ patch:
 
 因此，配合使用，可以获得如下的效果：
 
-<img src="/img/rime/symbols.png" width="50%" />
+<center>
+<img alt=‘’ src="/img/rime/symbols.png" width="30%" />
+</center>
 
 即输入`/tq`，即可出现和「天气」有关的候选项。
 
@@ -349,13 +397,15 @@ patch:
   recognizer/patterns/punct: '^/([0-9]0?|[A-Za-z]+)$'
 ```
 
-首先做的一件事情，就是覆盖了原来对于`/`符号的提示，默认的设置，输入`/`会显示`、,､, '/', ／〔全角〕, ÷`4个候选，根据喜好保留即可。其次就是可以通过`/xx`的方式快捷输入emoji表情符号，对于常用emoji的人来说，这无异于天降甘霖啦😄️。
+首先做的一件事情，就是覆盖了原来对于`/`符号的提示，默认的设置，输入`/`会显示`、`，`､`， `/`， `／〔全角〕`， `÷`候选项，可以根据喜好添加删除候选项即可。其次就是可以通过`/xx`的方式快捷输入emoji表情符号，对于常用emoji的人来说，这无异于天降甘霖啦😄️。
 
 #### 中英文混输
 
-通常，在中文模式下，直接输入英文并带有「提示」是非常有必要的功能。幸好，使用插件解决可以满足这个功能：
+通常，在中文模式下，直接输入英文并带补全「提示」是非常有必要的功能。幸好，使用插件解决可以满足这个功能：
 
-`bash rime-install BlindingDark/rime-easy-en:customize:schema=double_pinyin_flypy`
+``` bash
+bash rime-install BlindingDark/rime-easy-en:customize:schema=double_pinyin_flypy
+```
 
 和emoji的支持一样，「东风破」的安装命令会在配置文件上打上「补丁」。
 
@@ -365,14 +415,17 @@ patch:
 __patch:
     - patch/+:
          __include: easy_en:/patch
-         easy_en/enable_sentence: false   # 避免矫枉过正，把所有的字母组合当作英文作为候选词
+         # 避免矫枉过正，true会把所有的字母组合当作英文作为候选词
+         easy_en/enable_sentence: false   
 ```
 
 `easy_en/enable_sentence`开关的作用是，将任何输入的字符都作为英文候选，这样有点「过分敏感」了，通常需要将其设置为`false`。
 
 重新部署后，即可在中文输入模式下，实现英文输入：
 
-<img src="/img/rime/mix_input.png" width="50%"/>
+<center>
+<img alt='' src="/img/rime/mix_input.png" width="50%"/>
+</center>
 
 #### 模糊音
 
@@ -380,17 +433,17 @@ __patch:
 
 ```yaml
 patch:
-    speller/algebra:                        #模糊音配置（部分），需要使用哪个就取消前面的注释
-        - erase/^xx$/                      # 第一行保留
-        #- derive/^([zcs])h/$1/             # zh, ch, sh => z, c, s
+    speller/algebra:                    #模糊音配置（部分），使用哪个就取消注释
+        - erase/^xx$/                   # 第一行保留
+        #- derive/^([zcs])h/$1/          # zh, ch, sh => z, c, s
         #- derive/^([zcs])([^h])/$1h$2/     # z, c, s => zh, ch, sh
-        # - derive/([aei])n$/$1ng/            # an => ang en => eng, in => ing
-        # - derive/([aei])ng$/$1n/            # ang => an eng => en, ing => in 
-        # - derive/([u])an$/$1ang/            # uan => uang
-        # - derive/([u])ang$/$1an/            # uang => uan
+        # - derive/([aei])n$/$1ng/        # an => ang en => eng, in => ing
+        # - derive/([aei])ng$/$1n/        # ang => an eng => en, ing => in 
+        # - derive/([u])an$/$1ang/        # uan => uang
+        # - derive/([u])ang$/$1an/        # uang => uan
 ```
 
-模糊音的配置项应位于「拼写算法」里，意为将在拼写时将`a`认作`b`。上面的配置文件列出了典型的模糊音配置。
+模糊音的配置项应位于〔拼写算法〕里，意为将在拼写时将`a`认作`b`。上面的配置文件列出了典型的模糊音配置。
 
 由于双拼有自己的键位映射，所以在配置模糊音时，需要将模糊音配置在键位映射（全拼转双拼）之前，这样模糊音才能生效，并且需要
 在`custom`配置里，模糊音配置之后，重新「抄写」一遍双拼的键盘映射配置。
@@ -399,7 +452,7 @@ patch:
 
 #### 自定义词典
 
-在鼠须管中使用自定义词典也非常简单。只需要在`xxx.custom.yaml`配置文件中添加如下配置即可：
+在鼠须管中使用自定义词典也非常简单。只需要在对应输入方案的`xxx.custom.yaml`配置文件中添加如下配置即可：
 
 ```yaml
 ###使用自定义词典 custom_phrase.txt 
@@ -411,16 +464,21 @@ patch:
     enable_completion: false    #关闭逐键提示，精确匹配输入码的候选字即可
     enable_sentence: false      # 关闭输入法连打，此配置对双拼方案无效
     initial_quality: 1
-    "engine/translators/@5": table_translator@custom_phrase  # 在translators列表配置第5项中加入配置，启用自定义词典
+    # 在translators列表配置第5项中加入配置，启用自定义词典
+    "engine/translators/@5": table_translator@custom_phrase  
 ```
 
+{{< hint warning>}}
 > 上述配置中的`@5`意思是`@n`，意思是在列表项目配置中的第n个元素位设定新的值。常用用`@last`，表示在列表配置项最后加入配置。
+{{< /hint >}}
 
-此外，还需要一个名字为`custom_phrase.txt`的用户字典（在鼠须管的配置文件目录下），字典的内容格式为「候选字\tab输入码\tab权重（可省略）」，`\tab`表示各项以制表符（tab）分隔。
+此外，还需要一个名字为`custom_phrase.txt`的用户字典（在鼠须管的配置文件目录下），字典的内容格式为〔候选字\tab输入码\tab权重（可省略）〕，`\tab`表示各项以制表符（tab）分隔。
 
 重新部署后，既可以使用自定义短语。自定义短语用来快速输入邮箱📮️地址非常有用。
 
-<img src="/img/rime/custom_phrase.png" width="50%"/>
+<center>
+<img alt ='' src="/img/rime/custom_phrase.png" width="50%"/>
+</center>
 
 #### 日期时间动态输入
 
@@ -440,7 +498,9 @@ engine/translators/+:
 
 重新部署后，就可以在输入选框中快速键入当前日期和时间了。
 
-<img src="/img/rime/date_to_screen.png" width="50%" />
+<center>
+<img alt = '' src="/img/rime/date_to_screen.png" width="70%" />
+</center>
 
 ## 其他杂项
 
@@ -448,7 +508,9 @@ engine/translators/+:
 
 在默认配置下，即使使用小鹤双拼方案，在键入输入码之后，屏上显示的依然是全拼，就像这样：
 
-<img src="/img/rime/full_pinyin.png" width="50%" />
+<center>
+<img alt='' src="/img/rime/full_pinyin.png" width="50%" />
+</center>
 
 对于习惯双拼上屏的用户来说，可能有一点别扭，此时，需要额外的配置，来使屏上直接显示键入码，而不「翻译」为全拼：
 
@@ -459,7 +521,9 @@ patch:
 
 重新部署后生效。
 
+<center>
 <img src="/img/rime/double_pinyin.png" alt="屏上显示为双拼" width="50%" />
+</center>
 
 ### 快速输入id，网址、邮箱等
 
@@ -472,7 +536,8 @@ patch:
       punct: "^/([a-z]+|[0-9]0?)$"  # 自定义符号上屏
       email: "^[A-Za-z][-_.0-9A-Za-z]*@.*$"   # email快速上屏
       uppercase: "[A-Z][-_+.'0-9A-Za-z]*$"    # 大写英文直接上屏
-      url: "^(www[.]|https?:|ftp[.:]|mailto:|file:).*$|^[a-z]+[.].+$"   #网址快速上屏
+      #网址快速上屏
+      url: "^(www[.]|https?:|ftp[.:]|mailto:|file:).*$|^[a-z]+[.].+$"  
       mypattern: "^icool[0-9]+$"     # 直接输入id，而不需要先上屏icool
 ```
 
@@ -482,11 +547,19 @@ patch:
 
 在注释掉上述`url` pattern后，在中文模式下不能快速输入网址，在输入`www`之后，接`.`会直接上屏：
 
+<center style="font-size:0.8rem; font-style:italic; color: grey">
 <img src="/img/rime/a_1.gif" alt="www直接上屏了" width="50%" />
+<p>
+输入www。则会直接上屏
+</center>
 
 而在取消注释（即启用pattern）后，在中文输入模式下，可以直接输入网址：
 
+<center style="font-size:0.8rem; font-style:italic; color: grey">
 <img src="/img/rime/a_2.gif" alt="快速输入网址" width="50%" />
+<p>
+启用模式匹配后，输入www。会匹配模式而不上屏
+</center>
 
 其他匹配模式效果一致，不再一一例证。
 
