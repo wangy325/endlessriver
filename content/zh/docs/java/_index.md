@@ -4,6 +4,7 @@ title: "Java核心"
 bookFlatSection: true
 bookCollapseSection: false
 bookComments: false
+BookToC: false
 ---
 
 ## Java入门
