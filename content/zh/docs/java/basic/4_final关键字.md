@@ -168,3 +168,5 @@ g()
 也就是说，该类的所有方法都含有一个隐式的`final`修饰符。
 
 `final`类的域可以**是或不是**`final`，规则同[final数据](#m3)一致。
+
+https://docs.oracle.com/javase/specs/jls/se18/html/jls-17.html#jls-17.5

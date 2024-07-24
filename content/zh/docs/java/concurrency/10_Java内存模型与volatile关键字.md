@@ -4,7 +4,7 @@ date: 2020-10-27
 categories: [java]
 tags: [concurrency]
 author: "wangy325"
-weight: 10
+weight: 1000
 ---
 
 # Java内存模型与volatile关键字
