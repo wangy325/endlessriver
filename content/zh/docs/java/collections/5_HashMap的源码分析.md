@@ -7,15 +7,16 @@ author: "wangy325"
 weight: 7
 ---
 
-# HashMap的源码分析
 
-HashMap基于散列表，散列表中每一个Node节点（桶）是链表，当两个条目（entry）的key的hash值对桶数（capacity）取模的值相等时，这两个entry会存储在同一个链表中。但当链表中元素达到一定数目时，链表结构会转变为**树结构**。
+`HashMap`基于散列表，散列表中每一个Node节点（桶）是链表，当两个条目（entry）的key的hash值对桶数（capacity）取模的值相等时，这两个entry会存储在同一个链表中。但当链表中元素达到一定数目时，链表结构会转变为**树结构**。
 
-> 此文中没有讨论HashMap中涉及到树结构的源码。
+本文从初始化，扩容，插入，获取，删除这几个方面深入讨论了`HashMap`的实现细节。
+
+> 此文中没有讨论`HashMap`中涉及到树结构的源码。
 
 <!--more-->
 
-## 1.基础字段
+## 基础字段
 
 HashMap中定义了如下字段：
 
@@ -46,20 +47,22 @@ int threshold;
 final float loadFactor;
 ```
 
-## 2.初始化
+## 初始化
 
-### 2.1 构造器
+### 构造器
 
 HashMap提供了以下几个构造器
 
 ```Java
 public HashMap(int initialCapacity, float loadFactor){
     if (initialCapacity < 0)
-            throw new IllegalArgumentException("Illegal initial capacity: " + initialCapacity);
+            throw new IllegalArgumentException(
+                "Illegal initial capacity: " + initialCapacity);
         if (initialCapacity > MAXIMUM_CAPACITY)
             initialCapacity = MAXIMUM_CAPACITY;
         if (loadFactor <= 0 || Float.isNaN(loadFactor))
-            throw new IllegalArgumentException("Illegal load factor: " + loadFactor);
+            throw new IllegalArgumentException(
+                "Illegal load factor: " + loadFactor);
         // 字段初始化
         this.loadFactor = loadFactor;
         this.threshold = tableSizeFor(initialCapacity);
@@ -114,11 +117,11 @@ final void putMapEntries(Map<? extends K, ? extends V> m, boolean evict) {
     }
 ```
 
-可以看到，除了最后一个构造器额外调用了`putVal()`方法外，构造器都只做了一些字段初始化工作，那么HashMap的键值对是如何“放入”的呢？
+可以看到，除了最后一个构造器额外调用了`putVal()`方法外，构造器都只做了一些字段初始化工作，那么`HashMap`的键值对是如何“放入”的呢？
 
-### 2.2 插入键值对
+### 插入键值对
 
-键值对的插入与扩容密不可分，接下来从这两个方法来阐述HashMap的键值对插入过程
+键值对的插入与扩容密不可分，接下来从这两个方法来阐述`HashMap`的键值对插入过程
 
 当使用`put(K,V)`向映射中插入键值对时，实际上调用的是`putVal()`方法
 
@@ -130,15 +133,15 @@ public V put(K key, V value) {
 /**
  * Implements Map.put and related methods. 向HashMap中插入元素
  *
- * @param hash 键的hash值
- * @param key 键
- * @param value 值
+ * @param hash key的hash值
+ * @param key 
+ * @param value 
  * @param onlyIfAbsent 若真，那么不修改原键的值（若原键值不为null）
  * @param evict if false, the table is in creation mode.
  * @return 之前键映射的值，若之前键不存在则返回null
  */
 final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict) {
-    // HashMap字段拷贝一份
+    // HashMap的数据拷贝一份先
     Node<K,V>[] tab; Node<K,V> p; int n, i;
 
     if ((tab = table) == null || (n = tab.length) == 0)
@@ -149,31 +152,40 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict) {
         n = (tab = resize()).length;
     if ((p = tab[i = (n - 1) & hash]) == null)
         // (n-1) & hash == hash % n, 用于计算key-value放在哪个桶中
-        // 若桶中尚未有内容，则新建一节点
+        // 若桶中尚未有内容，则新建一节点 插入新值
+        // 良好的散列表应该走这里
         tab[i] = newNode(hash, key, value, null);
     else {
         // 若桶中有内容
         Node<K,V> e; K k;
-        if (p.hash == hash && ((k = p.key) == key || (key != null && key.equals(k))))
+        if (p.hash == hash &&
+             ((k = p.key) == key || (key != null && key.equals(k))))
             // 并且第一个节点和新节点的key值一样（更新值）
+            // 更新已经存在的k-v值，在桶中直接命中
             e = p;
         else if (p instanceof TreeNode)
-            // 树
+            // 如果已经树化，使用树化后的相关方法
+            // 不好
             e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
         else {
-            //
+            // 开始找在桶中的位置
             for (int binCount = 0; ; ++binCount) {
                 if ((e = p.next) == null) {
+                    // 桶中只有一个元素，但是key没命中，说明这个桶要来新客人了
+                    // 向桶中插入新值
                     //遍历桶中的节点，若至链尾，则在链尾加入节点
                     p.next = newNode(hash, key, value, null);
                     //同时判断此时链表中的node数，若 > 8，则由链表转化为二叉树
                     // binCount = 7时说明链表中已经有8个节点了，此时节点数已经 >8个了
                     if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
                         //树化
+                        // sad 
                         treeifyBin(tab, hash);
                     break;
                 }
-                if (e.hash == hash && ((k = e.key) == key || (key != null && key.equals(k))))
+                if (e.hash == hash && 
+                ((k = e.key) == key || (key != null && key.equals(k))))
+                    // 命中，跳出 更新已有k-v对
                     //同理，key已存在，跳出for循环
                     break;
                 // 将p顺延
@@ -201,7 +213,27 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict) {
     return null;
 }
 ```
-## 3.扩容
+
+综上， 插入键值对的流程可以概括为：
+
+{{< mermaid class="optional">}}
+flowchart TD
+a([putVal]) --> b{"bucket is empty?"} --> |Yes| c(Insert new k-v)
+c --> m(afterNodeInsertion)-->z([return])
+b --> |No|d{bucket.hash = k.hash?} --> |Yes|o(update exist k-v)
+o --> y(afterNodeAccess) --> z
+d --> |No|e{treeified?}
+e -->|No|g[search buckets] -->| for cycle| g
+e --> |Yes| f(putTreeNode)-->y
+g --> h{bucket.k = k} --> |Yes|o
+h --> |No| j[add new k-v in bucket] --> k{bucket elements > 8?}
+k --> |Yes| l(Trrify)-->o
+k --> |No| o
+{{< /mermaid >}}
+
+
+
+## 扩容
 
 由`putVal()`方法可知，`resize()`方法在初始化过程中也发挥了作用。
 
@@ -273,7 +305,8 @@ final Node<K,V>[] resize() {
                             /*
                              * 此处的逻辑为：
                              * 第一次循环将loTail和loHead均初始化为e
-                             * 第二次将loTail.next改为满足条件((e.hash & oldCap) == 0)的e的更新值
+                             * 第二次将loTail.next改为满足条件
+                             * ((e.hash & oldCap) == 0)的e的更新值
                              * 这一过程将跳过中间不满足条件的节点
                              * 由于loHead和loTail都是指向e的引用，loHead.next随之而变
                              * 接下来将loTail指向e的更新值
@@ -310,6 +343,7 @@ final Node<K,V>[] resize() {
     return newTab;
 }
 ```
+
 上述`resize()`方法的结论可以通过以下代码验证
 
 ```Java
@@ -354,11 +388,13 @@ public class NodeTest<K, V> {
         for (int i = 0; i < newtab.length; i++) {
             if ((g = newtab[i]) != null) {
                 if (g.next == null) {
-                    System.out.println("newtab[" + i + "]" + g.getKey() + ", " + g.getValue());
+                    System.out.println("newtab[" + i + "]" 
+                        + g.getKey() + ", " + g.getValue());
                 } else {
                     do {
                         h = g.next;
-                        System.out.println("newtab[" + i + "]" + g.getKey() + ", " + g.getValue());
+                        System.out.println("newtab[" + i + "]" 
+                            + g.getKey() + ", " + g.getValue());
                     } while ((g = h) != null);
                 }
             }
@@ -450,9 +486,10 @@ newtab[6]15, one
 newtab[6]7, three
 *///:~
 ```
+
 从输出可以看到，原`table[2]`的节点被拆分后分别放在`newtab[2]`和`newtab[6]`的桶里，并且节点的顺序没有变化
 
-## 4.获取键值对
+## 获取键值对
 
 一般使用`get(K key)`方法获取映射中指定键的值，get方法相较`putVal()`要简单许多
 
@@ -472,14 +509,17 @@ final Node<K,V> getNode(int hash, Object key) {
         (first = tab[(n - 1) & hash]) != null) {
         if (first.hash == hash && // always check first node
             // 先从第一个节点查看，如key相等则返回此节点
+            // 积极处理，好的散列桶中只有一个元素
             ((k = first.key) == key || (key != null && key.equals(k))))
             return first;
         if ((e = first.next) != null) {
             // 否则查找链表中的其他节点
             if (first instanceof TreeNode)
+                // 若已经树化
                 return ((TreeNode<K,V>)first).getTreeNode(hash, key);
             do {
                 if (e.hash == hash &&
+                    // 遍历寻找
                     ((k = e.key) == key || (key != null && key.equals(k))))
                     return e;
             } while ((e = e.next) != null);
@@ -491,11 +531,13 @@ final Node<K,V> getNode(int hash, Object key) {
 
 另外判断一个映射中是否存在某个键对应的值对应的方法
 
-> public boolean containsKey(Object key) {return getNode(hash(key), key) != null;}
+        public boolean containsKey(Object key) {
+            return getNode(hash(key), key) != null;
+        }
 
 实际上也是调用的上面提到的`getNode()`方法
 
-## 5. 删除键值对
+## 删除键值对
 
 使用`remove(K key)`删除映射中的键值对
 
