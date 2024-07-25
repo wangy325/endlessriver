@@ -1,5 +1,5 @@
 ---
-title: "Rime中州韻輸入引擎安裝與簡單調試記錄"
+title: "Rime中州韻輸入引擎安裝與輸入方案定製指北"
 date: 2024-06-06
 draft: false
 series: [rime]
@@ -602,6 +602,10 @@ import_tables:
 - rime.squirrel.WARNING，警告级别，可能会记录一些不影响使用的警告信息，如自定义配置缺失等
 
 可以通过`echo $TMPDIR`来快速定位日志文件的目录。
+
+---
+
+此次配置文件同步在 https://github.com/wangy325/squirrel_config，感兴趣的朋友可以自行下载使用。
 
 ---
 

@@ -27,7 +27,8 @@ Java基础知识容易忽视、混淆的点，简单做一些记录。另外还�
 #### 2 集合框架
 集合框架，开发中使用最多的Java工具类，不管是List，还是Hash还是Map，随处可见，然而要用好它们，可能需要更好地了解它们...
 
-- [数组与链表](collections/1_List.md)
+- [数组](collections/1_List_arraylist.md)
+- [链表](collections/1_List_linkedlist.md)
 - [队列](collections/2_Queue.md)
 - [映射集](collections/4_Map.md)
 - [HashMap的源码分析](collections/6_HashMap的源码分析.md)
@@ -40,8 +41,8 @@ Java基础知识容易忽视、混淆的点，简单做一些记录。另外还�
 
 本部分内容由浅入深，首先讨论了线程的概念，生命周期以及另一个重要的概念——**任务**。以及为什么需要并发，并发过程中会遇到的**共享资源**的问题。接下来，阐述了并发过程中常遇到的问题——**死锁(Dead Lock)**。
 
-- [线程与任务](concurrency/1线程与任务.md)
-- [资源访问受限](concurrency/2资源访问受限.md)
+- [线程与任务](concurrency/1线程与任务_1.md)
+- [锁与同步](concurrency/2资源访问受限_2_锁和条件.md)
 - [获取任务的返回值](concurrency/3获取任务的返回值.md)
 - [终结任务](concurrency/5终结任务.md)
 - [死锁](concurrency/4死锁.md)
