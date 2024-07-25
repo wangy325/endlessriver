@@ -13,12 +13,12 @@ weight: 6
 
 其与`HashMap`的差别在于其使用`LinkedList`来维护键值对插入的顺序，其插入机制和`HashMap`是一致的。
 
-`LinkedHashMap`和`HashMap`的[性能相差不大](./3_Set.md/#linkedhashset)与`HashSet`和`LinkedHashSet`一致：
+`LinkedHashMap`和`HashMap`的性能相差不大，与`HashSet`和`LinkedHashSet`[一致](./3_Set.md/#linkedhashset)：
 
 | 集合 | 特征 |
 |:--:|:--:|
-|HashMap|HashMap基于散列表，插入和查询键值对的开销是固定的|
-|LinkedHashMap|和HashMap类似，不过其使用LinkedList维护内部次序，因此其迭代顺序是插入顺序或者LRU（最近最少使用）次序，性能稍差于HashMap|
+|`HashMap`|`HashMap`基于散列表，插入和查询键值对的开销是固定的|
+|`LinkedHashMap`|和`HashMap`类似，不过其使用`LinkedList`维护内部次序，因此其迭代顺序是插入顺序或者LRU（最近最少使用）次序，性能稍差于`HashMap`|
 
 <!--more-->
 
