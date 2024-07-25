@@ -4,7 +4,7 @@ date: 2020-05-12
 categories: [java]
 tags: [collections]
 author: "wangy325"
-weight: 5
+weight: 8
 ---
 
 # Collections工具类

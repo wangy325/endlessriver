@@ -5,30 +5,29 @@ draft: false
 categories: [java]
 tags: [collections]
 author: "wangy325"
-weight: 2
+weight: 3
 ---
 
-# Queue队列
+Queue（队列），实际开发过程中，~~在单线程环境下~~使用的并不多，Queue作为集合框架中重要组成似乎习惯性被忽略。队列总是先持有元素，再处理元素[^1]。
 
-Queue（队列），实际开发过程中，在单线程环境下使用的情况下不多，Queue作为集合框架中重要组成似乎习惯性被忽略，队列总是先持有元素，再处理元素[^1]。
+[^1]: A collection designed for holding elements prior to processing
 
-![J7NBrQ.png](/img/Queue.png)
+![J7NBrQ.png](/img//collections/Queue.png)
 
-<p style="text-align:center;font-size:.9rem;font-style:italic">Queue继承关系简图</p>
+<p style="color:grey;text-align:center;font-size:.8rem;font-style:italic">Queue继承关系简图</p>
 
 <!--more-->
 
 除了Collection定义的操作之外，Queue定义了额外的插入/删除/检查元素的操作，这些操作有2种形式：
 
-
 |             | *Throws Exception* | *Returns special value* |
 | :---------: | :----------------: | :---------------------: |
-| **Insert**  |       add(e)       |        offer(e)         |
-| **Remove**  |      remove()      |         poll()          |
-| **Examine** |     element()      |         peek()          |
+| **Insert**  |       *add(e)*       |        *offer(e)*         |
+| **Remove**  |      *remove()*      |         *poll()*          |
+| **Examine** |     *element()*      |         *peek()*          |
 
 
-如表所示，add/remove/element方法失败后抛出异常。offer/poll/peek方法失败后返回一个特殊值（null或false，视具体操作不同），需要说明的是，~~`offer()`方法主要是为有容量限制的队列设计的~~ 对于有限队列而言，`offer()`方法比`add()`方法更可取。
+如表所示，*add/remove/element*方法失败后抛出异常。*offer/poll/peek*方法失败后返回一个特殊值（`null`或`false`，视具体操作不同），需要说明的是，~~`offer()`方法主要是为有容量限制的队列设计的~~ 对于有限队列而言，`offer()`方法比`add()`方法更可取。
 
 典型的队列遵从FIFO( *first-in-first-out* )原则，FIFO队列的新元素总是插入到队尾。
 
@@ -40,7 +39,7 @@ Queue（队列），实际开发过程中，在单线程环境下使用的情况
 
 `offer()`方法尝试向队列中插入一个元素，否则返回`false`，而`Collection.add`方法失败之后会抛出（运行时）异常。因此`offer()`方法适用于定容或有界队列中插入元素。
 
-队列中不允许插入`null`，或者说**不应**将`null`插入队列中（LinkedList允许空值），因为`null`会作为队列方法的特殊返回值（空队列指示器）出现，若将`null`插入队列，会引发歧义。
+队列中不允许插入`null`，或者说**不应**将`null`插入队列中（`LinkedList`允许空值），因为`null`会作为队列方法的特殊返回值（空队列指示器）出现，若将`null`插入队列，会引发歧义。
 
 **Queue有两个子接口：**
 
@@ -50,9 +49,9 @@ Queue（队列），实际开发过程中，在单线程环境下使用的情况
 
 2. Deque
 
-   **双端队列** 是支持从 **队首和队尾添加/删除元素** 的线性集合，一般来说，Deque **没有容量限制**，但是其也支持有限长度的实现。
+   **双端队列** 是支持从 **队首和队尾添加/删除元素** 的线性集合，一般来说，`Deque` **没有容量限制**，但是其也支持有限长度的实现。
 
-   从Deque的定义可知，其比Queue的定义多了队头的入队、队尾的出队以及相应的查看操作：
+   从`Deque`的定义可知，其比`Queue`的定义多了队头的入队、队尾的出队以及相应的查看操作：
 
    <table BORDER CELLPADDING=3 CELLSPACING=1>
      <tr>
@@ -90,46 +89,46 @@ Queue（队列），实际开发过程中，在单线程环境下使用的情况
      </tr>
     </table>
 
-   与Queue不同的是，获取而不删除的方法由`element()`变成了`getXXX()`，这些方法用来在队列头/尾中插入/删除/检查元素，当操作失败时有不同的处理：一组直接抛出异常，一组返回一个特殊值（null或false）。~~，同样地，返回特殊值的方法适用于有限容量的队列。~~
+   与`Queue`不同的是，获取而不删除的方法由`element()`变成了`getXXX()`，这些方法用来在队列头/尾中插入/删除/检查元素，当操作失败时有不同的处理：一组直接抛出异常，一组返回一个特殊值（null或false）。~~同样地，返回特殊值的方法适用于有限容量的队列。~~
 
-   由于Deque继承自Queue，当**其作为Queue使用时，是一个FIFO队列**，新元素会添加至队尾，删除操作删除队首元素，因此下表的方法在Deque作为Queue使用时是等价的：
+   由于`Deque`继承自`Queue`，当**其作为Queue使用时，是一个FIFO队列**，新元素会添加至队尾，删除操作删除队首元素，因此下表的方法在`Deque`作为`Queue`使用时是等价的：
 
 
-| Queue Methods | Equivalent Deque Methods |
-| :-----------: | :----------------------: |
-|    add(e)     |        addLast(e)        |
-|   offer(e)    |       offerLast(e)       |
-|   remove()    |      removeFirst()       |
-|    poll()     |       pollFirst()        |
-|   element()   |        getFirst()        |
-|    peek()     |       peekFirst()        |
+    | Queue Methods | Equivalent Deque Methods |
+    | :-----------: | :----------------------: |
+    |    add(e)     |        addLast(e)        |
+    |   offer(e)    |       offerLast(e)       |
+    |   remove()    |      removeFirst()       |
+    |    poll()     |       pollFirst()        |
+    |   element()   |        getFirst()        |
+    |    peek()     |       peekFirst()        |
 
 
    此外，**Deque还可以作为LIFO队列**（栈）使用，当作为栈使用时，新元素会从队首添加或删除，这种情况下，`java.util.Stack`的方法和Deque的方法是等价的：
 
-| Stack Methods | Equivalent Deque Methods |
-| :-----------: | :----------------------: |
-|    push(e)    |       addFirst(e)        |
-|     pop()     |      removeFirst()       |
-|    peek()     |       peekFirst()        |
+    | Stack Methods | Equivalent Deque Methods |
+    | :-----------: | :----------------------: |
+    |    push(e)    |       addFirst(e)        |
+    |     pop()     |      removeFirst()       |
+    |    peek()     |       peekFirst()        |
 
-   > ~~ArrayDeque 就是一个LIFO队列实现~~
+   > ArrayDeque~~就是一个LIFO队列实现~~可以用作LIFO队列
 
-  Deque**不提供**使用索引操作集合的方法。
+  `Deque`**不提供**使用索引操作集合的方法。
 
-   和Queue一样，虽然没有严格约束不能插入`null`到队列中，也强烈不推荐将`null`值插入。
+   和`Queue`一样，虽然没有严格约束不能插入`null`到队列中，也强烈不推荐将`null`值插入。
 
    除此之外，Deque还提供2个删除元素的方法：
 
-   > boolean removeFirstOccurrence(Object o);
-   >
-   > boolean removeLastOccurrence(Object o);
+     boolean removeFirstOccurrence(Object o);
+    
+     boolean removeLastOccurrence(Object o);
 
-# 1 优先级队列(NON-FIFO)实现——PriorityQueue
+## PriorityQueue
 
 优先级队列不允许`null`值。
 
-**优先级队列**是一个有序队列，其**底层是由堆( *heap* )实现的**，堆是一个可以自我调整的**二叉树**。优先级队列的排序依据可以来自元素的自然排序（实现Comparable接口）或自定义比较器，当使用自然排序规则时，优先级队列不允许插入non-comparable对象。
+**优先级队列**是一个有序队列，其**底层是由堆( *heap* )实现的**，堆是一个可以自我调整的**二叉树**。优先级队列的排序依据可以来自元素的自然排序（实现`Comparable`接口）或自定义比较器，当使用自然排序规则时，优先级队列不允许插入non-comparable对象。
 
 优先级队列的第一个元素(head)总是按照排序规则计算出最小元素，如果有几个相等的最小元素，那么head为其中任意一个，当使用`poll(`)或`remove()`后，其他最小元素自动移动至head。
 
@@ -138,7 +137,7 @@ Queue（队列），实际开发过程中，在单线程环境下使用的情况
 优先级队列是自动扩容的，其扩容机制为：
 
 - 当队列较小时（<64），容量翻倍；
-- 当队列长度>64时，容量增加一半（和ArrayList 一样）
+- 当队列长度>64时，容量增加一半（和`ArrayList` 一样）
 
 优先级队列也有迭代器，此迭代器不能按照指定排序规则顺序迭代元素——优先级队列并没有对所有元素进行排序，若想获得所有元素的排序，可以使用`Arrays.sort(pq.toArray())`。
 
@@ -170,9 +169,9 @@ sorted array:[1, 1, 6, 7, 9, 12]
 *///:~
 ```
 
-和上面的叙述一样，PriorityQueue并没有对所有元素进行排序，不过其保证了最小元素始终在队首，并且队列发生结构性变化时，队列中的元素“位置”也会发生变化。
+和上面的叙述一样，`PriorityQueue`并没有对所有元素进行排序，不过其保证了最小元素始终在队首，并且队列发生结构性变化时，队列中的元素“位置”也会发生变化。
 
-下例展示了如何在PriorityQueue中使用自定义比较器：
+下例展示了如何在`PriorityQueue`中使用自定义比较器：
 
 ```java
 static void userComparator() {
@@ -230,33 +229,33 @@ dell	lenovo	hp	samsung
 *///:~
 ```
 
-从结果来看，元素在PriorityQueue里**并不是全排序的**，不过其会自动将“最小”的元素移动至队首。
+从结果来看，元素在`PriorityQueue`里**并不是全排序的**，不过其会自动将“最小”的元素移动至队首。
 
-此例中，如果不在构造器中指定比较器，PriorityQueue会在运行时抛出 `ClassCastException`——试图将`PC`向上转型为Comparable时异常。
+此例中，如果不在构造器中指定比较器，`PriorityQueue`会在运行时抛出 `ClassCastException`——试图将`PC`向上转型为Comparable时异常。
 
-# 2 双端队列的双向链表实现——LinkedList
+## LinkedList
 
-LinkedList是Deque的实现，可以作为双端队列使用，其实现了Deque声明的所有方法。
+`LinkedList`是`Deque`的实现，可以作为双端队列使用，其实现了`Deque`声明的所有方法。
 
-想将LinkedList作为Deque使用，须将其声明为 Deque：
+想将`LinkedList`作为`Deque`使用，须将其声明为 `Deque`：
 
 ```java
 Deque<String> deque = new LinkedList<>();
 ```
 
-LinkedList得益于双向链表节点的灵活性，很容易就能够实现在首尾两端对元素进行操作。
+`LinkedList`得益于双向链表节点的灵活性，很容易就能够实现在首尾两端对元素进行操作。
 
-# 3 双端队列的循环数组实现——ArrayDeque
+## ArrayDeque
 
-ArrayDeque是由**循环数组**实现的双端队列，没有容量限制，并且能够自动扩容，**不允许** 插入`null`值。
+`ArrayDeque`是由**循环数组**实现的双端队列，没有容量限制，并且能够自动扩容，**不允许** 插入`null`值。
 
-> ArrayDeque作为栈（ *LIFO* 队列）使用时，效率比`java.util.Stack`高。
+> `ArrayDeque`作为栈（ *LIFO* 队列）使用时，效率比`java.util.Stack`高。
 >
-> ArrayDeque作为Queue使用时，效率比LinkedList高。
+> `ArrayDeque`作为`Queue`使用时，效率比`LinkedList`高。
 
-ArrayDeque的迭代器也是 *fail-fast* 的，意味着和ArrayList一样，在获取迭代器之后使用集合方法对队列进行结构性修改会引发 *ConcurrentModificationException*。
+`ArrayDeque`的迭代器也是 *fail-fast* 的，意味着和`ArrayList`一样，在获取迭代器之后使用集合方法对队列进行结构性修改会引发 *ConcurrentModificationException*。
 
-ArrayDeque主要的字段域有：
+`ArrayDeque`主要的字段域有：
 
 ```java
 transient Object[] elements;
@@ -267,7 +266,7 @@ private static final int MIN_INITIAL_CAPACITY = 8;
 
 elements用于存储数据，head和tail分别用来标记队列的头尾。 *MIN_INITIAL_CAPACITY* 是创列的最小容量（2<sup>3</sup>）。当构造器没有指定容量时，初始化容量为16；只有当指定容量且**数值小于8时**才会使用8作为初始容量。
 
-<span id="resize">参考如下源码</span>：
+参考如下源码：
 
 ```java
 // ArrayDeque初始化时容量的计算
@@ -294,6 +293,8 @@ private static int calculateSize(int numElements) {
 若指定容量>8时，那么需要对其进行 **5次右移及位或运算保证最终的容量大小是2<sup>n</sup>**，比如传进来的参数是13，那么最后得到的容量就是2<sup>4</sup>。
 
 ArrayDeque中，当`head==tail`[^2]时触发扩容，容量增加一倍。
+
+[^2]: head和tail在循环数组中的行为是如何？
 
 > TODO
 
@@ -342,7 +343,7 @@ private void doubleCapacity() {
 }
 ```
 
-一般地，循环队列都是使用**模运算**实现的，而ArrayDeque通过**位运算**来实现循环队列，Java集合框架中很多地方都使用了位运算（如HashMap的扩容），位运算和模运算有[如下关系](https://blog.csdn.net/lonyw/article/details/80519652)：
+一般地，循环队列都是使用**模运算**实现的，而`ArrayDeque`通过**位运算**来实现循环队列，Java集合框架中很多地方都使用了位运算（如HashMap的扩容），位运算和模运算有[如下关系](https://blog.csdn.net/lonyw/article/details/80519652)：
 
 > x % 2<sup>n</sup> = x & (2<sup>n</sup> - 1)
 
@@ -351,20 +352,20 @@ private void doubleCapacity() {
 当触发扩容时，将容量增加一倍，同时使用两次`System.arraycopy`将原数组拷贝到新数组中，现引用[ArrayDeque扩容](https://www.jianshu.com/p/b65c22587bdb)将其机制作简要阐述：
 
 > 假如默认容量16，此时数组情况如图
-> ![JOvQtx.png](/img/ArrayDeque_full.png)
+> ![JOvQtx.png](/img/collections/ArrayDeque_full.png)
 >
 > 当再次调用`addFirst("G")`时，
 >
-> ![JOvUHA.png](/img/ArrayDeque_full_2.png)
+> ![JOvUHA.png](/img/collections/ArrayDeque_full_2.png)
 >
 > 此时~~head==tail~~，触发扩容，将会创建一个大小为 **16*2** 的新数组，然后通过两次拷贝将原数组的数据复制到新数组
 >
 > - 第一次将***G-H***拷贝到新数组
 > - 第二次将***A-F***拷贝到新数组
 >
-> ![JOvXU1.jpg](/img/ArrayDeque_full_3.jpg)
+> ![JOvXU1.jpg](/img/collections/ArrayDeque_full_3.jpg)
 >
-> <p style="text-align:center;font-style:italic;font-size:.9rem">ArrayDeque扩容图解<sup>  来源见水印</sup></p>
+> <p style="text-align:center;font-style:italic;font-size:.8rem;color:grey">ArrayDeque扩容图解<sup>  来源见水印</sup></p>
 
 参考如下示例：
 
@@ -396,8 +397,7 @@ array size : 8
 *///~
 ```
 
-ArrayDeque的具体方法就不再赘述了，其囊括了作为Queue以及Stack的的实现。
+`ArrayDeque`的具体方法就不再赘述了，其囊括了作为`Queue`以及`Stack`的的实现。
 
+---
 
-[^1]: A collection designed for holding elements prior to processing
-[^2]: head和tail在循环数组中的行为是如何？
