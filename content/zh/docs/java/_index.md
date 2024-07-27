@@ -31,7 +31,7 @@ Java基础知识容易忽视、混淆的点，简单做一些记录。另外还�
 - [链表](collections/1_List_linkedlist.md)
 - [队列](collections/2_Queue.md)
 - [映射集](collections/4_Map.md)
-- [HashMap的源码分析](collections/6_HashMap的源码分析.md)
+- [HashMap的源码分析](collections/5_HashMap的源码分析.md)
 - ...
 {{< /columns >}}
 
@@ -49,10 +49,12 @@ Java基础知识容易忽视、混淆的点，简单做一些记录。另外还�
 
 接下来，开始讨论执行器和线程池。执行器可以看作执行任务的*trigger*，Java提供了不同类型的执行器和线程池，以应对不同的应用场景，各线程池的线程创建及销毁条件都有所区别，了解线程池中线程的创建、入队、销毁、拒绝机制，对于理解线程池以及Java并发有很大的帮助。此外，Java还提供了其他一些重要的并发组件，比如**阻塞队列**，**倒计时门栅**，**信号量**等等，一并作介绍。
 
-- [执行器和线程池](concurrency/7_1_Executors.md)
-- [计划执行任务](concurrency/8计划执行任务.md)
-- [阻塞队列与生产-消费模式](concurrency/6生产者-消费者与阻塞队列.md)
-- [其他重要的并发组件](concurrency/9其他重要的并发组件.md)
+- [执行器和线程池]
+  - [Ececutors and ExecutorServices](./concurrency/7_1_Executors_and_ExecutorService.md)
+  - [ThreadPoolExecutor](./concurrency/7_2_ThreadPoolExecutor1.md)
+- [计划执行任务](./concurrency/8_1_ScheduledExecutorService1.md)
+- [阻塞队列与生产-消费模式](./concurrency/6生产者-消费者与阻塞队列.md)
+- [其他重要的并发组件](./concurrency/9_3_semaphore.md)
 
 最后，简单地讨论了Java的内存模型，同时讨论了`volatile`这个曾经饱受争议的关键字，介绍了Java虚拟机执行程序的**指令重排**。
 
