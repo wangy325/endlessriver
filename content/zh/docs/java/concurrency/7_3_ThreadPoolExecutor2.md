@@ -7,7 +7,7 @@ categories: [java]
 tags: [concurrency]
 ---
 
-[前文](./7_2_ExecutorService.md/#threadpoolexecutor)说过，`ThreadPoolExecutor`实例代表了Java线程池，前面我们介绍了`ThreadPoolExecutor`的构造器和几个核心概念，在本节中，我们着重介绍线程池的执行过程以及线程池的关闭。
+[前文](./7_2_ThreadPoolExecutor1.md/#threadpoolexecutor)说过，`ThreadPoolExecutor`实例代表了Java线程池，前面我们介绍了`ThreadPoolExecutor`的构造器和几个核心概念，在本节中，我们着重介绍线程池的执行过程以及线程池的关闭。
 
 <!--more-->
 
@@ -58,7 +58,7 @@ public boolean isTerminated() {
 
 了解了线程池的工作状态，接下来我们尝试去深入任务是如何在线程池中被执行的，以及线程池中核心线程，任务队列以及非核心线程之间是如何协同工作的。
 
-在[任务队列](./7_2_ExecutorService.md/#任务队列)中，我们阐述了任务队列与线程池之间存在交互关系，这种交互关系体现了线程池执行任务的重要过程。
+在[任务队列](./7_2_ThreadPoolExecutor1.md/#任务队列)中，我们阐述了任务队列与线程池之间存在交互关系，这种交互关系体现了线程池执行任务的重要过程。
 
 <center style="font-size:.8rem;font-style:italic;color:grey">
 
@@ -71,7 +71,7 @@ public boolean isTerminated() {
 
 ###  提交任务
 
-在介绍[ExecutorService](./7_2_ExecutorService.md/#executorservice接口)时我们提到了`AbstractExecutorService`基类，它有两个重要的作用：
+在介绍[ExecutorService](./7_2_ThreadPoolExecutor1.md/#executorservice接口)时我们提到了`AbstractExecutorService`基类，它有两个重要的作用：
 
 1. 将所有的任务提交转变为执行一个`FutureTask`
 2. 实现了`invokeAny/invokeAll`方法
@@ -216,7 +216,7 @@ private boolean addWorker(Runnable firstTask, boolean core) {
 
 ###  创建空线程
 
-前面介绍[核心概念](./7_2_ExecutorService.md/#核心线程池与最大线程池)的时候说到，线程池初始化成功之后，池中是没有活动线程的，不过线程池具有很好的灵活性，可以进行动态配置。使用`prestartCoreThread()`和`prestartAllCoreThreads()`方法可以向线程池中添加**核心**线程，这些线程并没有使用任务初始化，不过其会尝试去队列中获取任务执行，若队列为空，这些线程就会挂起(waiting)[^7]。
+前面介绍[核心概念](./7_2_ThreadPoolExecutor1.md/#核心线程池与最大线程池)的时候说到，线程池初始化成功之后，池中是没有活动线程的，不过线程池具有很好的灵活性，可以进行动态配置。使用`prestartCoreThread()`和`prestartAllCoreThreads()`方法可以向线程池中添加**核心**线程，这些线程并没有使用任务初始化，不过其会尝试去队列中获取任务执行，若队列为空，这些线程就会挂起(waiting)[^7]。
 
 ```java
 /** 创建一个核心线程*/

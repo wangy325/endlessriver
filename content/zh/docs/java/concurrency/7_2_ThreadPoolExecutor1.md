@@ -8,7 +8,7 @@ tags: [concurrency]
 ---
 
 
-[前文](./7_1_Executors.md)就已经提过，`Executors`执行器创建的线程池包括不同实现，可以应对不同的场景，那么Java中包含哪些实现呢？
+[前文](./7_1_Executors_and_ExecutorService.md)就已经提过，`Executors`执行器创建的线程池包括不同实现，可以应对不同的场景，那么Java中包含哪些实现呢？
 
 本问就来讨论这些实现。
 

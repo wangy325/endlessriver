@@ -334,7 +334,7 @@ queue size: 0
 
 ##  关闭线程池
 
-除了继承`ThreadPoolExecutor`的[线程池关闭](../执行器与线程池/##3-3-如何合理地关闭线程池)的逻辑之外，`ScheduledThreadPoolExecutor`关闭线程池和其基类还有些许差异，主要是其通过实现`onShutdown`方法，实现了新的关闭策略。
+除了继承`ThreadPoolExecutor`的[线程池关闭](./7_3_ThreadPoolExecutor2.md/#如何合理地关闭线程池)的逻辑之外，`ScheduledThreadPoolExecutor`关闭线程池和其基类还有些许差异，主要是其通过实现`onShutdown`方法，实现了新的关闭策略。
 
 ###  onShutDown方法
 
