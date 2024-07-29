@@ -1,5 +1,5 @@
 ---
-title: "Git入门2"
+title: "Git合并与分支管理"
 date: 2018-09-20
 draft: false
 tags: []
@@ -8,16 +8,17 @@ author: "wangy325"
 
 ---
 
-git fetch 与 git pull
+
+> 此文的操作背景在本次工作空间的master分支下, 并且追踪远程master分支
+> 部分内容参考自[yibai.com](https://www.yiibai.com/git/git_pull.html)
+
+[常用操作速查](./Git入门1.md)说到, git版本控制的基本原型与操作逻辑. 如果出现两台机器(比如公司和家)上同时更改'本地仓库'内容并且`push`到远程库中,那么必然会导致另一个版本库中的文件低于远程库,如果是有效的改动, 必然涉及到本地库和远程库同步的问题, 这涉及到3个关键词: `fetch`, `merge`, `pull`
+
 
 <!--more-->
 
-> 此文的操作背景在本次工作空间的master分支下, 并且追踪远程master分支
-> 部分内容引用自[yibai.com](https://www.yiibai.com/git/git_pull.html)
 
-前文说到, git版本控制的基本原型与操作逻辑. 如果出现两台机器(比如公司和家)上同时更改'本地仓库'内容并且`push`到远程库中,那么必然会导致另一个版本库中的文件低于远程库,如果是有效的改动, 必然涉及到本地库和远程库同步的问题, 这涉及到3个关键词: `fetch`, `merge`, `pull`
-
-#### git fetch
+## git fetch
 
 > 从一个或多个其他存储库中获取分支和/或标签(统称为“引用”)以及完成其历史所必需的对象
 
@@ -29,7 +30,7 @@ $ git fetch origin master
 
 命令. `git fetch` 命令会默认拉取所有分支信息. 但是仅仅这样, 本地的文件并没有更新, 因为这一操作仅仅'检查到有可用更新', 要'更新'本地仓库工作空间的文件,还需要另一个命令: `git merge`
 
-#### git merge
+## git merge
 
 > 命令用于将两个或两个以上的开发历史加入(合并)一起
 
@@ -60,7 +61,7 @@ $ git merge origin/master
 
 > 注意：上述命令会自动将合并后的结果提交(commit), 如果想要对合并进行进一步更改时, 可以使用 `--no-commit` 选项
 
-#### git pull
+## git pull
 
 > 取回远程主机某个分支的更新(fetch)，再与本地的指定分支合并(merge)
 
@@ -83,7 +84,7 @@ $ git fetch origin master
 $ git merge origin/master
 ```
 
-#### 分支追踪关系
+## 分支追踪关系
 
 一般地, Git会自动在本地分支和远程分支之间建立一种追踪关系(tracking). 建立追踪关系的分支之间可以建立更加简便的操作.
 
@@ -112,7 +113,7 @@ $ git pull origin
 $ git pull
 ```
 
-#### git fetch和git pull的区别
+## git fetch和git pull的区别
 
 - *git fetch* : 从远程获取最新的版本到本地, 但是不会自动合并
 - *git pull* : 从远程获取最新版本并且合并到本地
@@ -133,3 +134,9 @@ $ git fetch origin master:tmp
 $ git diff tmp
 $ git merge tmp
 ```
+
+---
+
+TODO:
+
+- [ ] git rabase

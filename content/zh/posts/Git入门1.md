@@ -1,5 +1,5 @@
 ---
-title: "Git入门1"
+title: "Git常用命令速查"
 date: 2018-09-19
 draft: false
 categories: [git]
@@ -8,12 +8,10 @@ author: "wangy325"
 
 ---
 
-本文简单介绍了Git本地仓库的构建，与远程仓库的关联
-
-<!--more-->
+本文简单介绍了Git本地仓库的构建，与远程仓库的关联。
 
 
-# 安装
+# 安装Git
 
 ubuntu下安装：
 
@@ -22,6 +20,8 @@ sudo apt install git
 ```
 
 windows 下安装，需[下载](https://git-scm.com/downloads)安装包
+
+<!--more-->
 
 # Git 本地仓库的创建
 
@@ -89,7 +89,8 @@ git push -u origin master
 - 远程仓库(remote repository):远程版本库，`push`推送本地文件到远程版本库，`fetch`从远程版本库拉取 ~~资源~~ 版本信息，`pull`从远程版本库中拉取资源
 
 
-<center style="font-size:13px;font-family:auto;color:darkgray">
+<center style="font-size:.8rem;font-style:italic;color:darkgray">
+
 ![imLgtx.png](/img/git_stage.png)
 
 Git本地工作区，暂存区，版本库的概念，图引自[易百教程](https://www.yiibai.com/git/)
