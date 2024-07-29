@@ -8,6 +8,7 @@ date = "2017-08-20T21:38:52+08:00"
 
 {{< youtube "UeeuEplH3D0" >}}
 
+
 这首`Things left unsaid`出自 [*Pink Floyd*](https://en.wikipedia.org/wiki/Pink_Floyd) 2014年的专辑`endless river`，自私地用作博客名字。那时想找点摇滚来听，恰逢**Pink Floyd**这张专辑发行，也是我第一次接触计算机"技术"，准确点说，是接触Ubuntu。我想，Pink Floyd我想我会一直听，技术之路，也会一直走。
 
 <!--more-->

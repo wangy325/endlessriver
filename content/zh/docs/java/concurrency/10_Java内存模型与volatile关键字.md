@@ -1,5 +1,5 @@
 ---
-title: "Java内存模型与volatile关键字(转)"
+title: "JMM与volatile关键字(转)"
 date: 2020-10-27
 categories: [java]
 tags: [concurrency]

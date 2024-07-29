@@ -10,13 +10,13 @@ categories: [java]
 ---
 
 
-trim标记是一个格式化的标记，可以完成set或者是where标记的功能
+`trim`标记是一个格式化的标记，可以完成`set`或者是`where`标记的功能。
 
 <!--more-->
 
 ## 样例一
 
-```
+```sql
 　　select * from user
 
 　　<trim prefix="WHERE" prefixoverride="AND |OR">
@@ -38,7 +38,7 @@ trim标记是一个格式化的标记，可以完成set或者是where标记的�
 
 ## 样例二
 
-```
+```sql
 　　update user
 
 　　<trim prefix="set" suffixoverride="," suffix=" where id = #{id} ">
@@ -60,7 +60,7 @@ trim标记是一个格式化的标记，可以完成set或者是where标记的�
 
 实例:
 
-```
+```sql
 insert into yd_submit_fail
 <trim prefix="(" suffix=")" suffixOverrides="," >  
 	<if test="id != null" >

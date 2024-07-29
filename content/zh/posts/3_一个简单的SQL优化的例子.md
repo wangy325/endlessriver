@@ -6,9 +6,6 @@ tags: []
 categories: [mysql]
 ---
 
-
-<!--more-->
-
 例如，我在执行以下sql语句的时候
 
 ```sql
@@ -29,6 +26,8 @@ SELECT projectId FROM lywl_equip_package WHERE salesId in (
 		AND t2.datapackage_cycle = 1
 	)
 ```
+
+<!--more-->
 
 以上sql查询的是订购移动跨月销售品的设备id, 查询耗时 6.462s。
 

@@ -9,12 +9,12 @@ author: "wangy325"
 ---
 
 
-本文介绍在如何在xxl-job中使用创建并使用分片任务。
+本文介绍在如何在[xxl-job](https://www.xuxueli.com/xxl-job/#%E3%80%8A%E5%88%86%E5%B8%83%E5%BC%8F%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E5%B9%B3%E5%8F%B0XXL-JOB%E3%80%8B)中使用创建并使用分片任务。
+
+
+`xxl-job`是国内开源的一款轻量级分布式任务调度平台，开发者是大众点评的工程师，其目前维护一个[开源社区](https://www.xuxueli.com/)，里面还有很多已经发布或尚在孵化的开源项目。
 
 <!--more-->
-
-[xxl-job](https://www.xuxueli.com/xxl-job/#%E3%80%8A%E5%88%86%E5%B8%83%E5%BC%8F%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E5%B9%B3%E5%8F%B0XXL-JOB%E3%80%8B)是国内开发者提供的一款轻量级分布式任务调度平台，开发者是大众点评的工程师，其目前维护一个[开源社区](https://www.xuxueli.com/)，里面还有很多已经发布或尚在孵化的开源项目。
-
 
 **任务分片**是一个以空间换时间的概念，旨在将耗时任务进行拆分，然后同时执行，拆分之后执行的结果对任务任务原来不分片执行的结果没有影响。
 
@@ -107,7 +107,8 @@ public void singleExecutorMultiThreadsCityJob() throws Exception {
                 .forEach(i -> {
                     int cityId = CITY_ID_LIST.get(i);
                     List<String> task = TASKS.get(cityId);
-                    task.forEach(t -> XxlJobHelper.log("【{}】执行【{}】，任务内容为：{}",
+                    task.forEach(t -> XxlJobHelper.log("【{}】执行【{}】，
+                        任务内容为：{}",
                         Thread.currentThread().getName(), cityId, t));
                 });
     } else {
@@ -120,7 +121,8 @@ public void singleExecutorMultiThreadsCityJob() throws Exception {
                     List<String> task = TASKS.get(cityId);
                     Optional.ofNullable(task).ifPresent(todoTasks -> {
                         todoTasks.forEach(t ->
-                            XxlJobHelper.log("【{}】执行【{}】，任务内容为：{}",
+                            XxlJobHelper.log("【{}】执行【{}】，
+                                任务内容为：{}",
                                 Thread.currentThread().getName(), cityId, t));
                     });
                 });
@@ -170,7 +172,8 @@ public void multiExecutorShardingCityJob() throws Exception {
             int cityId = CITY_ID_LIST.get(i);
             List<String> task = TASKS.get(cityId);
             Optional.ofNullable(task).ifPresent(todoTasks -> {
-                todoTasks.forEach(t -> XxlJobHelper.log("实例【{}】执行【{}】，任务内容为：{}",
+                todoTasks.forEach(t -> XxlJobHelper.log("实例【{}】执行【{}】，
+                任务内容为：{}",
                 shardIndex, cityId, t));
             });
         }
