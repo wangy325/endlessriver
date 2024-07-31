@@ -228,7 +228,7 @@ xml配置如下[^1]：
 测试包中提供了2个测试类，分别用于测试基于`JavaBean+注解`、基于xml文件的aop配置；
 
 - [TrackCounterTest]用于测试基于javaBean和注解实现的aop，这是推荐的方式
-- [TrackCountTestWithXml]用于测试基于xml配置的aop，在运行此测试时，需要注释掉[TrackCount](src/main/java/com/wangy/aop/TrackCounter.java)类上的`@Aspect`注解，以免Application Context注入2个切面
+- [TrackCountTestWithXml]用于测试基于xml配置的aop，在运行此测试时，需要注释掉`TrackCount`类上的`@Aspect`注解，以免Application Context注入2个切面
 
 以下是使用xml配置的测试样例：
 

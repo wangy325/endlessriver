@@ -41,7 +41,7 @@ Java 堆是垃圾收集器管理的主要区域，因此也被称作**GC 堆（G
 
 **堆空间的基本结构：**
 
-![](/img/jvm-gc-heap.png)
+![](/img/jvm/jvm-gc-heap.png)
 
 上图所示的 Eden 区、From Survivor0("From") 区、To Survivor1("To") 区都属于新生代，Old Memory 区属于老年代。
 
@@ -100,14 +100,14 @@ public class GCTest {
 }
 ```
 通过以下方式运行：
-![](/img/jvm-gc-test-1.png)
+![](/img/jvm/jvm-gc-test-1.png)
 
 添加的参数：`-XX:+PrintGCDetails`
-![](/img/jvm-gc-test-2.png)
+![](/img/jvm/jvm-gc-test-2.png)
 
 运行结果 (红色字体描述有误，应该是对应于 JDK1.7 的永久代)：
 
-![](/img/jvm-gc-test-3.jpeg)
+![](/img/jvm/jvm-gc-test-3.jpeg)
 
 从上图我们可以看出 eden 区内存几乎已经被分配完全（即使程序什么也不做，新生代也会使用 2000 多 k 内存）。假如我们再为 allocation2 分配内存会出现什么情况呢？
 
@@ -115,7 +115,7 @@ public class GCTest {
 allocation2 = new byte[900*1024];
 ```
 
-![](/img/jvm-gc-test-4.jpeg)
+![](/img/jvm/jvm-gc-test-4.jpeg)
 
 **简单解释一下为什么会出现这种情况：** 因为给 allocation2 分配内存的时候 eden 区内存几乎已经被分配完了，我们刚刚讲了当 Eden 区没有足够空间进行分配时，虚拟机将发起一次 Minor GC.GC 期间虚拟机又发现 allocation1 无法存入 Survivor 空间，所以只好通过 **分配担保机制** 把新生代的对象提前转移到老年代中去，老年代上的空间足够存放 allocation1，所以不会出现 Full GC。执行 Minor GC 后，后面分配的对象如果能够存在 eden 区的话，还是会在 eden 区分配内存。可以执行如下代码验证：
 
@@ -185,7 +185,7 @@ public class GCTest {
 
 上面的说法已经在《深入理解Java虚拟机》第三版中被改正过来了。感谢R大的回答：
 
-![](/img/jvm-gc-zhihu.jpg)
+![](/img/jvm/jvm-gc-zhihu.jpg)
 
 **总结：**
 
@@ -203,7 +203,7 @@ public class GCTest {
 
 堆中几乎放着所有的对象实例，对堆垃圾回收前的第一步就是要判断那些对象已经死亡（即不能再被任何途径使用的对象）。
 
-![](/img/jvm-gc-object-death.png)
+![](/img/jvm/jvm-gc-object-death.png)
 
 ### 2.1 引用计数法
 
@@ -231,7 +231,7 @@ public class ReferenceCountingGc {
 这个算法的基本思想就是通过一系列的称为 **“GC Roots”** 的对象作为起点，从这些节点开始向下搜索，节点所走过的路径称为引用链，当一个对象到 GC Roots 没有任何引用链相连的话，则证明此对象是不可用的。
 
 <center>
-![可达性分析算法 ](/img/jvm-gc-object-death-2.png)
+![可达性分析算法 ](/img/jvm/jvm-gc-object-death-2.png)
 </center>
 
 可作为GC Roots的对象包括下面几种:
@@ -322,25 +322,25 @@ graph TD
 1. **效率问题**
 2. **空间问题（标记清除后会产生大量不连续的碎片）**
 
-<!-- ![](/img/jvm-gc-mark-sweep.jpeg) -->
+<!-- ![](/img/jvm/jvm-gc-mark-sweep.jpeg) -->
 
-<img src="/img/jvm-gc-mark-sweep.jpeg" alt="标记-清除算法" width="400px" position="center"/>
+<img src="/img/jvm/jvm-gc-mark-sweep.jpeg" alt="标记-清除算法" width="400px" position="center"/>
 
 ### 3.2 复制算法
 
 为了解决效率问题，“复制”收集算法出现了。它可以将内存分为大小相同的两块，每次使用其中的一块。当这一块的内存使用完后，就将还存活的对象复制到另一块去，然后再把使用的空间一次清理掉。这样就使每次的内存回收都是对内存区间的一半进行回收。
 
-<!-- ![复制算法](/img/jvm-gc-copy-clean.png) -->
+<!-- ![复制算法](/img/jvm/jvm-gc-copy-clean.png) -->
 
-<img src="/img/jvm-gc-copy-clean.png" alt="复制算法" width="400px" position="center"/>
+<img src="/img/jvm/jvm-gc-copy-clean.png" alt="复制算法" width="400px" position="center"/>
 
 ### 3.3 标记-整理算法
 
 根据老年代的特点提出的一种标记算法，标记过程仍然与“标记-清除”算法一样，但后续步骤不是直接对可回收对象回收，而是让所有存活的对象向一端移动，然后直接清理掉端边界以外的内存。
 
-<!-- ![标记-整理算法 ](/img/jvm-gc-mark-compact.png) -->
+<!-- ![标记-整理算法 ](/img/jvm/jvm-gc-mark-compact.png) -->
 
-<img src="/img/jvm-gc-mark-compact.png" alt="标记-整理算法" width="400px" position="center"/>
+<img src="/img/jvm/jvm-gc-mark-compact.png" alt="标记-整理算法" width="400px" position="center"/>
 
 ### 3.4 分代收集算法
 
@@ -368,9 +368,9 @@ graph TD
 ### 4.1 Serial 收集器
 Serial（串行）收集器收集器是最基本、历史最悠久的垃圾收集器了。大家看名字就知道这个收集器是一个单线程收集器了。它的 **“单线程”** 的意义不仅仅意味着它只会使用一条垃圾收集线程去完成垃圾收集工作，更重要的是它在进行垃圾收集工作的时候必须暂停其他所有的工作线程（ **"Stop The World"** ），直到它收集结束。
 
-<!-- ![ Serial 收集器 ](/img/jvm-gc-coll-serial.png) -->
+<!-- ![ Serial 收集器 ](/img/jvm/jvm-gc-coll-serial.png) -->
 
-<img src="/img/jvm-gc-coll-serial.png" alt="Serial 收集器" caption="新生代复制算法，老年代标记-整理算法" width="400px" position="center"/>
+<img src="/img/jvm/jvm-gc-coll-serial.png" alt="Serial 收集器" caption="新生代复制算法，老年代标记-整理算法" width="400px" position="center"/>
 
 虚拟机的设计者们当然知道 Stop The World 带来的不良用户体验，所以在后续的垃圾收集器设计中停顿时间在不断缩短（仍然还有停顿，寻找最优秀的垃圾收集器的过程仍然在继续）。
 
@@ -380,9 +380,9 @@ Serial（串行）收集器收集器是最基本、历史最悠久的垃圾收�
 
 **ParNew 收集器其实就是 Serial 收集器的多线程版本，除了使用多线程进行垃圾收集外，其余行为（控制参数、收集算法、回收策略等等）和 Serial 收集器完全一样。**
 
-<!-- ![ParNew 收集器 ](/img/jvm-gc-coll-parnew.png) -->
+<!-- ![ParNew 收集器 ](/img/jvm/jvm-gc-coll-parnew.png) -->
 
-<img src="/img/jvm-gc-coll-parnew.png" alt="ParNew 收集器" caption="新生代复制算法，老年代标记-整理算法" width="400px" position="center"/>
+<img src="/img/jvm/jvm-gc-coll-parnew.png" alt="ParNew 收集器" caption="新生代复制算法，老年代标记-整理算法" width="400px" position="center"/>
 
 它是许多运行在 Server 模式下的虚拟机的首要选择，除了 Serial 收集器外，只有它能与 CMS 收集器（真正意义上的并发收集器，后面会介绍到）配合工作。
 
@@ -409,9 +409,9 @@ Parallel Scavenge 收集器也是使用复制算法的多线程收集器，它�
 
 **Parallel Scavenge 收集器关注点是吞吐量（高效率的利用 CPU）。CMS 等垃圾收集器的关注点更多的是用户线程的停顿时间（提高用户体验）。所谓吞吐量就是 CPU 中用于运行用户代码的时间与 CPU 总消耗时间的比值。** Parallel Scavenge 收集器提供了很多参数供用户找到最合适的停顿时间或最大吞吐量，如果对于收集器运作不太了解，手工优化存在困难的时候，使用Parallel Scavenge收集器配合自适应调节策略，把内存管理优化交给虚拟机去完成也是一个不错的选择。
 
-<!-- ![Parallel Scavenge 收集器](/img/jvm-gc-coll-parallel-scavenge.png) -->
+<!-- ![Parallel Scavenge 收集器](/img/jvm/jvm-gc-coll-parallel-scavenge.png) -->
 
-<img src="/img/jvm-gc-coll-parallel-scavenge.png" alt="Parallel Scavenge 收集器" caption="新生代复制算法，老年代标记-整理算法" width="400px" position="center"/>
+<img src="/img/jvm/jvm-gc-coll-parallel-scavenge.png" alt="Parallel Scavenge 收集器" caption="新生代复制算法，老年代标记-整理算法" width="400px" position="center"/>
 
 **是JDK1.8默认收集器**  
  使用java -XX:+PrintCommandLineFlags -version命令查看
@@ -444,9 +444,9 @@ JDK1.8默认使用的是Parallel Scavenge + Parallel Old，如果指定了-XX:+U
 - **并发清除：** 开启用户线程，同时 GC 线程开始对未标记的区域做清扫。
 
 
-<!-- ![CMS 垃圾收集器](/img/jvm-gc-coll-cms.png) -->
+<!-- ![CMS 垃圾收集器](/img/jvm/jvm-gc-coll-cms.png) -->
 
-<img src="/img/jvm-gc-coll-cms.png" alt="CMS 垃圾收集器" width="400px" position="center"/>
+<img src="/img/jvm/jvm-gc-coll-cms.png" alt="CMS 垃圾收集器" width="400px" position="center"/>
 
 
 从它的名字就可以看出它是一款优秀的垃圾收集器，主要优点：**并发收集、低停顿**。但是它有下面三个明显的缺点：
@@ -484,20 +484,20 @@ G1 收集器的运作大致分为以下几个步骤：
 
 ### 5.1 Java内存区域常见配置概览
 
-![](/img/jvm-general-param.jpg)
+![](/img/jvm/jvm-general-param.jpg)
 
 ### 5.2 堆参数
 
-<!-- ![堆参数](/img/jvm-heap-param.jpg) -->
+<!-- ![堆参数](/img/jvm/jvm-heap-param.jpg) -->
 
-</img src="/img/jvm-heap-param.jpg" alt="堆参数" width="500px" position="center"/>
+</img/jvm src="/img/jvm/jvm-heap-param.jpg" alt="堆参数" width="500px" position="center"/>
 
 
 ### 5.3 回收器参数
 
-<!-- ![垃圾回收器参数](/img/jvm-coll-param.jpg) -->
+<!-- ![垃圾回收器参数](/img/jvm/jvm-coll-param.jpg) -->
 
-<img src="/img/jvm-coll-param.jpg" alt="垃圾回收器参数" width="500px" position="center"/>
+<img src="/img/jvm/jvm-coll-param.jpg" alt="垃圾回收器参数" width="500px" position="center"/>
 
 如上表所示，目前**主要有串行、并行和并发三种**，对于大内存的应用而言，串行的性能太低，因此使用到的主要是并行和并发两种。并行和并发 GC 的策略通过 `UseParallelGC `和` UseConcMarkSweepGC` 来指定，还有一些细节的配置参数用来配置策略的执行方式。例如：`XX:ParallelGCThreads`， `XX:CMSInitiatingOccupancyFraction` 等。 通常：Young 区对象回收只可选择并行（耗时间），Old 区选择并发（耗 CPU）。
 
@@ -506,15 +506,15 @@ G1 收集器的运作大致分为以下几个步骤：
 > 在Java8中永久代的参数<code>-XX:PermSize</code> 和<code>-XX：MaxPermSize</code>已经失效。
 >
 > 按需求弹性配置各项参数，请勿死记硬背
-<!-- ![项目中垃圾回收器常用配置](/img/jvm-proj-param.jpg) -->
+<!-- ![项目中垃圾回收器常用配置](/img/jvm/jvm-proj-param.jpg) -->
 
-<img src="/img/jvm-proj-param.jpg" alt="项目中垃圾回收器常用配置" width="500px" position="center"/>
+<img src="/img/jvm/jvm-proj-param.jpg" alt="项目中垃圾回收器常用配置" width="500px" position="center"/>
 
 ### 5.5 常用的垃圾回收器组合
 
-<!-- ![垃圾回收器常用组合](/img/jvm-general-comb.jpg) -->
+<!-- ![垃圾回收器常用组合](/img/jvm/jvm-general-comb.jpg) -->
 
-<img src="/img/jvm-general-comb.jpg" alt="垃圾回收器常用组合配置" width="500px" position="center"/>
+<img src="/img/jvm/jvm-general-comb.jpg" alt="垃圾回收器常用组合配置" width="500px" position="center"/>
 
 ## 6 不要急着GC调优
 

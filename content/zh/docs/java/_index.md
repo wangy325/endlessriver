@@ -30,7 +30,7 @@ Java基础知识容易忽视、混淆的点，简单做一些记录。另外还�
 - [数组](collections/1_List_arraylist.md)
 - [链表](collections/1_List_linkedlist.md)
 - [队列](collections/2_Queue.md)
-- [映射集](collections/4_Map.md)
+- [映射集](collections/4_Map_hash_tree_map.md)
 - [HashMap的源码分析](collections/5_HashMap的源码分析.md)
 - ...
 {{< /columns >}}

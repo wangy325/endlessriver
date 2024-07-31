@@ -236,5 +236,5 @@ checkOut() Interrupted
 ---
 
 [^4]: 并不能保证先调用`acquire()`方法的线程就能先获得许可，而是先调用方法的线程先执行内部逻辑的线程优先获取许可。所以有可能线程a先于线程b调用`acquire()`方法，但是却晚于线程b到达“等待点”。
-[^5]: 这个示例演化自`Semaphore`的javaDoc：https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Semaphore.html。
+[^5]: 这个示例演化自`Semaphore`的javaDoc: https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Semaphore.html。
 [^6]: 如果使用是个“许可证数”为1的`Semaphore`，其作用相当于一个独占锁，任意时刻只有一个任务能够获取许可并且对资源进行修改，此时，`getItem`方法可以不使用同步。

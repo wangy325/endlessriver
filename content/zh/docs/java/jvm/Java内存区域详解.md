@@ -19,18 +19,19 @@ libraries:
 <!--more-->
 
 # 2 运行时数据区域
+
 Java 虚拟机在执行 Java 程序的过程中会把它管理的内存划分成若干个不同的数据区域。JDK. 1.8 和之前的版本略有不同，下面会介绍到。
 
 **JDK 1.8 之前：**
 
 <!-- ![](/img/java-mem-b-1.8.jpg) -->
 
-<img src="/img/java-mem-b-1.8.jpg" alt="JDK8之前的内存模型" caption="" alt="" width="500px" position="center"/>
+<img src="/img/jvm/java-mem-b-1.8.jpg" alt="JDK8之前的内存模型" caption="" alt="" width="500px" position="center"/>
 
 **JDK 1.8 ：**
 
 <!-- ![](/img/java-mem-1.8.jpg) -->
-<img src="/img/java-mem-1.8.jpg" alt="JDK8的内存模型" caption="" alt="" width="500px" position="center" />
+<img src="/img/jvm/java-mem-1.8.jpg" alt="JDK8的内存模型" caption="" alt="" width="500px" position="center" />
 
 
 **线程私有的：**
@@ -46,6 +47,7 @@ Java 虚拟机在执行 Java 程序的过程中会把它管理的内存划分成
 - 直接内存 (非运行时数据区的一部分)
 
 ## 2.1 程序计数器
+
 程序计数器是一块较小的内存空间，可以看作是当前线程所执行的字节码的行号指示器。**字节码解释器工作时通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等功能都需要依赖这个计数器来完成。**
 
 另外，**为了线程切换后能恢复到正确的执行位置，每条线程都需要有一个独立的程序计数器，各线程之间计数器互不影响，独立存储，我们称这类内存区域为“线程私有”的内存。**
@@ -107,13 +109,13 @@ Java 堆是垃圾收集器管理的主要区域，因此也被称作**GC 堆（G
 
 <!-- ![JVM堆内存结构-JDK7](/img/java-heap-b-1.8.jpg) -->
 
-<img src="/img/java-heap-b-1.8.jpg" alt="JDK7-JVM堆内存结构" width="300px" position="center" />
+<img src="/img/jvm/java-heap-b-1.8.jpg" alt="JDK7-JVM堆内存结构" width="300px" position="center" />
 
 JDK 8 版本之后方法区（HotSpot 的永久代）被彻底移除了（JDK1.7 就已经开始了），取而代之是元空间，元空间使用的是直接内存。
 
 <!-- ![JVM堆内存结构-JDK8](/img/java-heap-1.8.jpg) -->
 
-<img src="/img/java-heap-1.8.jpg" alt="JDK8-JVM堆内存结构" width="300px" position="center" />
+<img src="/img/jvm/java-heap-1.8.jpg" alt="JDK8-JVM堆内存结构" width="300px" position="center" />
 
 **上图所示的 Eden 区、两个 Survivor 区都属于新生代（为了区分，这两个 Survivor 区域按照顺序被命名为 from 和 to），中间一层属于老年代。**
 
@@ -223,9 +225,11 @@ JDK1.4 中新加入的 **NIO(New Input/Output) 类**，引入了一种基于**�
 
 
 # 3 HotSpot 虚拟机对象探秘
+
 通过上面的介绍我们大概知道了虚拟机的内存情况，下面我们来详细的了解一下 HotSpot 虚拟机在 Java 堆中对象分配、布局和访问的全过程。
 
 ## 3.1 对象的创建
+
 下图便是 Java 对象的创建过程，我建议最好是能默写出来，并且要掌握每一步在做什么。
 
 ```mermaid
@@ -252,7 +256,7 @@ graph LR
 |:--:|:--:|:--:|
 |适用场合|堆内存规整，没有内存碎片|堆内存不规整的情况下|
 |原理|用过的内存整理到一边，没用过的内存整理到另一边，使用分界值指针，只要向没使用过的内存方向将指针移动对象内存大小的位置即可|虚拟机维护一个列表，该列表记录那些内存块是可用的，分配一块足够大的内存块给新对象，然后更新列表|
-|收集器|[serial](../java-gc/#4-1-serial-%E6%94%B6%E9%9B%86%E5%99%A8)，[parNew](../java-gc/#4-2-parnew-%E6%94%B6%E9%9B%86%E5%99%A8)|[CMS](../java-gc/#4-6-cms-%E6%94%B6%E9%9B%86%E5%99%A8)|
+|收集器|[serial](./java-gc.md/#41-serial-收集器)，[parNew](./java-gc.md/#42-parnew-收集器)|[CMS](./java-gc.md/#46-cms-收集器)|
 
 **内存分配并发问题（补充内容，需要掌握）**
 
@@ -292,13 +296,13 @@ graph LR
 
     <!-- ![对象的访问定位-使用句柄](/img/java-object-access-1.jpg) -->
 
-	<img src="/img/java-object-access-1.jpg"  alt="对象的访问定位-使用句柄" width="400px" position="center"/>
+	<img src="/img/jvm/java-object-access-1.jpg"  alt="对象的访问定位-使用句柄" width="400px" position="center"/>
 
 2. **直接指针：**  如果使用直接指针访问，那么 Java 堆对象的布局中就必须考虑如何放置访问类型数据的相关信息，而 reference 中存储的直接就是对象的地址。
 
     <!-- ![对象的访问定位-直接指针](/img/java-object-access-2.jpg) -->
 
-	<img src="/img/java-object-access-2.jpg"  alt="对象的访问定位-直接指针" width="400px" position="center"/>
+	<img src="/img/jvm/java-object-access-2.jpg"  alt="对象的访问定位-直接指针" width="400px" position="center"/>
 
 
 **这两种对象访问方式各有优势。使用句柄来访问的最大好处是 reference 中存储的是稳定的句柄地址，在对象被移动时只会改变句柄中的实例数据指针，而 reference 本身不需要修改。使用直接指针访问方式最大的好处就是速度快，它节省了一次指针定位的时间开销。**
@@ -330,7 +334,7 @@ System.out.println(str2==str3);//false
 
 <!-- ![String-Pool-Java](/img/java-string-pool-1.jpg) -->
 
-<img src="/img/java-string-pool-1.jpg"  alt="Java String Pool" width="400px" position="center"/>
+<img src="/img/jvm/java-string-pool-1.jpg"  alt="Java String Pool" width="400px" position="center"/>
 
 **String 类型的常量池比较特殊。它的主要使用方法有两种：**
 
@@ -360,7 +364,7 @@ System.out.println(str4 == str5);//false
 ```
 <!-- ![字符串拼接](/img/java-string-pool-2.jpg) -->
 
-<img src="/img/java-string-pool-2.jpg"  alt="字符串拼接" width="400px" position="center"/>
+<img src="/img/jvm/java-string-pool-2.jpg"  alt="字符串拼接" width="400px" position="center"/>
 
 尽量避免多个字符串拼接，因为这样会重新创建对象。如果需要改变字符串的话，可以使用 StringBuilder 或者 StringBuffer。
 
