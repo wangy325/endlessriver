@@ -257,7 +257,7 @@ System.out.printf("'%5.2e'%n", 5.1473);
 
 实际上，Java8提供了更加完整易用的 [DateTimeFormatter](https://www.baeldung.com/java-datetimeformatter)来进行日期时间的格式化[^3]。
 
-[^3]: 关于Java8的新日期时间库，也可以参考[这篇文章](../../basic/java-new-time-api)
+[^3]: 关于Java8的新日期时间库，也可以参考[这篇文章](../../java/basic/11_java-new-time-api.md)
 
 ## 7.1 时间格式化
 

@@ -14,7 +14,7 @@ tags: [concurrency]
 
 <!--more-->
 
-![xx](/img/scheduledFutureTask.png)
+![xx](/img/juc/scheduledFutureTask.png)
 <p style="text-align:center; font-size:.8rem; font-style:italic;color:grey">ScheduledThreadPoolExecutor继承关系图</p>
 
 从`ScheduledThreadPoolExecutor`的继承关系图可以看到，其是`ThreadPoolExecutor`的导出类，其提交任务和执行任务以及关闭线程池的逻辑应和线程池相差无几，其重点差别在于**任务对象以及任务队列**的封装上，后文将会详述`ScheduledThreadPoolExecutor`的任务计划执行以及周期执行机制。

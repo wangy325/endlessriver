@@ -1,5 +1,5 @@
 ---
-title: "Lambda表达式与函数式接口"
+title: "Lambda与函数式接口"
 date: 2020-04-22
 categories: [java]
 series: []

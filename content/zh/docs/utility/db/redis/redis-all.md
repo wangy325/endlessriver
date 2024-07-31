@@ -54,14 +54,18 @@ Memcached 是分布式缓存最开始兴起的那会，比较常用的。后来�
 
 作为暖男一号，我给大家画了一个草图。
 
-```mermaid
+<center>
+
+{{< mermaid type="optional" >}}
 graph TD
     A[User] -->|Query data| B{In cache}
     B -->|Y|C[Return data]
     B -->|N|D{In DB}
     D -->|Y|E[Update cache] -->C
     D -->|N|F[Return null]
-```
+{{< /mermaid >}}
+
+</center>
 
 简单来说就是:
 
@@ -76,14 +80,19 @@ _简单，来说使用缓存主要是为了提升用户体验以及应对更多�
 
 下面我们主要从“高性能”和“高并发”这两点来看待这个问题。
 
-```mermaid
+<center>
+
+{{< mermaid type="optional" >}}
 graph TD
     A[User] -->|Load Balance| B(nginx)
     B -->|1|C[Business 1]
     B -->|2|D[Business 2]
     C & D-->E[(Cache)]
     E --> F[(DataBase)]
-```
+{{< /mermaid  >}}
+
+</center>
+
 
 **高性能** ：
 
@@ -578,11 +587,15 @@ Redis官网也解释了自己为啥不支持回滚。简单来说就是Redis开�
 
 如下图所示，用户的请求最终都要跑到数据库中查询一遍。
 
-```mermaid
+<center>
+
+{{< mermaid type="optional" >}}
 graph TD
     A[User] -->|Query data|B{In cache}
     B -->|N|C[(DataBase)]
-```
+{{< /mermaid >}}
+
+</center>
 
 ### 16.3. 有哪些解决办法？
 
@@ -625,13 +638,17 @@ public Object getObjectInclNullById(Integer id) {
 
 加入布隆过滤器之后的缓存处理流程图如下。
 
-```mermaid
+<center>
+
+{{< mermaid type="optional" >}}
 graph TD
     A[User] -->|Query data|B{Bloom filter}
     B -->|valid key|C[Query Cache]
     B -->|unexist key|D([Return illegal request])
     C --> F[Continue...]
-```
+{{< /mermaid >}}
+
+</center>
 
 但是，需要注意的是布隆过滤器可能会存在误判的情况。总结来说就是： **布隆过滤器说某个元素存在，小概率会误判。布隆过滤器说某个元素不在，那么这个元素一定不在。**
 
@@ -649,7 +666,7 @@ _为什么会出现误判的情况呢? 我们还要从布隆过滤器的原理�
 
 然后，一定会出现这样一种情况：**不同的字符串可能哈希出来的位置相同。** （可以适当增加位数组大小或者调整我们的哈希函数来降低概率）
 
-更多关于布隆过滤器的内容可以看我的这篇原创：[《不了解布隆过滤器？一文给你整的明明白白！》](../bloom-filter) ，强烈推荐，个人感觉网上应该找不到总结的这么明明白白的文章了。
+更多关于布隆过滤器的内容可以看我的这篇原创：[《不了解布隆过滤器？一文给你整的明明白白！》](./bloom-filter.md) ，强烈推荐，个人感觉网上应该找不到总结的这么明明白白的文章了。
 
 ## 17. 缓存雪崩
 
