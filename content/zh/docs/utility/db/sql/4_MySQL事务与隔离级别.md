@@ -1,5 +1,5 @@
 ---
-title: "MySQL事务与隔离级别"
+title: "事务隔离级别与MVCC"
 date: 2020-11-27
 author: wangy325
 weight: 4
@@ -204,7 +204,21 @@ mysql> SET TRANSACTION ISOLATION LEVEL [tx_isolation];
 
 来控制当前客户端连接的下个事务隔离级别——只对当前连接的**下一次事务生效**生效，这样便于测试。
 
-更多关于`set transaction`命令的内容：https://dev.mysql.com/doc/refman/8.0/en/set-transaction.html
+更多关于`set transaction`命令的内容: https://dev.mysql.com/doc/refman/8.0/en/set-transaction.html
+
+{{< hint info >}}
+`mysql 8`查看以及设置事务隔离级别的命令有所变化：
+
+查看事务隔离级别：
+
+    select @@global.transaction_isolation, @@transaction_isolation;
+
+设置事务隔离级别：
+
+    set session transaction isolation level read committed;
+    set global transaction isolation level read committed;
+{{< /hint >}}
+
 
 在测试过程中，涉及到的客户端命令有：
 
@@ -214,7 +228,9 @@ mysql> SET TRANSACTION ISOLATION LEVEL [tx_isolation];
 
 # 4 读未提交 READ UNCOMMITTED
 
-![脏读](/img/mysql_iso_level/mysql-tx-read-uncommitted.jpg)
+![脏读](/img/mysql/mysql-tx-read-uncommitted.jpg)
+
+<p style="color:grey;font-size:.8rem;font-style:italic; text-align:center"> READ UNCOMMITTED 隔离级别出现脏读和不可重复读的问题</p>
 
 从上面的执行图可以看到：
 
@@ -228,15 +244,17 @@ mysql> SET TRANSACTION ISOLATION LEVEL [tx_isolation];
 
 # 5 读已提交 READ COMMITTED
 
-![不可重复度](/img/mysql_iso_level/mysql-tx-read-committed.jpg)
+![不可重复度](/img/mysql/mysql-tx-read-committed.jpg)
+
+<p style="color:grey;font-size:.8rem;font-style:italic; text-align:center"> READ COMMITTED 隔离级别出现不可重复读的问题</p>
 
 从上面的执行图可以看到：
 
 - 会话1和会话2的事务隔离级别都设置为***READ COMMITTED***；
 - 会话1将`vend_id`=1007对应的`vend_address`改为`sz`；
-- 此时会话2中去读取`vend_id`=1007的数据，不能读取到会话1**未提交**的更改；<span style=background-color:yellow;font-weight:bold><==结果1</span>
+- 此时会话2中去读取`vend_id`=1007的数据，**不能**读取到会话1**未提交**的更改；<span style=background-color:yellow;font-weight:bold><==旧数据</span>
 - 会话1**提交**更改
-- 会话2再次读取`vend_id`=1007的数据，读取到数据列`vend_address`的更改。<span style=background-color:yellow;font-weight:bold><==结果2</span>
+- 会话2再次读取`vend_id`=1007的数据，读取到数据列`vend_address`的更改。<span style=background-color:yellow;font-weight:bold><==新数据</span>
 
 上面的执行流程完整演示了在***READ COMMITTED***隔离级别下，两次读取到的结果不一致的现象，即在此隔离级别下**不可重复读**。
 
@@ -306,11 +324,12 @@ mysql> SET TRANSACTION ISOLATION LEVEL [tx_isolation];
 
 # 7 可重复读 REPEATABLE READ
 
-![可重复读](/img/mysql_iso_level/mysql-tx-repeatable-read.jpg)
+![可重复读](/img/mysql/mysql-tx-repeatable-read.jpg)
+<p style="color:grey;font-size:.8rem;font-style:italic; text-align:center"> REPEATABLE READ 是默认的事务隔离级别</p>
 
 这是一个相对完整的示例，演示了InnoDB引擎在默认事务隔离级别下，不同事务在处理同一行数据之间的表现，其中有一些结果出乎意料却又在MVCC以及事务隔离级别的“情理之中”。在这个示例中我们可以看到以下重要内容：
 
-1. 事务只能读取到在其开始之前就已经存在的数据，或者其自身修改的数据；
+1. 事务只能读取到在**其开始之前就已经存在**的数据，或者其**自身修改**的数据；
 2. 事务使用了**行级锁**来保证数据一致；
 3. 事务B可以修改事务A创建但未提交的数据，并且事务B随即可读取之，这验证了第1点；
 4. 事务A无法读取到事务B的修改（只要这个修改发生在事务A开始之后，无论事务B是否提交），这保证了**可重复读**；
@@ -320,16 +339,18 @@ mysql> SET TRANSACTION ISOLATION LEVEL [tx_isolation];
 
 # 8 串行 SERIALIZABLE
 
-![串行](/img/mysql_iso_level/mysql-tx-serializable.jpg)
+![串行](/img/mysql/mysql-tx-serializable.jpg)
+<p style="color:grey;font-size:.8rem;font-style:italic; text-align:center"> SERIALIZABLE 隔离级别效率很低</p>
 
 当使用最高的事务级别同时开启2个事务时，2个事务只能依次执行，换言之，会话2会阻塞会话1的`insert`操作，只有当会话2`commit/rollback`之后，会话1才会结束阻塞。
 
 > 上图中第一次执行insert的时候，发现语句迟迟不返回，以为是语句故障，使用ctrl-c结束了语句执行，控制台输出：
 >
 > ```SQL
-ERROR 1317 (70100): Query execution was interrupted
+>ERROR 1317 (70100): Query execution was interrupted
 > ```
-> 看到interruptted，间接证明了insert操作确实是处于阻塞状态
+>
+> 看到关键字`interruptted`，证明了insert操作确实是处于阻塞状态。
 
 # 9 参考
 

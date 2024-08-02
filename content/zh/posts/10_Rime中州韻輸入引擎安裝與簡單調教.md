@@ -120,7 +120,8 @@ bash rime-install luna-pinyin
 ```yaml
 patch:
   us_keyboard_layout: true      # 鍵盤選項：應用美式鍵盤佈局
-#  show_notifications_when: growl_is_running  # 狀態通知，默認裝有Growl時顯示，也可設爲全開（always）全關（never）
+# 狀態通知，默認裝有Growl時顯示，也可設爲全開（always）全關（never）
+#  show_notifications_when: growl_is_running 
   style/horizontal: true        # 候選窗横向顯示
 #  style/inline_preedit: false   # 非內嵌編碼行
 #  style/font_face: "儷黑 Pro"    # 我喜歡的字體名稱
