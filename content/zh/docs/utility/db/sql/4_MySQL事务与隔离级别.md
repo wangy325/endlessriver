@@ -65,7 +65,11 @@ categories: [mysql]
 
 - <span style="font-style:italic;font-weight:bold;color:#0047AB">REPEATABLE READ</span>（**可重复读**）
 
-    可重复读解决了脏读的问题，同时也保证了在事务了多次对同一个数据取样，读取到的数据是一致的。但是，理论上，该隔离级别的不能解决**幻读**（***phantom read***）的问题：幻读指的是某个事务在读取**某个范围**的记录时，另外一个事务又在该范围内插入了新的记录，那么，当之前的事务再次读取这个范围的记录时，就会出现**幻行**（***phantom row***）。不过InnoDB引擎通过MVCC(*multi version concurrency control*)多版本并发控制解决了幻读的问题。
+    可重复读解决了脏读的问题，同时也保证了在事务了多次对同一个数据取样，读取到的数据是一致的。
+
+    但是，理论上，该隔离级别的不能解决**幻读**（***phantom read***）的问题：幻读指的是某个事务在读取**某个范围**的记录时，另外一个事务又在该范围内插入了新的记录，那么，当之前的事务再次读取这个范围的记录时，就会出现**幻行**（***phantom row***）。
+
+    <span style=background-color:yellow;>不过InnoDB引擎通过MVCC(*multi version concurrency control*)多版本并发控制解决了幻读的问题。</span>
 
     可重复读是MySQL的**默认隔离级别**
 
@@ -151,6 +155,7 @@ mysql> show  variables like '%engine%';
 +----------------------------------+--------+
 4 rows in set (0.01 sec)
 ```
+
 看到系统当前数据库（版本5.7）的默认存储引擎是InnoDB，InnoDB引擎支持事务，就用这个引擎测试。
 
 我们使用供应商表`vendors`完成接下来的测试，先看看`vendors`表所使用的引擎：
@@ -178,6 +183,7 @@ Max_data_length: 0
         Comment:
 1 row in set (0.00 sec)
 ```
+
 我们看到`vendors`表的引擎也是InnoDB。
 
 ## 3.2 隔离级别
