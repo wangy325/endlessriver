@@ -1,5 +1,5 @@
 ---
-title: "MySQL中的几个字符串处理函数"
+title: "MySQL字符串处理函数"
 date: 2018-09-21
 author: "wangy325"
 weight: 2

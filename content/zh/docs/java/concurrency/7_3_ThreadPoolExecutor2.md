@@ -546,7 +546,8 @@ public class ExecutorShutdown {
 
     static int pointer = 0;
     /** 容量为1的线程池，其能保证提交的任务都是序列化执行的 */
-    ThreadPoolExecutor service = (ThreadPoolExecutor) Executors.newFixedThreadPool(1);
+    ThreadPoolExecutor service
+        = (ThreadPoolExecutor) Executors.newFixedThreadPool(1);
 
     @SneakyThrows
     public static void main(String[] args) {
@@ -605,13 +606,15 @@ public class ExecutorShutdown {
         @Override
         public void run() {
             // 响应中断，调用shutdownNow()可以结束任务
-            System.out.println("[" + Thread.currentThread() + "@" + this + "]，开始执行");
+            System.out.println("[" + Thread.currentThread() 
+                + "@" + this + "]，开始执行");
             // never finish unless interrupted
             for (; ; ) {
                 if (!Thread.interrupted()) {
                     pointer++;
                 } else {
-                    System.out.println("[" + Thread.currentThread() + "@" + this + "]，被中断");
+                    System.out.println("[" + Thread.currentThread() 
+                        + "@" + this + "]，被中断");
                     break;
                 }
             }
@@ -621,9 +624,11 @@ public class ExecutorShutdown {
     class EasyTask extends Task implements Runnable {
         @Override
         public void run() {
-            System.out.println("[" + Thread.currentThread() + "@" + this + "]，开始执行");
+            System.out.println("[" + Thread.currentThread()
+                 + "@" + this + "]，开始执行");
             pointer++;
-            System.out.println("[" + Thread.currentThread() + "@" + this + "]，执行完成");
+            System.out.println("[" + Thread.currentThread() 
+                + "@" + this + "]，执行完成");
         }
     }
 }
@@ -660,5 +665,5 @@ is executor terminated? true
      fails to respond to interrupts may never terminate.*
 
 
-[^6]: 目前作者还未找到隐式调用`finalize()`方法导致线程池关闭的例证
+[^6]: 目前笔者还未找到隐式调用`finalize()`方法导致线程池关闭的例证
 [^7]: 若corePoolSize=0，这些方法不会创建线程
