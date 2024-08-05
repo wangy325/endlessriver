@@ -1,12 +1,13 @@
 ---
-title: "MySQL锁的简单使用"
+title: "MySQL显式锁简单介绍"
 date: 2021-03-24
 author: "wangy325"
 weight: 5
-tags: [undone]
+tags: []
 categories: [mysql]
 BookToC: true
 ---
+
 
 对于MySQL数据库而言，[事务的隔离级别](./4_MySQL事务与隔离级别.md)在不同程度上保证了数据一致性。
 
@@ -28,7 +29,7 @@ MySQL对每条SQL语句的执行，都添加了一个隐式事务，言外之意
 
 MySQL显式锁可以简单地分为2类：
 
-- 读锁（S锁，共享锁，*Share Lock*）
+- 读锁（S锁，共享锁，*Shared Lock*）
 - 写锁（X锁，排它锁，*Exclusive Lock*）
 
 
@@ -50,7 +51,7 @@ MySQL使用
 
 
 
-```console
+```sql
 mysql> begin;
 Query OK, 0 rows affected (0.00 sec)
 
@@ -66,7 +67,7 @@ mysql> select * from user where id = 1 for share;
 <p style="font-size:.8rem;font-style:italic;text-align:center; color:grey">会话1: 开启事务，并且对id=1的数据行添加读锁</p>
 
 
-```console
+```sql
 mysql> begin;
 Query OK, 0 rows affected (0.00 sec)
 
@@ -104,7 +105,7 @@ MySQL使用
 
 对数据加写锁。
 
-```console
+```sql
 mysql> begin;
 Query OK, 0 rows affected (0.00 sec)
 
@@ -123,7 +124,7 @@ Rows matched: 1  Changed: 1  Warnings: 0
 
 <p style="font-size:.8rem;font-style:italic;text-align:center; color:grey">会话1: 开启事务，对id=1的数据行添加写锁</p>
 
-```console
+```sql
 mysql> select * from user where id = 1 for share ;
 ^C^C -- query aborted
 ERROR 1317 (70100): Query execution was interrupted
@@ -152,17 +153,13 @@ mysql> select * from user where id = 1;
 - MySQL提供了 `skip locked` 语句来跳过锁
 - 可以查询事务开始前的数据，无法获取事务开始后其他会话的更新（MVCC）。
 
-### 开发实践
-
-在开发实践中，一般使用乐观锁机制。
-
 {{< hint info >}}
-一些中间件框架（如`mybatis-plus`）支持使用乐观锁更新数据。
-{{< /hint  >}}
+
+在开发实践中，一般使用乐观锁机制。一些中间件框架（如`mybatis-plus`）支持使用乐观锁更新数据。
 
 乐观锁是一种思想，它默认没有其他会话更改数据，因此总是尝试直接更改数据，而不是去加锁。这样可以提高读取性能。
 
-实际开发实践中，最常用“版本号”来作为乐观锁的实现机制。意思就是在表中添加`version`字段。
+常用“版本号”来作为乐观锁的实现机制。意思就是在表中添加`version`字段。
 
 其基本逻辑是：
 
@@ -178,4 +175,16 @@ C --> |N| E(不更新)
 ```sql
 update ... set version = version + 1 where `version` = version;
 ```
+
+{{< /hint  >}}
+
+
+
+---
+
+拓展阅读：
+
+- https://dev.mysql.com/doc/refman/8.0/en/innodb-locking.html#innodb-shared-exclusive-locks
+- https://dev.mysql.com/doc/refman/8.0/en/innodb-locks-set.html
+- https://dev.mysql.com/doc/refman/8.0/en/innodb-locking.html
 
