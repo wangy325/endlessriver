@@ -1,3 +1,8 @@
+<!--
+ * @Author: wangy325
+ * @Date: 2024-06-17 14:30:12
+ * @Description: 
+-->
 <!-- update: Disable footer for particular page -->
 <!DOCTYPE html>
 <html lang="{{ default .Site.Language.Lang .Site.LanguageCode  }}" dir="{{ default "ltr" .Site.Language.LanguageDirection }}">
@@ -23,6 +28,28 @@
       {{ partial "docs/inject/content-before" . }}
       {{ template "main" . }} <!-- Page Content -->
       {{ partial "docs/inject/content-after" . }}
+
+      <!-- snippets start -->
+      <!-- https://discourse.gohugo.io/t/easiest-way-to-embed-code-from-source-files/36662 -->
+       <!-- https://gohugo.io/methods/site/data/ -->
+      {{ if default false (default .Site.Params.snippets .Params.snippets) }}
+          {{ $key := path.Base .TranslationKey }}
+          
+          {{ with resources.GetMatch (printf "snippets/pys/%s.*" $key) }}
+          <!-- <h2>{{$key}}</h2> -->
+          {{ $lang := path.Ext .Name | strings.TrimLeft "."  }}
+          {{ $options := slice "lineNos=table" "style=native" }}
+          {{ transform.Highlight .Content $lang (delimit $options ",") }}
+          {{ end }}
+
+          <!-- 可以从 json yaml toml xml读取数据，但是没必要，直接写在md里就行了 -->
+          <!-- {{ range where  site.Data.py  "name" $key}}
+          <h2>Data</h2>
+          Author: {{ .author }}<br>
+          Output: {{ .output }}<br>
+          {{ end }} -->
+      {{ end }}
+       <!-- snippets end -->
       
       <!-- https://discourse.gohugo.io/t/remove-footer-and-header/44347 -->
       {{ if default true (default .Site.Params.BookFooter  .Params.BookFooter)}}
@@ -33,6 +60,10 @@
       {{ end }}
 
       {{ template "comments" . }} <!-- Comments block -->
+
+      {{ if default true (default .Site.Params.copyright .Params.copyright) }}
+        {{ template "copyright" .}}
+      {{ end }}
 
       <label for="menu-control" class="hidden book-menu-overlay"></label>
     </div>
@@ -84,4 +115,8 @@
 
 {{ define "toc" }}
   {{ partial "docs/toc" . }}
+{{ end }}
+
+{{ define "copyright"}}
+  {{ partial "copyright" .}}
 {{ end }}

@@ -4,6 +4,7 @@
 BookComments: false
 BookSearch: fasle
 BookFooter: false
+copyright: false
 type: docs
 title: "Home"
 ---
