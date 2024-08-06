@@ -6,7 +6,8 @@
 <!-- https://gohugo.io/templates/embedded/#conditional-loading-of-disqus-comments -->
 <!-- {{ partial "disqus.html" . }} -->
   
-<div id="disqus_thread"></div>
+<!-- 不要使用disqus了 -->
+<!-- <div id="disqus_thread"></div>
 <script>
     /**
     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
@@ -24,4 +25,22 @@
     (d.head || d.body).appendChild(s);
     })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> -->
+
+<!-- giscus -->
+<div class = "giscus-thread"></div>
+<script src="https://giscus.app/client.js"
+    data-repo="wangy325/wangy325.github.io"
+    data-repo-id="R_kgDOHhhDZg"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOHhhDZs4ChbMn"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin="anonymous"
+    async>
+</script>
