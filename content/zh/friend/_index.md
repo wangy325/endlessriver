@@ -6,6 +6,7 @@ menu:
 title: Links
 BookFooter: false
 BookComments: false
+copyright: false
 ---
 
 <center style="font-family:monospace; font-size:0.9rem">
