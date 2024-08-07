@@ -4,7 +4,7 @@ date: 2020-11-03
 author: "wangy325"
 weight: 15
 categories: [java]
-tags: [concurrency]
+tags: [并发]
 ---
 
 [前文](./7_2_ThreadPoolExecutor1.md/#threadpoolexecutor)说过，`ThreadPoolExecutor`实例代表了Java线程池，前面我们介绍了`ThreadPoolExecutor`的构造器和几个核心概念，在本节中，我们着重介绍线程池的执行过程以及线程池的关闭。

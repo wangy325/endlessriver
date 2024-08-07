@@ -1,8 +1,8 @@
 ---
 title: "进程和线程模型"
 date: 2024-07-09
-tags: [OS]
 categories: [cource]
+tags: []
 author: "wangy325"
 weight: 3
 ---

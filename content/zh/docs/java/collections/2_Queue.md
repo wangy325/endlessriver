@@ -3,7 +3,7 @@ title: "Queue"
 date: 2020-05-02
 draft: false
 categories: [java]
-tags: [collections]
+tags: [集合框架]
 author: "wangy325"
 weight: 3
 ---

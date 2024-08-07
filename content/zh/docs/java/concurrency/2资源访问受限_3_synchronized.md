@@ -2,7 +2,7 @@
 title: "synchronized关键字"
 date: 2020-05-20
 categories: [java]
-tags: [concurrency]
+tags: [并发]
 author: "wangy325"
 weight: 5
 ---

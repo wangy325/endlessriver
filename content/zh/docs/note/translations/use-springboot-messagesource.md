@@ -3,8 +3,8 @@ title: "在SpringBoot中使用MessageSource"
 date: 2021-02-20
 author: "wangy325"
 weight: 2
-tags: [translation]
 categories: [java]
+tags: [spring, 译文]
 ---
 
 

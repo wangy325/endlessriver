@@ -2,8 +2,7 @@
 title: "观察者模式"
 date: 2024-03-08
 weight: 2
-tags: [design pattern]
-categories: []
+categories: [设计模式]
 author: "wangy325"
 ---
 

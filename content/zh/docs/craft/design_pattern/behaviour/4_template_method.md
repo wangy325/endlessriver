@@ -2,8 +2,7 @@
 title: "模板方法模式"
 date: 2024-04-02
 weight: 4
-tags: [design pattern]
-categories: []
+categories: [设计模式]
 author: "wangy325"
 ---
 

@@ -1,8 +1,8 @@
 ---
 title: "使用Logback记录日志"
 date: 2021-02-10
-tags: [translation]
 categories: [java]
+tags: [译文]
 image:
 ---
 

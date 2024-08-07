@@ -2,8 +2,7 @@
 title: "代理模式"
 date: 2018-12-05
 author: "wangy325"
-tags: [design pattern]
-categories: []
+categories: [设计模式]
 ---
 
 

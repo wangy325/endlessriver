@@ -2,7 +2,7 @@
 title: "Collections工具类"
 date: 2020-05-12
 categories: [java]
-tags: [collections]
+tags: [集合框架]
 author: "wangy325"
 weight: 8
 ---

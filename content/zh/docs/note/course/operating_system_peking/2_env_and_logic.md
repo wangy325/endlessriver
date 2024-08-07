@@ -1,8 +1,8 @@
 ---
 title: "操作系统运行环境与机制"
 date: 2024-07-03
-tags: [OS]
-categories: [cource]
+categories: [cource, 操作系统]
+tags: []
 author: "wangy325"
 weight: 2
 ---

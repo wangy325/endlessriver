@@ -3,8 +3,8 @@ title: "关于forever启动node服务的问题"
 date: 2019-08-28
 draft: false
 description: "node.js的安装以及forever脚本的使用。"
+categories: []
 tags: []
-categories: [javascript]
 author: "wangy325"
 ---
 
@@ -19,7 +19,7 @@ author: "wangy325"
 
 最简单的方法是直接使用node已经编译好的可执行文件, 解压之后，将可执行文件链接到`$PATH`中：
 
-```
+```console
 wget https://nodejs.org/dist/v10.16.3/node-v10.16.3-linux-x64.tar.xz
 # unarchive file to /usr/local
 tar -xf node-v10.16.3-linux-x64.tar.xz -C /usr/local

@@ -2,8 +2,7 @@
 title: "抽象工厂模式"
 date: 2024-03-26
 weight: 3
-tags: [design pattern]
-categories: []
+categories: [设计模式]
 author: "wangy325"
 ---
 

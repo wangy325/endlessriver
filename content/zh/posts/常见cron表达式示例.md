@@ -4,8 +4,7 @@ date: 2018-12-13
 lastmod: 2021-03-29
 description: "cron表达式速查手册。"
 draft: false
-tags: []
-categories: [crontab]
+tags: [crontab]
 author: "wangy325"
 
 ---

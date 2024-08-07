@@ -2,7 +2,7 @@
 title: "ArrayList"
 date: 2020-04-29
 categories: [java]
-tags: [collections]
+tags: [集合框架]
 author: "wangy325"
 weight: 1
 ---

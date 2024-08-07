@@ -3,7 +3,7 @@ title: "LinkedHashMap"
 date: 2020-05-10
 draft: false
 categories: [java]
-tags: [collections]
+tags: [集合框架]
 author: "wangy325"
 weight: 6
 ---
