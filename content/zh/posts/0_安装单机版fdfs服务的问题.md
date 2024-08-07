@@ -4,15 +4,13 @@ date: 2019-08-31
 draft: false
 description: "本文记录了安装fdfs单机文件服务时，遇到的问题，主要是nginx的配置上。"
 author: "wangy325"
-# weight: 5
-tags: []
-categories: [server]
+categories: []
+tags: [server]
 ---
 
-
-> 此文章记录的内容已经过时，现在有更多的文件存储方案，如[minIO](https://min.io/docs/minio/linux/index.html)。
-
- 以下为原文。
+{{< hint danger >}}
+此文章记录的内容已经过时，现在有更好的文件存储方案，如[minIO](https://min.io/docs/minio/linux/index.html)。
+{{< /hint >}}
 
 ---
 

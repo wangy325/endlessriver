@@ -4,7 +4,7 @@ date: 2020-11-10
 author: "wangy325"
 weight: 18
 categories: [java]
-tags: [concurrency]
+tags: [并发]
 ---
 
 

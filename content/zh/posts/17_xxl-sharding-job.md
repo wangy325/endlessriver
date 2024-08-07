@@ -3,8 +3,8 @@ title: "在xxl-job中使用分片任务"
 date: 2021-01-25
 draft: false
 description: ""
-tags: []
-categories: [crontab]
+tags: [crontab]
+categories: [java]
 author: "wangy325"
 ---
 

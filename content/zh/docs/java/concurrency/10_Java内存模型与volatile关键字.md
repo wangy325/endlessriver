@@ -2,7 +2,7 @@
 title: "JMM与volatile关键字(转)"
 date: 2020-10-27
 categories: [java]
-tags: [concurrency]
+tags: [并发, JVM]
 author: "wangy325"
 weight: 1000
 ---

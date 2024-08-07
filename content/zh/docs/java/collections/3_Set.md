@@ -2,7 +2,7 @@
 title: "Set"
 date: 2020-05-06
 categories: [java]
-tags: [collections]
+tags: [集合框架]
 author: "wangy325"
 weight: 4
 ---

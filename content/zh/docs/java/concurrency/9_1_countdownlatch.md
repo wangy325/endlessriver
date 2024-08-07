@@ -4,7 +4,7 @@ date: 2020-11-16
 author: "wangy325"
 weight: 19
 categories: [java]
-tags: [concurrency]
+tags: [并发]
 BookToC: false
 ---
 

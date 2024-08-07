@@ -2,8 +2,7 @@
 title: "装饰者模式"
 date: 2024-03-21
 weight: 2
-tags: [design pattern]
-categories: []
+categories: [设计模式]
 author: "wangy325"
 ---
 

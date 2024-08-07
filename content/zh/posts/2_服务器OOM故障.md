@@ -2,14 +2,14 @@
 title: "一次服务器OOM故障"
 date: 2021-02-20
 author: "wangy325"
-tags: []
-categories: [server]
+categories: []
+tags: [server]
 # weight: 10
 ---
 
-使用idm下载y2b视频导致服务器内存溢出，内核强制关闭了服务进程。
+使用`idm`下载y2b视频导致服务器内存溢出，内核强制关闭了服务进程。
 
-通过系统日志定位原因，并探讨了服务器维护的几个相关命令。
+通过系统日志定位原因，并介绍了服务器维护的几个相关命令。
 
 <!--more-->
 

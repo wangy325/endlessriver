@@ -2,8 +2,7 @@
 title: "建造者模式"
 date: 2022-03-13
 weight: 4
-tags: [design pattern]
-categories: []
+categories: [设计模式]
 author: "wangy325"
 ---
 

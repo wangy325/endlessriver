@@ -2,7 +2,7 @@
 title: "HashMap的源码分析"
 date: 2020-09-24
 categories: [java]
-tags: [collections]
+tags: [集合框架]
 author: "wangy325"
 weight: 7
 ---

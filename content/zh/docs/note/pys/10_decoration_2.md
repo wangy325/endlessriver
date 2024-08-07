@@ -1,8 +1,7 @@
 ---
 title: "装饰器2"
 date: 2024-06-06
-tags: [python]
-categories: []
+categories: [python]
 author: "wangy32"
 weight: 11
 BookToC: false

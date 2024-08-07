@@ -2,8 +2,7 @@
 title: "命令模式"
 date: 2024-03-29
 weight: 1 
-tags: [design pattern]
-categories: []
+categories: [设计模式]
 author: "wangy325"
 ---
 

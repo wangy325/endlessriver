@@ -2,8 +2,7 @@
 title: "适配器模式"
 date: 2024-04-01
 weight: 3
-tags: [design pattern]
-categories: []
+categories: [设计模式]
 author: "wangy325"
 ---
 

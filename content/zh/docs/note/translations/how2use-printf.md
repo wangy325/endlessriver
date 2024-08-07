@@ -2,8 +2,8 @@
 title: "使用printf格式化输出"
 date: 2020-12-10
 draft: false
-tags: [translation]
 categories: [java]
+tags: [译文]
 image:
 ---
 

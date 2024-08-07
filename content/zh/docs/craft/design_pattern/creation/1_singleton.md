@@ -2,8 +2,7 @@
 title: "单例模式"
 date: 2024-03-28
 weight: 1
-tags: [design pattern]
-categories: []
+categories: [设计模式]
 author: "wangy325"
 ---
 
