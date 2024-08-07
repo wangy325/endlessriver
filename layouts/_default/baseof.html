@@ -110,6 +110,12 @@
 
 {{ define "main" }}
   <article class="markdown book-article">
+    {{ if default true (default .Site.Params.showTitle .Params.showTitle) }}
+      <h1>
+        <a href="{{ .RelPermalink }}">{{ partial "docs/title.html" . }}</a>
+      </h1>
+    {{ end }}
+    {{ partial "docs/post-meta" . }}
     {{- .Content -}}
   </article>
 {{ end }}

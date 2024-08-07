@@ -1,13 +1,13 @@
 ---
-title: "格式化输出与文件I/O"
+title: "类与对象"
 date: 2024-06-06
 tags: [python]
 categories: []
 author: "wangy32"
-weight: 6
+weight: 9
 BookToC: false
 snippets: true
 ---
 
-## 格式化输出与文件I/O
-
+---
+---

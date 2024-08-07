@@ -1,13 +1,14 @@
 ---
-title: "命名空间与作用域"
+title: "闭包与装饰器"
 date: 2024-06-06
 tags: [python]
 categories: []
 author: "wangy32"
-weight: 8
+weight: 10
 BookToC: false
 snippets: true
 ---
 
-## 命名空间与作用域
 
+---
+---

@@ -1,6 +1,6 @@
 ---
 weight: 3
-title: "它山之石"
+title: ""
 bookCollapseSection: false
 bookFlatSection: true
 ---

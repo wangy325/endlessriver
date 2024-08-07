@@ -1,13 +1,14 @@
 ---
-title: "流程控制语句"
+title: "字符串，元组和字典"
 date: 2024-06-06
 tags: [python]
 categories: []
 author: "wangy32"
-weight: 1
+weight: 3
 BookToC: false
 snippets: true
 ---
 
+---
+---
 
-## 流程控制语句
