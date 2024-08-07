@@ -39,7 +39,7 @@ Git 不同于 Subversion 的地方在于，Git是分布式的版本管理系统�
 
 ## Git 关联GitHub远程仓库
 
-Git支持基于SSH和https关联远程仓库，但推荐使用SSH方式，它[更加安全](#)。在本地仓库要想和GitHub远程仓库关联，首先需要在GitHub中配置SSH and GPG keys。
+Git支持基于SSH和https关联远程仓库，但推荐使用SSH方式，它**更加安全**。在本地仓库要想和GitHub远程仓库关联，首先需要在GitHub中配置SSH and GPG keys。
 
 通过
 
