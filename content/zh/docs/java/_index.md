@@ -1,6 +1,6 @@
 ---
 weight: 1
-title: "Java核心"
+title: ""
 bookFlatSection: true
 bookCollapseSection: false
 bookComments: false
@@ -14,7 +14,9 @@ BookToC: false
 ### Java基础
 
 {{< columns >}}
+
 #### 1 必知必会
+
 Java基础知识容易忽视、混淆的点，简单做一些记录。另外还有一些不常用的Java API，试着优雅的使用它们。
 
 - [访问权限修饰符](basic/1_访问权限修饰符.md)
@@ -25,6 +27,7 @@ Java基础知识容易忽视、混淆的点，简单做一些记录。另外还�
 <--->  <!-- magic separator, between columns -->
 
 #### 2 集合框架
+
 集合框架，开发中使用最多的Java工具类，不管是List，还是Hash还是Map，随处可见，然而要用好它们，可能需要更好地了解它们...
 
 - [数组](collections/1_List_arraylist.md)

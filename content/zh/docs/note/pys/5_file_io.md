@@ -1,13 +1,14 @@
 ---
-title: "函数式编程"
+title: "格式化输出与文件I/O"
 date: 2024-06-06
 tags: [python]
 categories: []
 author: "wangy32"
-weight: 4
+weight: 6
 BookToC: false
 snippets: true
 ---
 
-## 函数
+---
+---
 

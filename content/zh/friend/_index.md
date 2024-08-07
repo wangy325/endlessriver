@@ -7,6 +7,7 @@ title: Links
 BookFooter: false
 BookComments: false
 copyright: false
+showTitle: false
 ---
 
 <center style="font-family:monospace; font-size:0.9rem">
@@ -14,10 +15,10 @@ copyright: false
 🔗️ 自我麻痹
 <br/>
 
-[本博客仓库](https://github.com/wangy325/endlessriver)<br/>
-[示例代码库](https://github.com/wangy325/java-review)<br/>
-[hugo-theme-even](https://github.com/wangy325/hugo-theme-even)<br/>
-[mybatis-plus-starter](https://github.com/wangy325/mybatis-plus-starter)
+[博客仓库](https://github.com/wangy325/endlessriver)<br/>
+[示例代码](https://github.com/wangy325/java-review)<br/>
+<!-- [hugo-theme-even](https://github.com/wangy325/hugo-theme-even)<br/> -->
+<!-- [mybatis-plus-starter](https://github.com/wangy325/mybatis-plus-starter) -->
 
 <br/>
 
@@ -28,7 +29,7 @@ copyright: false
 [廖雪峰](https://www.liaoxuefeng.com/)
 <br/>
 
-[森亮号航海见识](http://see.sl088.com/)&nbsp;&nbsp;&nbsp;&nbsp;
+[~~森亮号航海见识~~](http://see.sl088.com/)&nbsp;&nbsp;&nbsp;&nbsp;
 [谢益辉](https://yihui.org/)
 <br/>
 
@@ -44,5 +45,5 @@ copyright: false
 <br/>
 
 [琼・岗鉴](http://khangey.com/cn/)&nbsp;&nbsp;&nbsp;&nbsp;
-[独影](http://www.doing.ws/)
+[~~独影~~](http://www.doing.ws/)
 </center>
