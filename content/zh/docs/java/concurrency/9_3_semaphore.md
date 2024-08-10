@@ -12,9 +12,14 @@ BookToC: false
 
 无论是显式锁还是通过`synchronized`关键字获取的隐式锁，其在任一时刻都只能让一个任务访问资源，而`Semaphore`（计数信号量）允许多个任务同时访问资源。可以把`Semaphore`看作是持有对象访问许可（permits）的“security”。访问对象时，须先通过`acquire()`获取许可，若此时没有许可可用，那么`acquire()`将阻塞，否则获取许可，可用许可数-1；使用完资源后，通过`release()`方法返还许可。事实上，并没有实际上的许可证对象，`Semaphore`通过协同各个线程工作，来达到目的。
 
-`Semaphore`的构造器接受一个“公平性参数”。不传入此参数或传入<i>false</i>时，线程获取许可的顺序无法保证，即使线程阻塞了很久，其仍然可能被刚调用`acquire()`方法的线程“抢走”许可，这可能会导致线程“饿死”。当传入<i>true</i>时，`Semaphore`保证线程获取许可的顺序和其调用`acquire()`方法之后被执行的顺序一致[^4]，也就是先执行的任务先获取许可（FIFO）。需要说明的是，`tryAcquire()`方法不遵循公平性原则，如果有许可可用，它直接获取之。在使用`Semaphore`时，一般将其设置为**公平**的
+`Semaphore`的构造器接受一个“公平性参数”。不传入此参数或传入*false*时，线程获取许可的顺序无法保证，即使线程阻塞了很久，其仍然可能被刚调用`acquire()`方法的线程“抢走”许可，这可能会导致线程“饿死”。当传入*true*时，`Semaphore`保证线程获取许可的顺序和其调用`acquire()`方法之后被执行的顺序一致[^4]，也就是先执行的任务先获取许可（FIFO）。需要说明的是，`tryAcquire()`方法不遵循公平性原则，如果有许可可用，它直接获取之。在使用`Semaphore`时，一般将其设置为**公平**的
+
+[^4]: 并不能保证先调用`acquire()`方法的线程就能先获得许可，而是先调用方法的线程先执行内部逻辑的线程优先获取许可。所以有可能线程a先于线程b调用`acquire()`方法，但是却晚于线程b到达“等待点”。
+
 
 `Semaphore`通常用于限制访问资源的线程数量，典型的例子就是控制“池”的并发访问量。下例中使用`Semaphore`控制池中的对象方法，当需要使用时，可以将它们“签出”（checkout），使用完毕之后再将其“签入”（checkin），使用泛型类封装功能[^5]。
+
+[^5]: 这个示例演化自`Semaphore`的javaDoc: https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Semaphore.html，来自TIJ。
 
 ```java
 class Pool<T> {
@@ -96,6 +101,8 @@ class Pool<T> {
 
 > *The semaphore encapsulates the synchronization needed to restrict access to the pool, separately from
 any synchronization needed to maintain the consistency of the pool itself.*
+
+[^6]: 如果使用是个“许可证数”为1的`Semaphore`，其作用相当于一个独占锁，任意时刻只有一个任务能够获取许可并且对资源进行修改，此时，`getItem`方法可以不使用同步。
 
 接下来我们可以测试这个池能否正常工作了:
 
@@ -235,6 +242,4 @@ checkOut() Interrupted
 
 ---
 
-[^4]: 并不能保证先调用`acquire()`方法的线程就能先获得许可，而是先调用方法的线程先执行内部逻辑的线程优先获取许可。所以有可能线程a先于线程b调用`acquire()`方法，但是却晚于线程b到达“等待点”。
-[^5]: 这个示例演化自`Semaphore`的javaDoc: https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Semaphore.html。
-[^6]: 如果使用是个“许可证数”为1的`Semaphore`，其作用相当于一个独占锁，任意时刻只有一个任务能够获取许可并且对资源进行修改，此时，`getItem`方法可以不使用同步。
+
