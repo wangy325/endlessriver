@@ -3,20 +3,18 @@
  * @Date: 2024-08-13 18:59:45
  * @Description: 
 -->
-{{ with .Date }}
-  <!-- <h5>{{ partial "docs/date" (dict "Date" . "Format" $.Site.Params.BookDateFormat) }}</h5> -->
+<!-- {{ with .Date }}
   {{- $date := partial "docs/date" (dict "Date" . "Format" $.Site.Params.BookDateFormat) -}}
-    <a class = "flex align-center" style = "font-size: .9rem"  title = '{{ i18n "Created by" }} {{$.Params.author}}'> 
-      <img style = "height:1rem; width: 1rem; margin-inline-end: .5rem" src='{{ "svg/edit.svg" | relURL }}' class="book-icon" alt="" />
-      <span>{{ $date }}</span>
-    </a>
-{{ end }}
+  <a class = "flex align-center" style = "font-size: .9rem"  title = '{{ i18n "Created by" }} {{$.Params.author}}'> 
+    <img style = "height:1rem; width: 1rem; margin-inline-end: .5rem" src='{{ "svg/edit.svg" | relURL }}' class="book-icon" alt="" />
+    <span>{{ $date }}</span>
+  </a>
+{{ end }} -->
 
-{{ range $taxonomy, $_ := .Site.Taxonomies }}
+<!-- {{ range $taxonomy, $_ := .Site.Taxonomies }}
   {{ with $terms := $.GetTerms $taxonomy }}
-  <div style = "font-size: .9rem">
     {{ range $n, $term := $terms }}{{ if $n }}, {{ end }}
-    <a  class = "flex align-center" href="{{ $term.RelPermalink }}">
+    <a  class = "flex align-center" style = "font-size: .9rem" href="{{ $term.RelPermalink }}">
         {{ if eq $taxonomy  "categories"}}
         <img style = "height:1rem; width: 1rem; margin-inline-end: .5rem" src='{{ "svg/cates.svg" | relURL }}' class="book-icon" alt="" />
         {{ else}}
@@ -25,11 +23,10 @@
        {{ $term.Title }}
     </a>
     {{- end }}
-  </div>
   {{ end }}
-{{ end }}
+{{ end }} -->
 
-{{ if .Params.image }}
+<!-- {{ if .Params.image }}
 <p>
   {{ with .Resources.GetMatch .Params.image }}
     <img src={{ .RelPermalink }} />
@@ -37,4 +34,44 @@
     <img src={{ .Params.image | relURL }} />
   {{ end }}
 </p>
+{{ end }} -->
+
+
+
+<div style="font-size: .9rem">
+  {{ template "post-meta" .}}
+</div>
+
+{{ define "post-meta"}}
+<div class = "flex align-cneter" style = "font-size:.9rem">
+  {{ with .Date}}
+    {{- $date := partial "docs/date" (dict "Date" . "Format" $.Site.Params.BookDateFormat) -}}
+      <div class = "flex align-cneter" style="margin-right: 1rem">
+        <img style="width: 1rem; margin-inline-end: .5rem" src='{{ "svg/edit.svg" | relURL }}' class="book-icon" alt="" />
+        <a class = "xxx" title='{{ i18n "Created by" }} {{$.Params.author}}'>
+          {{ $date }}
+        </a>
+      </div>
+  {{ end }}
+  {{ with $terms := $.GetTerms "categories" }}
+      <div class= "flex align-center" style="margin-right: 1rem">
+        <img style = "height:1rem; width: 1rem; margin-inline-end: .5rem" src='{{ "svg/cates.svg" | relURL }}' class="book-icon" alt="" />
+        {{ range $term := $terms}}
+        <a class ="xxx" href="{{$term.RelPermalink}}" style="margin-right: .5rem">
+          {{ $term.Title }}
+        </a>
+        {{ end }}
+      </div>
+  {{ end }}
+{{ with $terms := $.GetTerms "tags"}}
+    <div class ="flex align-center" style="margin-right: 1rem">
+    <img style = "height:1rem; width: 1rem; margin-inline-end: .5rem" src='{{ "svg/tag-alt.svg" | relURL }}' class="book-icon" alt="" />
+        {{ range $term := $terms}}
+        <a class ="xxx" href="{{$term.RelPermalink}}" style="margin-right: .5rem">
+            {{ $term.Title}}
+        </a>
+        {{ end }}
+      </div>
+{{ end }}
+</div>
 {{ end }}
