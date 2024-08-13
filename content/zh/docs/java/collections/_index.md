@@ -4,6 +4,7 @@ bookCollapseSection: true
 weight: 2
 title: "集合框架"
 BookToC: false
+BookComments: false
 ---
 
 <center>

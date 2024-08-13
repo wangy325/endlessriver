@@ -2,6 +2,7 @@
 bookCollapseSection: true
 weight: 4
 title: 算法讨论
+bookComments: false
 ---
 
 此目录下的内容从记录一个牛客网上的机试题开始。
