@@ -1,0 +1,40 @@
+<!--
+ * @Author: wangy325
+ * @Date: 2024-08-13 18:59:45
+ * @Description: 
+-->
+{{ with .Date }}
+  <!-- <h5>{{ partial "docs/date" (dict "Date" . "Format" $.Site.Params.BookDateFormat) }}</h5> -->
+  {{- $date := partial "docs/date" (dict "Date" . "Format" $.Site.Params.BookDateFormat) -}}
+    <a class = "flex align-center" style = "font-size: .9rem"  title = '{{ i18n "Created by" }} {{$.Params.author}}'> 
+      <img style = "height:1rem; width: 1rem; margin-inline-end: .5rem" src='{{ "svg/edit.svg" | relURL }}' class="book-icon" alt="" />
+      <span>{{ $date }}</span>
+    </a>
+{{ end }}
+
+{{ range $taxonomy, $_ := .Site.Taxonomies }}
+  {{ with $terms := $.GetTerms $taxonomy }}
+  <div style = "font-size: .9rem">
+    {{ range $n, $term := $terms }}{{ if $n }}, {{ end }}
+    <a  class = "flex align-center" href="{{ $term.RelPermalink }}">
+        {{ if eq $taxonomy  "categories"}}
+        <img style = "height:1rem; width: 1rem; margin-inline-end: .5rem" src='{{ "svg/cates.svg" | relURL }}' class="book-icon" alt="" />
+        {{ else}}
+        <img style = "height:1rem; width: 1rem; margin-inline-end: .5rem" src='{{ "svg/tag-alt.svg" | relURL }}' class="book-icon" alt="" />
+        {{ end }}
+       {{ $term.Title }}
+    </a>
+    {{- end }}
+  </div>
+  {{ end }}
+{{ end }}
+
+{{ if .Params.image }}
+<p>
+  {{ with .Resources.GetMatch .Params.image }}
+    <img src={{ .RelPermalink }} />
+  {{ else }}
+    <img src={{ .Params.image | relURL }} />
+  {{ end }}
+</p>
+{{ end }}
