@@ -1,5 +1,5 @@
 ---
-title: "spring声明式事务的使用"
+title: "Spring声明式事务的使用"
 date: 2021-06-04
 author: "wangy325"
 weight: 4

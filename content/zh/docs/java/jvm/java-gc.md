@@ -2,7 +2,7 @@
 title: "JVM垃圾回收概要(转)"
 date: 2020-11-25
 weight: 2
-caregories: [java]
+categories: [java]
 tags: [JVM]
 libraries:
 - mermaid
