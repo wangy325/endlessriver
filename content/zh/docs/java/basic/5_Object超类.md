@@ -7,8 +7,6 @@ author: "wangy325"
 weight: 5
 ---
 
-# Object超类
-
 在Java中，如果一个类没有明确地指出超类，那么Object就是这个类的超类。实际上，Object类是所有类超类，这个类定义了一些重要的方法。
 
 <!--more-->
@@ -138,3 +136,7 @@ public class HashT {
 ```
 
 注意，`s`和`t`哈希值相同时因为String类覆盖了hashCode方法，其值是由字符串字面量值计算来的，而StringBuilder没有覆盖hashCode方法，其值是Object默认的hashCode方法导出的**对象存储地址**。
+
+---
+
+参考: [再论Object超类](../concurrency/2资源访问受限_5_线程本地存储.md/#再论object超类)

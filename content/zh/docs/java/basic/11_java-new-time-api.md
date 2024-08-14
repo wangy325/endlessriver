@@ -7,7 +7,6 @@ author: "wangy325"
 weight: 11
 ---
 
-# Java8日期和时间API
 
 > mybatis自 3.4.5 开始，已经支持使用`LocaldateTime`作为时间查询入参，映射类型为`TimeStamp`，参考地址: https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers
 
