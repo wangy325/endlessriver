@@ -77,6 +77,8 @@
     {{ end }}
   </main>
 
+  {{ template "back-to-top" .}}
+
   {{ partial "docs/inject/body" . }}
 </body>
 </html>
@@ -125,5 +127,9 @@
 {{ end }}
 
 {{ define "copyright"}}
-  {{ partial "copyright" .}}
+  {{ partial "copyright" . }}
 {{ end }}
+
+{{ define "back-to-top"}}
+  {{ partial "back-to-top" . }}
+{{end}}

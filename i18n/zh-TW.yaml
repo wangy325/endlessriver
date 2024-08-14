@@ -13,6 +13,9 @@
 - id: Expand
   translation: 展開
 
+- id: Go to top
+  translation: 回到頂部
+
 - id: bookSearchConfig
   translation: |
     {

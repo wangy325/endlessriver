@@ -13,5 +13,8 @@
 - id: Expand
   translation: Expand
 
+- id: Go to top
+  translation: Go to top
+
 - id: bookSearchConfig
   translation: '{ cache: true }'
