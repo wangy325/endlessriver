@@ -69,16 +69,16 @@
     </div>
 
     {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
-    <aside class="book-toc">
+    <aside class="book-toc" >
       <div class="book-toc-content">
-        {{ template "toc" . }} <!-- Table of Contents -->
+        {{ template "toc" . }} 
       </div>
     </aside>
     {{ end }}
   </main>
-
+<div class ="back-to-top">
   {{ template "back-to-top" .}}
-
+</div>
   {{ partial "docs/inject/body" . }}
 </body>
 </html>
@@ -87,7 +87,7 @@
   {{ partial "docs/menu" . }}
 {{ end }}
 
-{{ define "header" }}
+{{ define "header" }}   <!--mobile view-->
   {{ partial "docs/header" . }}
 
   {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
@@ -116,8 +116,8 @@
       <h1>
         <a href="{{ .RelPermalink }}">{{ partial "docs/title.html" . }}</a>
       </h1>
+      {{ partial "post-meta" . }}
     {{ end }}
-    {{ partial "post-meta" . }}
     {{- .Content -}}
   </article>
 {{ end }}

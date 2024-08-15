@@ -28,7 +28,11 @@ Most contents were like Learning Notes, especially those contents about Java/Pyt
 
 All code snipptes showed in contents can be find in this [Repo](https://github.com/wangy325/java-review).
 
+Due to this, this blog looks more like a doc page, which theme Book is desgined for docs.
+
 Also, there are some 'practical guides' type contents, but not that much. I should write more blogs like that, I think. /*\
+
+Besides, I was thought to translate some English posts. Now I perfer to quote them or write some.
 
 ## The author
 
