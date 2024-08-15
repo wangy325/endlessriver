@@ -1,9 +1,10 @@
 ---
-title: "字符串，元组和字典"
+title: "格式化输出与文件I/O"
 date: 2024-06-06
 categories: [python]
+tags: [snippet]
 author: "wangy32"
-weight: 3
+weight: 6
 BookToC: false
 snippets: true
 ---

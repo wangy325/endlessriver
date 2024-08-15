@@ -29,34 +29,24 @@
       {{ template "main" . }} <!-- Page Content -->
       {{ partial "docs/inject/content-after" . }}
 
-      <!-- snippets start -->
-      <!-- https://discourse.gohugo.io/t/easiest-way-to-embed-code-from-source-files/36662 -->
-       <!-- https://gohugo.io/methods/site/data/ -->
-      {{ if default false (default .Site.Params.snippets .Params.snippets) }}
-          {{ $key := path.Base .TranslationKey }}
-          
-          {{ with resources.GetMatch (printf "snippets/pys/%s.*" $key) }}
-          <!-- <h2>{{$key}}</h2> -->
-          {{ $lang := path.Ext .Name | strings.TrimLeft "."  }}
-          {{ $options := slice "lineNos=table" "style=native" }}
-          {{ transform.Highlight .Content $lang (delimit $options ",") }}
-          {{ end }}
-
-          <!-- 可以从 json yaml toml xml读取数据，但是没必要，直接写在md里就行了 -->
-          <!-- {{ range where  site.Data.py  "name" $key}}
-          <h2>Data</h2>
-          Author: {{ .author }}<br>
-          Output: {{ .output }}<br>
-          {{ end }} -->
-      {{ end }}
-       <!-- snippets end -->
-      
       <!-- https://discourse.gohugo.io/t/remove-footer-and-header/44347 -->
       {{ if default true (default .Site.Params.BookFooter  .Params.BookFooter)}}
       <footer class="book-footer">
         {{ template "footer" . }} <!-- Footer under page content -->
         {{ partial "docs/inject/footer" . }}
       </footer>
+      {{ end }}
+
+      <!-- render git-sub-module snippets -->
+      <!-- https://discourse.gohugo.io/t/easiest-way-to-embed-code-from-source-files/36662 -->
+       <!-- https://gohugo.io/methods/site/data/ -->
+      {{ if default false (default .Site.Params.snippets .Params.snippets) }}
+        {{ $key := path.Base .TranslationKey }}
+          {{ with resources.GetMatch (printf "snippets/*/%s.*" $key) }}
+            {{ $lang := path.Ext .Name | strings.TrimLeft "."  }}
+            {{ $options := slice "lineNos=table" "style=native" }}
+            {{ transform.Highlight .Content $lang (delimit $options ",") }}
+          {{ end }}
       {{ end }}
 
       {{ template "comments" . }} <!-- Comments block -->

@@ -1,12 +1,14 @@
 ---
-title: "函数式编程"
-date: 2024-06-06
+title: "线程模型"
+date: 2024-08-06
 categories: [python]
+tags: [snippet]
 author: "wangy32"
-weight: 4
+weight: 12
 BookToC: false
 snippets: true
 ---
+
 
 ---
 ---
