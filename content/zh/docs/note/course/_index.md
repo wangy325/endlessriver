@@ -1,9 +1,12 @@
 ---
-title: "课程笔记"
+title: "Courses"
 weight: 4
 bookFlatSection: false
 bookCollapseSection: true
 bookComments: false
+BookToC: false
+showTitle: false
+tags: [undone]
 ---
 
 本部分内容记录了系列课程的学习笔记。

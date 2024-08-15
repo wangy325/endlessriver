@@ -2,9 +2,10 @@
 #bookFlatSection: true
 bookCollapseSection: true
 weight: 2
-title: "集合框架"
+title: "Collections"
 BookToC: false
 BookComments: false
+showTitle: false
 ---
 
 <center>
