@@ -2,7 +2,7 @@
 menu:
   after:
     name: links
-    weight: 6
+    weight: 7
 title: Links
 BookFooter: false
 BookComments: false
@@ -10,19 +10,19 @@ copyright: false
 showTitle: false
 ---
 
-<center style="font-family:monospace; font-size:0.9rem">
+<center style="font-family:monospace; font-size:0.8rem">
 
-🔗️ 自我麻痹
+🔗️ Self-hypnosis
 <br/>
 
-[博客仓库](https://github.com/wangy325/endlessriver)<br/>
-[示例代码](https://github.com/wangy325/java-review)<br/>
+[endlessriver](https://github.com/wangy325/endlessriver)<br/>
+<!-- [示例代码](https://github.com/wangy325/java-review)<br/> -->
 <!-- [hugo-theme-even](https://github.com/wangy325/hugo-theme-even)<br/> -->
 <!-- [mybatis-plus-starter](https://github.com/wangy325/mybatis-plus-starter) -->
 
 <br/>
 
-📔️ 技术博客
+📔️ Bravo blogs
 <br/>
 
 [阮一峰的个人站](http://www.ruanyifeng.com/home.html)&nbsp;&nbsp;&nbsp;&nbsp;
@@ -38,7 +38,7 @@ showTitle: false
 
 <br/>
 
-🌊️ 有趣的事
+🌊️ Fun things
 
 [赫赫文王](https://kqh.me/)&nbsp;&nbsp;&nbsp;&nbsp;
 [落网](https://www.indie.cn/)

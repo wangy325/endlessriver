@@ -1,10 +1,8 @@
+---
+draft: true
+date: 2017-08-20 21:38:52
+---
 
-+++
-title = "关于..."
-description = ""
-type = "about"
-date = "2017-08-20T21:38:52+08:00"
-+++
 
 {{< youtube "UeeuEplH3D0" >}}
 
