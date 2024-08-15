@@ -3,53 +3,22 @@
  * @Date: 2024-08-14 10:10:57
  * @Description: 
 -->
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1rem;
-}
-
-#top {
-  display: none;
-  position: fixed;
-  bottom: 10px;
-  right: 15px;
-  z-index: 99;
-  font-size: 1rem;
-  cursor: pointer;
-  .black { display: block;}
-  .blue { display: none;}
-}
-
-#top:hover {
-    .black{ display: none;}
-    .blue { display: block;}
-}
-
-
-</style>
-</head>
-<body>
 
 <!-- <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button> -->
- <div id="top">
+ <div id="back-to-top">
 <img src="/svg/chevrons-up.svg" srcset="/svg/chevrons-up.svg 500w " onclick="topFunction()"   class="black"/>
 <img title = '{{ i18n "Go to top"}}' src="/svg/chevrons-up-blue.svg" srcset="/svg/chevrons-up-blue.svg 500w " onclick="topFunction()"  class="blue"/>
 </div>
 
 <script>
 // Get the button
-let mybutton = document.getElementById("top");
+let mybutton = document.getElementById("back-to-top");
 
-// When the user scrolls down 30px from the top of the document, show the button
+// When the user scrolls down 500px from the top of the document, show the button
 window.onscroll = function() {scrollFunction()};
 
 function scrollFunction() {
-  if (document.body.scrollTop > 30 || document.documentElement.scrollTop > 30) {
+  if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
     mybutton.style.display = "block";
   } else {
     mybutton.style.display = "none";
@@ -62,6 +31,3 @@ function topFunction() {
   document.documentElement.scrollTop = 0;
 }
 </script>
-
-</body>
-</html>

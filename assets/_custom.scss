@@ -1,0 +1,50 @@
+
+#back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 10px;
+    right: 15px;
+    z-index: 99;
+    font-size: 1rem;
+    cursor: pointer;
+
+    .black {
+        display: block;
+    }
+
+    .blue {
+        display: none;
+    }
+}
+
+#back-to-top:hover {
+    .black {
+        display: none;
+    }
+
+    .blue {
+        display: block;
+    }
+}
+// mobile view font-size .8rem samller than body font size
+@media screen and (max-width: $mobile-breakpoint) {
+
+    .book-menu {
+        visibility: hidden;
+        margin-inline-start: -$menu-width;
+        font-size: $font-size-14;
+        z-index: 1;
+    }
+
+    #toc-control:checked~main {
+        .book-header aside {
+            display: block;
+            font-size: $font-size-14;
+        }
+    }
+
+    .back-to-top {
+        display: none;
+    }
+
+}
