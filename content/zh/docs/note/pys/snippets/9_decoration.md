@@ -1,12 +1,14 @@
 ---
-title: "4个重要的内置函数"
+title: "闭包与装饰器"
 date: 2024-06-06
 categories: [python]
+tags: [snippet]
 author: "wangy32"
-weight: 5
+weight: 10
 BookToC: false
 snippets: true
 ---
+
 
 ---
 ---
