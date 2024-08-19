@@ -1,0 +1,120 @@
+<!--
+ * @Author: wangy325
+ * @Date: 2024-08-16 00:07:02
+ * @Description: 
+-->
+ <!-- https://allanchain.github.io/blog/post/hugo-toc/ -->
+  
+{{- $headers := findRE "(?s)<h[1-4].*?>(.|\n])+?</h[1-4]>" .Content -}}
+<!-- <a>{{ $headers}}</a> -->
+{{- $has_headers := ge (len $headers) 1 -}}
+{{- if $has_headers -}}
+
+{{- $largest := 6 -}}
+{{- range $headers -}}
+  {{- $headerLevel := index (findRE "[1-4]" . 1) 0 -}}
+  {{- $headerLevel := len (seq $headerLevel) -}}
+  {{- if lt $headerLevel $largest -}}
+    {{- $largest = $headerLevel -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $firstHeaderLevel := len (seq (index (findRE "[1-4]" (index $headers 0) 1) 0)) -}}
+
+{{- $.Scratch.Set "bareul" slice -}}
+<div id="toc-new">
+<ul class="nav">
+  {{- range seq (sub $firstHeaderLevel $largest) -}}
+    <ul class="nav">
+    {{- $.Scratch.Add "bareul" (sub (add $largest .) 1) -}}
+  {{- end -}}
+  {{- range $i, $header := $headers -}}
+    {{- $headerLevel := index (findRE "[1-4]" . 1) 0 -}}
+    {{- $headerLevel := len (seq $headerLevel) -}}
+
+    {{/* get id="xyz" */}}
+    {{ $id := index (findRE "(id=\"(.*?)\")" $header 9) 0 }}
+    {{/* strip id="" to leave xyz (no way to get regex capturing groups in hugo :( */}}
+    {{ $cleanedID := replace (replace $id "id=\"" "") "\"" "" }}
+    {{- $header := replaceRE "(?s)<h[1-4].*?>((.|\n])+?)</h[1-4]>" "$1" $header -}}
+    {{- $header := $header | safeHTML  | plainify | htmlEscape  -}}
+    {{- $header := substr $header 0 -2 -}}
+
+    {{- if ne $i 0 -}}
+      {{- $prevHeaderLevel := index (findRE "[1-4]" (index $headers (sub $i 1)) 1) 0 -}}
+      {{- $prevHeaderLevel := len (seq $prevHeaderLevel) -}}
+        {{- if gt $headerLevel $prevHeaderLevel -}}
+          {{- range seq $prevHeaderLevel (sub $headerLevel 1) -}}
+            <ul class="nav">
+            {{/* the first should not be recorded */}}
+            {{- if ne $prevHeaderLevel . -}}
+              {{- $.Scratch.Add "bareul" . -}}
+            {{- end -}}
+          {{- end -}}
+        {{- else -}}
+          </li>
+          {{- if lt $headerLevel $prevHeaderLevel -}}
+            {{- range seq (sub $prevHeaderLevel 1) -1 $headerLevel -}}
+              {{- if in ($.Scratch.Get "bareul") . -}}
+                </ul>
+                {{/* manually do pop item */}}
+                {{- $tmp := $.Scratch.Get "bareul" -}}
+                {{- $.Scratch.Delete "bareul" -}}
+                {{- $.Scratch.Set "bareul" slice}}
+                {{- range seq (sub (len $tmp) 1) -}}
+                  {{- $.Scratch.Add "bareul" (index $tmp (sub . 1)) -}}
+                {{- end -}}
+              {{- else -}}
+                </ul></li>
+              {{- end -}}
+            {{- end -}}
+          {{- end -}}
+        {{- end -}}
+        <li class="nav-item">
+          <!-- <a  id="{{ add "t" (replace (index  (split $header " ") 1) "." "")}}" href="#{{- $cleanedID  -}}">{{- $header  -}}</a> -->
+          {{- $lid := replaceRE `[\(\)-\.\@]`  "" $header  -}}
+          {{- $lids := split (trim $lid " ")  " "  -}}
+          {{- with  $lid -}}
+                {{- if eq  ($lids | len ) 1 -}}
+                        {{- $lid := index $lids 0 -}}
+                        <a  id="{{ add "t" (trim $lid " ") }}" href="#{{- $cleanedID  -}}">{{- $header  -}}</a>
+                        {{- else if gt ($lids | len ) 2 -}}
+                        {{- $lid := add (index $lids 1) (index $lids 2) -}}
+                        <a  id="{{ add "t" (trim $lid " ")}}" href="#{{- $cleanedID  -}}">{{- $header  -}}</a>
+                        {{- else -}}
+                        {{-  $lid := index $lids 1 -}}
+                        <a  id="{{ add "t" (trim $lid " ")}}" href="#{{- $cleanedID  -}}">{{- $header  -}}</a>
+                {{- end -}}
+          {{-  end -}}
+    {{- else -}}
+    <li class="nav-item">
+        {{- $lid := replaceRE `[\(\)-\@]`  "" $header  -}}
+        {{- $lids := split (trim $lid " ")  " "  -}}
+        {{- with  $lid -}}
+        {{- if eq  ($lids | len ) 1 -}}
+                {{- $lid := index $lids 0 -}}
+                <a  id="{{ add "t" (trim $lid " ") }}" href="#{{- $cleanedID  -}}">{{- $header  -}}</a>
+                {{- else if gt ($lids | len ) 2 -}}
+                {{- $lid := add (index $lids 1) (index $lids 2) -}}
+                <a  id="{{ add "t" (trim $lid " ")}}" href="#{{- $cleanedID  -}}">{{- $header  -}}</a>
+                {{- else -}}
+                {{-  $lid := index $lids 1 -}}
+                <a  id="{{ add "t" (trim $lid " ")}}" href="#{{- $cleanedID  -}}">{{- $header  -}}</a>
+        {{- end -}}
+  {{-  end -}}
+    {{- end -}}
+  {{- end -}}
+  <!-- {{- $firstHeaderLevel := len (seq (index (findRE "[1-4]" (index $headers 0) 1) 0)) -}} -->
+  {{ $firstHeaderLevel := $largest }}
+  {{- $lastHeaderLevel := len (seq (index (findRE "[1-4]" (index $headers (sub (len $headers) 1)) 1) 0)) -}}
+  </li>
+  {{- range seq (sub $lastHeaderLevel $firstHeaderLevel) -}}
+    {{- if in ($.Scratch.Get "bareul") (add . $firstHeaderLevel) -}}
+      </ul>
+    {{- else -}}
+      </ul></li>
+    {{- end -}}
+  {{- end -}}
+</ul>
+</div>
+{{- end -}}

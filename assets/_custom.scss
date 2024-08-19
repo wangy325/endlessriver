@@ -1,3 +1,48 @@
+#toc-new  ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0;
+    overflow:hidden;
+    white-space:nowrap;
+}
+
+#toc-new ul ul {
+    padding-inline-start: 1rem;
+}
+
+#toc-new ul li {
+    margin: .65em 0;
+    position: relative;
+    text-overflow:ellipsis;
+    overflow:hidden;
+}
+
+
+#toc-new li a {
+    color: black;
+}
+
+#toc-new li  a.active {
+    color: #05b;
+    background-color: aliceblue;
+}
+
+// 隐藏次一级目录
+#toc-new li > ul {
+    display: none;
+}
+// 展开
+// + ~ 兄弟选择器
+// :has 父类选择器
+#toc-new li > a.active ~ ul {
+    display: inherit;
+}
+#toc-new .nav:has( a.active) {
+    display: inherit;
+}
+
+
+
 
 #back-to-top {
     display: none;

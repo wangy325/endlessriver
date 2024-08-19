@@ -177,7 +177,7 @@ public class GCTest {
 >
 > **Sets the maximum tenuring threshold for use in adaptive GC sizing. The largest value is 15. The default value is 15 for the parallel (throughput) collector, and 6 for the CMS collector.默认晋升年龄并不都是15，这个是要区分垃圾收集器的，CMS就是6.**
 
-## 1.5主要进行 gc 的区域
+### 1.5主要进行 gc 的区域
 
 周志明先生在《深入理解Java虚拟机》第二版中P92如是写道：
 
@@ -424,7 +424,7 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.211-b12, mixed mode)
 ```
 JDK1.8默认使用的是Parallel Scavenge + Parallel Old，如果指定了-XX:+UseParallelGC参数，则默认指定了-XX:+UseParallelOldGC，可以使用-XX:-UseParallelOldGC来禁用该功能
 
-### 4.4.Serial Old 收集器
+### 4.4 Serial Old 收集器
 **Serial 收集器的老年代版本**，它同样是一个单线程收集器。它主要有两大用途：一种用途是在 JDK1.5 以及以前的版本中与 Parallel Scavenge 收集器搭配使用，另一种用途是作为 CMS 收集器的后备方案。
 
 ### 4.5 Parallel Old 收集器
@@ -547,7 +547,7 @@ G1 收集器的运作大致分为以下几个步骤：
 > MinorGC 执行时间不到50ms； Minor GC 执行不频繁，约10秒一次； Full GC 执行时间不到1s； Full GC 执行频率不算频繁，不低于10分钟1次。
 
 
-## 参考
+## 7 参考
 
 - 《深入理解 Java 虚拟机：JVM 高级特性与最佳实践（第二版》
 - https://my.oschina.net/hosee/blog/644618
