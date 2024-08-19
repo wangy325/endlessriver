@@ -10,7 +10,7 @@
   {{ partial "docs/html-head" . }}
   {{ partial "docs/inject/head" . }}
 </head>
-<body dir="{{ default "ltr" .Site.Language.LanguageDirection }}">
+<body dir="{{ default "ltr" .Site.Language.LanguageDirection }}" data-bs-spy="scroll" data-bs-target="#TableOfContents">
   <input type="checkbox" class="hidden toggle" id="menu-control" />
   <input type="checkbox" class="hidden toggle" id="toc-control" />
   <main class="container flex">
@@ -62,6 +62,9 @@
     <aside class="book-toc" >
       <div class="book-toc-content">
         {{ template "toc" . }} 
+        <!-- <script src="/js/toc.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script>createToC()</script> -->
       </div>
     </aside>
     {{ end }}
@@ -70,6 +73,8 @@
   {{ template "back-to-top" .}}
 </div>
   {{ partial "docs/inject/body" . }}
+
+  <script src="/js/scroll-listening.js"></script>
 </body>
 </html>
 
@@ -113,7 +118,7 @@
 {{ end }}
 
 {{ define "toc" }}
-  {{ partial "docs/toc" . }}
+  {{ partial "new-toc" . }}
 {{ end }}
 
 {{ define "copyright"}}
