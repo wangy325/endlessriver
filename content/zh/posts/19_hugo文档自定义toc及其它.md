@@ -141,7 +141,9 @@ Hugo使用`htmlUnescape`来反转义：
 
 ```html
 {{- $lid := replaceRE `[\(\)-\.\@\?\";= ]`  "" $header  -}}
-<a  id="{{ add "t" (trim $lid " ")}}" href="#{{- $cleanedID  -}}">{{- $header  -}}</a>
+<a  id="{{ add "t" (trim $lid " ")}}" href="#{{- $cleanedID -}}">
+    {{- $header -}}
+</a>
 ```
 
 上面的代码，处理掉了标题中的空格和特殊字符，并且已字符`t`开头，避免id不能已数字开头的问题。
@@ -213,7 +215,7 @@ window.addEventListener("scroll", () => tocTrack())
 ```js
 const listAllHeadings = () => {
   const headlines = document
-    .querySelectorAll("article h1, article h2, article h3, article h4, article h5");
+    .querySelectorAll("article h1, article h2, h3, h4, h5");
   const head = [].slice.apply(headlines).filter(function (item) {
     return item.getAttribute("id") != null
   })
