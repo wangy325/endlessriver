@@ -58,15 +58,11 @@ const tocTrack = () => {
   }
   // 应对乱七八糟的文档目录
   // 清除文档目录中的() - 和@
-  // 中文'（）'作为id没影响
-  let sps = anchorId.replace(/[\(\)-\.\@]/g, '').split(" ")
-  if (sps.length > 2) {
-    anchorId = "t" + sps[1] + sps[2]
-  } else if (sps.length == 2) {
-    anchorId = "t" + sps[1]
-  } else {
-    anchorId = "t" + sps[0]
-  }
+  // 中文标点如'（）' '？'作为id没影响
+  let sps = anchorId.replace(/[\(\)-\.\@\"\?;= ]/g, '')
+  
+  anchorId = "t" + sps
+  
   // console.log('anchorId: ' + anchorId)
 
   var toc_active = document.querySelectorAll(`#toc-new .nav-item #${anchorId}`)
@@ -76,9 +72,3 @@ const tocTrack = () => {
   // toc_active.classList.remove("active")
 
 };
-
-
-
-
-
-

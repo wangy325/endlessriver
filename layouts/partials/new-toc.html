@@ -75,41 +75,16 @@
           {{- end -}}
         {{- end -}}
         <li class="nav-item">
-          <!-- <a  id="{{ add "t" (replace (index  (split $header " ") 1) "." "")}}" href="#{{- $cleanedID  -}}">{{- $header  -}}</a> -->
-          
-          {{- $lid := replaceRE `[\(\)-\.\@]`  "" $header  -}}
-          {{- $lids := split (trim $lid " ")  " "  -}}
-          {{- with  $lid -}}
-                {{- if eq  ($lids | len ) 1 -}}
-                    {{- $lid := index $lids 0 -}}
-                    <a  id="{{ add "t" (trim $lid " ") }}" href="#{{- $cleanedID  -}}">{{- $header  -}}</a>
-                {{- else if gt ($lids | len ) 2 -}}
-                    {{- $lid := add (index $lids 1) (index $lids 2) -}}
-                    <a  id="{{ add "t" (trim $lid " ")}}" href="#{{- $cleanedID  -}}">{{- $header  -}}</a>
-                {{- else -}}
-                    {{-  $lid := index $lids 1 -}}
-                    <a  id="{{ add "t" (trim $lid " ")}}" href="#{{- $cleanedID  -}}">{{- $header  -}}</a>
-                {{- end -}}
-          {{-  end -}}
+      
+          {{- $lid := replaceRE `[\(\)-\.\@\?\";= ]`  "" $header  -}}
+          <a  id="{{ add "t" (trim $lid " ")}}" href="#{{- $cleanedID  -}}">{{- $header  -}}</a>
 
     {{- else -}}
     <li class="nav-item">
+      
+       {{- $lid := replaceRE `[\(\)-\.\@\?\";= ]`  "" $header  -}}
+        <a  id="{{ add "t" (trim $lid " ")}}" href="#{{- $cleanedID  -}}">{{- $header  -}}</a>
 
-        {{- $lid := replaceRE `[\(\)-\@]`  "" $header  -}}
-        {{- $lids := split (trim $lid " ")  " "  -}}
-        {{- with  $lid -}}
-            {{- if eq  ($lids | len ) 1 -}}
-               {{- $lid := index $lids 0 -}}
-                <a  id="{{ add "t" (trim $lid " ") }}" href="#{{- $cleanedID  -}}">{{- $header  -}}</a>
-            {{- else if gt ($lids | len ) 2 -}}
-                {{- $lid := add (index $lids 1) (index $lids 2) -}}
-                <a  id="{{ add "t" (trim $lid " ")}}" href="#{{- $cleanedID  -}}">{{- $header  -}}</a>
-            {{- else -}}
-                {{-  $lid := index $lids 1 -}}
-                <a  id="{{ add "t" (trim $lid " ")}}" href="#{{- $cleanedID  -}}">{{- $header  -}}</a>
-        {{- end -}}
-
-  {{-  end -}}
     {{- end -}}
   {{- end -}}
   <!-- {{- $firstHeaderLevel := len (seq (index (findRE "[1-5]" (index $headers 0) 1) 0)) -}} -->
