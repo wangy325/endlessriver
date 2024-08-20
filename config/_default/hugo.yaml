@@ -18,11 +18,26 @@ baseURL: https://wangy325.github.io
 title: Endless River
 theme: hugo-book
 
-# Needed for mermaid/katex shortcodes
+
+# hugo markdown render config reference:
+# https://gohugo.io/getting-started/configuration-markup/#typographer
 markup:
   goldmark:
     renderer:
-      unsafe: true
+      unsafe: true  # Needed for mermaid/katex shortcodes
+    extensions:
+      typographer:
+        disable: true
+        apostrophe: '&rsquo;'
+        ellipsis: '&hellip;'
+        emDash: '&mdash;'
+        enDash: '&ndash;'
+        leftAngleQuote: '&laquo;'
+        leftDoubleQuote: '&ldquo;'
+        leftSingleQuote: '&lsquo;'
+        rightAngleQuote: '&raquo;'
+        rightDoubleQuote: '&rdquo;'
+        rightSingleQuote: '&rsquo;'
   tableOfContents:
     startLevel: 1
     endLevel: 4
