@@ -20,7 +20,7 @@ const inportJs = (url) => {
 
 // 找出正文标题
 const listAllHeadings = () => {
-  const headlines = document.querySelectorAll("article h1, article h2, article h3, article h4, article h5, article  h6");
+  const headlines = document.querySelectorAll("article h1, article h2, article h3, article h4, article h5");
   const head = [].slice.apply(headlines).filter(function (item) {
     return item.getAttribute("id") != null
   })
