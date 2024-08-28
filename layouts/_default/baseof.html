@@ -13,8 +13,30 @@
 <body dir="{{ default "ltr" .Site.Language.LanguageDirection }}" data-bs-spy="scroll" data-bs-target="#TableOfContents">
   <input type="checkbox" class="hidden toggle" id="menu-control" />
   <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <input type="checkbox" class="hidden toggle" id="menu-navi" />
+  <input type="checkbox" class="hidden toggle" id="toc-navi" />
+  <!-- <script src="/js/navi.js"></script> -->
   <main class="container flex">
+    <!-- hide/show buttons -->
+     <div class= "navi-header">
+      <label class="switch menu" for="menu-navi">
+        <img class="book-icon" src="/svg/hamburger.svg"/>
+      </label>
+      {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
+          <label class="switch toc" for="toc-navi" >
+            <img class= "book-icon" src="/svg/list.svg"/>
+          </label>
+      {{ end }}
+     </div>
+
     <aside class="book-menu">
+      <div id = 'title-search'>
+        {{ partial "docs/brand" . }}
+        {{ partial "docs/search" . }}
+        {{ if hugo.IsMultilingual }}
+          {{ partial "docs/languages" . }}
+        {{ end }}
+      </div>
       <div class="book-menu-content">
         {{ template "menu" . }} <!-- Left menu Content -->
       </div>
@@ -33,12 +55,12 @@
       <!-- https://discourse.gohugo.io/t/easiest-way-to-embed-code-from-source-files/36662 -->
       <!-- https://gohugo.io/methods/site/data/ -->
       {{ if default false (default .Site.Params.snippets .Params.snippets) }}
-      {{ $key := path.Base .TranslationKey }}
-      {{ with resources.GetMatch (printf "snippets/*/%s.*" $key) }}
-      {{ $lang := path.Ext .Name | strings.TrimLeft "."  }}
-      {{ $options := slice "lineNos=table" "style=dracula" }}
-      {{ transform.Highlight .Content $lang (delimit $options ",") }}
-      {{ end }}
+        {{ $key := path.Base .TranslationKey }}
+        {{ with resources.GetMatch (printf "snippets/*/%s.*" $key) }}
+          {{ $lang := path.Ext .Name | strings.TrimLeft "."  }}
+          {{ $options := slice "lineNos=table" "style=dracula" }}
+          {{ transform.Highlight .Content $lang (delimit $options ",") }}
+        {{ end }}
       {{ end }}
 
       <!-- https://discourse.gohugo.io/t/remove-footer-and-header/44347 -->
@@ -59,11 +81,11 @@
     </div>
 
     {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
-    <aside class="book-toc" >
-      <div class="book-toc-content">
-        {{ template "toc" . }} 
-      </div>
-    </aside>
+      <aside class="book-toc" >
+        <div class="book-toc-content">
+          {{ template "toc" . }} 
+        </div>
+      </aside>
     {{ end }}
   </main>
 <div class ="back-to-top">
@@ -76,7 +98,7 @@
 </html>
 
 {{ define "menu" }}
-  {{ partial "docs/menu" . }}
+  {{ partial "menu" . }}
 {{ end }}
 
 {{ define "header" }}   <!--mobile view-->

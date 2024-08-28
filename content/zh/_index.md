@@ -8,6 +8,7 @@ copyright: false
 type: docs
 title: "Home"
 showTitle: false
+BookToC: false
 ---
 
 <center style="font-family:monospace;font-size:0.8rem">

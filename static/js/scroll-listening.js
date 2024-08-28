@@ -6,16 +6,6 @@
  */
 
 window.addEventListener("scroll", () => tocTrack())
-window.onload = function () {
-  // inportJs('/js/md5.js')
-}
-
-const inportJs = (url) => {
-  var script = document.createElement('script');
-  script.setAttribute('type', 'text/javascript');
-  script.setAttribute('src', url);
-  document.getElementsByTagName('head')[0].appendChild(script);
-}
 
 
 // 找出正文标题
