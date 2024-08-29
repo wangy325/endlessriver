@@ -10,7 +10,7 @@
   {{ partial "docs/html-head" . }}
   {{ partial "docs/inject/head" . }}
 </head>
-<body dir="{{ default "ltr" .Site.Language.LanguageDirection }}" data-bs-spy="scroll" data-bs-target="#TableOfContents">
+<body dir="{{ default "ltr" .Site.Language.LanguageDirection }}">
   <input type="checkbox" class="hidden toggle" id="menu-control" />
   <input type="checkbox" class="hidden toggle" id="toc-control" />
   <input type="checkbox" class="hidden toggle" id="menu-navi" />
@@ -30,13 +30,13 @@
      </div>
 
     <aside class="book-menu">
-      <div id = 'title-search'>
+      <!-- <div id = 'title-search'>
         {{ partial "docs/brand" . }}
         {{ partial "docs/search" . }}
         {{ if hugo.IsMultilingual }}
           {{ partial "docs/languages" . }}
         {{ end }}
-      </div>
+      </div> -->
       <div class="book-menu-content">
         {{ template "menu" . }} <!-- Left menu Content -->
       </div>
@@ -98,7 +98,7 @@
 </html>
 
 {{ define "menu" }}
-  {{ partial "menu" . }}
+  {{ partial "docs/menu" . }}
 {{ end }}
 
 {{ define "header" }}   <!--mobile view-->
