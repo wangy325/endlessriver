@@ -6,7 +6,19 @@
 // works. but conflict with checked css
 // and page load too slow...
 
-window.addEventListener('load', () => {
+window.addEventListener('load', resizeBody)
+
+function resizeBody() {
+    console.log('load page...')
+    const toc = document.getElementsByClassName('book-toc');
+    if (toc.length == 0) {
+        // doc no toc
+        document.getElementById('toc-navi').style.checked = true
+        document.getElementsByClassName('book-page')[0].style.right = 0
+    }
+}
+
+function loadNavi() {
     if (localStorage.getItem('mhidden') === 'true') {
         console.log('hidden menu')
         document.getElementsByClassName('book-menu')[0].style.display = "none";
@@ -26,7 +38,7 @@ window.addEventListener('load', () => {
             document.getElementsByClassName('book-toc')[0].style.opacity = 1;
         }
     }
-})
+}
 
 window.onclose = function () {
     localStorage.removeItem('mhidden')
@@ -34,10 +46,10 @@ window.onclose = function () {
 }
 
 const mb = document.getElementById('menu-navi');
-mb.addEventListener('click', () => mh())
+// mb.addEventListener('click', () => mh())
 
 const tb = document.getElementById("toc-navi")
-tb.addEventListener('click', () => th())
+// tb.addEventListener('click', () => th())
 
 
 function mh() {

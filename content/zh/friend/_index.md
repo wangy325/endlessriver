@@ -4,6 +4,7 @@ menu:
     name: links
     weight: 7
 title: Links
+draft: true
 BookFooter: false
 BookComments: false
 copyright: false
