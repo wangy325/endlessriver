@@ -9,6 +9,7 @@ BookFooter: false
 BookComments: false
 copyright: false
 showTitle: false
+BookIndex: true
 ---
 
 <center style="font-family:monospace; font-size:0.8rem">

@@ -5,6 +5,7 @@ title: Algorithms
 bookComments: false
 BookToC: false
 showTitle: false
+BookIndex: true
 ---
 
 此目录下的内容从记录一个牛客网上的机试题开始。
