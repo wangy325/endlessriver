@@ -7,6 +7,7 @@ title: About
 BookFooter: false
 BookComments: false
 showTitle: false
+BookIndex: true
 ---
 
 ##  The name

@@ -1,0 +1,26 @@
+{{ if not (default false (default .Site.Params.BookIndex  .Params.BookIndex)) }}
+    <div class="next-prev">
+        <hr>
+        <div class="page-navi flex" id="pagenavi">
+            {{ if .NextInSection }}
+            <div class="pre-page">
+                {{ i18n "Previous Page" }}
+                <a href="{{.NextInSection.Permalink}}">{{ .NextInSection.LinkTitle }}</a>
+            </div>
+            {{ else }}
+            <div class="pre-page-none">
+                {{ i18n "First Page" }}
+            </div>
+            {{ end }}
+            {{ if .PrevInSection }}
+                <div class = "next-page">
+                    <a href="{{.PrevInSection.Permalink}}">{{ .PrevInSection.LinkTitle }}</a> {{ i18n "Next Page" }}
+                </div>
+            {{ else }}
+                <div class = "next-page-none">
+                    {{ i18n "Last Page" }}
+                </div>
+            {{ end }}
+        </div>
+    </div>
+{{ end }}

@@ -174,3 +174,23 @@ params:
 #  category = "categories"
 #  series = "series"
 #### old zzo config items done
+
+related:
+  includeNewer: false
+  indices:
+  - applyFilter: false
+    cardinalityThreshold: 0
+    name: categories
+    pattern: ""
+    toLower: false
+    type: basic
+    weight: 20
+  - applyFilter: false
+    cardinalityThreshold: 0
+    name: tags
+    pattern: ""
+    toLower: false
+    type: basic
+    weight: 10
+  threshold: 80
+  toLower: false

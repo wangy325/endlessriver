@@ -50,34 +50,6 @@
       {{ partial "docs/inject/content-before" . }}
       {{ template "main" . }} <!-- Page Content -->
       {{ partial "docs/inject/content-after" . }}
-
-      <!-- render git-sub-module code snippets -->
-      <!-- https://discourse.gohugo.io/t/easiest-way-to-embed-code-from-source-files/36662 -->
-      <!-- https://gohugo.io/methods/site/data/ -->
-      {{ if default false (default .Site.Params.snippets .Params.snippets) }}
-        {{ $key := path.Base .TranslationKey }}
-        {{ with resources.GetMatch (printf "snippets/*/%s.*" $key) }}
-          {{ $lang := path.Ext .Name | strings.TrimLeft "."  }}
-          {{ $options := slice "lineNos=table" "style=dracula" }}
-          {{ transform.Highlight .Content $lang (delimit $options ",") }}
-        {{ end }}
-      {{ end }}
-
-      <!-- https://discourse.gohugo.io/t/remove-footer-and-header/44347 -->
-      {{ if default true (default .Site.Params.BookFooter  .Params.BookFooter)}}
-      <footer class="book-footer">
-        {{ template "footer" . }} <!-- Footer under page content -->
-        {{ partial "docs/inject/footer" . }}
-      </footer>
-      {{ end }}
-      
-      {{ template "comments" . }} <!-- Comments block -->
-
-      {{ if default true (default .Site.Params.copyright .Params.copyright) }}
-        {{ template "copyright" .}}
-      {{ end }}
-
-      <label for="menu-control" class="hidden book-menu-overlay"></label>
     </div>
 
     {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
@@ -87,42 +59,21 @@
         </div>
       </aside>
     {{ end }}
+    
   </main>
-<div class ="back-to-top">
-  {{ template "back-to-top" .}}
-</div>
-  {{ partial "docs/inject/body" . }}
+  <label for="menu-control" class="hidden book-menu-overlay"></label>
 
+  <div class ="back-to-top">
+    {{ partial "back-to-top" .}}
+  </div>
+  
+  {{ partial "docs/inject/body" . }}
+  
   <script src="/js/scroll-listening.js"></script>
 </body>
 </html>
 
-{{ define "menu" }}
-  {{ partial "docs/menu" . }}
-{{ end }}
-
-{{ define "header" }}   <!--mobile view-->
-  {{ partial "docs/header" . }}
-
-  {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
-  <aside class="hidden clearfix">
-    {{ template "toc" . }}
-  </aside>
-  {{ end }}
-{{ end }}
-
-{{ define "footer" }}
-  {{ partial "docs/footer" . }}
-{{ end }}
-
-{{ define "comments" }}
-  {{ if and .Content (default true (default .Site.Params.BookComments .Params.BookComments)) }}
-  <div class="book-comments">
-    <!-- {{- partial "docs/comments" . -}} -->
-    {{ partial "comments" . }}
-  </div>
-  {{ end }}
-{{ end }}
+<!-- -------------------------  Templates  ------------------------------------>
 
 {{ define "main" }}
   <article class="markdown book-article">
@@ -134,16 +85,55 @@
     {{ end }}
     {{- .Content -}}
   </article>
+    <!-- render git-sub-module code snippets -->
+    <!-- https://discourse.gohugo.io/t/easiest-way-to-embed-code-from-source-files/36662 -->
+    <!-- https://gohugo.io/methods/site/data/ -->
+    {{ if default false (default .Site.Params.snippets .Params.snippets) }}
+      {{ $key := path.Base .TranslationKey }}
+      {{ with resources.GetMatch (printf "snippets/*/%s.*" $key) }}
+        {{ $lang := path.Ext .Name | strings.TrimLeft "."  }}
+        {{ $options := slice "lineNos=table" "style=dracula" }}
+        {{ transform.Highlight .Content $lang (delimit $options ",") }}
+      {{ end }}
+    {{ end }}
+
+    <!-- https://discourse.gohugo.io/t/remove-footer-and-header/44347 -->
+    {{ if default true (default .Site.Params.BookFooter  .Params.BookFooter)}}
+    <footer class="book-footer">
+      {{ partial "docs/footer" . }} <!-- Footer under page content -->
+      {{ partial "docs/inject/footer" . }}
+    </footer>
+    {{ end }}
+
+    <!-- next and previous buttons -->
+    {{ partial "next-previous" .}}
+    <!-- related pages -->
+      {{ partial "related" .}}
+    
+      {{ if and .Content (default true (default .Site.Params.BookComments .Params.BookComments)) }}
+      <div class="book-comments">
+        {{ partial "comments" . }}
+      </div>
+      {{ end }} <!-- Comments block -->
+
+    {{ if default true (default .Site.Params.copyright .Params.copyright) }}
+      {{ partial "copyright" . }}
+    {{ end }}
+{{ end }}  <!-- Page Content -->
+
+{{ define "menu" }}
+  {{ partial "docs/menu" . }}
 {{ end }}
+
+{{ define "header" }}   <!--mobile view-->
+  {{ partial "docs/header" . }}
+  {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
+    <aside class="hidden clearfix">
+      {{ template "toc" . }}
+    </aside>
+  {{ end }}
+{{ end }}       
 
 {{ define "toc" }}
   {{ partial "new-toc" . }}
 {{ end }}
-
-{{ define "copyright"}}
-  {{ partial "copyright" . }}
-{{ end }}
-
-{{ define "back-to-top"}}
-  {{ partial "back-to-top" . }}
-{{end}}

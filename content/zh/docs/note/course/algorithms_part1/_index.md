@@ -4,6 +4,7 @@ weight: 2
 bookCollapseSection: true
 BookComments: false
 BookToC: false
+BookIndex: true
 ---
 
 ## [Algorithms, Part I - Princeton University - Coursera](https://www.coursera.org/learn/algorithms-part1/home/info)
