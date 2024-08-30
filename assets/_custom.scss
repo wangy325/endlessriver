@@ -2,13 +2,108 @@ html,
 body {
     scroll-behavior: smooth;
     font-family: serif, 'cursive';
-    // display: block flex;
+    display: block flex;
     overflow-x: hidden;
     // font-family:  Verdana, Geneva, sans-serif;
 }
 
 code {
     font-family: 'Courier New', Courier, monospace;
+}
+
+// 底部文章导航
+.next-prev {
+    hr {
+        border: none;
+        height: 10px;
+        margin-top: 2rem;
+        border-top: 1px solid rgba(12, 68, 235, 0.35);
+    }
+
+    #pagenavi {
+        margin-top: 2rem;
+        justify-content: space-between;
+
+        div {
+            height: auto;
+            border: 0 solid rgba(12, 68, 235, 0.35);
+            padding: 5px;
+        }
+
+        div.pre-page,
+        div.pre-page-none {
+            text-align: left;
+            border-left-width: 1px;
+        }
+
+        div.next-page,
+        div.next-page-none {
+            text-align: right;
+            border-right-width: 1px;
+        }
+    }
+}
+
+// 相似文章
+.related {
+    margin-top: 2rem;
+    // background-color: #f8f8f8;
+    border-radius: 25px;
+
+    .rel-title {
+        padding-top: 1rem;
+        text-align: center;
+    }
+
+    .rel-items {
+        display: flex;
+        justify-content: space-evenly;
+
+        a {
+            font-size: .85rem;
+            text-align: center;
+            padding: 10px;
+            div {
+                height: 5rem;
+                border: 1px solid #f8f8f8;
+                // background-color: aliceblue;
+                border-radius: 20px;
+                margin-top: 1rem;
+                padding: 10px;
+                padding-top: 1.5rem;
+            }
+        }
+
+        a:hover {
+            div {
+                box-shadow: 0 0 10px 0  rgba(12, 68, 235, 0.35);
+            }
+        }
+    }
+    hr {
+        border: none;
+        height: 10px;
+        margin-top: 2rem;
+        border-top: 1px solid rgba(12, 68, 235, 0.35);
+    }
+
+}
+
+.copyright {
+    text-align: center;
+    font-size: 0.8rem;
+    color: gray;
+
+    a {
+        color: gray;
+    }
+
+    .cline {
+        border: none;
+        height: 10px;
+        border-top: 2px solid #f8f8f8;
+        margin-top: 5rem;
+    }
 }
 
 // TOC 的样式

@@ -1,0 +1,20 @@
+{{ if not (default false (default .Site.Params.BookIndex  .Params.BookIndex)) }}
+    <section class="related">
+        {{ $related := .Site.RegularPages.Related . | first 5 }}
+        {{ with $related }}
+        <div class="rel-title">
+            {{ i18n "Related" }}
+        </div>
+        <div class="rel-items">
+            {{ range . }}
+                <a href="{{ .RelPermalink }}" class="related__link">
+                    <div>
+                       {{ .Title }}
+                    </div>
+                </a>
+            {{ end }}
+        </div>
+        {{ end }}
+        <hr>
+    </section>
+{{ end }}

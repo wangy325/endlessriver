@@ -9,6 +9,7 @@ type: docs
 title: "Home"
 showTitle: false
 BookToC: false
+BookIndex: true
 ---
 
 <center style="font-family:monospace;font-size:0.8rem">
