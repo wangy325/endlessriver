@@ -169,6 +169,7 @@ body .container {
     position: absolute;
     margin-right: 2rem;
     left: 19rem;
+    right: 0;
     transition: .3s;
 }
 
@@ -181,52 +182,51 @@ body .container {
     transition: .3s;
 }
 
+// web menu and toc ui style
+@media screen and (min-width: $mobile-breakpoint) {
 
-#menu-navi:focus~main label[for="menu-navi"] {
-    @include outline;
-}
-
-#menu-navi:checked~main {
-
-    .book-menu,
-    .book-menu .book-menu-content {
-        position: absolute;
-        transform: translateX(-20rem);
-        transition: .3s;
+    #menu-navi:focus~main label[for="menu-navi"] {
+        @include outline;
     }
 
+    #menu-navi:checked~main {
+
+        .book-menu,
+        .book-menu .book-menu-content {
+            position: absolute;
+            transform: translateX(-20rem);
+        }
+
+        .book-page {
+            left: 0;
+        }
+    }
+
+    #toc-navi:focus~main label[for="toc-navi"] {
+        @include outline;
+    }
+
+    #toc-navi:checked~main {
+
+        .book-toc {
+            position: fixed;
+            transform: translateX(-18rem);
+        }
+
+        .book-page {
+            right: 18rem;
+        }
+    }
+
+
+    .book-menu-content {
+        margin-top: 2rem;
+    }
+
+    .book-toc-content,
     .book-page {
-        left: 0;
-        transition: .3s;
+        margin-top: 2rem;
     }
-}
-
-#toc-navi:focus~main label[for="toc-navi"] {
-    @include outline;
-}
-
-#toc-navi:checked~main {
-
-    .book-toc {
-        position: fixed;
-        transform: translateX(-18rem);
-        transition: .3s;
-    }
-
-    .book-page {
-        right: 18rem;
-        transition: .3s;
-    }
-}
-
-
-.book-menu-content {
-    margin-top: 2rem;
-}
-
-.book-toc-content,
-.book-page {
-    margin-top: 2rem;
 }
 
 // mobile view font-size .8rem samller than body font size
@@ -249,6 +249,7 @@ body .container {
 
     // bug: 目录展开后切换为移动视图，目录不能完全隐藏
     // 会占用空白空间
+    // fixed: 原因在与toc-navi按扭checked book-page right 18rem
     .book-toc {
         position: absolute;
         right: 0;
