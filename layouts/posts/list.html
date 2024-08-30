@@ -15,6 +15,11 @@
   {{ end }}
 
   {{ template "_internal/pagination.html" . }}
+
+  {{ if default true (default .Site.Params.copyright .Params.copyright) }}
+    {{ partial "copyright" . }}
+  {{ end }}
+
 {{ end }}
 
 {{ define "toc" }}

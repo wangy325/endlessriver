@@ -5,6 +5,7 @@ bookFlatSection: true
 bookCollapseSection: false
 bookComments: false
 BookToC: false
+BookIndex: true
 ---
 
 ## Java入门

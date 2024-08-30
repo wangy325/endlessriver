@@ -6,6 +6,7 @@ title: "Collections"
 BookToC: false
 BookComments: false
 showTitle: false
+BookIndex: true
 ---
 
 <center>

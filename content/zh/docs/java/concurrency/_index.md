@@ -6,6 +6,7 @@ title: "Concurrency"
 bookComments: false
 BookToC: false
 showTitle: false
+BookIndex: true
 ---
 
 本部分主要讨论了Java并发相关的内容。主要分为几大部分：

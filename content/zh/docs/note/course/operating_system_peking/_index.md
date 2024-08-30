@@ -4,6 +4,7 @@ weight: 1
 bookCollapseSection: true
 BookComments: false
 BookToC: false
+BookIndex: true
 ---
 
 ### [操作系统原理（Operating Systems） - Peking University - Coursera](https://www.coursera.org/learn/os-pku/home/info)

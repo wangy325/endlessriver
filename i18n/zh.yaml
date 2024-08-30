@@ -16,6 +16,17 @@
 - id: Go to top
   translation: 回到顶部
 
+- id: Next Page
+  translation: →
+- id: Previous Page
+  translation: ←
+- id: First Page
+  translation: ←∅
+- id: Last Page
+  translation: ∅→
+- id: Related
+  translation: 相似文章
+
 - id: bookSearchConfig
   translation: |
     {
