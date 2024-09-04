@@ -188,12 +188,12 @@ public void allowCoreThreadTimeOut(boolean value) {
 
 任务队列有3种常见实现：
 
-1. 直接运行(*direct handoffs*)，这种情形的任务队列一般由[SynchronousQueue](./6生产者-消费者与阻塞队列.md/#synchronousqueue)实现，这种队列的实现对线程池的要求严苛，如果没有可用的线程即刻执行任务，那么将任务放入队列将失败。在此情形下，一般将maximumPoolSize设置为Integer.MAX_
+1. 直接运行(*direct handoffs*)，这种情形的任务队列一般由[SynchronousQueue](../conecptes/6生产者-消费者与阻塞队列.md/#synchronousqueue)实现，这种队列的实现对线程池的要求严苛，如果没有可用的线程即刻执行任务，那么将任务放入队列将失败。在此情形下，一般将maximumPoolSize设置为Integer.MAX_
 VALUE以防止线程池拒绝任务。这种实现可能会导致内存泄漏。
 
-2. 无界任务队列， 一般由[LinkedBlockingQueue](./6生产者-消费者与阻塞队列.md/#linkedblockingqueue)实现，这种情形下，当当前工作线程达到`corePoolSize`之后，所有新提交的任务都会放入队列中，由于队列无界，就**不会**再创建新线程了，也不会拒绝任务。因此`maximumPoolSize`这一设置将无意义。如果任务源源不断地提交，有可能任务积压导致内存泄漏。
+2. 无界任务队列， 一般由[LinkedBlockingQueue](../conecptes/6生产者-消费者与阻塞队列.md/#linkedblockingqueue)实现，这种情形下，当当前工作线程达到`corePoolSize`之后，所有新提交的任务都会放入队列中，由于队列无界，就**不会**再创建新线程了，也不会拒绝任务。因此`maximumPoolSize`这一设置将无意义。如果任务源源不断地提交，有可能任务积压导致内存泄漏。
 
-3. 有界队列，一般由[ArrayBlockingQueue](./6生产者-消费者与阻塞队列.md/#arrayblockingqueue)实现，使用有界队列可以避免资源耗尽，但是也增加了配置的难度，是应该配置更多的线程数更小的队列还是应该配置更大的队列更少的线程数，往往需要根据具体的任务来考量。
+3. 有界队列，一般由[ArrayBlockingQueue](../conecptes/6生产者-消费者与阻塞队列.md/#arrayblockingqueue)实现，使用有界队列可以避免资源耗尽，但是也增加了配置的难度，是应该配置更多的线程数更小的队列还是应该配置更大的队列更少的线程数，往往需要根据具体的任务来考量。
 
 #### 拒绝策略
 

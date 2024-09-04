@@ -45,20 +45,20 @@ Java基础知识容易忽视、混淆的点，简单做一些记录。另外还�
 
 本部分内容由浅入深，首先讨论了线程的概念，生命周期以及另一个重要的概念——**任务**。以及为什么需要并发，并发过程中会遇到的**共享资源**的问题。接下来，阐述了并发过程中常遇到的问题——**死锁(Dead Lock)**。
 
-- [线程与任务](concurrency/1线程与任务_1.md)
-- [锁与同步](concurrency/2资源访问受限_2_锁和条件.md)
-- [获取任务的返回值](concurrency/3获取任务的返回值.md)
-- [终结任务](concurrency/5终结任务.md)
-- [死锁](concurrency/4死锁.md)
+- [线程与任务](concurrency/conecptes/1线程与任务_1.md)
+- [锁与同步](concurrency/conecptes/2资源访问受限_2_锁和条件.md)
+- [获取任务的返回值](concurrency/conecptes/3获取任务的返回值.md)
+- [终结任务](concurrency/conecptes/5终结任务.md)
+- [死锁](concurrency/conecptes/4死锁.md)
 
 接下来，开始讨论执行器和线程池。执行器可以看作执行任务的*trigger*，Java提供了不同类型的执行器和线程池，以应对不同的应用场景，各线程池的线程创建及销毁条件都有所区别，了解线程池中线程的创建、入队、销毁、拒绝机制，对于理解线程池以及Java并发有很大的帮助。此外，Java还提供了其他一些重要的并发组件，比如**阻塞队列**，**倒计时门栅**，**信号量**等等，一并作介绍。
 
 - [执行器和线程池]
-  - [Ececutors and ExecutorServices](./concurrency/7_1_Executors_and_ExecutorService.md)
-  - [ThreadPoolExecutor](./concurrency/7_2_ThreadPoolExecutor1.md)
-- [计划执行任务](./concurrency/8_1_ScheduledExecutorService1.md)
-- [阻塞队列与生产-消费模式](./concurrency/6生产者-消费者与阻塞队列.md)
-- [其他重要的并发组件](./concurrency/9_3_semaphore.md)
+  - [Ececutors and ExecutorServices](./concurrency/pools/7_1_Executors_and_ExecutorService.md)
+  - [ThreadPoolExecutor](./concurrency/pools/7_2_ThreadPoolExecutor1.md)
+- [计划执行任务](./concurrency/pools/8_1_ScheduledExecutorService1.md)
+- [阻塞队列与生产-消费模式](./concurrency/conecptes/6生产者-消费者与阻塞队列.md)
+- [其他重要的并发组件](./concurrency/components/9_3_semaphore.md)
 
 最后，简单地讨论了Java的内存模型，同时讨论了`volatile`这个曾经饱受争议的关键字，介绍了Java虚拟机执行程序的**指令重排**。
 

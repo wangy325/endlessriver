@@ -134,7 +134,7 @@ private <T> T doInvokeAny(Collection<? extends Callable<T>> tasks,
 
 可以看到，与`invokeAll`不同的是，`invokeAny`方法是在循环的启动任务，直到获取到任一任务的返回值为止，而未执行或正在执行的任务则会被中断。
 
-下面的示例中，我们修改了[阻塞队列-查找关键字](./6阻塞队列使用2例.md/#查找关键字)应用，让任务在成功搜寻到含有关键字的文件时就视为任务完成，取消其他任务的执行，这样一种场景之下，我们可以使用`invokeAny`方法：
+下面的示例中，我们修改了[阻塞队列-查找关键字](../conecptes/6阻塞队列使用2例.md/#查找关键字)应用，让任务在成功搜寻到含有关键字的文件时就视为任务完成，取消其他任务的执行，这样一种场景之下，我们可以使用`invokeAny`方法：
 
 ```Java
 public class Search1Keyword extends SearchKeyword {
