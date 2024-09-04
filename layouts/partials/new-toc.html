@@ -40,7 +40,7 @@
     {{ $id := index (findRE "(id=\"(.*?)\")" $header 9) 0 }}
     {{/* strip id="" to leave xyz (no way to get regex capturing groups in hugo :( */}}
     {{ $cleanedID := replace (replace $id "id=\"" "") "\"" "" }}
-    {{- $header := replaceRE "(?s)<h[1-5].*?>((.|\n])+?)</h[1-4]>" "$1" $header -}}
+    {{- $header := replaceRE "(?s)<h[1-5].*?>((.|\n])+?)</h[1-5]>" "$1" $header -}}
     {{- $header := $header | safeHTML  | plainify | htmlUnescape  -}}
     {{- $header := substr $header 0 -2 -}}
 
@@ -76,14 +76,25 @@
         {{- end -}}
         <li class="nav-item">
       
-          {{- $lid := replaceRE `[\(\)-\.\@\?\";= ]`  "" $header  -}}
-          <a  id="{{ add "t" (trim $lid " ")}}" href="#{{- $cleanedID  -}}">{{- $header  -}}</a>
+          {{- $lid := replaceRE `[\(\)-\.\@\?\"/;= ]`  "" $header  -}}
+          <!-- 获取文档标签ID -->
+          {{- $hid := replaceRE `[\(\)\.\@\?\"/;=（）？——“”]`  "" $header  -}}
+          {{- $hid := strings.TrimLeft " " $hid -}}
+          {{- $hid := strings.TrimRight " " $hid -}}
+          {{- $hid := replaceRE `[ ]`  "-" $hid  -}}
+          {{- $hid := lower $hid -}}
+          
+          <a  id="{{ add "t" (trim $lid " ")}}" href="" onclick='scrolly("{{$hid}}"); return false;'>{{- $header  -}}</a>
+
     {{- else -}}
     <li class="nav-item">
       
-       {{- $lid := replaceRE `[\(\)-\.\@\?\";= ]`  "" $header  -}}
-        <a  id="{{ add "t" (trim $lid " ")}}" href="#{{- $cleanedID  -}}">{{- $header  -}}</a>
-
+       {{- $lid := replaceRE `[\(\)-\.\@\?\"/;= （）？——“”]`  "" $header  -}}
+       {{- $hid := replaceRE `[\(\)\.\@\?/？——\";]`  "" $header  -}}
+       {{- $hid := trim  $hid " " -}}
+       {{- $hid := replaceRE `[ ]`  "-" $hid  -}}
+       {{- $hid := lower $hid -}}
+        <a  id="{{ add "t" (trim $lid " ")}}" href="#{{- $cleanedID  -}}" onclick='scrolly("{{$hid}}"); return false;'>{{- $header  -}}</a>
     {{- end -}}
   {{- end -}}
   <!-- {{- $firstHeaderLevel := len (seq (index (findRE "[1-5]" (index $headers 0) 1) 0)) -}} -->
@@ -101,3 +112,13 @@
 </div>
 {{- end -}}
 
+<script>
+  function scrolly(target){
+    const yoffset=50
+    var ep = document.getElementById(target).offsetTop
+    window.scrollTo({
+      top: ep,
+      behaviour: 'smooth'
+    })
+  }
+</script>

@@ -219,7 +219,7 @@ body .container {
     margin-right: 2rem;
     margin-left: 1rem;
     left: 16rem;
-    right: 12rem;
+    right: 14rem;
     transition: .3s;
 }
 
@@ -420,6 +420,9 @@ body .container {
 
 // TOC 高亮, 自动隐藏与显示次级目录
 #toc-new li {
+    margin: 5px 0 0 0;
+
+    // height: 2rem;
     a {
         color: black;
     }
@@ -430,16 +433,11 @@ body .container {
 
     a.active {
         color: $hover-color;
-        background-color: $bkg-color;
+        background-color: $bkg-color-light;
 
-        ul {
+        ~ul {
             display: inherit;
         }
-    }
-
-    // 隐藏次一级目录
-    #toc-new li>ul {
-        display: none;
     }
 }
 
@@ -465,14 +463,14 @@ body .container {
     .blue {
         display: none;
     }
+}
 
-    :hover {
-        .black {
-            display: none;
-        }
+#back-to-top:hover {
+    .black {
+        display: none;
+    }
 
-        .blue {
-            display: block;
-        }
+    .blue {
+        display: block;
     }
 }
