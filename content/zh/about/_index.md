@@ -8,6 +8,7 @@ BookFooter: false
 BookComments: false
 showTitle: false
 BookIndex: true
+BookToc: false
 ---
 
 ##  The name

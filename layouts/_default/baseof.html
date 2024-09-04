@@ -16,31 +16,30 @@
   <input type="checkbox" class="hidden toggle" id="menu-navi" />
   <input type="checkbox" class="hidden toggle" id="toc-navi" />
   <!-- <script src="/js/navi.js"></script> -->
-  <main class="container flex">
-    <!-- hide/show buttons -->
-     <div class= "navi-header">
-      <label class="switch menu" for="menu-navi">
-        <img class="book-icon" src="/svg/hamburger.svg"/>
-      </label>
-      {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
-          <label class="switch toc" for="toc-navi" >
-            <img class= "book-icon" src="/svg/list.svg"/>
-          </label>
-      {{ end }}
-     </div>
 
-    <aside class="book-menu">
-      <!-- <div id = 'title-search'>
+  <!-- Navi Bar -->
+  <div class="navi-bar" id="navibar">
+      
+      <div id = 'page-title'>
         {{ partial "docs/brand" . }}
-        {{ partial "docs/search" . }}
+      </div>
+
+      <div class="page-navi-col">
+        {{ partial "menu" . }} <!-- Left menu Content -->
+      </div>
+
+      <!-- classname: book-search -->
+      {{ partial "docs/search" . }}
         {{ if hugo.IsMultilingual }}
           {{ partial "docs/languages" . }}
         {{ end }}
-      </div> -->
-      <div class="book-menu-content">
-        {{ template "menu" . }} <!-- Left menu Content -->
-      </div>
-    </aside>
+  </div>
+
+
+  <main class="container flex">
+   
+
+ 
 
     <div class="book-page">
       <header class="book-header">
@@ -121,9 +120,6 @@
     {{ end }}
 {{ end }}  <!-- Page Content -->
 
-{{ define "menu" }}
-  {{ partial "docs/menu" . }}
-{{ end }}
 
 {{ define "header" }}   <!--mobile view-->
   {{ partial "docs/header" . }}

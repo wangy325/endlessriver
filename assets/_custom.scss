@@ -1,3 +1,13 @@
+// properties
+$f-class-navi: 10rem;
+$s-class-navi: 13rem;
+$navi-height: 2.5rem;
+$bkg-color: rgb(231, 236, 254);
+$bkg-color-light: rgb(240, 240, 240);
+$hover-color: #0055bb;
+$dropdown-max-height: 16rem;
+
+
 html,
 body {
     scroll-behavior: smooth;
@@ -9,6 +19,298 @@ body {
 
 code {
     font-family: Courier, 'Courier New' monospace;
+}
+
+// 导航栏
+@media screen and (min-width: $mobile-breakpoint) {
+
+    #navibar {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: $navi-height;
+        background-color: white;
+        position: fixed;
+        left: 0;
+        right: 0;
+        z-index: 99;
+        border: 1px solid transparent;
+        box-shadow: 0 2px 5px 2px $bkg-color;
+
+        #page-title {
+            display: flex;
+            height: 25px;
+            margin: .5rem .5rem;
+
+            font-family: fantasy;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        // search -bar 
+        .book-search {
+            display: flex;
+            // position: absolute;
+            // left: 43rem;
+        }
+
+        .page-navi-col {
+            display: flex;
+            margin: 0 1rem 0 1rem;
+
+            nav {
+                display: flex;
+
+                ul {
+                    list-style: none;
+                }
+            }
+
+            nav>ul {
+                display: flex;
+                margin: 0 1rem 0;
+
+                >li {
+                    position: relative;
+                    margin: 0 2rem;
+                    padding: .5rem .5rem;
+                }
+            }
+
+            // 中间撑开
+            nav>ul:first-child {
+                >li:last-child {
+                    margin-right: 15rem;
+                }
+            }
+
+            nav>ul:last-child {
+
+                // position: absolute;
+                a {
+                    text-decoration: none;
+                    color: black;
+                }
+
+                li:hover {
+
+                    // background-color: rgba(12, 68, 235, 0.35);
+                    // border-radius: 5px;
+                    a {
+                        color: $hover-color;
+                    }
+                }
+            }
+
+            // navi bar
+            li.book-section-flat {
+                /* position: relative; */
+
+                >a,
+                >span {
+                    font-weight: normal;
+                    text-decoration: none;
+                    color: black;
+                }
+
+                >a:hover,
+                >span:hover {
+                    color: $hover-color;
+                }
+
+                ul {
+                    display: none;
+                    width: $s-class-navi;
+                    position: absolute;
+                    left: 0;
+                    // transform: translatex(-.5rem);
+                    border: 1px solid $bkg-color;
+                    box-shadow: 0 1px 1px 1px $bkg-color;
+                    border-radius: 5px;
+                    padding-inline-start: 0;
+                    background-color: white;
+
+
+                    li {
+                        margin: .5rem 0 .5rem;
+                        padding: 5px;
+                        white-space: nowrap;
+                        overflow-x: hidden;
+                        text-overflow: ellipsis;
+
+                        a {
+                            font-size: .85rem;
+                            text-decoration: none;
+                            color: black;
+                        }
+
+                        :hover>a {
+                            color: #0055bb;
+                        }
+                    }
+                }
+
+            }
+
+            li.book-section-flat:hover {
+
+                cursor: pointer;
+                background-color: $bkg-color;
+                border-radius: 4px;
+
+                >ul {
+                    display: block;
+                    width: $f-class-navi;
+                    padding: 0;
+
+                    >li:hover {
+                        background-color: $bkg-color-light;
+
+                        >ul {
+                            display: block;
+                            position: absolute;
+                            transform: translatex($f-class-navi - .1rem) translatey(-1.5rem);
+                            // max-height:$dropdown-max-height;
+                            // overflow-y: auto;
+                            // 2层下拉滚动会导致3层显示异常
+
+                            >li:hover {
+                                background-color: $bkg-color-light;
+                                // 禁用父ul的overflow-y
+
+                                >ul {
+                                    display: block;
+                                    position: absolute;
+                                    transform: translatex($s-class-navi - .1rem) translatey(-1.5rem);
+                                    max-height: $dropdown-max-height;
+                                    overflow-y: auto;
+
+                                    >li:hover {
+                                        background-color: $bkg-color-light;
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+        }
+
+
+
+    }
+}
+
+@media screen and (max-width: $mobile-breakpoint) {
+    #navibar {
+        display: none;
+    }
+}
+
+
+// web页面下 menu 和toc 重新定位
+body .container {
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+.book-page {
+    display: block;
+    position: absolute;
+    margin-right: 2rem;
+    margin-left: 1rem;
+    left: 16rem;
+    right: 12rem;
+    transition: .3s;
+}
+
+// https://www.zhangxinxu.com/wordpress/2024/06/css-transition-behavior/
+.book-toc {
+    display: block;
+    height: 100%;
+    position: absolute;
+    left: 1rem;
+    transition: .3s;
+}
+
+// web menu and toc ui style
+@media screen and (min-width: $mobile-breakpoint) {
+    #toc-navi:focus~main label[for="toc-navi"] {
+        @include outline;
+    }
+
+    #toc-navi:checked~main {
+
+        .book-toc {
+            position: absolute;
+            transform: translateX(16rem);
+        }
+    }
+
+    .book-menu-content,
+    .book-toc-content,
+    .book-page {
+        margin-top: 2rem;
+    }
+}
+
+// mobile view font-size .8rem samller than body font size
+@media screen and (max-width: $mobile-breakpoint) {
+
+    .book-menu-content,
+    .book-toc-content,
+    .book-page {
+        margin-top: 0rem;
+    }
+
+    .book-menu {
+        position: absolute;
+        left: 0;
+        visibility: hidden;
+        margin-inline-start: -$menu-width;
+        font-size: $font-size-14;
+        z-index: 1;
+    }
+
+    // bug: 目录展开后切换为移动视图，目录不能完全隐藏
+    // 会占用空白空间
+    // fixed: 原因在与toc-navi按扭checked book-page right 18rem
+    .book-toc {
+        position: absolute;
+        right: 0;
+        visibility: hidden;
+        margin-inline-start: -$menu-width;
+        font-size: $font-size-14;
+        z-index: 1;
+    }
+
+    .book-page {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: 0;
+    }
+
+    #toc-control:checked~main {
+        .book-header aside {
+            display: block;
+            transition: .3s allow-discrete;
+            opacity: 1;
+            font-size: $font-size-14;
+        }
+    }
+
+    .back-to-top {
+        display: none;
+    }
+
+    .navi-header {
+        display: none;
+    }
 }
 
 // 底部文章导航
@@ -136,8 +438,8 @@ code {
     }
 
     a.active {
-        color: #05b;
-        background-color: aliceblue;
+        color: $hover-color;
+        background-color: $bkg-color;
 
         ul {
             display: inherit;
@@ -181,199 +483,5 @@ code {
         .blue {
             display: block;
         }
-    }
-}
-
-// 导航栏
-.navi-header {
-    width: 100%;
-    height: 30px;
-    background-color: white;
-    position: fixed;
-    left: 0;
-    right: 0;
-    z-index: 99;
-    border: 1px solid transparent;
-    box-shadow: 0 2px 5px 2px rgba(12, 68, 235, 0.35);
-
-    label.menu {
-        position: fixed;
-        // top: 5px;
-        left: 10px;
-        z-index: 99;
-        cursor: pointer;
-    }
-
-    label.toc {
-        position: fixed;
-        right: 10px;
-        cursor: pointer;
-    }
-
-    img.book-icon {
-        width: 1.8rem;
-        height: 1.8rem;
-    }
-}
-
-
-// web页面下 menu 和toc 重新定位
-body .container {
-    max-width: 80rem;
-    margin: 0 auto;
-}
-
-.book-menu {
-    display: block;
-    position: absolute;
-    transition: .3s;
-    left: 1.5%;
-}
-
-// 让标题和搜索框固定
-// 列入计划吧 (:-
-#title-search {
-    display: block;
-    position: fixed;
-    top: 25px;
-    z-index: 90;
-    padding-top: 1rem;
-    background-color: white;
-    margin-left: 1rem;
-    transition: .3s;
-
-    .book-brand {
-        width: 100%;
-    }
-
-    .book-search {
-        width: 120%;
-        display: block;
-
-        ul {
-            list-style: none;
-            overflow: hidden;
-        }
-
-        ul li {
-            padding: 5px 5px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: flex;
-            flex-direction: column;
-        }
-    }
-}
-
-.book-page {
-    display: block;
-    position: absolute;
-    margin-right: 2rem;
-    margin-left: 1rem;
-    left: 16rem;
-    right: 14rem;
-    transition: .3s;
-}
-
-// https://www.zhangxinxu.com/wordpress/2024/06/css-transition-behavior/
-.book-toc {
-    display: block;
-    height: 100%;
-    position: absolute;
-    right: 16rem;
-    transition: .3s;
-}
-
-// web menu and toc ui style
-@media screen and (min-width: $mobile-breakpoint) {
-
-    #menu-navi:focus~main label[for="menu-navi"] {
-        @include outline;
-    }
-
-    #menu-navi:checked~main {
-
-        .book-menu,
-        .book-menu .book-menu-content {
-            position: absolute;
-            transform: translateX(-20rem);
-        }
-
-        .book-page {
-            left: 0;
-        }
-    }
-
-    #toc-navi:focus~main label[for="toc-navi"] {
-        @include outline;
-    }
-
-    #toc-navi:checked~main {
-
-        .book-toc {
-            position: absolute;
-            transform: translateX(16rem);
-        }
-    }
-
-    .book-menu-content,
-    .book-toc-content,
-    .book-page {
-        margin-top: 2rem;
-    }
-}
-
-// mobile view font-size .8rem samller than body font size
-@media screen and (max-width: $mobile-breakpoint) {
-
-    .book-menu-content,
-    .book-toc-content,
-    .book-page {
-        margin-top: 0rem;
-    }
-
-    .book-menu {
-        position: absolute;
-        left: 0;
-        visibility: hidden;
-        margin-inline-start: -$menu-width;
-        font-size: $font-size-14;
-        z-index: 1;
-    }
-
-    // bug: 目录展开后切换为移动视图，目录不能完全隐藏
-    // 会占用空白空间
-    // fixed: 原因在与toc-navi按扭checked book-page right 18rem
-    .book-toc {
-        position: absolute;
-        right: 0;
-        visibility: hidden;
-        margin-inline-start: -$menu-width;
-        font-size: $font-size-14;
-        z-index: 1;
-    }
-
-    .book-page {
-        position: absolute;
-        left: 0;
-        right: 0;
-        margin: 0;
-    }
-
-    #toc-control:checked~main {
-        .book-header aside {
-            display: block;
-            transition: .3s allow-discrete;
-            opacity: 1;
-            font-size: $font-size-14;
-        }
-    }
-
-    .back-to-top {
-        display: none;
-    }
-
-    .navi-header {
-        display: none;
     }
 }
