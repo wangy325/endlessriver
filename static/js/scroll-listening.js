@@ -49,7 +49,7 @@ const tocTrack = () => {
   // 应对乱七八糟的文档目录
   // 清除文档目录中的() - 和@
   // 中文标点如'（）' '？'作为id没影响
-  let sps = anchorId.replace(/[\(\)-\.\@\"\?;= ]/g, '')
+  let sps = anchorId.replace(/[\(\)-\.\@\"\?\/;= ]/g, '')
   
   anchorId = "t" + sps
   
