@@ -10,7 +10,7 @@ BookToC: true
 
 ##  PriorityBlockingQueue
 
-`PriorityBlockingQueue`就是一个基础的可阻塞的[优先级队列](../collections/2_Queue.md/#priorityqueue)，当队列为空时，从队列中获取元素时被阻塞。其余特性和优先级队列是一致的。
+`PriorityBlockingQueue`就是一个基础的可阻塞的[优先级队列](../../collections/2_Queue.md/#priorityqueue)，当队列为空时，从队列中获取元素时被阻塞。其余特性和优先级队列是一致的。
 
 下例展示了如何构建一个<span id ="pt">可以放入优先级队列</span>的任务：
 
@@ -186,7 +186,7 @@ Finished PrioritizedTaskConsumer
 
 `DelayQueue`是一个无界的阻塞队列，利用`PriorityQueue`实现，用于存放实现`Delay`接口[^9]的对象，队列中的对象只能在其到期之后才能被取出。同时其还是一个有序队列，即队头的元素将最先到期，若没有任何元素到期，就不会有队头元素，`poll()`方法将返回`null`，因此DelayQueue**不接受**`null`作为元素。
 
-实际上，在了解了`ScheduledThreadPoolExecutor.ScheduledFutureTask`的[出队规则](./8_2_ScheduledExecutorService2.md/#任务出队)之后，`DelayQueue`的出队的实现也就不言自明了——当`leader`被设置时，表明有任务即将出队，其他任务进入等待，该任务出队之后重置`leader`：
+实际上，在了解了`ScheduledThreadPoolExecutor.ScheduledFutureTask`的[出队规则](../pools/8_2_ScheduledExecutorService2.md/#任务出队)之后，`DelayQueue`的出队的实现也就不言自明了——当`leader`被设置时，表明有任务即将出队，其他任务进入等待，该任务出队之后重置`leader`：
 
 ```java
 // Delayqueue.take

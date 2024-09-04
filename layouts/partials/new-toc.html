@@ -78,7 +78,6 @@
       
           {{- $lid := replaceRE `[\(\)-\.\@\?\";= ]`  "" $header  -}}
           <a  id="{{ add "t" (trim $lid " ")}}" href="#{{- $cleanedID  -}}">{{- $header  -}}</a>
-
     {{- else -}}
     <li class="nav-item">
       
@@ -101,3 +100,4 @@
 </ul>
 </div>
 {{- end -}}
+

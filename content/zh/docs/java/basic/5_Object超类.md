@@ -139,4 +139,4 @@ public class HashT {
 
 ---
 
-参考: [再论Object超类](../concurrency/2资源访问受限_5_线程本地存储.md/#再论object超类)
+参考: [再论Object超类](../concurrency/conecptes/2资源访问受限_5_线程本地存储.md/#再论object超类)

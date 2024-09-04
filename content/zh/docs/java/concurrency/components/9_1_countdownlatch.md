@@ -12,7 +12,7 @@ BookToC: false
 
 ##  CountDownLatch
 
-在讨论线程的基本概念时，我们说过`join()`方法可使当前线程等待调用join方法的线程执行完，可以实现简单的[无锁同步](./1线程与任务_2.md/#加入线程join)，使用`CountDownLatch`可以更加简单的实现这一目的。毕竟，`join()`方法的语义“加入一个线程”不是很容易就能让人理解。相较于`join()`方法，`CountDownLatch`的语义就明确多了。
+在讨论线程的基本概念时，我们说过`join()`方法可使当前线程等待调用join方法的线程执行完，可以实现简单的[无锁同步](../conecptes/1线程与任务_2.md/#加入线程join)，使用`CountDownLatch`可以更加简单的实现这一目的。毕竟，`join()`方法的语义“加入一个线程”不是很容易就能让人理解。相较于`join()`方法，`CountDownLatch`的语义就明确多了。
 
 <!--more-->
 
