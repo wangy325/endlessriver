@@ -89,7 +89,7 @@
       {{ $key := path.Base .TranslationKey }}
       {{ with resources.GetMatch (printf "snippets/*/%s.*" $key) }}
         {{ $lang := path.Ext .Name | strings.TrimLeft "."  }}
-        {{ $options := slice "lineNos=table" "style=autumn" }}
+        {{ $options := slice "lineNos=inline" "style=lovelace" }}
         {{ transform.Highlight .Content $lang (delimit $options ",") }}
       {{ end }}
     {{ end }}
