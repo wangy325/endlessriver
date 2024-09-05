@@ -1,5 +1,5 @@
 ---
-title: "Hugo自定义TOC模板及其它"
+title: "Hugo自定义TOC模板及滚动监听"
 date: 2024-08-20
 author: wangy325
 enableGitInfo: true

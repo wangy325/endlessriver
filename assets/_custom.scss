@@ -3,7 +3,7 @@ $f-class-navi: 10rem;
 $s-class-navi: 13rem;
 $navi-height: 2.5rem;
 $bkg-color: rgb(231, 236, 254);
-$bkg-color-light: rgb(240, 240, 240);
+$bkg-color-light: #f8f8f8;
 $hover-color: #0055bb;
 $dropdown-max-height: 16rem;
 
@@ -140,7 +140,7 @@ code {
                         text-overflow: ellipsis;
 
                         a {
-                            font-size: .85rem;
+                            font-size: .875rem;
                             text-decoration: none;
                             color: black;
                         }
@@ -357,8 +357,8 @@ body .container {
                 height: auto;
                 font-size: .85rem;
                 text-align: center;
-                border: 1px solid #f8f8f8;
-                background-color: #f8f8f8;
+                border: 1px solid $bkg-color-light;
+                background-color: $bkg-color-light;
                 border-radius: 10px;
                 margin-top: 1rem;
                 padding: 10px;
@@ -367,7 +367,7 @@ body .container {
 
         a:hover {
             div {
-                box-shadow: 0 0 10px 0 rgba(12, 68, 235, 0.35);
+                box-shadow: 0 0 10px 0 $bkg-color;
             }
         }
     }
@@ -400,6 +400,7 @@ body .container {
 
 // TOC 的样式
 #toc-new ul {
+    font-size: .85rem;
     list-style: none;
     padding: 0px;
     margin: 0;
@@ -450,8 +451,8 @@ body .container {
 #back-to-top {
     display: none;
     position: fixed;
-    bottom: 10px;
-    right: 1px;
+    bottom: 100px;
+    right: 50px;
     z-index: 99;
     font-size: .8rem;
     cursor: pointer;
@@ -473,4 +474,19 @@ body .container {
     .blue {
         display: block;
     }
+}
+
+// 代码框
+.highlight pre {
+    padding: 1rem;
+    outline-style: none;
+    border: 1px solid $bkg-color;
+    border-radius: .25rem;
+
+    code {
+        font-size: .875rem;
+    }
+}
+.markdown code {
+    font-size: 1rem;
 }
