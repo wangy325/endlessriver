@@ -12,34 +12,35 @@
 <body dir="{{ default "ltr" .Site.Language.LanguageDirection }}">
   <input type="checkbox" class="hidden toggle" id="menu-control" />
   <input type="checkbox" class="hidden toggle" id="toc-control" />
-  <input type="checkbox" class="hidden toggle" id="menu-navi" />
-  <input type="checkbox" class="hidden toggle" id="toc-navi" />
   <!-- <script src="/js/navi.js"></script> -->
-
+  
   <!-- Navi Bar -->
   <div class="navi-bar" id="navibar">
-      
-      <div id = 'page-title'>
-        {{ partial "docs/brand" . }}
-      </div>
-
-      <div class="page-navi-col">
-        {{ partial "menu" . }} <!-- Left menu Content -->
-      </div>
-
-      <!-- classname: book-search -->
-      {{ partial "docs/search" . }}
-        {{ if hugo.IsMultilingual }}
-          {{ partial "docs/languages" . }}
-        {{ end }}
+    
+    <div id = 'page-title'>
+      {{ partial "docs/brand" . }}
+    </div>
+    
+    <div class="page-navi-col">
+      {{ partial "navi" . }} <!-- Left menu Content -->
+    </div>
+    
+    <!-- classname: book-search -->
+    {{ partial "docs/search" . }}
+    {{ if hugo.IsMultilingual }}
+    {{ partial "docs/languages" . }}
+    {{ end }}
   </div>
-
-
+  
+  
   <main class="container flex">
-   
 
- 
-
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        {{ partial "docs/menu" . }} 
+      </div>
+    </aside>    <!-- Mobile view menu -->
+    
     <div class="book-page">
       <header class="book-header">
         {{ template "header" . }} <!-- Mobile layout header -->
@@ -48,6 +49,8 @@
       {{ partial "docs/inject/content-before" . }}
       {{ template "main" . }} <!-- Page Content -->
       {{ partial "docs/inject/content-after" . }}
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
     </div>
 
     {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
@@ -59,9 +62,10 @@
     {{ end }}
     
   </main>
-  <label for="menu-control" class="hidden book-menu-overlay"></label>
 
+  <div class="back-to-top">
   {{ partial "back-to-top" .}}
+  </div>
   
   {{ partial "docs/inject/body" . }}
   
