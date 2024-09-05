@@ -124,6 +124,8 @@ code {
                     width: $s-class-navi;
                     position: absolute;
                     left: 0;
+                    // padding: 0rem 0.5rem;
+                    margin: .7rem 0 0;
                     // transform: translatex(-.5rem);
                     border: 1px solid $bkg-color;
                     box-shadow: 0 1px 1px 1px $bkg-color;
@@ -138,6 +140,7 @@ code {
                         white-space: nowrap;
                         overflow-x: hidden;
                         text-overflow: ellipsis;
+                        border-radius: 5px;
 
                         a {
                             font-size: .875rem;
@@ -162,7 +165,6 @@ code {
                 >ul {
                     display: block;
                     width: $f-class-navi;
-                    padding: 0;
 
                     >li:hover {
                         background-color: $bkg-color-light;
@@ -170,7 +172,7 @@ code {
                         >ul {
                             display: block;
                             position: absolute;
-                            transform: translatex($f-class-navi - .1rem) translatey(-1.5rem);
+                            transform: translatex($f-class-navi - .1rem) translatey(-2rem);
                             // max-height:$dropdown-max-height;
                             // overflow-y: auto;
                             // 2层下拉滚动会导致3层显示异常
@@ -503,7 +505,6 @@ body .container {
 
     div {
         border-right: 1px solid $bkg-color;
-        border-radius: 2px;
 
         img {
             width: 1rem;
