@@ -5,7 +5,6 @@ menu:
     weight: 6
 title: About
 BookFooter: false
-BookComments: false
 showTitle: false
 BookIndex: true
 BookToc: false

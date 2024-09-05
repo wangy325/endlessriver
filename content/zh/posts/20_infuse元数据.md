@@ -2,7 +2,6 @@
 title: "让Infuse从TMDB正确获取元数据"
 date: 2024-08-23
 author: wangy325
-enableGitInfo: true
 BookToC: false
 categories: [utility]
 tags: [闲聊]

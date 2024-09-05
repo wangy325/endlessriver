@@ -1,12 +1,12 @@
 --- 
 #  homepage 
 # disable all features
-BookComments: false
+title: "Home"
+type: docs
 BookSearch: fasle
+BookComments: false
 BookFooter: false
 copyright: false
-type: docs
-title: "Home"
 showTitle: false
 BookToC: false
 BookIndex: true

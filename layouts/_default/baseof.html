@@ -3,7 +3,6 @@
  * @Date: 2024-06-17 14:30:12
  * @Description: 
 -->
-<!-- update: Disable footer for particular page -->
 <!DOCTYPE html>
 <html lang="{{ default .Site.Language.Lang .Site.LanguageCode  }}" dir="{{ default "ltr" .Site.Language.LanguageDirection }}">
 <head>
@@ -78,7 +77,7 @@
       <h1>
         <a href="{{ .RelPermalink }}">{{ partial "docs/title.html" . }}</a>
       </h1>
-      {{ partial "post-meta" . }}
+        {{ template "post-meta" . }}
     {{ end }}
     {{- .Content -}}
   </article>
@@ -94,13 +93,16 @@
       {{ end }}
     {{ end }}
 
+    <!-- Deprecated! since 2024-09-05 -->
     <!-- https://discourse.gohugo.io/t/remove-footer-and-header/44347 -->
+    <!--
     {{ if default true (default .Site.Params.BookFooter  .Params.BookFooter)}}
     <footer class="book-footer">
-      {{ partial "docs/footer" . }} <!-- Footer under page content -->
+      {{ partial "footer" . }} 
       {{ partial "docs/inject/footer" . }}
-    </footer>
+    </footer> 
     {{ end }}
+     -->
 
     <!-- next and previous buttons -->
     {{ partial "next-previous" .}}
@@ -130,4 +132,10 @@
 
 {{ define "toc" }}
   {{ partial "new-toc" . }}
+{{ end }}
+
+{{ define "post-meta" }}
+  <div class = "postmeta flex align-cneter" style="justify-content: center;">  
+    {{partial "post-meta" .}}
+  </div>
 {{ end }}

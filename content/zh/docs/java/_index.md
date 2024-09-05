@@ -1,14 +1,14 @@
 ---
 weight: 1
 title: ""
+date: 2024-06-14
 bookFlatSection: true
 bookCollapseSection: false
 bookComments: false
-BookToC: false
 BookIndex: true
 ---
 
-## Java入门
+## Java技术文章总览
 
 记录了Java相关的知识，包括了面向对象基础，集合框架、并发和JVM等相关内容。
 
@@ -53,7 +53,7 @@ Java基础知识容易忽视、混淆的点，简单做一些记录。另外还�
 
 接下来，开始讨论执行器和线程池。执行器可以看作执行任务的*trigger*，Java提供了不同类型的执行器和线程池，以应对不同的应用场景，各线程池的线程创建及销毁条件都有所区别，了解线程池中线程的创建、入队、销毁、拒绝机制，对于理解线程池以及Java并发有很大的帮助。此外，Java还提供了其他一些重要的并发组件，比如**阻塞队列**，**倒计时门栅**，**信号量**等等，一并作介绍。
 
-- [执行器和线程池]
+- 执行器和线程池
   - [Ececutors and ExecutorServices](./concurrency/pools/7_1_Executors_and_ExecutorService.md)
   - [ThreadPoolExecutor](./concurrency/pools/7_2_ThreadPoolExecutor1.md)
 - [计划执行任务](./concurrency/pools/8_1_ScheduledExecutorService1.md)
