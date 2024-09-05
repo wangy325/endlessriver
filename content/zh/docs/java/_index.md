@@ -62,7 +62,7 @@ Java基础知识容易忽视、混淆的点，简单做一些记录。另外还�
 
 最后，简单地讨论了Java的内存模型，同时讨论了`volatile`这个曾经饱受争议的关键字，介绍了Java虚拟机执行程序的**指令重排**。
 
-- [Java内存模型与valatile关键字](concurrency/10_Java内存模型与volatile关键字.md)
+- [Java内存模型与valatile关键字](./jvm/10_Java内存模型与volatile关键字.md)
 
 ### JVM
 

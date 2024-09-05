@@ -6,12 +6,13 @@ $bkg-color: rgb(231, 236, 254);
 $bkg-color-light: #f8f8f8;
 $hover-color: #0055bb;
 $dropdown-max-height: 16rem;
+$page-max-width: 80rem;
+$page-min-width: 30rem;
 
 
 html,
 body {
     scroll-behavior: smooth;
-    display: block flex;
     overflow-x: hidden;
     // font-family: serif, 'cursive';
     font-family: Arial, Helvetica, sans-serif;
@@ -21,9 +22,23 @@ code {
     font-family: Courier, 'Courier New' monospace;
 }
 
-// 导航栏
+// web menu and toc ui style
 @media screen and (min-width: $mobile-breakpoint) {
 
+    // web页面下 menu 和toc 重新定位
+    body .container {
+        max-width: 80rem;
+        margin: 0 auto;
+    }
+
+    // 页面压缩时，右边距也压缩 阅读区间还回来
+    @media screen and (max-width: $page-max-width) {
+        body .book-page {
+            right: 2rem;
+        }
+    }
+
+    // 导航栏
     #navibar {
         display: flex;
         justify-content: space-between;
@@ -200,77 +215,50 @@ code {
             }
         }
     }
+
+    .book-menu {
+        display: none;
+        // visibility: hidden;
+        // z-index: -10;
+    }
+
+    .book-page {
+        display: block;
+        position: absolute;
+        margin-right: 2rem;
+        margin-left: 1rem;
+        left: 16rem;
+        right: 14rem;
+        transition: .3s;
+    }
+
+    .book-toc-content,
+    .book-page {
+        margin-top: 4rem;
+    }
 }
 
+// mobile view 
+// font-size .8rem samller than body font size
 @media screen and (max-width: $mobile-breakpoint) {
+
     #navibar {
         display: none;
     }
-}
 
-
-// web页面下 menu 和toc 重新定位
-body .container {
-    max-width: 80rem;
-    margin: 0 auto;
-}
-
-.book-page {
-    display: block;
-    position: absolute;
-    margin-right: 2rem;
-    margin-left: 1rem;
-    left: 16rem;
-    right: 14rem;
-    transition: .3s;
-}
-
-// https://www.zhangxinxu.com/wordpress/2024/06/css-transition-behavior/
-.book-toc {
-    display: block;
-    height: 100%;
-    position: absolute;
-    left: 1rem;
-    transition: .3s;
-}
-
-// web menu and toc ui style
-@media screen and (min-width: $mobile-breakpoint) {
-    #toc-navi:focus~main label[for="toc-navi"] {
-        @include outline;
-    }
-
-    #toc-navi:checked~main {
-
-        .book-toc {
-            position: absolute;
-            transform: translateX(16rem);
-        }
-    }
-
-    .book-menu-content,
-    .book-toc-content,
-    .book-page {
-        margin-top: 2rem;
-    }
-}
-
-// mobile view font-size .8rem samller than body font size
-@media screen and (max-width: $mobile-breakpoint) {
-
-    .book-menu-content,
-    .book-toc-content,
-    .book-page {
-        margin-top: 0rem;
+    .back-to-top {
+        display: none;
     }
 
     .book-menu {
-        position: absolute;
-        left: 0;
         visibility: hidden;
-        margin-inline-start: -$menu-width;
-        font-size: $font-size-14;
-        z-index: 1;
+        font-size: .875rem;
+
+        ul li a {
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
     }
 
     // bug: 目录展开后切换为移动视图，目录不能完全隐藏
@@ -278,31 +266,11 @@ body .container {
     // fixed: 原因在与toc-navi按扭checked book-page right 18rem
     .book-toc {
         position: absolute;
-        right: 0;
+        left: -16rem;
         visibility: hidden;
         margin-inline-start: -$menu-width;
         font-size: $font-size-14;
         z-index: 1;
-    }
-
-    .book-page {
-        position: absolute;
-        left: 0;
-        right: 0;
-        margin: 0;
-    }
-
-    #toc-control:checked~main {
-        .book-header aside {
-            display: block;
-            transition: .3s allow-discrete;
-            opacity: 1;
-            font-size: $font-size-14;
-        }
-    }
-
-    .navi-header {
-        display: none;
     }
 }
 
@@ -401,6 +369,15 @@ body .container {
 }
 
 // TOC 的样式
+// https://www.zhangxinxu.com/wordpress/2024/06/css-transition-behavior/
+.book-toc {
+    display: block;
+    height: 100%;
+    position: absolute;
+    left: 1rem;
+    transition: .3s;
+}
+
 #toc-new ul {
     font-size: .85rem;
     list-style: none;
@@ -453,8 +430,8 @@ body .container {
 #back-to-top {
     display: none;
     position: fixed;
-    bottom: 100px;
-    right: 50px;
+    bottom: 5%;
+    right: 2%;
     z-index: 99;
     font-size: .8rem;
     cursor: pointer;
@@ -478,6 +455,7 @@ body .container {
     }
 }
 
+
 // 代码框
 .highlight pre {
     padding: 1rem;
@@ -490,6 +468,7 @@ body .container {
     }
 }
 
+// 标题居中
 .markdown {
     h1 {
         text-align: center;
