@@ -114,10 +114,10 @@
 
 <script>
   function scrolly(target){
-    const yoffset=50
+    const offset=40
     var ep = document.getElementById(target).offsetTop
     window.scrollTo({
-      top: ep,
+      top: ep + offset,
       behaviour: 'smooth'
     })
   }
