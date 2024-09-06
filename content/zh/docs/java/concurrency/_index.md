@@ -2,11 +2,14 @@
 #bookFlatSection: true
 bookCollapseSection: true
 weight: 3
-title: "Concurrency"
+title: "并发"
+date: 2024-06-14
 bookComments: false
 BookToC: false
 BookIndex: true
 ---
+
+## Java 并发编程
 
 本部分主要讨论了Java并发相关的内容。主要分为几大部分：
 

@@ -1,6 +1,7 @@
 ---
-title: "Courses"
+title: "慕课笔记"
 weight: 4
+date: 2024-07-17
 bookFlatSection: false
 bookCollapseSection: true
 bookComments: false

@@ -2,6 +2,6 @@
 #bookFlatSection: true
 bookCollapseSection: true
 weight: 1
-title: "Obj-Oriented"
+title: "面向对象"
 BookIndex: true
 ---

@@ -1,5 +1,5 @@
 ---
-title: "并发组件-Exchanger"
+title: "Exchanger"
 date: 2020-11-16
 author: "wangy325"
 weight: 22

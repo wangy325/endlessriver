@@ -1,5 +1,5 @@
 ---
-title: "并发组件-CyclicBarrier"
+title: "CyclicBarrier"
 date: 2020-11-16
 author: "wangy325"
 weight: 20

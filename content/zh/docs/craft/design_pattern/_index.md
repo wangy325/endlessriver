@@ -1,5 +1,5 @@
 ---
 bookCollapseSection: true
 weight: 5
-title: "Design Patterns"
+title: "设计模式"
 ---
