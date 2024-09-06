@@ -61,27 +61,27 @@ markup:
 # See https://gohugo.io/content-management/multilingual/#translation-by-filename
 # And https://gohugo.io/content-management/multilingual/#translation-by-content-directory
 languages:
-  zh:
+  zh-CN:
     contentDir: content/zh
     disabled: false
-    languageCode: zh
+    languageCode: zh-CN
     languageDirection: ltr
     languageName: 简体中文
     #    params:
     #      subtitle:
     #    title:
     weight: 1
-  # en:
-  #   contentDir: content/en
-  #   disabled: false
-  #   languageCode: en
-  #   languageDirection: ltr
-  #   languageName: English
-  #   #    params:
-  #   #      subtitle: Reference, Tutorials, and Explanations
-  #   #    title: Project Documentation
-  #   weight: 2
-defaultContentLanguage: zh
+  en:
+    contentDir: content/en
+    disabled: false
+    languageCode: en
+    languageDirection: ltr
+    languageName: English
+    #    params:
+    #      subtitle: Reference, Tutorials, and Explanations
+    #    title: Project Documentation
+    weight: 2
+defaultContentLanguage: zh-CN
 defaultContentLanguageInSubdir: true
 
 menu:
