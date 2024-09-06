@@ -9,6 +9,7 @@ $dropdown-max-height: 16rem;
 $page-max-width: 80rem;
 $page-min-width: 30rem;
 $search-bar-width: 240px;
+$lan-width: 100px;
 
 
 html,
@@ -67,8 +68,8 @@ code {
             display: flex;
             position: absolute;
             left: 1rem;
-            height: 25px;
-            margin: .5rem .5rem;
+            height: $navi-height;
+            margin: .5rem;
 
             font-family: fantasy;
             white-space: nowrap;
@@ -80,9 +81,10 @@ code {
         .book-search {
             display: flex;
             position: relative;
-            right: 1rem;
+            // right: 1rem;
             margin: 0;
             width: $search-bar-width;
+            border: none;
             
             ul {
                 list-style: none;
@@ -122,6 +124,50 @@ code {
             }
         }
 
+        // 多语言
+        ul.book-languages {
+            display: flex;
+            position: relative;
+            left: 1rem;
+            width: $lan-width;
+            height: $navi-height;
+            list-style: none;
+            font-size: .8rem;
+            padding-inline-start: 0;
+            margin-block: 0;
+
+            a {
+                text-decoration: none;
+                color: black;
+                opacity: .8;
+                line-height: 20px;
+            }
+
+            li {
+                padding: 10px 0;
+            }
+
+            li:hover {
+                cursor: pointer;
+
+                ul {
+                    display: block;
+
+                    li a:hover {
+                        cursor: pointer;
+                        color: $hover-color;
+                    }
+                }
+            }
+
+            ul {
+                list-style: none;
+                display: none;
+                margin: 5px 0 5px;
+            }
+        }
+
+        // 导航索引
         .page-navi-col {
             display: flex;
             margin: 0 1rem 0 1rem;
@@ -152,6 +198,7 @@ code {
                 a {
                     text-decoration: none;
                     color: black;
+                    line-height: 22px;
                 }
 
                 li:hover {
@@ -173,6 +220,7 @@ code {
                     font-weight: normal;
                     text-decoration: none;
                     color: black;
+                    line-height: 22px;
                 }
 
                 >a:hover,
@@ -186,7 +234,7 @@ code {
                     position: absolute;
                     left: 0;
                     // padding: 0rem 0.5rem;
-                    margin: .7rem 0 0;
+                    margin: .5rem 0 0;
                     // transform: translatex(-.5rem);
                     border: 1px solid $bkg-color;
                     box-shadow: 0 1px 1px 1px $bkg-color;
@@ -207,6 +255,7 @@ code {
                             font-size: .875rem;
                             text-decoration: none;
                             color: black;
+                            // line-height: 22px;
                         }
 
                         :hover>a {
@@ -221,7 +270,7 @@ code {
 
                 cursor: pointer;
                 background-color: $bkg-color;
-                border-radius: 4px;
+                border-radius: 5px;
 
                 >ul {
                     display: block;
