@@ -1,0 +1,57 @@
+<!-- Let's do something really literately -->
+
+<!-- 字体，标题居中，作者居中，句首缩进 -->
+
+
+{{ $con_sep := split (trim .Inner " ") " \r" }}
+{{ if eq (len $con_sep) 1 }}
+    {{ $con_sep = split .Inner "\n" }}
+    {{ if eq (len $con_sep) 1 }}
+        <a> you</a>
+        {{ $con_sep := split .Inner "\r\n" }}
+    {{ end }}
+{{ end }}
+
+{{ $paragraphs := slice }}
+{{ range $con_sep }}
+    {{ if ne . "" }}
+        {{ $paragraphs = $paragraphs | append . }}
+    {{ end }}
+{{ end }}
+
+{{ $p_num := len $paragraphs }}
+<!-- <a> {{ $p_num }}</a> -->
+{{ $unformat_index := add $p_num -2 }}
+{{ $title_center := .Get 0 }}
+{{ $content_center := .Get 1 }}
+
+<blockquote class="book-quotation">
+    <a class="quote-start" style="font-size: 4rem; font-family:Arial, Helvetica, sans-serif">“</a>
+    {{ if $title_center }}
+        <p class="t-center">{{ index $paragraphs 0 }}</p>
+        <p class="t-center">
+            {{ $author_info := split (index $paragraphs 1) "·" }}
+            〔{{ index $author_info 0}}〕
+            {{ index $author_info 1 }}
+        </p>
+    {{ else }}
+        <p class="t-left">{{ index $paragraphs 0 }}</p>
+        <p class="t-left">
+            {{ $author_info := split (index $paragraphs 1) "·" }}
+            〔{{ index $author_info 0}}〕
+            {{ index $author_info 1 }}
+        </p>
+    {{ end }}
+
+    {{ if $content_center }}    
+        {{ range last $unformat_index $paragraphs }}
+            <p class="c-center">{{ .  }}</p>
+        {{ end }}
+    {{ else }}
+        {{ range last $unformat_index $paragraphs }}
+        <p class="c-intend">{{ .  }}</p>
+        {{ end }}
+    {{ end }}
+
+
+</blockquote>

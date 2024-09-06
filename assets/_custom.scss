@@ -53,8 +53,9 @@ code {
         z-index: 99;
         border: 1px solid transparent;
         box-shadow: 0 2px 5px 2px $bkg-color;
+
         // 滚动条
-        ::-webkit-scrollbar{
+        ::-webkit-scrollbar {
             height: 5px;
             width: 5px;
             background-color: $bkg-color-light;
@@ -85,7 +86,7 @@ code {
             margin: 0;
             width: $search-bar-width;
             border: none;
-            
+
             ul {
                 list-style: none;
                 font-size: .875rem;
@@ -100,7 +101,7 @@ code {
 
                 li {
                     margin: .5rem;
-                    padding:  5px 5px;
+                    padding: 5px 5px;
 
                     a {
                         display: block;
@@ -117,6 +118,7 @@ code {
                 li:hover {
                     border-radius: 5px;
                     background-color: white;
+
                     a {
                         color: $hover-color;
                     }
@@ -167,7 +169,7 @@ code {
             }
         }
 
-        // 导航索引
+        // 导航目录
         .page-navi-col {
             display: flex;
             margin: 0 1rem 0 1rem;
@@ -603,4 +605,83 @@ code {
     :last-child {
         border: none;
     }
+}
+
+// 自定义 shortcode
+.book-hint,
+.book-quotation {
+    >a {
+        text-decoration: none;
+        height: $navi-height;
+        display: block;
+        word-break: break-word;
+        font-size: 2rem;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    >a:hover {
+        text-decoration: none;
+        cursor: default;
+    }
+}
+
+.book-hint {
+    p {
+        padding-left: 2.5rem;
+    }
+
+    @each $name, $color in $hint-colors {
+        &.#{$name} {
+            border-color: $color;
+            background-color: rgba($color, .1);
+
+            >a {
+                color: rgba($color, .7);
+
+                ~p {
+
+                    a {
+                        color: rgba($color, .7);
+                        text-decoration: none;
+                    }
+
+                    a:hover {
+                        color: $color;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.book-quotation {
+    >a {
+        color: $bkg-color;
+    }
+
+    > .t-center, > .c-center {
+        text-align: center;
+    }
+
+    > .t-left {
+        text-indent: 2rem;
+        
+    }
+
+    > .c-intend {
+            text-indent: 2rem;
+    }
+
+    font-family: cursive;
+    // border-color: $bkg-color-light;
+    border: none;
+    border-inline-start: none !important;
+    background-color: rgba($bkg-color-light, .7);
+
+
 }
