@@ -2,11 +2,14 @@
 #bookFlatSection: true
 bookCollapseSection: true
 weight: 2
-title: "Collections"
+title: "集合框架"
+date: 2024-06-14
 BookToC: false
 BookComments: false
 BookIndex: true
 ---
+
+## Java 集合框架
 
 <center>
 

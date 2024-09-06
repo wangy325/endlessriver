@@ -1,5 +1,5 @@
 ---
-title: "并发组件-PBQ/DQ"
+title: "PriorityBlockingQueue and DelayQueue"
 date: 2020-11-16
 author: "wangy325"
 weight: 23

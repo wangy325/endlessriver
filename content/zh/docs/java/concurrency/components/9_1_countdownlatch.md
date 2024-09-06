@@ -1,5 +1,5 @@
 ---
-title: "并发组件-CountDownLatch"
+title: "CountDownLatch"
 date: 2020-11-16
 author: "wangy325"
 weight: 19
