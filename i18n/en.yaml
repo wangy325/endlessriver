@@ -15,17 +15,10 @@
 
 - id: Go to top
   translation: Go to top
-- id: UpdateInfo
+- id: Update Tag
   translation: Updated
 
-- id: Next Page
-  translation: →
-- id: Previous Page
-  translation: ←
-- id: First Page
-  translation: ←∅
-- id: Last Page
-  translation: ∅→
+
 - id: Related
   translation: See Also
 
