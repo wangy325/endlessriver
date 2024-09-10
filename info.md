@@ -9,3 +9,7 @@
 |showTitle| Boolean | `true` | `true` to show page title, but not all page needs to show that title. |
 |BookIndex| Boolean| `false` | `true` indicates the page is a `_index.md` page. A `_index.md` genarally shows the abstraction about contents in folder. Index page does not have to show next/prev navigation and related page links. |
 |BookFooter(deprecated) |Boolean |`true` | `true` to enable book footer. Now integrated into front-metas. |
+
+
+## Customized shortcodes
+

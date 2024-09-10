@@ -1,0 +1,18 @@
+{{ define "main" }}
+  {{ range sort .Paginator.Pages }}
+  <article class="markdown memo-post">
+    <fieldset class="memos">
+        <legend>{{ .Date.Format (.Param "BookDateFormat") }}</legend>
+        <p>{{- .Content -}}</p>
+    </fieldset>
+  </article>
+  {{ end }}
+
+  {{ template "_internal/pagination.html" . }}
+
+  {{ if default true (default .Site.Params.copyright .Params.copyright) }}
+    {{ partial "copyright" . }}
+  {{ end }}
+
+{{ end }}
+

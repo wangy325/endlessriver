@@ -1,0 +1,46 @@
+{{ define "main" }}
+  <main class="main archive">
+    <div class="archive_container">
+      {{ $filteredPages := .Site.RegularPages }}
+      {{ range $.Param  "notArchivedTypes" }}
+        {{ $filteredPages = (where $filteredPages "Type" "!=" (lower .)) }}
+      {{ end }}
+
+      {{ if gt (len $filteredPages) 0 }}
+        {{ $paginator := .Paginate ($filteredPages.GroupByDate ($.Param "archiveGroupByDate")) (.Param "archivePaginate") }}
+        {{ range ($paginator).PageGroups }}
+          <span class="archive_key">{{ .Key }}</span>
+          <ul class="archive_ul" data-dir="{{ $.Param "languagedir" | default "ltr" }}">
+            {{ range .Pages }}
+            <li class="archive_li" data-dir="{{ $.Param "languagedir" | default "ltr" }}">
+              <a href="{{ .Permalink }}" class="archive_title" data-dir="{{ $.Param "languagedir" | default "ltr" }}">{{ .Title }}</a>
+              
+              <small class="archive_tags"> 
+                {{ .Date.Format (.Param "BookDateFormat") }} / 
+                {{ .Type }}
+                {{ $paths := split  .Path  "/" }}
+                {{ $paths := first (add (len $paths)  -1) $paths }}
+                {{ $dir := "" }}
+                {{ if gt (len $paths) 2}}
+                  {{ $paths := last 2 $paths }}
+                  {{ range $paths }}
+                    {{ $dir = add $dir " " . " "  ">"}}
+                  {{ end }}
+                {{ end }}
+                {{ if ne $dir "" }} / {{ substr $dir 0 -1 }} {{ end }} 
+                </small>        
+            </li>
+            {{ end }}
+          </ul>
+        {{ end }}
+      {{ end }}
+    </div>
+  </main>
+
+  {{ template "_internal/pagination.html" . }}
+
+  {{ if default true (default .Site.Params.copyright .Params.copyright) }}
+    {{ partial "copyright" . }}
+  {{ end }}
+
+{{ end }}

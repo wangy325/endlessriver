@@ -733,7 +733,7 @@ code {
     display: inline-block;
 }
 
-// 更新于
+// 更新标记shortcode
 .update_by {
     border: 1px solid $bkg-color;
     border-radius: 5px;
@@ -742,6 +742,7 @@ code {
     legend {
     text-align: center;
     font-size: .875rem;
+    font-style: italic;
     background-color: rgba($bkg-color, .5);
     border-radius: 5px;
     }
@@ -749,5 +750,50 @@ code {
     p {
         display: inline ;
         // background-color: $hl_color;
+    }
+}
+
+// 归档页
+div.archive_container {
+    border-left: 2px solid $bkg-color;
+    margin-bottom: 5rem;
+
+    span.archive_key {
+        margin-left: 2rem;
+        font-style: italic ;
+    }
+
+    ul.archive_ul {
+        margin-left: 2rem;
+        list-style: none;
+        li {
+            line-height: 1.5rem;
+
+            small {
+                cursor: default;
+                font-style: italic;
+                opacity: .5;
+                border-radius: 5px;
+                background-color: $bkg-color;
+            }
+        }
+    }
+}
+
+// 闲言碎语
+
+fieldset.memos {
+    border: 2px  solid $bkg-color;
+    border-radius: 10px;
+
+    legend {
+        margin-left: 1rem;
+        font-style: italic;
+        color: $hover-color;
+    }
+
+    p {
+        padding-left: 2.5rem;
+        text-indent: 2rem;
     }
 }

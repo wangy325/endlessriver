@@ -172,6 +172,11 @@ params:
   # (Optional, experimental, default false) Enables a drop-down menu for translations only if a translation is present.
   BookTranslatedOnly: false
 
+# 归档页
+  notArchivedTypes: [intro, about, memos]
+  archiveGroupByDate: Jan 2006
+# 分页参数
+  archivePaginate: 20
 
 #### old zzo config items start
 #publishDir = "public"
