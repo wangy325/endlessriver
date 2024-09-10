@@ -191,6 +191,7 @@ params:
 #  series = "series"
 #### old zzo config items done
 
+# related posts setting
 related:
   includeNewer: false
   indices:
@@ -210,3 +211,7 @@ related:
     weight: 10
   threshold: 80
   toLower: false
+
+# code fence highlight
+pygmentsCodeFences: true
+pygmentsUseClasses: true
