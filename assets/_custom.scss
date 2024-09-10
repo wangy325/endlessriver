@@ -10,6 +10,7 @@ $page-max-width: 80rem;
 $page-min-width: 30rem;
 $search-bar-width: 240px;
 $lan-width: 100px;
+$hl_color: rgba(255,255,100, .5);
 
 
 html,
@@ -631,7 +632,7 @@ code {
 }
 
 .book-hint {
-    p {
+    div, p {
         padding-left: 2.5rem;
     }
 
@@ -659,22 +660,61 @@ code {
     }
 }
 
+// 引文
 .book-quotation {
+
+    >div {
+        line-height: 2.5rem;
+
+        p.plain_text {
+            margin: 0;
+            display: inline;
+        }
+
+        p:has(small) {
+            line-height: 1.5rem;
+            border: 1px solid $bkg-color;
+            border-radius: 5px;
+            box-shadow: 1px 2px 5px 1px $bkg-color;
+        }
+
+        div.zy {
+            display: inline;
+            text-indent: 0;
+            line-height: 1rem;
+        }
+
+        .zhuyin {
+            display: table-caption;
+            /* text-indent: 0; */
+            /* text-align: center; */
+            font-size: .875rem;
+            margin-bottom: 0;
+            // margin-inline: -.2rem;
+            // padding-inline: -.5rem;
+        }
+
+        .zy_plain_text {
+            display: table-cell;
+        }
+    }
+
     >a {
         color: $bkg-color;
     }
 
-    > .t-center, > .c-center {
+    >.t-left {
+        text-indent: 2rem;
+    }
+
+    >.t-center,
+    >.c-center {
         text-align: center;
     }
 
-    > .t-left {
-        text-indent: 2rem;
-        
-    }
 
-    > .c-intend {
-            text-indent: 2rem;
+    >.c-intend {
+        text-indent: 2rem;
     }
 
     font-family: cursive;
@@ -682,6 +722,32 @@ code {
     border: none;
     border-inline-start: none !important;
     background-color: rgba($bkg-color-light, .7);
+}
 
+// 高亮
+// https://discourse.gohugo.io/t/unable-to-customize-the-syntax-highlight-colors/22140
+@import "syntax";
 
+.line_hl {
+    background-color: $hl_color;
+    display: inline-block;
+}
+
+// 更新于
+.update_by {
+    border: 1px solid $bkg-color;
+    border-radius: 5px;
+    background-color: rgba($bkg-color, .5);
+
+    legend {
+    text-align: center;
+    font-size: .875rem;
+    background-color: rgba($bkg-color, .5);
+    border-radius: 5px;
+    }
+
+    p {
+        display: inline ;
+        // background-color: $hl_color;
+    }
 }

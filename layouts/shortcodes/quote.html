@@ -2,7 +2,6 @@
 
 <!-- 字体，标题居中，作者居中，句首缩进 -->
 
-
 {{ $con_sep := split (trim .Inner " ") " \r" }}
 {{ if eq (len $con_sep) 1 }}
     {{ $con_sep = split .Inner "\n" }}
@@ -20,7 +19,6 @@
 {{ end }}
 
 {{ $p_num := len $paragraphs }}
-<!-- <a> {{ $p_num }}</a> -->
 {{ $unformat_index := add $p_num -2 }}
 {{ $title_center := .Get 0 }}
 {{ $content_center := .Get 1 }}
@@ -28,30 +26,108 @@
 <blockquote class="book-quotation">
     <a class="quote-start" style="font-size: 4rem; font-family:Arial, Helvetica, sans-serif">“</a>
     {{ if $title_center }}
-        <p class="t-center">{{ index $paragraphs 0 }}</p>
-        <p class="t-center">
+        <div class="t-center">{{ index $paragraphs 0 }}</div>
+        <div class="t-center">
             {{ $author_info := split (index $paragraphs 1) "·" }}
             〔{{ index $author_info 0}}〕
             {{ index $author_info 1 }}
-        </p>
+        </div>
     {{ else }}
-        <p class="t-left">{{ index $paragraphs 0 }}</p>
-        <p class="t-left">
+        <div class="t-left">{{ index $paragraphs 0 }}</div>
+        <div class="t-left">
             {{ $author_info := split (index $paragraphs 1) "·" }}
             〔{{ index $author_info 0}}〕
             {{ index $author_info 1 }}
-        </p>
+        </div>
     {{ end }}
 
     {{ if $content_center }}    
         {{ range last $unformat_index $paragraphs }}
-            <p class="c-center">{{ .  }}</p>
+            {{ $var := . }}
+            {{ $zhuyin := findRE `[a-z]*\p{Latin}[a-z]*\p{Han}` . }}
+            {{ $pure_eng := findRE `\p{Han}` . }}
+            {{ $last_latin := ""}} 
+            {{ $zy_bang := slice }}
+            {{ if and  (gt  (len $zhuyin) 0) ( gt (len $pure_eng) 0) }}
+                {{ range $zhuyin }}
+                    {{ $c_piece := index (split $var (slicestr . 0 1)) 0 }}
+                    {{ if ne $last_latin  "" }}
+                        {{ $c_piece = index (split $c_piece $last_latin ) 1 }}
+                    {{ end }}
+                    {{$zy_bang = ($zy_bang | append $c_piece ) | append .}}
+                    {{ $last_latin = substr . -1 }}
+                {{ end }}
+        
+                {{ $zy_bang = $zy_bang | append  (index (split . $last_latin) 1) }}
+            {{ else }}
+                {{ $zy_bang = $zy_bang | append . }}
+            {{ end }}
+
+            <!-- 拼接 -->
+            <div class="c-center">
+                {{ range $zy_bang }}
+                    {{ if gt (len (findRE `[a-z]*\p{Latin}[a-z]*\p{Han}` .)) 0 }}
+                        {{ $zy := findRE `[a-z]*\p{Latin}[a-z]*` .  }}
+                        {{ $han := findRE `\p{Han}` .  }}
+                        <div class="zy">
+                            {{ range  $zy }}
+                                <p class="zhuyin">
+                                    {{ trim . " " | $.Page.RenderString }}
+                                </p>
+                            {{ end }}
+                            {{ range $han }}
+                                <p class="zy_plain_text"> {{ trim . " " | $.Page.RenderString }} </p>
+                            {{ end }}
+                            </div>
+                    {{ else }}
+                        <p class="plain_text">{{ trim . " " | $.Page.RenderString }}</p>
+                    {{ end }}
+                {{ end }}
+            </div>
         {{ end }}
     {{ else }}
         {{ range last $unformat_index $paragraphs }}
-        <p class="c-intend">{{ .  }}</p>
+            {{ $var := . }}
+            {{ $zhuyin := findRE `[a-z]*\p{Latin}[a-z]*\p{Han}` . }}
+            {{ $pure_eng := findRE `\p{Han}` . }}
+            {{ $last_latin := ""}} 
+            {{ $zy_bang := slice }}
+            {{ if and  (gt  (len $zhuyin) 0) ( gt (len $pure_eng) 0) }}
+                {{ range $zhuyin }}
+                    {{ $c_piece := index (split $var (slicestr . 0 1)) 0 }}
+                    {{ if ne $last_latin  "" }}
+                        {{ $c_piece = index (split $c_piece $last_latin ) 1 }}
+                    {{ end }}
+                    {{$zy_bang = ($zy_bang | append $c_piece ) | append .}}
+                    {{ $last_latin = substr . -1 }}
+                {{ end }}
+
+                {{ $zy_bang = $zy_bang | append  (index (split . $last_latin) 1) }}
+            {{ else }}
+                {{ $zy_bang = $zy_bang | append . }}
+            {{ end }}
+
+            <!-- 拼接 -->
+            <div class="c-intend">
+                {{ range $zy_bang }}
+                    {{ if gt (len (findRE `[a-z]*\p{Latin}[a-z]*\p{Han}` .)) 0 }}
+                        {{ $zy := findRE `[a-z]*\p{Latin}[a-z]*` .  }}
+                        {{ $han := findRE `\p{Han}` .  }}
+                        <div class="zy">
+                            {{ range  $zy }}
+                                <p class="zhuyin">
+                                    {{ trim . " " | $.Page.RenderString }}
+                                </p>
+                            {{ end }}
+                            {{ range $han }}
+                                <p class="zy_plain_text"> {{ trim . " " | $.Page.RenderString }} </p>
+                            {{ end }}
+                            </div>
+                    {{ else }}
+                        <p class="plain_text">{{ trim . " " | $.Page.RenderString }}</p>
+                    {{ end }}
+                {{ end }}
+            </div>
         {{ end }}
     {{ end }}
-
-
 </blockquote>

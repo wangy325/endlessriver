@@ -1,0 +1,9 @@
+<!-- p1 code language  is necessary-->
+<!-- p2 simplified  necessary-->
+
+{{ $p2 := "linenos=inline, " }}
+{{ $p2 = add $p2 "hl_lines=" }}
+{{ $p2 = add $p2 (.Get 1) }}
+{{ $p2 = add $p2 ",linenostart=1" }}
+
+{{ highlight (trim .InnerDeindent "\n\r") (.Get 0) $p2}}

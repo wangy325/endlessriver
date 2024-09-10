@@ -27,6 +27,9 @@
 - id: Related
   translation: 相似文章
 
+- id: UpdateInfo
+  translation: 更新于
+
 - id: bookSearchConfig
   translation: |
     {

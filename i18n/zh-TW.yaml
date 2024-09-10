@@ -15,6 +15,8 @@
 
 - id: Go to top
   translation: 回到頂部
+- id: UpdateInfo
+  translation: 更新于
 
 - id: Next Page
   translation: →
