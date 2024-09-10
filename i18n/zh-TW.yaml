@@ -15,17 +15,10 @@
 
 - id: Go to top
   translation: 回到頂部
-- id: UpdateInfo
+- id: Update Tag
   translation: 更新于
 
-- id: Next Page
-  translation: →
-- id: Previous Page
-  translation: ←
-- id: First Page
-  translation: ←∅
-- id: Last Page
-  translation: ∅→
+
 - id: Related
   translation: 類似文章
 
