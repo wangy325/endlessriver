@@ -267,7 +267,7 @@ And this line is normal.
 
 ### Update Info
 
-A customized shortcode to add update tags to page. Simple to use: 
+A customized shortcode to add update tags to page. Simple to use:
 
 ```tpl {{linenos=false}}
 {{</* update 2024-09-19 */>}}
