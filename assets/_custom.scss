@@ -781,7 +781,6 @@ div.archive_container {
 }
 
 // 闲言碎语
-
 fieldset.memos {
     border: 2px  solid $bkg-color;
     border-radius: 10px;
@@ -794,6 +793,38 @@ fieldset.memos {
 
     p {
         padding-left: 2.5rem;
-        text-indent: 2rem;
+        text-align: center;
     }
+}
+
+// plyr audio/video player
+@import "plyr";
+
+@property --plyr-color-main {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: $hover-color;
+}
+figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    div.plyr {
+        div.plyr__controls {
+            border : 1px solid $bkg-color;
+            border-radius: 1rem;
+            background-color: $bkg-color;
+            // box-shadow: 2px 2px 2px 2px rgba($bkg-color, 0.5);
+        }
+    }
+
+    figcaption {
+        opacity: .5;
+        font: italic smaller sans-serif;
+        padding: 3px;
+        text-align: center;
+    }
+
+
 }

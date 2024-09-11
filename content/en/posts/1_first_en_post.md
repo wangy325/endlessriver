@@ -10,8 +10,6 @@ tags: [gossip, hugo]
 
 This page shows the usage of hugo shortcodes, especially customized shortcodes.
 
-<p style="display: inline;">变化</p><p style="display: inline">莫测</p>
-
 <!--more-->
 
 ### Hint
@@ -278,3 +276,15 @@ This is page update info.
 {{< update 2024-09-19 >}}
 This is page update info.
 {{< /update >}}
+
+
+### Audio
+
+A simple audio player implmented by [plyr](https://github.com/sampotts/plyr/?tab=readme-ov-file).
+
+```tpl {{linenos=false}}
+{{</* audio "/audio/宋冬野-安和桥.mp3"  "安和桥-宋冬野" */>}}
+```
+
+{{< audio "/audio/宋冬野-安和桥.mp3"  "安和桥-宋冬野" >}}
+
