@@ -1,0 +1,53 @@
+{{/* Source: https://gitlab.com/Roneo/hugo-shortcode-roneo-collection */}}
+
+{{- $src := "" -}}
+{{- $caption := "" -}}
+{{- $class := "" -}}
+{{- $preload := "" -}}
+
+
+{{- if .IsNamedParams }}
+    {{- $src = .Get "src" -}}
+    {{- $caption = .Get "caption" -}}
+    {{- $class = .Get "class" -}}
+    {{- $preload = .Get "preload" | default "metadata" -}}
+{{- else }}
+    {{- $src = .Get 0 -}}
+    {{- $caption = .Get 1 -}}
+    {{- $class = .Get 2 -}}
+    {{- $preload = .Get 3 -}}
+{{- end }}
+
+<figure {{ with $class }}class="{{ . }}"{{ end }}>
+    <audio controls class="player" preload="{{ $preload }}">
+      {{ with $src }}<source src="{{ . | relURL }}" type="audio/mpeg">{{ end }}
+    </audio>
+    {{/*  <a href="{{ .Get "src"  }}" class="button small" download><i class="icon fas fa-download"></i></a>  */}}
+    {{ with $caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+</figure>
+
+
+    <script src="/js/plyr.polyfilled.js" crossorigin="anonymous"></script>
+    <script>
+      (function() {
+        const players = Array.from(document.querySelectorAll('.player')).map(
+            p => new Plyr(p, {
+                controls: ['play', 'progress', 'current-time', 'mute', 'volume'],
+                /* ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'] */
+                /*  autoplay: true,  */
+                /*  settings: ['speed']  */
+            })
+        );
+        {{/*  Stop other players when starting  */}}
+        players.forEach(function(p){
+            p.on('play', event => {
+                const instance = event.detail.plyr;
+                console.log('Stop others players');
+                players.forEach(function(p){ if(p != instance) p.stop()});
+            })
+        });
+    })();
+    </script>
+
+
+
