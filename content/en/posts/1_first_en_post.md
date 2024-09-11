@@ -6,7 +6,6 @@ categories: []
 tags: [gossip, hugo]
 ---
 
-> This is quote.
 
 This page shows the usage of hugo shortcodes, especially customized shortcodes.
 
@@ -14,7 +13,9 @@ This page shows the usage of hugo shortcodes, especially customized shortcodes.
 
 ### Hint
 
-There are 3 levels of hints: info warning and danger.  And could be used like this:
+> A customized shortcode based on  hugo book theme.
+
+There are 3 levels of hint: info warning and danger.  And could be used like this:
 
 ```tpl {linenos=false}
 {{</* hint info */>}}
@@ -280,7 +281,9 @@ This is page update info.
 
 ### Audio
 
-A simple audio player implmented by [plyr](https://github.com/sampotts/plyr/?tab=readme-ov-file).
+There are many ways to play audio on HTML. Here are 2 simple solution(3rd opensource api used).
+
+A simple audio player implmented by [plyr](https://github.com/sampotts/plyr/?tab=readme-ov-file):
 
 ```tpl {{linenos=false}}
 {{</* audio "/audio/宋冬野-安和桥.mp3"  "安和桥-宋冬野" */>}}
@@ -288,3 +291,16 @@ A simple audio player implmented by [plyr](https://github.com/sampotts/plyr/?tab
 
 {{< audio "/audio/宋冬野-安和桥.mp3"  "安和桥-宋冬野" >}}
 
+Another simple music player implemented by [APlayer](https://github.com/DIYgod/APlayer?tab=readme-ov-file):
+
+`aplayer` shortcode was used as [hugo module](https://gohugo.io/hugo-modules/use-modules/), and it's quite easy to use, just import [the module](https://github.com/Runzelee/aplayer-hugo-module).
+
+{{< hint info >}}
+The aplayer shortcode need a `/` before ending, else you need to add another close tag, do not know why.
+{{< /hint >}}
+
+```tpl {{ linenos=false}}
+{{</* aplayer name="安和桥" artist="宋冬野" url="/audio/宋冬野-安和桥.mp3" cover="/audio/anheqiao.jpg" /*/>}}
+```
+
+{{< aplayer name="安和桥" artist="宋冬野" url="/audio/宋冬野-安和桥.mp3" cover="/audio/anheqiao.jpg" />}}

@@ -220,3 +220,8 @@ related:
 # code fence highlight
 pygmentsCodeFences: true
 pygmentsUseClasses: true
+
+# hugo modules
+module:
+  imports:
+  - path: github.com/Runzelee/aplayer-hugo-module
