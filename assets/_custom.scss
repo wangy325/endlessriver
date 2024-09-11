@@ -792,14 +792,11 @@ fieldset.memos {
     }
 
     p {
-        padding-left: 2.5rem;
-        text-align: center;
+        font-family: Georgia, 'Times New Roman', Times, serif;
     }
 }
 
 // plyr audio/video player
-@import "plyr";
-
 @property --plyr-color-main {
     syntax: "<color>";
     inherits: false;
@@ -827,4 +824,10 @@ figure {
     }
 
 
+}
+
+// aplayer
+.aplayer {
+    width: 50%;
+    border-radius: .5rem !important;
 }

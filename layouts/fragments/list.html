@@ -10,9 +10,17 @@
 
   {{ template "_internal/pagination.html" . }}
 
+  <style>
+    .memo_comments {
+      margin-top: 5rem;
+    }
+  </style>
+  <div class="memo_comments">
+    {{ partial "comments" . }}
+  </div>
+
   {{ if default true (default .Site.Params.copyright .Params.copyright) }}
     {{ partial "copyright" . }}
   {{ end }}
 
 {{ end }}
-
