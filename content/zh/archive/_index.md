@@ -2,6 +2,6 @@
 menu:
   after:
     name: archive
-    weight: 7
+    weight: 6
 title: Archive
 ---
