@@ -2,7 +2,7 @@
 menu:
   after:
     name: about
-    weight: 6
+    weight: 8
 title: About
 BookFooter: false
 showTitle: false
