@@ -39,6 +39,13 @@ code {
         body .book-page {
             right: 2rem;
         }
+        .navi-bar #page-title {
+            display: none !important;
+        }
+
+        #navibar .page-navi-col nav>ul>li {
+            margin: 0 0 0 1rem !important;
+        }
     }
 
     // 导航栏
@@ -130,8 +137,9 @@ code {
         // 多语言
         ul.book-languages {
             display: flex;
-            position: relative;
-            left: 1rem;
+            // position: relative;
+            // left: 1rem;
+            margin-left: 1rem;
             width: $lan-width;
             height: $navi-height;
             list-style: none;
