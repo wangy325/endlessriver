@@ -17,7 +17,7 @@ enableGitInfo: true
 baseURL: https://wangy325.github.io
 title: Endless River
 theme: hugo-book
-
+timeZone: "Etc/GMT-8"    # UTC+08:00 timezone
 
 # hugo markdown render config reference:
 # https://gohugo.io/getting-started/configuration-markup/#typographer
@@ -145,7 +145,7 @@ params:
   # - In blog posts
   # BookDateFormat: "January 2, 2006"
   BookDateFormat: "2006-01-02"
-
+  BookDateTimeFormat: "2006-01-02 15:04:05"
 
   # (Optional, default true) Enables search function with flexsearch,
   # Index is built on fly, therefore it might slowdown your website.

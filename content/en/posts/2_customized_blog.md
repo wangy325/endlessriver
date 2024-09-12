@@ -6,7 +6,7 @@ categories:
 tags: [hugo]
 ---
 
-I'v done little work to make my blog a little more personality. Here I mark them down, in case of forgotten.
+I'v done little work to make my blog a little more 'personal'. Here I mark them down, in case of forgotten.
 
 <!--more-->
 
@@ -52,8 +52,8 @@ See [usage of hugo shortcodes](./1_usage_of_hugo_shortcodes.md)
 - comments: powered by giscus.
 - post-meta: display necessary post-meta of page.
 - new navi-bar: whole new website display, takes lot of time because my poor learning of js :-).
-- new toc: self-defined [table of contents](/../../zh-cn/posts/19_hugo文档自定义toc及其它/).
-- next-previous page index: index of next/previous page of same cates.
+- new toc: re-designed [table of contents](/../../zh-cn/posts/19_hugo文档自定义toc及滚动监听/).
+- next-previous page index: index of next/previous page of same categories.
 - related pages: recommanded pages, easy to see. {{< highline >}} Extra **system config** needed. {{< /highline>}}
 - multilingual: multi-language switch.
 - copyright: yes, copyright info at page bottom.
@@ -62,4 +62,4 @@ See [usage of hugo shortcodes](./1_usage_of_hugo_shortcodes.md)
 
 - archive page: yes, archive page. {{< highline >}} Extra **system config** needed. {{< /highline>}}
 - memo page: memorandums.
-- snippets: directly [embed](https://discourse.gohugo.io/t/easiest-way-to-embed-code-from-source-files/36662) code snippet(from vc) to post, quite cool.  
+- snippets: directly [embed](https://discourse.gohugo.io/t/easiest-way-to-embed-code-from-source-files/36662) code snippet(from vc) to post, quite cool staff.  

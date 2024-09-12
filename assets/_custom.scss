@@ -624,7 +624,8 @@ code {
         height: $navi-height;
         display: block;
         word-break: break-word;
-        font-size: 2rem;
+        font-size: 4rem;
+        // disable mouse select
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -653,7 +654,6 @@ code {
                 color: rgba($color, .7);
 
                 ~p {
-
                     a {
                         color: rgba($color, .7);
                         text-decoration: none;
@@ -799,9 +799,6 @@ fieldset.memos {
         color: $hover-color;
     }
 
-    p {
-        font-family: Georgia, 'Times New Roman', Times, serif;
-    }
 }
 
 // plyr audio/video player

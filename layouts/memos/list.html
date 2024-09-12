@@ -2,7 +2,13 @@
   {{ range sort .Paginator.Pages }}
   <article class="markdown memo-post">
     <fieldset class="memos">
-        <legend>{{ .Date.Format (.Param "BookDateFormat") }}</legend>
+        <legend>
+          {{ if and (eq .Date.Hour 0) (eq .Date.Minute 0) (eq .Date.Second 0) }} 
+            {{ .Date.Format (.Param "BookDateFormat") }}
+          {{ else }}
+              {{ .Date.Format (.Param "BookDateTimeFormat") }}
+          {{ end }}
+        </legend>
         <p>{{- .Content -}}</p>
     </fieldset>
   </article>
