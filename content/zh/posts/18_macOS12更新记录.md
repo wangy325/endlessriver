@@ -4,7 +4,7 @@ date: 2024-07-29
 author: wangy325
 enableGitInfo: true
 BookToC: false
-tags: [闲聊]
+tags: [软件]
 ---
 
 原本计划MBP2018就在BigSur 11.7 养老算了，实际上已经苟了3年，并且计划一直苟下去的😂...但是有几个征兆，最终还是在7月份，更新了12。以下为主要原因:

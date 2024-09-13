@@ -3,6 +3,7 @@ title: "Rime中州韻輸入引擎安裝與輸入方案定製指北"
 date: 2024-06-06
 draft: false
 categories: [utility]
+tags: [软件]
 author: "wangy32"
 # weight: 11
 ---

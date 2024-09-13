@@ -3,7 +3,7 @@ title: "使用Pythonanywhere托管Telegram机器人"
 date: 2024-07-08
 author: wangy325
 categories: [python]
-tags: [AI]
+tags: [Integration]
 enableGitInfo: true
 BookToC: false
 # weight: 

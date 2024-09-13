@@ -2,8 +2,8 @@
 title: " 获取JetBrains IDE的永久回退授权"
 date: 2024-07-01
 author: wangy325
-tags: []
 categories: [utility]
+tags: [软件]
 enableGitInfo: true
 BookToC: false
 # weight: 
