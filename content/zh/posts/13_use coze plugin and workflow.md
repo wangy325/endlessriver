@@ -3,7 +3,7 @@ title: "使用Coze的插件和工作流创建自定义AI工具"
 date: 2024-06-21
 author: wangy325
 categories: [utility]
-tags: [AI]
+tags: [Integration]
 enableGitInfo: true
 BookToC: false
 # weight: 15

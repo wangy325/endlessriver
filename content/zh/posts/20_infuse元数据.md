@@ -2,9 +2,9 @@
 title: "让Infuse从TMDB正确获取元数据"
 date: 2024-08-23
 author: wangy325
-BookToC: false
+BookToC: true
 categories: [utility]
-tags: [闲聊]
+tags: [软件]
 ---
 
 {{< hint info>}}
@@ -37,7 +37,9 @@ Infuse获取元数据之后的展示界面
 
 开始总是分分钟妙不可言。不过，由于硬盘里的电影格式并不是完全按照可以获取元数据的格式命名，有些剧集，甚至简单到使用数字序号命名单集，这样Infuse自然是无能为力的。要想Infuse从TMDB顺利获取**正确地**元数据，以下是一些必要命名规则：
 
-## 电影
+## Infuse的文件命名规则
+
+### 电影
 
 一般地，只需要提供电影名字就可以获取到元数据，不过，由于信息模糊，很有可能获取到错误的元数据。我们可以为每一部电影单独使用一个文件夹，文件夹名字为电影名：
 
@@ -60,9 +62,9 @@ Infuse获取元数据之后的展示界面
     Inception {tmdb-27205}.mkv 
     Inception {imdb-tt1375666}.mkv
 
-不过，最好的方式是下载符合通用命名格式的资源。这个命名格式接下来会介绍。
+不过，最好的方式是下载符合[通用命名规则](./20_infuse元数据.md/#电影文件命名的一般性规则)的资源。
 
-## 剧集
+### 剧集
 
 相比于电影，剧集要稍微麻烦一点。因为剧集有`Season`和`Episode`的概念。
 
@@ -87,14 +89,118 @@ Infuse获取元数据之后的展示界面
 
 经过测试，
 
-`The.Long.Season.S01E01.2023.V2.2160p.WEB-DL.H265.DV.DDP2.0-yiiha.mp4`
+<small style="color:orange">The.Long.Season.S01E01.2023.V2.2160p.WEB-DL.H265.DV.DDP2.0-yiiha.mp4</small>
 
 这样的文件名，可以成功获取元数据。
 
 对于只有一季的剧集（电视或者动画），都可以使用`S01`来标记，以让Infuse获取正确的元数据。
 
+## 电影文件命名的一般性规则
+
+下载电影文件的时候，经常可以看到电影文件名长长的一串，这一串文件名该如何理解呢？
+
+如经常看到这样的文件名：
+
+<small style="color:orange">Black.Panther.Wakanda.Forever.2022.2160p.BluRay.x265.10bit.SDR.DTS-HD.MA.TrueHD.7.1.Atmos-SWTYBLZ.mkv【34.02 GB】</small>
+
+可以将文件名拆解为：
+
+<small style="color:orange;">片名 . 发行年份 . 分辨率 . 压缩源 . 压缩编码 . 色深(*) . 光照渲染(*) . 音频格式 - 压制组织 . 文件格式</small>
+
+
+|Black.Panther.Wakanda.Forever.|2022.|2160p.|BluRay.|x265.|
+|:--|:--|:--|:--|:--|
+|片名| 年份|  分辨率|  压缩源   |  压缩编码|
+
+### 分辨率
+
+现在一般使用”P“表示分辨率，常见的有720P、1080P、2160P，分别对应HD，FHD，UHD。
+
+还有一种使用”K“表示分辨率，常见的有4K，即2160P，指代2种不同长宽的像素比：3840x2160和4096x2160；2K分辨率的视频不多见，一般16:9的2K显示器指拥有2560x1440像素。
+
+
+### 压缩源
+
+一般下载的视频都是经过压缩的，而压缩源指代的就是片源。比较常见也推荐下载的压缩源主要有以下几种：
+
+- DVDRIP（正式 DVD 版）
+
+    DVDRip是从最终版的DVD转制，质量应该是较好的。
+
+- HDTV
+
+    High Definition Television的简称，画质次于BD，对于那些未发行蓝光的电影(比如很多老电影)，有 HDTV 版是很好的收藏选择。
+
+- WebRip、WEB-DL （推荐）
+
+    这种格式其实是为了iTunes而出现的（iTunes在线商店），清晰度还不错，但是体积要小很多，大多数采用H.264 格式压缩。基本上，同一个片源，WebRip可能只需要 5GB，而 BDRip 可能要到 8GB ～ 10GB 的样子（当然画质也有差别）。
+
+- Remux、BluRay（蓝光原盘）
+
+    BluRay蓝光原盘：指对正式出版的蓝光影碟的数字拷贝。蓝光盘里的内容，码率一般都很高，画质很好。
+
+    REMUX：无损的提取出 HD-DVD 和 BluRay-DVD 里面的视频数据和音频数据，封装到我们熟悉的MKV等文件中。
+
+    2者的区别就是一个是光盘格式（可能需要特殊的播放器），一个是常见的电影格式。个人倾向于推荐Remux版本。
+
+### 压缩编码
+
+所谓视频编码方式就是指通过压缩技术，将原始视频格式的文件转换成另一种视频格式文件的方式。视频流传输中最为重要的编解码标准有国际电联的H.264/AVC、H.265/HEVC等。
+
+如果有H.265就选，它比H.264更加先进，同等画质占用的空间更小。
+
+|10bit.|SDR.|DTS-HD.MA.TrueHD.7.1.Atmos|-SWTYBLZ.|mkv|
+|:--|:--|:--|:--|:--|
+|  色深  |  光照渲染| 音频格式| 压缩组织 |文件格式|
+
+### 色深
+
+色深（Color Depth）亦可称为色位深度，用bit数来表示数码影像色彩数目的单位。一般为称作8bit 、 10bit 、HDR 等。
+
+8bit即显示器可以表示256种颜色，10bit即可表示1024种颜色。能表示的颜色越多，那么就可以说你的显示器越”vivid“。
+
+如果有10bit资源就选10bit。一般来讲HDR资源都是10bit的。
+
+{{< hint info >}}
+关于色深，现在电商平台为了宣传自家的显示器，把称呼都叫的五花八门了，最常见的是HDR10，HDR400之类。也就HDR10和HDR10+算正经称呼了。HDR400纯属忽悠人的，属于一个相当低的HDR标准，前者属于HDR格式，这两根本不是一个东西，且HDR400色深是8bit的。
+
+不信看这里:  https://en.wikipedia.org/wiki/High-dynamic-range_television#VESA_DisplayHDR。
+
+还有这里: https://displayhdr.org/
+{{< /hint >}}
+
+### 光照渲染
+
+分为HDR和SDR普通片源，如果你的播放设备支持HDR，大可以选择HDR格式的。
+
+常见的HDR格式有 HDR10，HDR10+， Dolby Version，HLG等等。
+
+参考: https://en.wikipedia.org/wiki/High-dynamic-range_television#Formats
+
+### 音频格式
+
+常见的音频格式基本上和普通的音乐编码格式类似，主要有以下几种：
+
+- AAC
+
+    AAC 是最高效的音频有损编码格式。
+
+- DTS
+
+    DTS 属于 DVD 时代的音频标杆，有损音频压缩格式，分为 1.5Mbps 的全码 DTS 和半码 DTS；
+
+- TrueHD
+
+    TrueHD 属于蓝光音频标准之一，音频无损压缩格式，一般都可以从 TrueHD 中提取 AC3 核心。
+
+值得一提的是，在它们的后面会标注 2.0 、 5.1 、 7.1 等数字，是指支持的声道数。一般5.1及以上，需要家庭影院的支持，虽然在2.0的播放设备上也能播放，但是体现不出效果。
+
+最后标注的 Atmos 一般指**杜比全景声( Dolby Atmos )**，它是杜比实验室研发的3D环绕声技术，于2012年4月24日发布。~~一般家庭影院很难体验到Dolby Atmos啦。~~
+
 ---
+
+参考：
 
 [Infuse元數據](https://support.firecore.com/hc/zh-tw/articles/215090947-%E5%85%83%E6%95%B8%E6%93%9A-101)
 
-[电影文件命名的一般性规则](https://www.luxiyue.com/personal/%E4%B8%80%E6%96%87%E6%90%9E%E6%87%82%E7%94%B5%E5%BD%B1%E6%96%87%E4%BB%B6%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99/)
+[一文搞懂电影文件命名规则](https://www.luxiyue.com/personal/%E4%B8%80%E6%96%87%E6%90%9E%E6%87%82%E7%94%B5%E5%BD%B1%E6%96%87%E4%BB%B6%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99/)
