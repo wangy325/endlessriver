@@ -95,6 +95,32 @@ code {
             width: $search-bar-width;
             border: none;
 
+            #book-search-input:valid {
+                ~ .clear_search img {
+                    display: block;
+                }
+            }
+
+            #book-search-input:placeholder-shown {
+                ~ .clear_search img {
+                    display: none;
+                }
+            }
+
+
+            .clear_search {
+                img {
+                    position: absolute;
+                    width: 1.5rem;
+                    margin: .5rem 0;
+                    transform: translateX(-2rem);
+                }
+
+                img:hover {
+                    cursor: pointer;
+                }
+            }
+
             ul {
                 list-style: none;
                 font-size: .875rem;
