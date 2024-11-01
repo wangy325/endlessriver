@@ -17,7 +17,7 @@ tags: [软件]
 
 >DV = Dolby Vision，即杜比视界，对于不支持杜比视界的设备，播放就会出现偏色。
 >
-> https://www.demolandia.net/4k-video-test/dolby-vision.html 可以下载DV的4K视频demo，检查你电脑电视是否支持DV。
+> <https://www.demolandia.net/4k-video-test/dolby-vision.html> 可以下载DV的4K视频demo，检查你电脑电视是否支持DV。
 
 <!--more-->
 
@@ -107,7 +107,6 @@ Infuse获取元数据之后的展示界面
 
 <small style="color:orange;">片名 . 发行年份 . 分辨率 . 压缩源 . 压缩编码 . 色深(*) . 光照渲染(*) . 音频格式 - 压制组织 . 文件格式</small>
 
-
 |Black.Panther.Wakanda.Forever.|2022.|2160p.|BluRay.|x265.|
 |:--|:--|:--|:--|:--|
 |片名| 年份|  分辨率|  压缩源   |  压缩编码|
@@ -117,7 +116,6 @@ Infuse获取元数据之后的展示界面
 现在一般使用”P“表示分辨率，常见的有720P、1080P、2160P，分别对应HD，FHD，UHD。
 
 还有一种使用”K“表示分辨率，常见的有4K，即2160P，指代2种不同长宽的像素比：3840x2160和4096x2160；2K分辨率的视频不多见，一般16:9的2K显示器指拥有2560x1440像素。
-
 
 ### 压缩源
 
@@ -164,9 +162,9 @@ Infuse获取元数据之后的展示界面
 {{< hint info >}}
 关于色深，现在电商平台为了宣传自家的显示器，把称呼都叫的五花八门了，最常见的是HDR10，HDR400之类。也就HDR10和HDR10+算正经称呼了。HDR400纯属忽悠人的，属于一个相当低的HDR标准，前者属于HDR格式，这两根本不是一个东西，且HDR400色深是8bit的。
 
-不信看这里:  https://en.wikipedia.org/wiki/High-dynamic-range_television#VESA_DisplayHDR。
+不信看这里:  <https://en.wikipedia.org/wiki/High-dynamic-range_television#VESA_DisplayHDR。>
 
-还有这里: https://displayhdr.org/
+还有这里: <https://displayhdr.org/>
 {{< /hint >}}
 
 ### 光照渲染
@@ -175,7 +173,7 @@ Infuse获取元数据之后的展示界面
 
 常见的HDR格式有 HDR10，HDR10+， Dolby Version，HLG等等。
 
-参考: https://en.wikipedia.org/wiki/High-dynamic-range_television#Formats
+参考: <https://en.wikipedia.org/wiki/High-dynamic-range_television#Formats>
 
 ### 音频格式
 

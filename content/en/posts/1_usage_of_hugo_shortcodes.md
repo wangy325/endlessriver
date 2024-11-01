@@ -116,6 +116,10 @@ Sweets with sweets war not, joy delights in joy.
 长相思，摧心肝。
 {{< /quote >}}
 
+{{< update 2024-10-31 >}}
+The PinYin Note were handled by quote shortcodes and displayed by css style.
+{{< /update >}}
+
 {{< quote true true >}}
 Sonnet 8
 William Shakespeare
