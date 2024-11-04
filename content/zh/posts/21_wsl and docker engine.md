@@ -4,7 +4,7 @@ date: 2024-10-31
 author: wangy325
 BookToC: true
 categories: [utility]
-tags: [软件, WSL, Dockerß]
+tags: [软件, WSL, Docker]
 ---
 
 ## 安装WSL Ubuntu遇到的错误
