@@ -252,7 +252,6 @@ RULE_APPEND failed (No such file or directory): rule in chain DOCKER-USER\n (exi
 ### 无法拉取镜像
 
 WSL配置完代理之后，执行`docker run hello-world`依然报错：
-WSL配置完代理之后，执行`docker run hello-world`依然报错：
 
 ```shell
 root@pc-wangy:~# docker run hello-world
@@ -340,85 +339,7 @@ For more examples and ideas, visit:
 ```
 
 本文完。
-想了想，可能是docker并没有走代理：于是开始配置docker的代理了。
 
->Docker的代理有2个地方的配置，一个是[daemon的配置](https://docs.docker.com/engine/daemon/proxy/#systemd-unit-file)，也就是本文讨论的内容，另一个是[cli的配置](https://docs.docker.com/engine/cli/proxy/)。
-
-创建docker daemon的配置文件夹及文件：
-
-```shell
-sudo mkdir -p /etc/systemd/system/docker.service.d
-sudo vim /etc/systemd/system/docker.service.d/http-proxy.conf
-```
-
-写入如下配置：
-
-```conf
-[Service]
-Environment="HTTP_PROXY=http://127.0.0.1:7890"
-Environment="HTTPS_PROXY=http://127.0.0.1:7890"
-```
-
-接着运行如下命令：
-
-```shell
-systemctl daemon-reload
-system restart docker
-```
-
-> WSL2 已经支持systemctl啦！
-
-接着使用`docker info`检验docker daemon的配置：
-
-{{< highlight shell "11-12" >}}
- Kernel Version: 5.15.153.1-microsoft-standard-WSL2
- Operating System: Ubuntu 22.04.5 LTS
- OSType: linux
- Architecture: x86_64
- CPUs: 8
- Total Memory: 7.76GiB
- Name: pc-wangy
- ID: 124fe023-2684-4e51-87bb-76261f0974c5
- Docker Root Dir: /var/lib/docker
- Debug Mode: false
- HTTP Proxy: http://127.0.0.1:7890
- HTTPS Proxy: http://127.0.0.1:7890
- Experimental: false
- Insecure Registries:
-  127.0.0.0/8
- Live Restore Enabled: false
-{{< /highlight >}}
-
-这样，docker就可以走代理了。
-
-接下来，运行`docker run hello-world`来验证一下：
-
-```cmd
-root@pc-wangy:~# docker run hello-world
-
-Hello from Docker!
-This message shows that your installation appears to be working correctly.
-
-To generate this message, Docker took the following steps:
- 1. The Docker client contacted the Docker daemon.
- 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
-    (amd64)
- 3. The Docker daemon created a new container from that image which runs the
-    executable that produces the output you are currently reading.
- 4. The Docker daemon streamed that output to the Docker client, which sent it
-    to your terminal.
-
-To try something more ambitious, you can run an Ubuntu container with:
- $ docker run -it ubuntu bash
-
-Share images, automate workflows, and more with a free Docker ID:
- https://hub.docker.com/
-
-For more examples and ideas, visit:
- https://docs.docker.com/get-started/
-```
-
-本文完。
 
 ## References
 
