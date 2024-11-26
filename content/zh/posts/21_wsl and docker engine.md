@@ -7,6 +7,19 @@ categories: [utility]
 tags: [软件, WSL, Docker]
 ---
 
+在Windows中安装配置WSL Ubuntu并使用docker的过程中，遇到一些问题：
+
+1. 安装WSL会遇到错误代码
+2. WSL1还是WSL2？
+3. WSL的网络代理如何设置？
+4. WSL的`systemctl`不见了？
+5. docker-daemon启动失败？
+6. docker拉取镜像超时？
+
+本文记录了这些遇到的问题，并提供了可行的解决办法。
+
+<!--more-->
+
 ## 安装WSL Ubuntu遇到的错误
 
 安装过程很简单，在*microsoft store*里直接安装，这里选择的版本是`22.04.5 LTS`，安装完成后，Windows Terminal会自动添加配置终端配置，直接打开即可。
