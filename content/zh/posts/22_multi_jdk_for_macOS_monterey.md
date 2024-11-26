@@ -1,11 +1,17 @@
 ---
-title: "macOS monterey 安装多版本jdk"
+title: "在macOS monterey配置使用多版本jdk"
 date: 2024-11-20
 author: wangy325
-BookToC: true
+BookToC: false
 categories: [utility]
 tags: [软件]
 ---
+
+记录了在macOS 12 Monterry下安装并配置多版本JDK的方法。
+
+意外的发现`brew`对Monterey的支持越发的少了...
+
+<!--more-->
 
 {{< hint  info >}}
 macOS monterey 下，`brew install openjdk@17` 和`brew install openjdk@8`均失败。
