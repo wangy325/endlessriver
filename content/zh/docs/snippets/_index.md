@@ -1,5 +1,5 @@
 ---
-title: "Py"
+title: "Snippets"
 weight: 8
 date: 2024-06-14
 bookFlatSection: true

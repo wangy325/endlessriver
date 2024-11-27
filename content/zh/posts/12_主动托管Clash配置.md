@@ -173,3 +173,4 @@ proxy-groups:
 3. [适用于clash的测速地址](https://www.skyqian.com/archives/clash-testlink.html)
 4. [clash rules规则集](https://github.com/Loyalsoldier/clash-rules)
 5. [clash分流的终极方法](https://jamesdaily.life/rule-proxy-provider)
+6. [配置示例](../docs/snippets/gist/clash_pro.md)

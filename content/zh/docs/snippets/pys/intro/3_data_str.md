@@ -1,12 +1,13 @@
 ---
-title: "类与对象"
+title: "字符串，元组和字典"
 date: 2024-06-06
 categories: [python]
 tags: [snippet]
-author: "wangy32"
-weight: 9
+author: "wangy325"
+weight: 3
 BookToC: false
 snippets: true
 ---
 
 ---
+

@@ -1,10 +1,10 @@
 ---
-title: "线程-条件"
-date: 2024-08-15
+title: "类与对象"
+date: 2024-06-06
 categories: [python]
 tags: [snippet]
-author: "wangy32"
-weight: 14
+author: "wangy325"
+weight: 9
 BookToC: false
 snippets: true
 ---

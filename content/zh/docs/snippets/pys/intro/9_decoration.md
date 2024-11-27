@@ -1,13 +1,13 @@
 ---
-title: "字符串，元组和字典"
+title: "闭包与装饰器"
 date: 2024-06-06
 categories: [python]
 tags: [snippet]
-author: "wangy32"
-weight: 3
+author: "wangy325"
+weight: 10
 BookToC: false
 snippets: true
 ---
 
----
 
+---
