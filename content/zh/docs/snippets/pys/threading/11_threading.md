@@ -1,10 +1,10 @@
 ---
-title: "线程-锁"
-date: 2024-08-15
+title: "初窥Python线程"
+date: 2024-08-06
 categories: [python]
 tags: [snippet]
-author: "wangy32"
-weight: 13
+author: "wangy325"
+weight: 12
 BookToC: false
 snippets: true
 ---

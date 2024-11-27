@@ -1,12 +1,13 @@
 ---
-title: "4个重要的内置函数"
+title: "格式化输出与文件I/O"
 date: 2024-06-06
 categories: [python]
 tags: [snippet]
-author: "wangy32"
-weight: 5
+author: "wangy325"
+weight: 6
 BookToC: false
 snippets: true
 ---
 
 ---
+

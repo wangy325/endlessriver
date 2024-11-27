@@ -1,10 +1,10 @@
 ---
-title: "流程控制语句"
-date: 2024-06-06
+title: "线程-条件"
+date: 2024-08-15
 categories: [python]
 tags: [snippet]
-author: "wangy32"
-weight: 1
+author: "wangy325"
+weight: 14
 BookToC: false
 snippets: true
 ---
