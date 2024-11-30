@@ -13,9 +13,11 @@ BookIndex: true
 ---
 
 <center style="font-family:monospace;font-size:0.8rem">
- <p>👏 Hi  there</p>
+ <p>👏 Hi  there 👏</p>
 
-Nothing special here
+My personal blog.
+
+Simple and normal.
 
 <br/>
 

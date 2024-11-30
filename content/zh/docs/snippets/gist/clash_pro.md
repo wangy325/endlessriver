@@ -9,4 +9,7 @@ BookToC: false
 snippets: true
 ---
 
+>关于自定义配置各项参数的含义，可以参考[主动托管Clash配置](../../../posts/12_主动托管Clash配置.md)。
+
 ---
+
