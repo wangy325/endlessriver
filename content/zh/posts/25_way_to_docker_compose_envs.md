@@ -51,7 +51,7 @@ services:
    image: 'webapp:v1.5'
 ```
 
-#### 其他信息
+#### .env文件的补充信息
 
 1) 在 Docker Compose 版本 2.24.0 中，可以设置 `.env` 文件为可选，方法是使用 `env_file` 属性。当 `required` 设置为 `false` 且 `.env` 文件丢失时，Compose 会静默忽略该条目。
 
@@ -124,9 +124,9 @@ web:
 
 有关如何使用它的更多示例，请参阅 [environment属性](https://docs.docker.com/compose/compose-file/05-services/#environment)。
 
-#### 其他信息
+#### environment属性的补充信息
 
-1) 可以选择不设置值，而是将 Shell 中的环境变量直接传递到容器中。其工作方式与 `docker run -e VARIABLE ...` 相同：
+1) 可以选择不设置值，而是将 Shell 中的**环境变量**直接传递到容器中。其工作方式与 `docker run -e VARIABLE ...` 相同：
 
     ```yaml
     web:
@@ -158,7 +158,7 @@ web:
   - web-variables.env
 ```
 
-#### 其他信息
+#### env_file属性的补充信息
 
 1) 如果指定了多个文件，它们将按顺序进行评估，并可以覆盖之前文件中设置的值。
 
@@ -219,7 +219,7 @@ postgres: 不是有效的镜像引用。Docker 期望没有标记的引用（如
 docker compose --env-file ./config/.env.dev up
 ```
 
-#### 其他信息
+#### 命令行-env-flie选项的补充事项
 
 1) 如果想临时覆盖 `compose.yml` 文件中已经引用的 `.env` 文件，此方法很有用。例如，可能为生产 (.`env.prod` ) 和测试 (.`env.test`) 有不同的 `.env` 文件。在以下示例中，有两个环境文件，`.env` 和 `.env.dev`。两者都为 TAG 设置了不同的值。
 
@@ -278,9 +278,7 @@ docker compose --env-file ./config/.env.dev up
 $ docker compose run -e DEBUG=1 web python console.py
 ```
 
-#### 其他信息
-
-也可以通过不给变量赋值的方式从 shell 中传递变量：
+也可以通过不给变量赋值的方式从 shell 中传递当前环境变量：
 
 ```shell
 $ docker compose run -e DEBUG web python console.py
