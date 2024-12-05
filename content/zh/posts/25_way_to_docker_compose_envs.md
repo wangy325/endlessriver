@@ -296,4 +296,5 @@ $ docker compose run -e DEBUG web python console.py
 ## 参考资料
 
 [Ways to set environment variables with Compose](https://docs.docker.com/compose/environment-variables/set-environment-variables/)
+
 [原文🔗️](https://simi.studio/ways-to-set-environment-variables-with-docker-compose/#%E4%BB%8E-shell-%E4%B8%AD%E6%9B%BF%E6%8D%A2)
