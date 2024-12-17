@@ -249,3 +249,53 @@ More information, read:
 - https://docs.spring.io/spring-cloud-commons/docs/3.1.8/reference/html/#spring-cloud-loadbalancer
 - https://docs.spring.io/spring-cloud-openfeign/docs/3.1.9/reference/html/
 
+##### Using a ReactiveLoadBalanced WebClients
+
+Filter `UserContextFunctionFilter` uses to transmit correlationId and other HTTP Headers like JWT while micro service invoking.
+
+```java
+@Autowired
+ReactorLoadBalancerExchangeFilterFunction lbFunction;
+/**
+ * {@link WebClient} load balancer HTTP client
+ */
+@Bean
+@LoadBalanced
+public WebClient.Builder getWebclient() {
+    return WebClient.builder().filters(f -> {
+       f.add(new UserContextFunctionFilter());
+       f.add(lbFunction);
+    });
+}
+```
+
+And the `UserContextFunctionFilter` looks like: 
+
+```java
+public class UserContextFunctionFilter implements ExchangeFilterFunction {
+    @Override
+    public Mono<ClientResponse> filter(ClientRequest request, ExchangeFunction next) {
+        ClientRequest buildRequest = ClientRequest.from(request).headers(h -> {
+            h.add(UserContext.CORRELATION_ID, UserContextHolder.getContext().getCorrelationId());
+            h.add(UserContext.AUTH_TOKEN, UserContextHolder.getContext().getAuthToken());
+        }).build();
+        return next.exchange(buildRequest);
+    }
+
+}
+```
+
+There is a warning info by spring BeanPostProcessorAutoConfiguration:
+
+```cmd
+2024-12-17 08:29:57.580  INFO 1 --- [           main] trationDelegate$BeanPostProcessorChecker :Bean 'org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-12-17 08:29:57.594  INFO 1 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration$ReactorDeferringLoadBalancerFilterConfig' of type [org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration$ReactorDeferringLoadBalancerFilterConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-12-17 08:29:57.605  INFO 1 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'reactorDeferringLoadBalancerExchangeFilterFunction' of type [org.springframework.cloud.client.loadbalancer.reactive.DeferringLoadBalancerExchangeFilterFunction] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+```
+
+This `...is not eligible for getting processed by all BeanPostProcessors` info always causes by [circle dependency](https://www.baeldung.com/spring-not-eligible-for-auto-proxying).
+
+This info Spring Cloud did not fix it officially yet.
+
+- https://stackoverflow.com/questions/73782826/loadbalancerbeanpostprocessorautoconfiguration-is-not-eligible-for-getting-pro
+- https://github.com/spring-cloud/spring-cloud-commons/pull/1361

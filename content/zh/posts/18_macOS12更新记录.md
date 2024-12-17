@@ -1,5 +1,5 @@
 ---
-title: "macOS12 Monterey更新"
+title: "将MBP2018升级到macOS12 Monterey"
 date: 2024-07-29
 author: wangy325
 enableGitInfo: true
