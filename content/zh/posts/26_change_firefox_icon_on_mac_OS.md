@@ -15,7 +15,7 @@ tags: [软件]
 
 <!--more-->
 
-首先还是要让你们感受一下火狐新图标的违和感...
+首先感受一下火狐新图标的违和感...
 
 <center>
 
@@ -31,10 +31,10 @@ tags: [软件]
 
 接下来，生成firefox的图标包。
 
-按照 https://firefox-source-docs.mozilla.org/browser/branding/docs/UpdatingMacIcons.html的 引导，我们会使用`svg`原文件**导出**各种规格的png图片文件，就像文中那样，注意导出文件的格式，要遵从`icon_1x1.png`这样的格式：
+按照 https://firefox-source-docs.mozilla.org/browser/branding/docs/UpdatingMacIcons.html 的引导，我们会使用`svg`原文件**导出**各种规格的png图片文件，就像文中那样，注意导出文件的命名，要遵从`icon_1x1.png`这样的格式：
 
 
-```cmd
+{{< highlight cmd "12" >}}
 mkdir firefox.iconset
 mv icon_16x16.png firefox.iconset
 mv icon_32x32.png firefox.iconset
@@ -47,9 +47,10 @@ mv icon_512x512.png firefox.iconset
 mv icon_512x512@2x.png firefox.iconset
 mv icon_1024x1024@2x.png firefox.iconset
 iconutil -c icns firefox.iconset
-```
+{{< /highlight >}}
 
-最后执行命令后会生成一个`firefox.icns`文件，使用`预览`打开文件，可以看到里面实际上整合了不同分辨率的图标，是一个包。
+
+最后执行上面高亮行的命令后会生成一个`firefox.icns`文件，使用`预览`打开文件，可以看到里面实际上整合了不同分辨率的图标，是一个**包**。
 
 到这里工作就做的差不多了。
 
