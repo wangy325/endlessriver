@@ -15,10 +15,6 @@ BookIndex: true
 <center style="font-family:monospace;font-size:0.8rem">
  <p>👏 Hi  there 👏</p>
 
-My personal blog.
-
-Simple and normal.
-
 <br/>
 
 🎧️ Playing

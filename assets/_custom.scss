@@ -18,11 +18,11 @@ body {
     scroll-behavior: smooth;
     overflow-x: hidden;
     // font-family: serif, 'cursive';
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: sans-serif, arial, monospace;
 }
 
 code {
-    font-family: Courier, 'Courier New' monospace;
+    font-family: monospace;
 }
 
 // web menu and toc ui style
@@ -617,9 +617,9 @@ code {
     h1 {
         text-align: center;
     }
-
+    line-height: 2.0 !important;
     code {
-        font-size: 1rem;
+        font-size: .8rem !important;
     }
 }
 

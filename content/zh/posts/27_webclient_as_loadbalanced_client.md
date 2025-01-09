@@ -30,18 +30,16 @@ Spring Cloud提供了客户端负载均衡的抽象和实现。如果你的微�
 `ServiceInstanceListSupplier`接口提供了`builder()`方法来创建实例。
 
 ```java
-public interface ServiceInstanceListSupplier extends Supplier<Flux<List<ServiceInstance>>> {
+public interface ServiceInstanceListSupplier 
+    extends Supplier<Flux<List<ServiceInstance>>> {
 
 	String getServiceId();
-
 	default Flux<List<ServiceInstance>> get(Request request) {
 		return get();
 	}
-
 	static ServiceInstanceListSupplierBuilder builder() {
 		return new ServiceInstanceListSupplierBuilder();
 	}
-
 }
 ```
 
@@ -49,14 +47,12 @@ public interface ServiceInstanceListSupplier extends Supplier<Flux<List<ServiceI
 
 ```java { hl_lines=[6] }
 public class ReactiveCompositeDiscoveryClientAutoConfiguration {
-
-	@Bean
-	@Primary
-	public ReactiveCompositeDiscoveryClient reactiveCompositeDiscoveryClient(
-			List<ReactiveDiscoveryClient> discoveryClients) {
-		return new ReactiveCompositeDiscoveryClient(discoveryClients);
-	}
-
+    @Bean
+    @Primary
+    public ReactiveCompositeDiscoveryClient reactiveCompositeDiscoveryClient(
+            List<ReactiveDiscoveryClient> discoveryClients) {
+        return new ReactiveCompositeDiscoveryClient(discoveryClients);
+    }
 }
 ```
 
@@ -65,12 +61,13 @@ public class ReactiveCompositeDiscoveryClientAutoConfiguration {
 ```java
 public class EurekaReactiveDiscoveryClientConfiguration {
 
-	@Bean
-	@ConditionalOnMissingBean
-	public EurekaReactiveDiscoveryClient eurekaReactiveDiscoveryClient(EurekaClient client,
-			EurekaClientConfig clientConfig) {
-		return new EurekaReactiveDiscoveryClient(client, clientConfig);
-	}
+    @Bean
+    @ConditionalOnMissingBean
+    public EurekaReactiveDiscoveryClient eurekaReactiveDiscoveryClient
+        (EurekaClient client, EurekaClientConfig clientConfig) 
+    {
+        return new EurekaReactiveDiscoveryClient(client, clientConfig);
+    }
     // 以下省略...
 }
 ```
@@ -85,9 +82,13 @@ public class EurekaReactiveDiscoveryClientConfiguration {
 // org.springframework.cloud.loadbalancer.config.LoadBalancerAutoConfiguration
 @ConditionalOnMissingBean
 @Bean
-public LoadBalancerClientFactory loadBalancerClientFactory(LoadBalancerClientsProperties properties) {
-    LoadBalancerClientFactory clientFactory = new LoadBalancerClientFactory(properties);
-    clientFactory.setConfigurations(this.configurations.getIfAvailable(Collections::emptyList));
+public LoadBalancerClientFactory loadBalancerClientFactory
+    (LoadBalancerClientsProperties properties) 
+{    
+    LoadBalancerClientFactory clientFactory 
+        = new LoadBalancerClientFactory(properties);
+    clientFactory.setConfigurations(
+        this.configurations.getIfAvailable(Collections::emptyList));
     return clientFactory;
 }
 ```

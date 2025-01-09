@@ -15,8 +15,6 @@ BookIndex: true
 <center style="font-family:monospace;font-size:0.8rem">
  <p>👏 Hi  there</p>
 
-Nothing special here
-
 <br/>
 
 🎧️ Playing
