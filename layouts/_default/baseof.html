@@ -79,7 +79,7 @@
   <article class="markdown book-article">
     {{ if default true (default .Site.Params.showTitle .Params.showTitle) }}
       <h1>
-        <a href="{{ .RelPermalink }}">{{ partial "docs/title.html" . }}</a>
+        {{ partial "docs/title.html" . }}
       </h1>
         {{ template "post-meta" . }}
     {{ end }}
