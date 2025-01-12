@@ -1,5 +1,16 @@
+
 {{ define "main" }}
   {{ range sort .Paginator.Pages }}
+  <style>
+    article.markdown.book-post {
+      display: block;
+      padding: 1rem;
+      border: 1px solid transparent;
+      border-radius: 1.5rem;
+      box-shadow: 0px 2px 1px 1px aliceblue;
+      background-color: aliceblue;
+  }
+  </style>
   <article class="markdown book-post">
     <h2>
       <a href="{{ .RelPermalink }}">{{ partial "docs/title.html" . }}</a>
@@ -22,13 +33,10 @@
 
 {{ end }}
 
-{{ define "toc" }}
-<!-- 隐藏分类信息 -->
-  <!-- {{ partial "docs/taxonomy" . }} -->
-{{ end }} 
-
 {{ define "post-meta" }}
   <div class = "postmeta flex align-cneter">  
     {{partial "post-meta" .}}
   </div>
 {{ end }}
+
+
