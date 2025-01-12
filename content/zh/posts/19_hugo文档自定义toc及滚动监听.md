@@ -30,7 +30,7 @@ Hugo定义了默认的TOC模板，实现了上面的要素，比较简单：
 一般Hugo博客的TOC引用在`layouts/_default/baseof.html`里面，不用大改，只需要修改引用模板的部分即可：
 
 ```html
-    {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
+    {{ if default false (default .Site.Params.BookToC .Params.BookToC) }}
     <aside class="book-toc" >
       <div class="book-toc-content">
         {{ template "toc" . }} 

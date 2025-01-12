@@ -2,11 +2,11 @@
 $f-class-navi: 10rem;
 $s-class-navi: 12rem;
 $navi-height: 2.5rem;
-$bkg-color: rgb(231, 236, 254);
+$bkg-color: aliceblue;
 $bkg-color-light: #f8f8f8;
 $hover-color: #0055bb;
 $dropdown-max-height: 16rem;
-$page-max-width: 80rem;
+$page-max-width: 60rem;
 $page-min-width: 30rem;
 $search-bar-width: 240px;
 $lan-width: 100px;
@@ -37,7 +37,7 @@ code {
     // 页面压缩时，右边距也压缩 阅读区间还回来
     @media screen and (max-width: $page-max-width) {
         body .book-page {
-            right: 2rem;
+            // right: 2rem;
         }
 
         .navi-bar #page-title {
@@ -129,7 +129,7 @@ code {
                 padding-inline-start: 0;
                 margin-top: 45px;
                 border-radius: 5px;
-                background-color: $bkg-color-light;
+                background-color: $bkg-color;
                 width: $search-bar-width;
                 max-height: $page-min-width;
                 overflow-y: auto;
@@ -337,18 +337,18 @@ code {
                 >ul {
                     display: block;
                     >li:hover {
-                        background-color: $bkg-color-light;
+                        background-color: $bkg-color;
                         >ul {
                             display: block;
                             
                             >li:hover {
-                                background-color: $bkg-color-light;
+                                background-color: $bkg-color;
                                 // 禁用父ul的overflow-y
 
                                 >ul {
                                    display: block;
                                     >li:hover {
-                                        background-color: $bkg-color-light;
+                                        background-color: $bkg-color;
                                     }
                                 }
                             }
@@ -371,8 +371,8 @@ code {
         position: absolute;
         margin-right: 2rem;
         margin-left: 1rem;
-        left: 16rem;
-        right: 14rem;
+        left: 15rem;
+        right: 15rem;
         transition: .3s;
     }
 
@@ -557,7 +557,7 @@ code {
 
     a.active {
         color: $hover-color;
-        background-color: $bkg-color-light;
+        background-color: $bkg-color;
 
         ~ul {
             display: inherit;
@@ -878,3 +878,5 @@ figure {
     width: 50%;
     border-radius: .5rem !important;
 }
+
+// post页卡片样式
