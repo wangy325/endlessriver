@@ -535,10 +535,10 @@ code {
     }
 
     li {
-        margin: .65em 0;
+        margin: .85em 0;
         position: relative;
         text-overflow: ellipsis;
-        overflow: hidden;
+        // overflow: hidden;
     }
 }
 
@@ -557,7 +557,8 @@ code {
 
     a.active {
         color: $hover-color;
-        background-color: $bkg-color;
+        // 目录滚动的背景
+        // background-color: $bkg-color;
 
         ~ul {
             display: inherit;
