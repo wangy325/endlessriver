@@ -6,6 +6,7 @@ bookFlatSection: true
 bookCollapseSection: false
 bookComments: false
 BookIndex: true
+BookToC: false
 ---
 
 ## Java技术文章总览

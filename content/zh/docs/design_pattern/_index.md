@@ -1,8 +1,7 @@
 ---
 weight: 2
-title: ""
+title: "Design Pattern"
 bookFlatSection: true
 bookCollapseSection: false
 BookIndex: true
-draft: true
 ---

@@ -1,7 +1,7 @@
 ---
 title: "引论"
 date: 2024-07-03
-categories: [cource, 操作系统]
+categories: [course, 操作系统]
 tags: []
 author: "wangy325"
 weight: 1
