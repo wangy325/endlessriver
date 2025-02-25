@@ -4,7 +4,6 @@ date: 2018-09-21
 draft: false
 description: "mybatis的基础知识。"
 author: "wangy325"
-# weight: 6
 categories: [java]
 tags: []
 ---

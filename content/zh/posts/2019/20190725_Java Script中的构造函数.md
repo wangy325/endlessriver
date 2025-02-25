@@ -1,7 +1,6 @@
 ---
 title: "Java Script中的构造函数"
 date: 2019-07-25
-lastmod: 2019-10-21
 draft: false
 author: "wangy325"
 categories: []

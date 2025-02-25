@@ -2,7 +2,6 @@
 title: "使用docker镜像快速搭建redis集群开发环境"
 date: 2022-08-25T16:01:23+08:00
 author: "wangy325"
-weight: 3
 tags: []
 categories: [redis, docker]
 ---

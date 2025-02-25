@@ -2,7 +2,6 @@
 title: "SpringBoot使用AOP的简单示例"
 date: 2020-03-14
 author: "wangy325"
-weight: 1
 tags: [spring]
 categories: [java]
 ---

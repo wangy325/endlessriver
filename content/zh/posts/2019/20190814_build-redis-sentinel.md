@@ -2,7 +2,6 @@
 title: "Redis Sentinel高可用实现"
 date: 2019-08-14T16:01:23+08:00
 author: "wangy325"
-weight: 2
 tags: []
 categories: [redis]
 ---
