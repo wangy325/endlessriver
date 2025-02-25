@@ -9,7 +9,7 @@ BookToC: false
 # weight: 
 ---
 
-基于Coze的收费策略，在上面免费使用Gemini的可能性不大了(每日20次`gemini-1.5-flash`请求)。于是尝试看看，是否可以自己接入并部署玩玩看。
+基于`Coze`的收费策略，在上面免费使用`Gemini`的可能性不大了(每日20次`gemini-1.5-flash`请求)。于是尝试单独接入并部署一个电报机器人玩玩看。
 
 GitHub上有关Telegram机器人的项目不少，并且使用python并接入google Gemini AI的也不在少数。随即[clone](https://github.com/H-T-H/Gemini-Telegram-Bot.git)了一个，查看文档之后，便可上手。
 
@@ -25,15 +25,15 @@ GitHub上有关Telegram机器人的项目不少，并且使用python并接入goo
 
     这几天试试搞个本地的镜像吧。
 
-    >吐槽一句，在国内，想玩点东西，第一步往往都是和墙作斗争，太难了。
+    >在墙内想玩点东西，第一步往往是和墙作斗争，太难了😭️。
 
 2. 本地运行py
 
-    不出意外，本地跑肯定是会遇到问题的。问题有3:
+    不出意外，本地跑肯定是会遇到问题的。问题有2:
 
-    1）机器人Token的问题。由于之前telegram机器人的token在Coze上配置过，虽然Coze收费之后~~一怒之下~~删掉了bot，但是telegram机器人的`webhook`已经被设置了，不能再重复使用。此时配置项目并运行，会出现`webhook`冲突。处理办法是在telegram `botFather`处`revoke token`，重新设置后即可。
+    1）机器人`Token`的问题。由于之前telegram机器人的token在`Coze`上配置过，虽然Coze收费之后~~一怒之下~~删掉了bot，但是telegram机器人的`webhook`已经被设置了，不能再重复使用。此时配置项目并运行，会出现`webhook`冲突。处理办法是在telegram `botFather`处`revoke token`，重新设置后即可。
 
-    2）proxy的问题。又回到老生常谈的问题了，众所周知，telegram和google都是被禁止在大陆地区使用的，所以想要本地调试必须要走代理。所以需要额外配置二者的代理：
+    2）`proxy`的问题。~~众所周知~~，电报和谷歌都被禁止在墙内使用，所以想要调试必须要使用代理。所以需要额外配置二者的代理：
 
     ```py
     import os
@@ -47,7 +47,7 @@ GitHub上有关Telegram机器人的项目不少，并且使用python并接入goo
     asyncio_helper.proxy = 'http://127.0.0.1:7890'
     ```
 
-    另外，gemini-api[不支持香港地区](https://ai.google.dev/gemini-api/docs/available-regions?hl=zh-cn)，所以香港的🪜没用😂。
+    另外，gemini-api[不支持香港地区](https://ai.google.dev/gemini-api/docs/available-regions?hl=zh-cn)😂。
 
 幸运的是，处理完上面的问题，脚本正常跑起来了。
 
@@ -61,4 +61,6 @@ GitHub上有关Telegram机器人的项目不少，并且使用python并接入goo
 
 静态配置参数`telegram token`和`gemini api-key`，直接运行脚本即可成功创建[机器人](https://t.me/wygemibot)。
 
-
+{{< update 2025-02-25 >}}
+`pythonanywhere`托管的服务，基本上隔天就会被杀掉。可能是免费用户的原因，它的子元占用是按天重置的？
+{{< /update  >}}

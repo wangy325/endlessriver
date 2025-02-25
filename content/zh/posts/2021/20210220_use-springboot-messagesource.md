@@ -4,7 +4,7 @@ date: 2021-02-20
 author: "wangy325"
 weight: 2
 categories: [java]
-tags: [spring, 译文]
+tags: [spring, translation]
 ---
 
 
