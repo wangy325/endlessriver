@@ -2,7 +2,6 @@
 title: "MySQL死锁"
 date: 2024-08-05
 author: "wangy325"
-weight: 6
 tags: [undone]
 categories: [mysql]
 BookToC: false

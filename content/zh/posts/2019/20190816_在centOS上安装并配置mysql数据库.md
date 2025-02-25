@@ -2,7 +2,6 @@
 title: "CentOS安装并配置MySQL"
 date: 2019-08-16
 author: "wangy325"
-weight: 1
 tags: []
 categories: [mysql]
 ---
