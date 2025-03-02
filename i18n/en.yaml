@@ -24,3 +24,15 @@
 
 - id: bookSearchConfig
   translation: '{ cache: true }'
+
+- id: More
+  translation: Read More
+
+- id: Previous
+  translation: Previous
+- id: Next
+  translation: Next
+- id: First
+  translation: First
+- id: Last
+  translation: Last

@@ -19,13 +19,13 @@
     <p>
       {{- .Summary -}}
       {{ if .Truncated }}
-        <a href="{{ .RelPermalink }}">...</a>
+        <a href="{{ .RelPermalink }}">{{ i18n "More" }} ...</a>
       {{ end }}
     </p>
   </article>
   {{ end }}
 
-  {{ template "_internal/pagination.html" . }}
+  {{ partial "pagination.html" . }}
 
   {{ if default true (default .Site.Params.copyright .Params.copyright) }}
     {{ partial "copyright" . }}

@@ -502,6 +502,7 @@ code {
 
     a {
         color: gray;
+        text-decoration: underline solid;
     }
 
     .cline {
@@ -881,3 +882,23 @@ figure {
 }
 
 // post页卡片样式
+
+// 分页导航样式
+.pagination {
+    
+    display: flex;
+    border-top: 1px solid $bkg-color;
+    padding-top: 1rem;
+
+    .page_navi {
+        padding: 0.1rem .5rem;
+        margin: 0 .5rem;
+    }
+    
+    .page_current {
+        background-color: #05b;
+        border-radius: .2rem;
+        color: white;
+    }
+
+}
