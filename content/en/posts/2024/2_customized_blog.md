@@ -52,7 +52,7 @@ See [usage of hugo shortcodes](./1_usage_of_hugo_shortcodes.md)
 - comments: powered by giscus.
 - post-meta: display necessary post-meta of page.
 - new navi-bar: whole new website display, takes lot of time because my poor learning of js :-).
-- new toc: re-designed [table of contents](/../../zh-cn/posts/19_hugo文档自定义toc及滚动监听/).
+- new toc: re-designed [table of contents](/../../zh-cn/posts//2024/20240820_hugo文档自定义toc及滚动监听/).
 - next-previous page index: index of next/previous page of same categories.
 - related pages: recommanded pages, easy to see. {{< highline >}} Extra **system config** needed. {{< /highline>}}
 - multilingual: multi-language switch.

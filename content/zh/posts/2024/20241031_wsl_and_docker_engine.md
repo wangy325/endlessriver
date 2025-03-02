@@ -52,7 +52,7 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-L
 
 <center style="font-size:.8rem; font-style:italic; color: gray">
 
-![img](/img/post/2024-11-01%20001009.png)
+![img](/img/post/2024-11-01-001009.png)
 
 开启Windows的虚拟化功能
 </center>
@@ -69,11 +69,11 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-L
 
 <center style="font-size: .8rem; font-style:italic; color:gray">
 
-<img  alt="wsl" src="/img/post/2024-11-01%20013045.png" width="600px"/>
+<img  alt="wsl" src="/img/post/2024-11-01-013045.png" width="600px"/>
 
 Windows宿主机的网络属性
 
-<img  alt="wsl" src="/img/post/2024-11-01%20013101.png" width="600px"/>
+<img  alt="wsl" src="/img/post/2024-11-01-013101.png" width="600px"/>
 
 WSL的网络属性
 </center>
