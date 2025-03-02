@@ -37,7 +37,7 @@
     </div>
   </main>
 
-  {{ template "_internal/pagination.html" . }}
+  {{ partial "pagination.html" . }}
 
   {{ if default true (default .Site.Params.copyright .Params.copyright) }}
     {{ partial "copyright" . }}

@@ -22,6 +22,18 @@
 - id: Related
   translation: 類似文章
 
+- id: More
+  translation: 閱讀全篇
+
+- id: Previous
+  translation: 上一頁
+- id: Next
+  translation: 下一頁
+- id: First
+  translation: 首頁
+- id: Last
+  translation: 尾頁
+
 - id: bookSearchConfig
   translation: |
     {

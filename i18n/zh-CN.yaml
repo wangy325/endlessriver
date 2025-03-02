@@ -22,6 +22,18 @@
 - id: Update Tag
   translation: 更新于
 
+- id: More
+  translation: 阅读全文
+
+- id: Previous
+  translation: 上一页
+- id: Next
+  translation: 下一页
+- id: First
+  translation: 首页
+- id: Last
+  translation: 尾页
+
 - id: bookSearchConfig
   translation: |
     {
