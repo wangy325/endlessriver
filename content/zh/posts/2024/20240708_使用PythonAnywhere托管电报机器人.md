@@ -62,5 +62,5 @@ GitHub上有关Telegram机器人的项目不少，并且使用python并接入goo
 静态配置参数`telegram token`和`gemini api-key`，直接运行脚本即可成功创建[机器人](https://t.me/wygemibot)。
 
 {{< update 2025-02-25 >}}
-`pythonanywhere`托管的服务，基本上隔天就会被杀掉。可能是免费用户的原因，它的子元占用是按天重置的？
+使用`pythonanywhere`托管的服务，无论是使用解释器直接运行还是使用命令行启动，基本上隔天就会被杀掉。可能是免费用户的原因，它的资源占用是按天重置的？
 {{< /update  >}}

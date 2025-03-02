@@ -8,7 +8,7 @@ tags: [spring boot, docker]
 
 The [spotify docker maven plugin](https://github.com/spotify/docker-maven-plugin) (*Archived since Mar, 2022*) can only build image with local docker client installed. This plugin works fine on my Mac.
 
-But when I switched to Windows(with [docker installed in ubuntu-WSL](/../../zh-cn/posts/21_wsl_and_docker_engine)), problem occurred:
+But when I switched to Windows(with [docker installed in ubuntu-WSL](/../../zh-cn/posts/2024/20241031_wsl_and_docker_engine)), problem occurred:
 
 <!--more-->
 
