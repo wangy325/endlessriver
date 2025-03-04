@@ -18,11 +18,11 @@ But when I switched to Windows(with [docker installed in ubuntu-WSL](/../../zh-c
 
 Which means plugin can not find docker engine running on my machine. That's not the thing! The real reason is that spotify maven plugin can not build image through WSL docker.
 
-A alternative was found after searching google. that's [fabric8io/docker-maven-plugin](https://dmp.fabric8.io/#installation).
+An alternative was found after searching google. that's [fabric8io/docker-maven-plugin](https://dmp.fabric8.io/#installation).
 
 This page only shows basic usage of this plugin.
 
-This *fabric8io docker maven plugin* can set remote docker host, which works on Windows with docker installed within WSL.
+The *fabric8io docker maven plugin* can set remote docker host, which works on Windows with docker installed within WSL.
 
 Below shows the simplest configuration:
 
@@ -86,6 +86,6 @@ To run docker image with docker-compose, use `wsl docker compose up` on Windows.
 
 ## References
 
-- [ java.io.FileNotFoundException: \.\pipe\docker_engine](https://blog.csdn.net/qq_43437874/article/details/107198498)
+- [java.io.FileNotFoundException: \.\pipe\docker_engine](https://blog.csdn.net/qq_43437874/article/details/107198498)
 - [io.fabric8.docker-maven-plugin插件使用](https://blog.csdn.net/u010427387/article/details/122088632)
 - [fabric8 documents](https://dmp.fabric8.io/#image-name)

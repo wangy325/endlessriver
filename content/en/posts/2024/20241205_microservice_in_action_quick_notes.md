@@ -7,7 +7,7 @@ tags: [spring cloud]
 ---
 
 
-This is quick notes of learning Spring microservice in action(2nd edition). To be clearified, Spring-Boot and Spring-Cloud version are little differert from book. 
+This is quick notes of learning Spring microservice in action(2nd edition). To be clarified, Spring-Boot and Spring-Cloud version are little different from book.
 
 Here are versions used:
 
@@ -36,7 +36,7 @@ Here is official doc: https://docs.spring.io/spring-cloud-config/docs/current/re
 
 ### 2) Spring cloud config Git backend with ssh authentication
 
-Use command 
+Use command
 
 ```ssh
 ssh-keygen -m PEM -t rsa -b 4096 -f config_server_deploy_key.rsa
@@ -214,10 +214,10 @@ If you have more than 1 instances of organization service, the `RestTemplate` wi
 
 #### 5.3 OpenFeign
 
->Spring Cloud integrates Eureka, Spring Cloud CircuitBreaker, as well as Spring Cloud LoadBalancer to provide a 
+>Spring Cloud integrates Eureka, Spring Cloud CircuitBreaker, as well as Spring Cloud LoadBalancer to provide a
 >load-balanced http client when using Feign.
 
-By using OpenFeign integrated with Spring Cloud, it already supported a load-balanced http-client. 
+By using OpenFeign integrated with Spring Cloud, it already supported a load-balanced http-client.
 
 The way to use `OpenFeign` is simple:
 
