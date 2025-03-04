@@ -6,8 +6,9 @@ categories: []
 tags: [gossip, hugo]
 ---
 
+Despiting all hugo internal *shortcodes*, I'v wrote or modified some shortcodes.
 
-This page shows the usage of hugo shortcodes, especially customized shortcodes.
+This page shows the usage of those shortcodes, especially customized shortcodes.
 
 <!--more-->
 
@@ -87,7 +88,7 @@ Some ancient China *Ci* has a preface, you can make it font-size smaller than ma
 横汾路，寂寞当年箫鼓，荒烟依旧平楚。招魂楚些何jiē嗟及，山鬼暗啼风雨。天也妒，未信与，莺儿燕子俱黄土。千秋万古，为留待骚人，狂歌痛饮，来访雁丘处。
 {{< /quote >}}
 
-Addtionally, you can place all contents in middle.
+Additionally, you can place all contents in middle.
 
 Just one more boolean parameter. (:-
 
@@ -154,7 +155,7 @@ hugo gen chromastyles --style=themename > syntax.css
 
 Hugo supports [chroma style](https://xyproto.github.io/splash/docs/all.html) code fence themes.
 
-Here is the discusstion about syntax highlight: https://discourse.gohugo.io/t/unable-to-customize-the-syntax-highlight-colors/22140/4
+Here is the discussion about syntax highlight: https://discourse.gohugo.io/t/unable-to-customize-the-syntax-highlight-colors/22140/4
 {{< /hint >}}
 
 
@@ -188,7 +189,7 @@ def incr_with_x_threads(x, func, n):
 
 The way it configs the highlight line numbers is strange[^1]. Isn't it?
 
-[^1]: `hl_lines=[3, "4-6"]`？Why number ahead and string behiend(double quoted)?
+[^1]: `hl_lines=[3, "4-6"]`？Why number ahead and string behind(double quoted)?
 
 Second way is recommended: using shortcode `highlight`.
 
@@ -285,9 +286,9 @@ This is page update info.
 
 ### Audio
 
-There are many ways to play audio on HTML. Here are 2 simple solution(3rd opensource api used).
+There are many ways to play audio on HTML. Here are 2 simple solution(3rd open-source api used).
 
-A simple audio player implmented by [plyr](https://github.com/sampotts/plyr/?tab=readme-ov-file):
+A simple audio player implemented by [plyr](https://github.com/sampotts/plyr/?tab=readme-ov-file):
 
 ```tpl {{linenos=false}}
 {{</* audio "/audio/宋冬野-安和桥.mp3"  "安和桥-宋冬野" */>}}
