@@ -72,6 +72,33 @@ lrwxr-xr-x  1 root      wheel    45B Oct 18  2022 openjdk-11.jdk -> /usr/local/o
 
 macOS可以通过`echo $(/usr/libexec/java_home  -v 11)`来查看java的安装位置信息。后面的`11`是java的版本。
 
+{{< hint info >}}
+<small>*更新于2025-03-05:*</small>
+
+`/usr/libexec/java_home`是MacOS上最简单的设置`JAVA_HOME`的方式。
+
+通过运行`/usr/libexec/java_home -V`，可以查看当前系统所有安装的jdk版本。
+
+
+```cmd
+➜  ~ /usr/libexec/java_home -V
+Matching Java Virtual Machines (3):
+    23.0.2 (x86_64) "Homebrew" - "OpenJDK 23.0.2" /usr/local/Cellar/openjdk/23.0.2/libexec/openjdk.jdk/Contents/Home
+    17.0.14 (x86_64) "Homebrew" - "OpenJDK 17.0.14" /usr/local/Cellar/openjdk@17/17.0.14/libexec/openjdk.jdk/Contents/Home
+    11.0.16.1 (x86_64) "Homebrew" - "OpenJDK 11.0.16.1" /usr/local/Cellar/openjdk@11/11.0.16.1_1/libexec/openjdk.jdk/Contents/Home
+```
+
+可以看到，所有的jdk版本都是通过`brew`安装的。是的，**更新了macOS 13.7.2后，brew在MacOS上正常运行了**。
+
+同时，使用`/usr/libexec/java_home -v 17`可以查看对应版本jdk的目录：
+
+```cmd
+➜  ~ /usr/libexec/java_home -v 17
+/usr/local/Cellar/openjdk@17/17.0.14/libexec/openjdk.jdk/Contents/Home
+```
+
+{{< /hint >}}
+
 因此，可以通过这个变量来配置环境变量。
 
 在`.zshrc`中作以下配置：
