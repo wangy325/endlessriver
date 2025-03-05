@@ -46,7 +46,7 @@ params:
 - audio: audio player powered by pylr.
 - aplayer: music player powered by Aplayer.
 
-See [usage of hugo shortcodes](./1_usage_of_hugo_shortcodes.md)
+See [usage of hugo shortcodes](./20240906_usage_of_hugo_shortcodes.md)
 
 ## Partials
 
