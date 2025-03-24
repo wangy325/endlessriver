@@ -77,28 +77,6 @@ class ProgressB{
 }
 {{< /mermaid >}}
 
-```mermaid
-classDiagram
-direction RL
-class AbstractTemplate {
-    <<Abstract>>
-    +final templateMethod()
-    +step1()*
-    +step2()*
-    +hook()
-}
-ProgressA --|> AbstractTemplate
-class ProgressA{
-    +step1()
-    +step2()
-}
-ProgressB --|> AbstractTemplate
-class ProgressB{
-    +step1()
-    +step2()
-}
-```
-
 ### 要点
 
 - 模板方法定义了算法的步骤，并且把步骤的实现延迟到子类。

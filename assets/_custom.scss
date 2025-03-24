@@ -17,8 +17,7 @@ html,
 body {
     scroll-behavior: smooth;
     overflow-x: hidden;
-    // font-family: serif, 'cursive';
-    font-family: sans-serif, arial, monospace;
+    // font-family: 'Roboto', 'Noto-Sans', 'Google Sans', sans-serif, monospace;
 }
 
 code {
@@ -371,8 +370,8 @@ code {
         position: absolute;
         margin-right: 2rem;
         margin-left: 1rem;
-        left: 15rem;
-        right: 15rem;
+        left: 20rem;
+        right: 20rem;
         transition: .3s;
     }
 
