@@ -15,7 +15,7 @@ BookToC: false
 
 ### Java基础
 
-{{< columns >}}
+{{% columns %}}
 
 #### 1 必知必会
 
@@ -38,7 +38,7 @@ Java基础知识容易忽视、混淆的点，简单做一些记录。另外还�
 - [映射集](collections/4_Map_hash_tree_map.md)
 - [HashMap的源码分析](collections/5_HashMap的源码分析.md)
 - ...
-{{< /columns >}}
+{{% /columns %}}
 
 ### 并发
 
