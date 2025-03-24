@@ -37,15 +37,6 @@ class Singleton {
 }
 {{< /mermaid >}}
 
-```mermaid
-classDiagram
-class Singleton {
-  -Singleton instance
-  -Singleton() Singleton
-  +getInstance()$ Singleton
-}
-```
-
 ### 实现
 
 #### 1. 典型但线程不安全实现
@@ -203,7 +194,6 @@ public enum Singleton {
 1. 如果是在分布式环境中，基于JVM唯一的单例如何保证？
 2. 注意你的类加载器，不同的类加载器可能会导致多例。
 3. 要防止单例对象被回收。
-
 
 ### 参考
 

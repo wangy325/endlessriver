@@ -66,51 +66,6 @@ class Client {
 }
 {{< /mermaid >}}
 
-```mermaid
-classDiagram
-class AbstractFactory {
-  <<Abstract>>
-  createProductA() ProductA
-  createProductB() ProductB
-  otherMethod()
-}
-
-ConcreteFactoryA --|> AbstractFactory
-class ConcreteFactoryA{
-  createProductA() ProductA
-  createProductB() ProductB
-}
-ConcreteFactoryB --|> AbstractFactory
-class ConcreteFactoryB {
-  createProductA() ProductA
-  createProductB() ProductB
-}
-
-ConcreteFactoryA <.. ProductA
-ConcreteFactoryA <.. ProductB
-class ProductA {
-  <<Interface>>
-}
-
-ProductA <|.. ConcreteProductA
-class ConcreteProductA
-
-ConcreteFactoryB <.. ProductA
-ConcreteFactoryB <.. ProductB
-class ProductB {
-  <<Interface>>
-}
-ProductB <|.. ConcreteProductB
-class ConcreteProductB
-
-AbstractFactory <..* Client
-class Client {
-  -AbstractFactory absFactory
-  +Client(AbstractFactory f) Client
-  +otherMethod()
-}
-```
-
 ### 设计原则
 
 - 针对接口编程，而不是针对实现编程
