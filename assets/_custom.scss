@@ -49,6 +49,7 @@ code {
     }
 
     // 导航栏
+    // 2025-03-25: unused navibar-cascade style
     #navibar {
         display: flex;
         justify-content: right;
@@ -360,9 +361,16 @@ code {
     }
 
     .book-menu {
-        display: none;
+        display: block;
+        position: absolute;
+        left: 5%;
+        overflow: hidden;
         // visibility: hidden;
         // z-index: -10;
+
+        .book-menu-content {
+            margin-top:  4rem;
+        }
     }
 
     .book-page {
@@ -370,7 +378,7 @@ code {
         position: absolute;
         margin-right: 2rem;
         margin-left: 1rem;
-        left: 20%;
+        left: 25%;
         right: 20%;
         transition: .3s;
     }
@@ -518,7 +526,7 @@ code {
     display: block;
     height: 100%;
     position: absolute;
-    left: 1rem;
+    left: 85%;
     transition: .3s;
 }
 
@@ -538,7 +546,7 @@ code {
         margin: .85em 0;
         position: relative;
         text-overflow: ellipsis;
-        // overflow: hidden;
+        overflow: hidden;
     }
 }
 

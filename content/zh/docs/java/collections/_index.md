@@ -1,6 +1,6 @@
 ---
 #bookFlatSection: true
-bookCollapseSection: true
+bookCollapseSection: false
 weight: 2
 title: "集合框架"
 date: 2024-06-14
