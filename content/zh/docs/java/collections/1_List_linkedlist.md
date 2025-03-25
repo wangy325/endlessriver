@@ -20,28 +20,28 @@ weight: 2
 
 ![J4sq7d.png](/img/collections/doubly-linked_list.png)
 
-<p style="text-align:center;font-style:italic;font-size:.8rem;color:grey">LinkedList的基本数据结构<sup>  from Core Java</sup></p>
+<p style="text-align:center;font-style:italic;font-size:.8rem;color:grey">LinkedList的基本数据结构<sup> from Core Java</sup></p>
 
-### Node（节点）
+### Node(节点)
 
 **Node**（节点）是`LinkedList`的存储载体，每向`LinkedList`中增加/删除一个元素，就会增加/减少一个Node，Node定义了3个字段，其含义分别是：
 
-> E item：存入`LinkedList`的内容
+> `E item`：存入`LinkedList`的内容
 >
-> Node\<E\> prev：前一个节点的引用
+> `Node<E> prev`：前一个节点的引用
 >
-> Node\<E\> next：后一个节点的引用
+> `Node<E> next`：后一个节点的引用
 
 结合`LinkedList`的字段来看，`LinkedList`定义了两个个Node相关的引用：
 
-> transient Node\<E\> first：总是指向LinkedList的第一个节点
+> `transient Node<E> first`：总是指向`LinkedList`的第一个节点
 >
-> transient Node\<E\> last：总是指向LinkedList的最后一个节点
+> `transient Node<E> last`：总是指向`LinkedList`的最后一个节点
 
 `LinkedList`有如下规律：
 
-1. `first.prev`总是为null
-2. `last.next`总是为null
+1. `first.prev`总是为`null`
+2. `last.next`总是为`null`
 3. 当LinkedList只有一个元素时，`first == last`
 
 下面的代码验证了上述推论：
@@ -88,25 +88,25 @@ static void initializeTest() throws Exception {
 }
 /* output:
 first: java.util.LinkedList$Node@512ddf17
-	item: google
-	prev: null
-	next: null
+  item: google
+  prev: null
+  next: null
 
 last: java.util.LinkedList$Node@512ddf17
-	item: google
-	prev: null
-	next: null
+  item: google
+  prev: null
+  next: null
 
 // 当有3个元素时，first的next == last的prev
 first: java.util.LinkedList$Node@512ddf17
-	item: google
-	prev: null
-	next: java.util.LinkedList$Node@2c13da15
+  item: google
+  prev: null
+  next: java.util.LinkedList$Node@2c13da15
 
 last: java.util.LinkedList$Node@77556fd
-	item: photos
-	prev: java.util.LinkedList$Node@2c13da15
-	next: null
+  item: photos
+  prev: java.util.LinkedList$Node@2c13da15
+  next: null
 *///:~
 ```
 
@@ -201,21 +201,23 @@ C++
 
 `LinkedList`基于链表，~~插入和删除操作效率高~~<sup>并不总这样</sup>；但由于没有元素索引( *index* )，使用`get(int index)`和`set(int index , E e)`的效率稍低[^6]
 
-[^6]: `LinkedList`使用和索引相关的操作get()/set()/add()/remove()的效率是一致的
+[^6]: `LinkedList`使用和索引相关的操作`get()`/`set()`/`add()`/`remove()`的效率是一致的
 
 在`LinkedList`中，和索引相关的操作有：
 
-    public E get(int index)
+```java
+public E get(int index)
 
-    public E set(int index, E element)
+public E set(int index, E element)
 
-    public void add(int index, E element)
+public void add(int index, E element)
 
-    public E remove(int index)
+public E remove(int index)
 
-    public int indexOf(Object o) 	获取对象首次出现的位置
+public int indexOf(Object o)  //获取对象首次出现的位置
 
-    public int lastIndexOf(Object o)	获取对象最后出现的位置
+public int lastIndexOf(Object o)  //获取对象最后出现的位置
+```
 
 除了`indexOf`和`lastIndexOf`方法之外，其他的四个方法的实现都和这个方法有关：
 

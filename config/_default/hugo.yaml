@@ -173,7 +173,7 @@ params:
   BookTranslatedOnly: false
 
 # 归档页
-  notArchivedTypes: [intro, about, memos]
+  notArchivedTypes: [docs, intro, about, memos]
   archiveGroupByDate: Jan 2006
 # 分页参数
   archivePaginate: 20

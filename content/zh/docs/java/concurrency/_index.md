@@ -1,6 +1,6 @@
 ---
 #bookFlatSection: true
-bookCollapseSection: true
+bookCollapseSection: false
 weight: 3
 title: "并发"
 date: 2024-06-14
@@ -98,7 +98,6 @@ BookIndex: true
     - [Semaphore](./components/9_3_semaphore.md)
     - [Exchanger](./components/9_4_exchanger.md)
     - [PriorityBlockingQueue 和 DelayQueue](./components/9_5_priorityblockqueue_delayqueue.md)
-
 
 TODO:
 

@@ -1,5 +1,5 @@
 ---
-bookCollapseSection: true
-weight: 3
-title: "Structural"
+bookCollapseSection: false
+weight: 2
+title: "结构型"
 ---

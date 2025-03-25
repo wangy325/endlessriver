@@ -3,7 +3,7 @@
 # disable all features
 title: "Home"
 type: docs
-BookSearch: fasle
+BookSearch: false
 BookComments: false
 BookFooter: false
 copyright: false
@@ -32,4 +32,3 @@ todo:
     status
  -->
 </center>
-
