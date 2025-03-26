@@ -29,3 +29,4 @@ References:
 
 - https://discourse.gohugo.io/t/easiest-way-to-embed-code-from-source-files/36662
 - https://gohugo.io/methods/site/data/
+- https://gohugo.io/functions/resources/getmatch/#article

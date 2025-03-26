@@ -30,13 +30,11 @@ Rendered as this:
 This is customized shortcode `hint`, based on theme  [Hugo Book](#hint).
 {{< /hint >}}
 
-
 {{< hint warning >}}
 This is warning.
 
 `markdown` is still *working*
 {{< /hint >}}
-
 
 {{< hint danger >}}
 Danger Zone. [Link](#hint)
@@ -63,7 +61,6 @@ Gives this:
 林花谢了春红，太匆匆。无奈朝来寒雨晚来风。
 胭脂泪，相留醉，自是人生长恨水长东。
 {{< /quote >}}
-
 
 If you want to make title and author placed in middle, use a boolean parameter `true`.
 
@@ -103,7 +100,6 @@ Sweets with sweets war not, joy delights in joy.
 {{</* /quote */>}}
 
 ```
-
 
 {{< quote true true >}}
 长相思（其一）
@@ -157,7 +153,6 @@ Hugo supports [chroma style](https://xyproto.github.io/splash/docs/all.html) cod
 
 Here is the discussion about syntax highlight: https://discourse.gohugo.io/t/unable-to-customize-the-syntax-highlight-colors/22140/4
 {{< /hint >}}
-
 
 2 ways to achieve that.
 
@@ -283,7 +278,6 @@ This is page update info.
 This is page update info.
 {{< /update >}}
 
-
 ### Audio
 
 There are many ways to play audio on HTML. Here are 2 simple solution(3rd open-source api used).
@@ -309,3 +303,22 @@ The aplayer shortcode need a `/` before ending, else you need to add another clo
 ```
 
 {{< aplayer name="安和桥" artist="宋冬野" url="/audio/宋冬野-安和桥.mp3" cover="/audio/anheqiao.jpg" />}}
+
+### Code
+
+This shortcode aims to insert source code file into markdown pages. With this shortcode, there's no need to copy/paste any
+code by using \`\`\`java\`\`\` code fence.
+
+Usage:
+
+```tpl
+{{</* code 'Foo.java' */>}}
+```
+
+will give this (code of `foo.java`):
+
+```java
+public class Foo {
+    //
+}
+```
