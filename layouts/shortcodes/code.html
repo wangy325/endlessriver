@@ -1,0 +1,65 @@
+{{/*  render source code files  */}}
+
+{{ $file := .Get 0 }}
+
+
+{{ $fileName := strings.TrimSuffix (path.Ext $file) $file }}
+{{ $lang := path.Ext $file | strings.TrimLeft "."  }}
+
+
+{{/*  为了准确匹配，包内的所有类名必须唯一  */}}
+{{ with resources.GetMatch (printf "snippets/java/src/**/%s.*" $fileName) }}
+    {{ $options := slice "lineNos=inline" "style=lovelace" }}
+
+
+    {{/*  处理掉源代码的包、import语句和类注释  */}}
+    {{ $lines := strings.Split .Content "\n" }}
+
+    {{ $filteredLines := slice }}
+    {{ $skip := false }}
+    {{ range $line := $lines }}
+
+        {{/* 移除 package 语句 */}}
+        {{ if strings.HasPrefix $line "package" }}
+            {{ continue }}
+        {{ end }}
+
+        {{/* 移除 import 语句 */}}
+        {{ if strings.HasPrefix $line "import" }}
+            {{ continue }}
+        {{ end }}
+
+        {{/* 移除类注释 */}}
+        {{ if strings.HasPrefix $line "/**" }}
+            {{ $skip = true }}
+        {{ end }}
+        {{ if $skip }}
+            {{ if strings.Contains $line "*/" }}
+                {{ $skip = false }}
+            {{ end }}
+            {{ continue }}
+        {{ end }}
+
+        {{/* 添加过滤后的行到新数组 */}}
+        {{ $filteredLines = $filteredLines | append  $line }}
+    {{ end }}
+
+    {{/* 移除代码行前面的空白行 */}}
+    {{ $trimmedLines := slice }}
+    {{ $foundCode := false }}
+    {{ range $line := $filteredLines }}
+        {{ if not $foundCode }}
+            {{ if ne (strings.TrimSpace $line) "" }}
+                {{ $foundCode = true }}
+                {{ $trimmedLines = $trimmedLines | append $line }}
+            {{ end }}
+        {{ else }}
+            {{ $trimmedLines = $trimmedLines | append $line }}
+        {{ end }}
+    {{ end }}
+
+    {{/* 将过滤后的代码行重新组合成字符串 */}}
+    {{ $filteredCode := delimit $trimmedLines "\n" }}
+
+    {{ transform.Highlight $filteredCode $lang (delimit $options ",") }}
+{{ end }}
