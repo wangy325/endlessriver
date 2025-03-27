@@ -84,23 +84,13 @@
         {{ template "post-meta" . }}
     {{ end }}
     {{- .Content -}}
-  </article>
-    <!-- render git-sub-module code snippets -->
-    <!-- https://discourse.gohugo.io/t/easiest-way-to-embed-code-from-source-files/36662 -->
-    <!-- https://gohugo.io/methods/site/data/ -->
+    
+    {{/*  only load partial when site param matches  */}}
     {{ if default false (default .Site.Params.snippets .Params.snippets) }}
-      {{ $key := path.Base .TranslationKey }}
-      {{ with resources.GetMatch (printf "snippets/*/%s.*" $key) }}
-        {{ $lang := path.Ext .Name | strings.TrimLeft "."  }}
-        {{ $options := slice "lineNos=inline" "style=lovelace" }}
-        {{ transform.Highlight .Content $lang (delimit $options ",") }}
-      {{ end }}
-      {{ with resources.GetMatch (printf "snippets/java/src/**/%s.*" $key) }}
-        {{ $lang := path.Ext .Name | strings.TrimLeft "."  }}
-        {{ $options := slice "lineNos=inline" "style=lovelace" }}
-        {{ transform.Highlight .Content $lang (delimit $options ",") }}
-      {{ end }}
+      {{ partial "snippets" . }}
     {{ end }}
+  </article>
+
 
     <!-- Deprecated! since 2024-09-05 -->
     <!-- https://discourse.gohugo.io/t/remove-footer-and-header/44347 -->
