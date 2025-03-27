@@ -12,9 +12,9 @@ BookIndex: true
 
 此文档通过Hugo的模板自动生成，源代码在项目的子模块`assets/snippets`里。
 
-Hugo通过源代码生成post的代码是
+Hugo通过源代码生成page的代码是
 
-```go-html
+```html
 {{ if default false (default .Site.Params.snippets .Params.snippets) }}
     {{ $key := path.Base .TranslationKey }}
     {{ with resources.GetMatch (printf "snippets/*/%s.*" $key) }}

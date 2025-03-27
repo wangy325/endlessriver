@@ -6,13 +6,11 @@ categories: [设计模式]
 author: "wangy325"
 ---
 
-## 单例模式
-
 - by Head First 设计模式
   > 单例模式确保一个类只有一个实例，并且提供一个全局访问点。
 
 - by Dive into Design Patterns
-  > **Singleton** is a *creational design pattern* that lets you ensure
+  > **Singleton** is a *creation(al) design pattern* that lets you ensure
   > that a class has only one instance, while providing a global
   > access point to this instance.
 

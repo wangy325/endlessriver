@@ -1,16 +1,23 @@
-{{/*  render source code files  */}}
-{{/*  参数为完整的文件名 如 foo.py  */}}
-{{ $file := .Get 0 }}
+{{/*  embed source code files into pages */}}
+{{/*  https://discourse.gohugo.io/t/easiest-way-to-embed-code-from-source-files/36662  */}}
+{{/*  https://gohugo.io/methods/site/data/  */}}
 
 
-{{ $fileName := strings.TrimSuffix (path.Ext $file) $file }}
-{{ $lang := path.Ext $file | strings.TrimLeft "."  }}
+{{ $filePath := "" }}
+{{ $key := .File.BaseFileName }}
 
 
-{{/*  为了准确匹配，包内的所有类名必须唯一  */}}
-{{ with resources.GetMatch (printf "snippets/**/%s" $file) }}
+{{/*  还提供了读取文件的能力, 可将snippet的信息保存在元文件中(json/yaml)  */}}
+{{/*  <div class="desc">
+    {{ with index site.Data.snippets $key }}
+    <p>{{ .description }}</p>
+    {{ end }}
+</div>  */}}
+
+{{ with resources.GetMatch (printf "snippets/**/%s.*" $key) }}
+    {{ $filePath = .Name}}
+    {{ $lang := path.Ext .Name | strings.TrimLeft "." }}
     {{ $options := slice "lineNos=inline" "style=lovelace" }}
-
 
     {{/*  处理掉源代码的包、import语句和类注释  */}}
     {{ $lines := strings.Split .Content "\n" }}
@@ -26,17 +33,6 @@
 
         {{/* 移除 import 语句 */}}
         {{ if strings.HasPrefix $line "import" }}
-            {{ continue }}
-        {{ end }}
-
-        {{/* 移除类注释 */}}
-        {{ if strings.HasPrefix $line "/**" }}
-            {{ $skip = true }}
-        {{ end }}
-        {{ if $skip }}
-            {{ if strings.Contains $line "*/" }}
-                {{ $skip = false }}
-            {{ end }}
             {{ continue }}
         {{ end }}
 
