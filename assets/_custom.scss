@@ -379,7 +379,7 @@ code {
         margin-right: 2rem;
         margin-left: 1rem;
         left: 25%;
-        right: 20%;
+        right: 25%;
         transition: .3s;
     }
 
@@ -560,7 +560,8 @@ code {
     }
 
     ul {
-        display: none;
+        // display: none; // uncomment to enable toc auto hidden
+        display: inherit;   
     }
 
     a.active {
