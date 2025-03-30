@@ -1,65 +1,74 @@
 {{/*  render source code files  */}}
-{{/*  参数为完整的文件名 如 foo.py  */}}
-{{ $file := .Get 0 }}
+{{/* 参数1 需要渲染的源代码items 如 items="Foo,Bar,c" */}}
+{{/*  参数2 源代码的语言lang 如 lang="java"  */}}
+{{/*  一个shortcode仅仅能处理同类型的源代码  */}}
+{{ $files := .Get "items" }}
+{{ $lang := printf "%s" (.Get "lang") }}
 
-
-{{ $fileName := strings.TrimSuffix (path.Ext $file) $file }}
-{{ $lang := path.Ext $file | strings.TrimLeft "."  }}
-
-
-{{/*  为了准确匹配，包内的所有类名必须唯一  */}}
-{{ with resources.GetMatch (printf "snippets/**/%s" $file) }}
-    {{ $options := slice "lineNos=inline" "style=lovelace" }}
-
-
-    {{/*  处理掉源代码的包、import语句和类注释  */}}
-    {{ $lines := strings.Split .Content "\n" }}
-
-    {{ $filteredLines := slice }}
-    {{ $skip := false }}
-    {{ range $line := $lines }}
-
-        {{/* 移除 package 语句 */}}
-        {{ if strings.HasPrefix $line "package" }}
-            {{ continue }}
-        {{ end }}
-
-        {{/* 移除 import 语句 */}}
-        {{ if strings.HasPrefix $line "import" }}
-            {{ continue }}
-        {{ end }}
-
-        {{/* 移除类注释 */}}
-        {{ if strings.HasPrefix $line "/**" }}
-            {{ $skip = true }}
-        {{ end }}
-        {{ if $skip }}
-            {{ if strings.Contains $line "*/" }}
-                {{ $skip = false }}
+{{ $filteredCode := slice }}
+{{/*  highlight option  */}}
+{{ $options := slice "lineNos=inline" "style=lovelace" }}
+{{ if $files }}
+    {{/*  解析参数items   */}}
+    {{ $file := split $files "," }}
+    {{ if $file }}
+        {{ range $file }}
+            {{ $fileName := printf "%s.%s" . $lang }}
+            {{/*  为了准确匹配，包内的所有类名必须唯一  */}}
+            {{ with resources.GetMatch (printf "snippets/**/%s" $fileName) }}
+            
+                {{/*  处理掉源代码的包、import语句和类注释  */}}
+                {{ $lines := strings.Split .Content "\n" }}
+                {{ $filteredLines := slice}}
+                {{ $skip := false }}
+                {{ range $line := $lines }}
+            
+                    {{/* 移除 package 语句 */}}
+                    {{ if strings.HasPrefix $line "package" }}
+                        {{ continue }}
+                    {{ end }}
+            
+                    {{/* 移除 import 语句 */}}
+                    {{ if strings.HasPrefix $line "import" }}
+                        {{ continue }}
+                    {{ end }}
+            
+                    {{/* 移除类注释 */}}
+                    {{ if strings.HasPrefix $line "/**" }}
+                        {{ $skip = true }}
+                    {{ end }}
+                    {{ if $skip }}
+                        {{ if strings.Contains $line "*/" }}
+                            {{ $skip = false }}
+                        {{ end }}
+                        {{ continue }}
+                    {{ end }}
+            
+                    {{/* 添加过滤后的行到新数组 */}}
+                    {{ $filteredLines = $filteredLines | append  $line }}
+                {{ end }}
+            
+                {{/* 移除代码行前面的空白行 */}}
+                {{ $trimmedLines := slice }}
+                {{ $foundCode := false }}
+                {{ range $line := $filteredLines }}
+                    {{ if not $foundCode }}
+                        {{ if ne (strings.TrimSpace $line) "" }}
+                            {{ $foundCode = true }}
+                            {{ $trimmedLines = $trimmedLines | append $line }}
+                        {{ end }}
+                    {{ else }}
+                        {{ $trimmedLines = $trimmedLines | append $line }}
+                    {{ end }}
+                {{ end }}
+            
+                {{/* 将过滤后的代码行重新组合成字符串 */}}
+                {{ $filteredCode = $filteredCode | append $trimmedLines }}
             {{ end }}
-            {{ continue }}
-        {{ end }}
-
-        {{/* 添加过滤后的行到新数组 */}}
-        {{ $filteredLines = $filteredLines | append  $line }}
-    {{ end }}
-
-    {{/* 移除代码行前面的空白行 */}}
-    {{ $trimmedLines := slice }}
-    {{ $foundCode := false }}
-    {{ range $line := $filteredLines }}
-        {{ if not $foundCode }}
-            {{ if ne (strings.TrimSpace $line) "" }}
-                {{ $foundCode = true }}
-                {{ $trimmedLines = $trimmedLines | append $line }}
-            {{ end }}
-        {{ else }}
-            {{ $trimmedLines = $trimmedLines | append $line }}
+            
         {{ end }}
     {{ end }}
-
-    {{/* 将过滤后的代码行重新组合成字符串 */}}
-    {{ $filteredCode := delimit $trimmedLines "\n" }}
-
-    {{ transform.Highlight $filteredCode $lang (delimit $options ",") }}
 {{ end }}
+
+{{/*  render code  */}}
+{{ transform.Highlight (delimit $filteredCode "\n") $lang (delimit $options ",") }}
