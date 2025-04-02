@@ -1,11 +1,9 @@
 ---
-title: "线程竞争"
-description: "Threading competition condition"
-date: 2024-07-21
+title: "Java线程本地存储的简单使用"
+date: 2020-05-17
 categories: [java]
 tags: [snippet]
 author: "wangy325"
-weight: 6
 BookToC: false
 snippets: true
 ---

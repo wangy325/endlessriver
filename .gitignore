@@ -11,3 +11,5 @@ gh-pages
 gh-pages.pub
 .outline
 out/
+*.txt
+.venv/
