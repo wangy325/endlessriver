@@ -4,13 +4,6 @@
 {{ $ops := dict "display" "block"}} <!-- 一行也使用格式化渲染 -->
 
 <blockquote class="book-hint {{ $sign }}">
-    <!-- {{ if eq  $sign  "warning" }}
-        <a class="hint-start">⨷</a>
-    {{ else if eq $sign "danger" }}
-        <a class="hint-start">✘</a>
-    {{ else }}
-        <a class="hint-start" style="font-size: 4rem;">“</a>
-    {{ end }} -->
-    <a class="hint-start">“</a>
+    {{/*  <a class="hint-start">“</a>  */}}
     {{ .Inner | .Page.RenderString $ops }}
 </blockquote>

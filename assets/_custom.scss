@@ -692,7 +692,7 @@ code {
 
     div,
     p {
-        padding-left: 2.5rem;
+        padding-left: 1rem;
     }
 
     @each $name, $color in $hint-colors {

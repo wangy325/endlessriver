@@ -1,5 +1,5 @@
 ---
-title: "Java线程本地存储的简单使用"
+title: "ThreadLocal用例"
 date: 2020-05-17
 categories: [java]
 tags: [snippet]
