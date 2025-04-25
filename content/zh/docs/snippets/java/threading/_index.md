@@ -1,5 +1,5 @@
 ---
 bookCollapseSection: false
 weight: 3
-title: "并发编程"
+title: "并发"
 ---
