@@ -312,7 +312,7 @@ code by using \`\`\`java\`\`\` code fence.
 Usage:
 
 ```tpl
-{{</* code 'Foo.java' */>}}
+{{</* code items="Foo" lang="java" */>}}
 ```
 
 will give this (code of `foo.java`):
