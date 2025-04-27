@@ -46,4 +46,4 @@ tags: []
 6. 支持使用源代码和`docker`镜像部署
 
 
-附上项目地址: https://github.com/wangy325/snipy/tree/main/pys/atelebot
+项目地址: https://github.com/wangy325/snipy/tree/main/pys/atelebot

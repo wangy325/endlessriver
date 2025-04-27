@@ -1,10 +1,8 @@
 ---
 title: "实现一个自定义数组"
 date: 2021-06-21
-categories: [java]
-tags: [snippet]
+categories: [java, algo]
 author: "wangy325"
-weight: 1
 BookToC: false
 snippets: true
 ---
