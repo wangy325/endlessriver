@@ -11,6 +11,7 @@ $page-min-width: 30rem;
 $search-bar-width: 240px;
 $lan-width: 100px;
 $hl_color: rgba(255, 255, 100, .5);
+$update_color: rgba(90, 149, 244, .5);
 
 
 html,
@@ -793,15 +794,16 @@ code {
 
 // 更新标记shortcode
 .update_by {
-    border: 1px solid $bkg-color;
+    border: 1px solid $update_color;
     border-radius: 5px;
-    background-color: rgba($bkg-color, .5);
+    background-color: $update_color,;
 
     legend {
         text-align: left;
         font-size: .875rem;
         font-style: italic;
         background-color: rgba($bkg-color, .5);
+        background-blend-mode:normal;
         border-radius: 5px;
     }
 

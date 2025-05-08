@@ -21,7 +21,7 @@ Lambda表达式是一个**可传递的代码块**，可以在以后执行**一�
 ```java
 public class Intro {
     public static void main(String[] args) {
-        String[] s = new String[]{"baidu","alibaba","tencent","baida","kingdee"};
+        String[] s = new String[]{"baidu","alibaba","baida","kingdee"};
       	// String类实现了Comparable接口，可以直接使用sort方法实现字典序排序
       	// 为什么是字典序？因为String类的实现逻辑是字典序
         Arrays.sort(s);
@@ -41,8 +41,8 @@ class StringLengthComparator implements Comparator<String>{
     }
 }
 /* output
-[alibaba, baida, baidu, kingdee, tencent]
-[baida, baidu, alibaba, kingdee, tencent]
+[alibaba, baida, baidu, kingdee]
+[baida, baidu, alibaba, kingdee]
 *///:~
 ```
 
@@ -143,7 +143,7 @@ list.forEach(System.out::println)
 ```java
 public class Intro {
     public static void main(String[] args) {
-        String[] s = new String[]{"baidu", "alibaba", "tencent", "baida", "kingdee"};
+        String[] s = new String[]{"baidu", "alibaba", "baida", "kingdee"};
 		// lmabda statement original
 		/*Arrays.sort(s, (o1,o2) -> {
           if (o1.length() != o2.length()) return o1.length() - o2.length();
@@ -172,11 +172,11 @@ Arrays.sort(s, Intro::localCompare)
 
 方法引用根据调用者和方法类型区分，有3种形式
 
-1. object.instanceMethod：对象调用实例方法
+1. `object.instanceMethod`：对象调用实例方法
 
-2. Class.staticMethod：类调用静态方法
+2. `Class.staticMethod`：类调用静态方法
 
-3. Class.instanceMethod：类调用实例方法
+3. `Class.instanceMethod`：类调用实例方法
 
 前2者较容易理解，第3种情况需要特殊说明，参考如下示例：
 
@@ -203,8 +203,9 @@ Arrays.sort(s, String::compareToIgnoreCase);
 
 ```java
 public List<Spitter> findAll() {
-        return jdbcOperations.query(SPITTER_SELECT,
-                                    (rs, rowNum) -> this.mapResult(rs, rowNum));
+        return jdbcOperations.query(
+            SPITTER_SELECT,
+            (rs, rowNum) -> this.mapResult(rs, rowNum));
     }
 // skip mapResult...
 ```

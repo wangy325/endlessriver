@@ -6,7 +6,7 @@ categories: []
 tags: [gossip, hugo]
 ---
 
-Despiting all hugo internal *shortcodes*, I'v wrote or modified some shortcodes.
+Despiting all hugo [embedded shortcodes](https://gohugo.io/content-management/shortcodes/), I'v written/modified some shortcodes.
 
 This page shows the usage of those shortcodes, especially customized shortcodes.
 
@@ -14,9 +14,13 @@ This page shows the usage of those shortcodes, especially customized shortcodes.
 
 ### Hint
 
+{{< update 2025-04-28 >}}
+*Discard all changes to this shortcode.*
+{{< /update >}}
+
 > A customized shortcode based on  hugo book theme.
 
-There are 3 levels of hint: info warning and danger.  And could be used like this:
+There are 3 levels of hint: `info` `warning` and `danger`.  And could be used like this:
 
 ```tpl {linenos=false}
 {{</* hint info */>}}
@@ -27,17 +31,21 @@ This is customized shortcode `hint`, based on theme  [Hugo Book](#hint).
 Rendered as this:
 
 {{< hint info >}}
-This is customized shortcode `hint`, based on theme  [Hugo Book](#hint).
+This is info.
+
+This is customized shortcode `hint`, based on theme  [Hugo Book](./20240906_usage_of_hugo_shortcodes.md#hint).
 {{< /hint >}}
 
 {{< hint warning >}}
 This is warning.
 
-`markdown` is still *working*
+`Markdown` is still *working*
 {{< /hint >}}
 
 {{< hint danger >}}
-Danger Zone. [Link](#hint)
+This is danger.
+
+Danger Zone. [Link](./20240906_usage_of_hugo_shortcodes.md#hint)
 {{< /hint >}}
 
 ### Quote
@@ -64,7 +72,7 @@ Gives this:
 
 If you want to make title and author placed in middle, use a boolean parameter `true`.
 
-Some ancient China *Ci* has a preface, you can make it font-size smaller than main text, use a `<small>` tag.
+Some ancient China *Ci* has a preface, you can make font-size smaller than main text, use a `<small>` tag.
 
 ```tpl {linenos=false}
 {{</* quote true */>}}
