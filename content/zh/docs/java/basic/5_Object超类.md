@@ -17,33 +17,28 @@ weight: 5
 
 当对象引用`a`和`b`指向同一个对象即认为`a`等于`b`，看起来，这似乎合乎情理，但是在很多情况下，需要比较**对象的状态**的相等性，所以，Object类的`equals`方法往往是没有什么用处的。
 
-Java语言规范要求equals方法具有以下特性：
+Java语言规范要求`equals`方法具有以下特性：
 
-- 自反性：对于任何**非空**引用`x`，`x.equals(x)`为`true`；
-- 对称性：对于任何引用`x`、`y`，当且仅当`y.equals(x)`为`true`时，`x.equals(y)`才为`true`；
-- 传递性：对于任何引用`x`、`y`、`z`，若`x.equals(y)`为`true`，`y.equals(z)`为`true`，那么`x.equals(z)`也应该为`true`；
-- 一致性：对于任何引用`x`、`y`，若对象引用和`equals`方法未发生变化，那么多次调用应返回一致的结果；
-- 对于任何非空引用`x`，`x.equals(null)`为`false`。
+1) {{< highline >}} 自反性 {{< /highline>}}：对于任何**非空**引用`x`，`x.equals(x)`为`true`；
+2) {{< highline >}} 对称性 {{< /highline>}}：对于任何引用`x`、`y`，当且仅当`y.equals(x)`为`true`时，`x.equals(y)`才为`true`；
+3) {{< highline >}} 传递性 {{< /highline>}}：对于任何引用`x`、`y`、`z`，若`x.equals(y)`为`true`，`y.equals(z)`为`true`，那么`x.equals(z)`也应该为`true`；
+4) {{< highline >}} 一致性 {{< /highline>}}：对于任何引用`x`、`y`，若对象引用和`equals`方法未发生变化，那么多次调用应返回一致的结果；
+5) 对于任何非空引用`x`，`x.equals(null)`为`false`。
 
-参考之前`Employee2`类的`equals`方法：
+参考之前[Employee](./3_传值还是传引用.md/#employee)类的`equals`方法：
 
 ```java
-class Employee2 {
+class Employee {
     // skip...
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null) return false;
-      	if (o.getClass() != getClass()) return false;
-
-        Employee2 employee2 = (Employee2) o;
-
-        /*if (salary != employee2.salary) return false;
-        return name != null ? name.equals(employee2.name) : employee2.name == null;*/
-
-      	// or using Objects.equals(Object a, Object b) to compare
-      	return Objects.equals(name,employee2.name)
-           && salary == employee2.salary;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Employee employee2 = (Employee) o;
+        return Objects.equals(name, employee2.name)
+                && salary == employee2.salary;
     }
 ```
 
@@ -60,14 +55,14 @@ class Employee2 {
 参考如下例子：
 
 ```java
-class Manager extends Employee2{
+class ExpClass extends Employee{
   // skip...
   @Override
     public boolean equals(Object o) {
       if(!super.equals(o)) return false;
 
       // super.equals checked that o and this belong to same class
-      Manager m = (Manager)o;
+      ExpClass m = (ExpClass)o;
       return bonus == m.bonus;
     }
 }
@@ -79,23 +74,7 @@ class Manager extends Employee2{
 
 参考如下例子：
 
-```java
-class Stu{
-  // skip...
-  @Override
-    public final boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null) return false;
-        if (!(o instanceof Stu)) return false;
-
-        Stu stu = (Stu) o;
-
-        return stu.age == age
-          && Objects.equals(stu.name, name)
-          && Objects.equals(stu.code, code);
-    }
-}
-```
+{{< code items="EqualsT" lang="java" >}}
 
 这个equals方法有几处变化：
 
@@ -112,28 +91,14 @@ class Stu{
 
 Java语言对<span id="hashCode">hashCode方法有如下规范</span>：
 
-- 在同一次Java程序运行过程中，无论调用多少次对象的hashCode方法，返回的应该是同一个整型值；而在不同程序运行过程中则无此要求；
-- 对于任何对象`a`、`b`，若`a.equals(b)`为`true`，那么`a`和`b`的hashCode返回值应该相等；
-- 对于任何对象`a`、`b`，若`a.equals(b)`为`false`，`a`和`b`的hashCode返回值**没有必要一定不等**；需要指出的是，给不同对象分配不同的hashcode值有利于提升哈希表的性能；
+1. 在同一次Java程序运行过程中，无论调用多少次对象的hashCode方法，返回的应该是同一个整型值；而在不同程序运行过程中则无此要求；
+2. 对于任何对象`a`、`b`，若`a.equals(b)`为`true`，那么`a`和`b`的hashCode返回值应该相等；
+3. 对于任何对象`a`、`b`，若`a.equals(b)`为`false`，`a`和`b`的hashCode返回值**没有必要一定不等**；需要指出的是，给不同对象分配不同de hashCode值有利于提升哈希表的性能；
 
 基于第2点规范，**若重新定义了`equals`方法，那么必须重新定义`hashCode`方法**。
 
-```java
-public class HashT {
-    public static void main(String[] args) {
-        String s = "s";
-        String t = new String("s");
-        StringBuilder sb = new StringBuilder(s);
-        StringBuilder tb = new StringBuilder(t);
-        System.out.println(s.hashCode() + " : " +sb.hashCode());
-        System.out.println(t.hashCode() + " : " +tb.hashCode());
-    }
-}
-/* output
-115 : 1956725890
-115 : 356573597
-*///:~
-```
+{{< code items="HashT" lang="java">}}
+
 
 注意，`s`和`t`哈希值相同时因为String类覆盖了hashCode方法，其值是由字符串字面量值计算来的，而StringBuilder没有覆盖hashCode方法，其值是Object默认的hashCode方法导出的**对象存储地址**。
 
