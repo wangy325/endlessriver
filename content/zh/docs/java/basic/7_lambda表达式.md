@@ -9,8 +9,7 @@ weight: 7
 
 >Java 函数式接口和Lambda表达式是 Java 8 中引入的一个重要概念，它允许你将行为作为参数传递给方法，从而实现更简洁、更灵活的代码。
 
-
-##  Lambda表达式
+## Lambda表达式
 
 Lambda表达式是一个**可传递的代码块**，可以在以后执行**一次或多次**。
 
@@ -22,14 +21,14 @@ Lambda表达式是一个**可传递的代码块**，可以在以后执行**一�
 public class Intro {
     public static void main(String[] args) {
         String[] s = new String[]{"baidu","alibaba","baida","kingdee"};
-      	// String类实现了Comparable接口，可以直接使用sort方法实现字典序排序
-      	// 为什么是字典序？因为String类的实现逻辑是字典序
+       // String类实现了Comparable接口，可以直接使用sort方法实现字典序排序
+       // 为什么是字典序？因为String类的实现逻辑是字典序
         Arrays.sort(s);
         System.out.println(Arrays.toString(s));
 
         Arrays.sort(s, new StringLengthComparator());
-      	//等效使用Lambda表达式实现
-      	//Arrays.sort(s, (o1, o2) -> o1.length() - o2.length());
+       //等效使用Lambda表达式实现
+       //Arrays.sort(s, (o1, o2) -> o1.length() - o2.length());
         System.out.println(Arrays.toString(s));
     }
 }
@@ -49,11 +48,10 @@ class StringLengthComparator implements Comparator<String>{
 上例中，`compare`方法不是立即调用，在数组完成排序之前，`sort`方法会一直调用`compare`方法，只要元素的排列顺序不正确就会重新排列元素。
 
 ```java
-API:	 public static <T> void sort(T[] a, Comparator<? super T> c)
+API:  public static <T> void sort(T[] a, Comparator<? super T> c)
 ```
 
 `sort`方法需要一个比较器作为参数，接口`Comparator`**只有一个抽象方法**`compare`，要实现排序，实现`compare`方法即可，这正是`StringLengthComparator`类所做的事情。
-
 
 由于`StringLengthComparator`类只有一个方法，这相当于将一段代码块（函数）传递给`sort`。实际上这就是Java处理函数式编程的方式：Java是面向对象语言，因此**必须构造一个对象，这个对象有一个方法包含所需的逻辑代码**。
 
@@ -119,8 +117,7 @@ Java API使用`@FunctionalInterface`注解来标注函数式接口。
 T mapRow(ResultSet rs,int rowNum) throws SQLException
 ```
 
-
-##  方法引用
+## 方法引用
 
 如果有现成的方法完成想要传递到其他代码的操作，例如你只想通过forEach打印集合中的元素，可以使用
 
@@ -144,17 +141,17 @@ list.forEach(System.out::println)
 public class Intro {
     public static void main(String[] args) {
         String[] s = new String[]{"baidu", "alibaba", "baida", "kingdee"};
-		// lmabda statement original
-		/*Arrays.sort(s, (o1,o2) -> {
+  // lmabda statement original
+  /*Arrays.sort(s, (o1,o2) -> {
           if (o1.length() != o2.length()) return o1.length() - o2.length();
-        	return o1.compareTo(o2);
+         return o1.compareTo(o2);
         })*/
 
-      	// Lambda expression with method reference
+       // Lambda expression with method reference
         Arrays.sort(s, (o1,o2) -> localCompare(o1, o2) );
 
-      	// method reference
-      	Arrays.sort(s, Intro::localCompare)
+       // method reference
+       Arrays.sort(s, Intro::localCompare)
         System.out.println(Arrays.toString(s));
 
     private static int localCompare(String o1, String o2) {
@@ -197,7 +194,7 @@ Arrays.sort(s, String::compareToIgnoreCase);
 
 方法引用种可以使用`this`和`super`关键字，分别表示调用当前类和超类的方法。
 
-##  变量作用域
+## 变量作用域
 
 在使用Spring JDBC操作数据库时，需要用到`RowMapper`的回调来处理返回数据，前文已提及，`RowMapper`是一个函数式接口，可以等价为Lambda表达式：
 
@@ -246,20 +243,18 @@ static void repeatMessage(String msg, int delay) {
 
 这是出于线程安全的考虑。
 
-
 2） 不能引用在外部改变了值的自由变量
 
  ```java
   static void repeat(String text, int count){
     for (int i = 1, i<= count, i++){
         ActionListener listener = evevt -> {
-        	// System.out.println(i + "text"); // ERROR! can't refer to changing i
-      	};
+         // System.out.println(i + "text"); // ERROR! can't refer to changing i
+       };
       new Timer(1000, listener).start();
     }
   }
  ```
-
 
 3） 注意变量的命名
 
