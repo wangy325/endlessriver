@@ -7,3 +7,6 @@
 [submodule "assets/snippets"]
 	path = assets/snippets
 	url = git@github.com:wangy325/snipy.git
+[submodule "telebot_gemini"]
+	path = telebot_gemini
+	url = git@github.com:wangy325/telebot_gemini.git
