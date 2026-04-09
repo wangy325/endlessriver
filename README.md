@@ -8,6 +8,6 @@
 # TODO
 
 - [x] DP的代码整理
-- [ ] Java源代码还有很多呢，整理下`snippets`页面的基本结构
-- [ ] windows优化的东西，如AHK的代码，git的配置等等，都可以托管在snippets 的`misc`里
+- [x] Java源代码还有很多呢，整理下`snippets`页面的基本结构
+- [x] windows优化的东西，如AHK的代码，git的配置等等，都可以托管在snippets 的`misc`里
 - [ ] ~~new blog： about win11 font type~~
