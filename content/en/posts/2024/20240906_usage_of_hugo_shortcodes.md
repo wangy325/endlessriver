@@ -12,7 +12,7 @@ This page shows the usage of those shortcodes, especially customized shortcodes.
 
 <!--more-->
 
-### Hint
+## Hint
 
 {{< update 2025-04-28 >}}
 *Discard all changes to this shortcode.*
@@ -48,7 +48,7 @@ This is danger.
 Danger Zone. [Link](./20240906_usage_of_hugo_shortcodes.md#hint)
 {{< /hint >}}
 
-### Quote
+## Quote
 
 `quote` is **real** quotation. With new font style and text format. `quote` can be used when you quoting some classical literatures. Like:
 
@@ -144,7 +144,7 @@ Whose speechless song, being many, seeming one,
 Sings this to thee: 'thou single wilt prove none.'
 {{< /quote >}}
 
-### Highlight Code
+## Highlight Code
 
 It's not the syntax highlighting, It's code line highlighting.
 
@@ -252,7 +252,7 @@ public static void main(String[] args){
 }
 {{< /highlight>}}
 
-### Highlight Line
+## Highlight Line
 
 Customized a new shortcode named `highline`, which is used to highlight current paragraph.
 
@@ -272,7 +272,7 @@ This line is **highlight**.
 
 And this line is normal.
 
-### Update Info
+## Update Info
 
 A customized shortcode to add update tags to page. Simple to use:
 
@@ -286,7 +286,7 @@ This is page update info.
 This is page update info.
 {{< /update >}}
 
-### Audio
+## Audio
 
 There are many ways to play audio on HTML. Here are 2 simple solution(3rd open-source api used).
 
@@ -312,7 +312,7 @@ The aplayer shortcode need a `/` before ending, else you need to add another clo
 
 {{< aplayer name="安和桥" artist="宋冬野" url="/audio/宋冬野-安和桥.mp3" cover="/audio/anheqiao.jpg" />}}
 
-### Code
+## Code
 
 This shortcode aims to insert source code file into markdown pages. With this shortcode, there's no need to copy/paste any
 code by using \`\`\`java\`\`\` code fence.

@@ -6,7 +6,7 @@ categories:
 tags: [hugo]
 ---
 
-I'v done little work to make this blog a little more 'personalized'.
+I'v done **some** work to make this blog a little more 'personalized'.
 
  Here I marked them down, in case of forgotten.
 
@@ -38,22 +38,31 @@ params:
 
 ## Shortcodes
 
-- hint: based on theme, used to show info clearly.
-- quote: literature quotation.
-- highlight: highlight code lines.{{< highline  >}} Extra **system config** needed. {{< /highline >}}
-- highline: highlight line.
-- update: content update note.
-- audio: audio player powered by pylr.
-- aplayer: music player powered by Aplayer.
+{{< hint  info>}}
+Taking advantage of shortcodes, make content more clear and easy to read.
+{{< /hint >}}
 
 See [usage of hugo shortcodes](./20240906_usage_of_hugo_shortcodes.md)
 
+- `hint`: based on theme, used to show info clearly.
+- `quote`: literature quotation.
+- `highlight`: highlight code lines.{{< highline  >}} Extra **system config** needed. {{< /highline >}}
+- `highline`: highlight line.
+- `update`: content update note.
+- `audio`: audio player powered by **pylr**.
+- `aplayer`: music player powered by **Aplayer**.
+
+
 ## Partials
 
+{{< hint  info>}}
+Partials are some tiny components, which are used to increase website interactivity and user experience.
+{{< /hint >}}
+
 - back-to-top button
-- comments: powered by giscus.
+- comments: powered by [giscus](https://github.com/giscus/giscus).
 - post-meta: display necessary post-meta of page.
-- new navi-bar: whole new website display, takes lot of time because my poor learning of js :-).
+- new navigation-bar: whole new website display, takes lot of time because my poor javascript :-).
 - new toc: re-designed [table of contents](/zh-cn/posts/2024/20240820_hugo文档自定义toc及滚动监听).
 - next-previous page index: index of next/previous page of same categories.
 - related pages: recommended pages, easy to see. {{< highline >}} Extra **system config** needed. {{< /highline>}}
