@@ -9,7 +9,7 @@ BookToC: false
 
 使用了一段时间的`Obsidian`，软件自带的插件生态特别完善，特别是`Templater`和`dataview`插件，在笔记效率上比Hugo “古法写作”高了不少，更不要说接入AI Agent后，在处理英文文档或者知识笔记的便捷度上更上了一个台阶。
 
-<!-- more -->
+<!--more-->
 
 最近一直在思考要不要将Hugo这些年的知识笔记迁移到Obsidian去算了。
 
