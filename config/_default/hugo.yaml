@@ -15,7 +15,7 @@ enableGitInfo: true
 
 
 baseURL: https://wangy325.github.io
-title: xf&pl
+title: XF&PL
 theme: hugo-book
 timeZone: "Etc/GMT-8"    # UTC+08:00 timezone
 
@@ -100,7 +100,7 @@ menu:
 params:
   # (Optional, default light) Sets color theme: light, dark or auto.
   # Theme 'auto' switches between dark and light modes based on browser/os preferences
-  BookTheme: "light"
+  BookTheme: "auto"
 
   # (Optional, default true) Controls table of contents visibility on right side of pages.
   # Start and end levels can be controlled with markup.tableOfContents setting.
@@ -225,3 +225,8 @@ pygmentsUseClasses: true
 module:
   imports:
   - path: github.com/Runzelee/aplayer-hugo-module
+
+# ignore files
+ignoreFiles:
+  - "\\..class$"
+  - "/out/"

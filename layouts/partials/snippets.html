@@ -14,7 +14,15 @@
     {{ end }}
 </div>  */}}
 
-{{ with resources.GetMatch (printf "snippets/**/%s.*" $key) }}
+{{ $matchedResource := "" }}
+{{ range resources.Match (printf "snippets/**/%s.*" $key) }}
+    {{ if and (not (strings.HasSuffix .Name ".class")) (not (strings.Contains .Name "/out/")) }}
+        {{ $matchedResource = . }}
+        {{ break }}
+    {{ end }}
+{{ end }}
+
+{{ with $matchedResource }}
     {{ $filePath = .Name}}
     {{ $lang := path.Ext .Name | strings.TrimLeft "." }}
     {{ $options := slice "lineNos=inline" "style=lovelace" }}
